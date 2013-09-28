@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  adventurer_id: 1
+  value: 1
+
+two:
+  name: MyString
+  adventurer_id: 1
+  value: 1

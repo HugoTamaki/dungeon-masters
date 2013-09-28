@@ -1,0 +1,48 @@
+<%= simple_form_for(@story) do |f| %>
+
+  <div class="field">
+    <%= f.input :title %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+  </div>
+  <div class="field">
+    <%= f.input :resume, as: :text, input_html: { rows: 10, cols: 40 } %>
+  </div>
+
+  <div id="tabs">
+    <ul>
+      <li><a href="#tabs-1">Chapters</a></li>
+      <li><a href="#tabs-2">Special Attributes</a></li>
+      <li><a href="#tabs-3">Items</a></li>
+    </ul>
+    <div id="tabs-1">
+      <%= f.simple_fields_for :chapters do |builder| %>
+        <%= render "chapters_fields", f: builder %>
+      <% end %>
+      <p>
+        <%= link_to_add_fields "Add chapters", f, :chapters, "chapters" %>
+      </p>
+    </div>
+    <div id="tabs-2">
+      <%= f.simple_fields_for :special_attributes do |builder| %>
+        <%= render "special_attributes_fields", f: builder %>
+      <% end %>
+      <p>
+        <%= link_to_add_fields "Add Special Attributes", f, :special_attributes, "special_attributes" %>
+      </p>
+    </div>
+    <div id="tabs-3">
+      <%= f.simple_fields_for :items do |builder| %>
+        <%= render "items_fields", f: builder %>
+      <% end %>
+      <p>
+        <%= link_to_add_fields "Add items", f, :items, "items" %>
+      </p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+

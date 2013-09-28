@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  adventurer_id: 1
+  item_id: 1
+  status: 1
+
+two:
+  adventurer_id: 1
+  item_id: 1
+  status: 1

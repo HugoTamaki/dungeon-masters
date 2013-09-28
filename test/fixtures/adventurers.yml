@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  user_id: 1
+  ability: 1
+  energy: 1
+  luck: 1
+  gold: 1
+
+two:
+  name: MyString
+  user_id: 1
+  ability: 1
+  energy: 1
+  luck: 1
+  gold: 1

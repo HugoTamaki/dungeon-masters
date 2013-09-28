@@ -1,0 +1,15 @@
+<div class="fields">
+  <h3>Chapter</h3>
+  <p>
+    <%= f.input :reference %>
+    <%= f.input :content, as: :text, input_html: { rows: 5 } %>
+    <%= f.input :image %>
+    <%= link_to_remove_fields "Remove chapter", f %>
+  </p>
+</div>
+<div>
+  <%= f.simple_fields_for :decisions do |builder| %>
+    <%= render "decisions_fields", f: builder %>
+  <% end %>
+  <%= link_to_add_fields "Add decisions", f, :decisions, "decisions" %>
+</div>

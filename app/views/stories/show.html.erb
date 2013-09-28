@@ -1,0 +1,61 @@
+<p>
+  <b>Title:</b>
+  <%= @story.title %>
+</p>
+
+<p>
+  <b>Resume:</b>
+  <%= @story.resume %>
+</p>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Chapters</a></li>
+    <li><a href="#tabs-2">Special Attributes</a></li>
+    <li><a href="#tabs-3">Items</a></li>
+  </ul>
+  <div id="tabs-1">
+    <% @chapters.each do |chapter| %>
+      <h3>Chapter <%= chapter.reference %></h3>
+      <p>
+        Content: <%= chapter.content %>
+      </p>
+      <p>
+        <%= image_tag chapter.image_url.to_s if chapter.image.present? %>
+      </p>
+      <% if chapter.decisions.present? %>
+        <h3>Decisions</h3>
+        <% chapter.decisions.each do |decision| %>
+          <p>
+            Destiny: <%= decision.destiny_num %>
+          </p>
+          <hr/>
+        <% end %>
+      <% end %>
+    <% end %>
+    <hr/>
+  </div>
+  <div id="tabs-2">
+    <% @special_attributes.each do |special_attribute| %>
+      <p>
+        Special Attribute: <%= special_attribute.name %>
+      </p>
+    <% end %>
+    <hr/>
+  </div>
+  <div id="tabs-3">
+    <% @items.each do |item| %>
+      <p>
+        Item: <%= item.name %>
+      </p>
+      <p>
+        Description: <%= item.description %>
+      </p>
+    <% end %>
+    <hr/>
+  </div>
+</div>
+
+
+<%= link_to 'Edit', edit_story_path(@story) %> |
+<%= link_to 'Back', stories_path %>
