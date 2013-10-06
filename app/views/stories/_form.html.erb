@@ -1,3 +1,8 @@
+<div class="message-container">
+  <p id="message">
+
+  </p>
+</div>
 <%= simple_form_for(@story) do |f| %>
 
   <div class="field">
@@ -7,6 +12,7 @@
   <div class="field">
     <%= f.input :resume, as: :text, input_html: { rows: 10, cols: 40 } %>
   </div>
+  <input type="hidden" id="story_id" value="<%= @story.id %>" />
 
   <div id="tabs">
     <ul>
@@ -21,6 +27,7 @@
       <p>
         <%= link_to_add_fields "Add chapters", f, :chapters, "chapters" %>
       </p>
+      <br/>
     </div>
     <div id="tabs-2">
       <%= f.simple_fields_for :special_attributes do |builder| %>
@@ -38,10 +45,11 @@
         <%= link_to_add_fields "Add items", f, :items, "items" %>
       </p>
     </div>
-  </div>
+  </div><br/>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Update", class: "btn btn-primary" %>
+    <%= f.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>
 

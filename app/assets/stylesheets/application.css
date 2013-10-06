@@ -12,14 +12,17 @@
  *= require_tree .
 */
 
-#div_attributes {
-    display:none;
+.chapter-fields {
+    border: 1px solid;
+    padding: 15px;
 }
 
-#div_items {
-    display:none;
+.decision-fields {
+    margin: 5px;
+    padding: 15px;
+    border: 1px solid;
 }
 
-#div_chapters {
-    display:block;
+.message-container {
+    height: 30px;
 }

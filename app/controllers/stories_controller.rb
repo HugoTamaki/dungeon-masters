@@ -31,17 +31,17 @@ class StoriesController < ApplicationController
   # GET /stories/new.json
   def new
     @story = Story.new
-#    @story.chapters.build
+    #    @story.chapters.build
     @story.special_attributes.build
     @story.items.build
     chapter = @story.chapters.build
     chapter.decisions.build
-#    @story.chapters.decisions.build
-#    3.times do
-#      chapter = @story.chapters.build
-#      special_attribute = @story.special_attributes.build
-#      item = @story.items.build
-#    end
+    #    @story.chapters.decisions.build
+    #    3.times do
+    #      chapter = @story.chapters.build
+    #      special_attribute = @story.special_attributes.build
+    #      item = @story.items.build
+    #    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -86,6 +86,30 @@ class StoriesController < ApplicationController
     end
   end
 
+  def auto_save
+    @story = Story.find(params[:story_id].to_i)
+
+    respond_to do |format|
+      if @story.update_attributes(params[:story])
+        format.html { render nothing: true}
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @story.errors, status: :unprocessable_entity }
+      end
+    end
+
+    #    respond_to do |format|
+    #        if @story.update_attributes(params[:story])
+    #          format.html
+    #          format.json { head :no_content }
+    #        else
+    #          format.html { render action: "edit" }
+    #          format.json { render json: @story.errors, status: :unprocessable_entity }
+    #        end
+    #    end
+  end
+  
   # DELETE /stories/1
   # DELETE /stories/1.json
   def destroy

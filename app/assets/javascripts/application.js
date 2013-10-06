@@ -15,6 +15,7 @@
 //= require twitter/bootstrap
 //= require_tree .
 //= require jquery-ui
+//= require jquery.autosave
 
 function add_fields(link, association, content) {
     var new_id = new Date().getTime();
@@ -22,16 +23,49 @@ function add_fields(link, association, content) {
     $(link).parent().before(content.replace(regexp, new_id));
 }
 
-function remove_fields(link) {
+function remove_fields(link, form) {
     $(link).prev("input[type=hidden]").val("1");
     //$(link).closest(".fields").remove();
-    $(link).closest(".fields").hide();
+    $(link).closest("."+form+"-fields").hide();
 }
 
 $(document).ready(function(){
 
-   $(function() {
+    $(function() {
         $( "#tabs" ).tabs();
     });
+
+    $(function() {
+        if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
+            setTimeout(autoSavePost, 1000);
+        }
+    });
+
+    function fadeMessage(){
+        $('#message').fadeOut('slow');//just a function to fade out the message
+    }
+
+    function autoSavePost() {
+        var story_id = document.getElementById('story_id').value
+        $.ajax({
+            type: "POST",
+            url: "/stories/auto_save?story_id=" + story_id,
+            data: $("#edit_story_"+story_id).serialize(),
+            dataType: "script",
+            success: function(data) {
+                $('#message').html("Data saved.").show();
+                setTimeout("$('#message').fadeOut('slow');",2000);
+                console.log(data);
+            },
+            error: function(data,status,error) {
+                console.log(error);
+                console.log(status);
+                console.log(data);
+                $('#message').html(error).show();
+                fadeMessage();
+            }
+        });
+        setTimeout(autoSavePost, 5000);
+    }
 
 });

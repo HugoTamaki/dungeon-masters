@@ -1,6 +1,9 @@
 Calabouco::Application.routes.draw do
 
-  resources :stories
+  resources :stories do
+#    put 'stories/auto_save', as: :auto_save_story_path
+    put 'auto_save', on: :collection
+  end
 
   devise_for :users
 
