@@ -35,9 +35,59 @@ $(document).ready(function(){
         $( "#tabs" ).tabs();
     });
 
+//    $(function() {
+//        if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
+//            setTimeout(autoSavePost, 1000);
+//        }
+//    });
+//
+//    function autoSavePost() {
+//        var story_id = document.getElementById('story_id').value
+//        $.ajax({
+//            type: "POST",
+//            url: "/stories/auto_save?story_id=" + story_id,
+//            data: $("#edit_story_"+story_id).serialize(),
+//            dataType: "script",
+//            success: function(data) {
+//                $('#message').html("Data saved.").show();
+//                setTimeout("$('#message').fadeOut('slow');",2000);
+//                console.log(data);
+//            },
+//            error: function(data,status,error) {
+//                console.log(error);
+//                console.log(status);
+//                console.log(data);
+//                $('#message').html(error).show();
+//                fadeMessage();
+//            }
+//        });
+//        setTimeout(autoSavePost, 5000);
+//    }
+
     $(function() {
         if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
-            setTimeout(autoSavePost, 1000);
+            $("#edit_story_"+document.getElementById('story_id').value+" input, textarea").change(function() {
+                var story_id = document.getElementById('story_id').value;
+                $.ajax({
+                    type: "POST",
+                    url: "/stories/auto_save?story_id=" + story_id,
+                    data: $("#edit_story_"+story_id).serialize(),
+                    dataType: "script",
+                    success: function(data) {
+                        $('#message').html("Data saved.").show();
+                        setTimeout("$('#message').fadeOut('slow');",2000);
+                        console.log(data);
+                    },
+                    error: function(data,status,error) {
+                        console.log(error);
+                        console.log(status);
+                        console.log(data);
+                        $('#message').html(error).show();
+                        fadeMessage();
+                    }
+                });
+
+            });
         }
     });
 
@@ -45,27 +95,5 @@ $(document).ready(function(){
         $('#message').fadeOut('slow');//just a function to fade out the message
     }
 
-    function autoSavePost() {
-        var story_id = document.getElementById('story_id').value
-        $.ajax({
-            type: "POST",
-            url: "/stories/auto_save?story_id=" + story_id,
-            data: $("#edit_story_"+story_id).serialize(),
-            dataType: "script",
-            success: function(data) {
-                $('#message').html("Data saved.").show();
-                setTimeout("$('#message').fadeOut('slow');",2000);
-                console.log(data);
-            },
-            error: function(data,status,error) {
-                console.log(error);
-                console.log(status);
-                console.log(data);
-                $('#message').html(error).show();
-                fadeMessage();
-            }
-        });
-        setTimeout(autoSavePost, 5000);
-    }
 
 });

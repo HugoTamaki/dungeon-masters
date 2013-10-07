@@ -61,7 +61,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if @story.save
-        format.html { redirect_to @story, notice: 'Story was successfully created.' }
+        format.html { redirect_to edit_story_path(@story), notice: 'Story was successfully created.' }
         format.json { render json: @story, status: :created, location: @story }
       else
         format.html { render action: "new" }
@@ -76,12 +76,22 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
 
     respond_to do |format|
-      if @story.update_attributes(params[:story])
-        format.html { redirect_to @story, notice: 'Story was successfully updated.' }
-        format.json { head :no_content }
+      if params[:commit] == "Save"
+        if @story.update_attributes(params[:story])
+          format.html { redirect_to edit_story_path(@story), notice: 'Story was successfully saved.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @story.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render action: "edit" }
-        format.json { render json: @story.errors, status: :unprocessable_entity }
+        if @story.update_attributes(params[:story])
+          format.html { redirect_to @story, notice: 'Story was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @story.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -98,16 +108,7 @@ class StoriesController < ApplicationController
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
-
-    #    respond_to do |format|
-    #        if @story.update_attributes(params[:story])
-    #          format.html
-    #          format.json { head :no_content }
-    #        else
-    #          format.html { render action: "edit" }
-    #          format.json { render json: @story.errors, status: :unprocessable_entity }
-    #        end
-    #    end
+    
   end
   
   # DELETE /stories/1
