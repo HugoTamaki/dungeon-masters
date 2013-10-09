@@ -16,24 +16,29 @@
   </ul>
   <div id="tabs-1">
     <% @chapters.each do |chapter| %>
-      <h3>Chapter <%= chapter.reference %></h3>
-      <p>
-        Content: <%= chapter.content %>
-      </p>
-      <p>
-        <%= image_tag chapter.image_url.to_s if chapter.image.present? %>
-      </p>
-      <% if chapter.decisions.present? %>
-        <h3>Decisions</h3>
-        <% chapter.decisions.each do |decision| %>
-          <p>
-            Destiny: <%= decision.destiny_num %>
-          </p>
-          <hr/>
+      <div class="chapter-fields">
+        <h3>Chapter <%= chapter.reference %></h3>
+        <p>
+          Content: <%= chapter.content %>
+        </p>
+        <p>
+          <%= image_tag chapter.image_url.to_s if chapter.image.present? %>
+        </p>
+        <% if chapter.decisions.present? %>
+          <div class="decision-fields">
+            <h3>Decisions</h3>
+            <% chapter.decisions.each do |decision| %>
+              <p>
+                Destiny: <%= decision.destiny_num %>
+              </p>
+              <hr/>
+            <% end %>
+          </div>
         <% end %>
-      <% end %>
+        <hr/>
+      </div><br/>
     <% end %>
-    <hr/>
+
   </div>
   <div id="tabs-2">
     <% @special_attributes.each do |special_attribute| %>

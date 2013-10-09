@@ -69,7 +69,7 @@ $(document).ready(function(){
             $("#edit_story_"+document.getElementById('story_id').value+" input, textarea").change(function() {
                 var story_id = document.getElementById('story_id').value;
                 $.ajax({
-                    type: "POST",
+                    type: "PUT",
                     url: "/stories/auto_save?story_id=" + story_id,
                     data: $("#edit_story_"+story_id).serialize(),
                     dataType: "script",

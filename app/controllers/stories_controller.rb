@@ -101,6 +101,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if @story.update_attributes(params[:story])
+        binding.pry
         format.html { render nothing: true}
         format.json { head :no_content }
       else
