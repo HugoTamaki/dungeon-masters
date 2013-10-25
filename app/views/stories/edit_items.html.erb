@@ -1,0 +1,13 @@
+<%= simple_form_for(@story) do |f| %>
+
+  <%= f.simple_fields_for :items, @items do |builder| %>
+    <%= render "items_fields", f: builder %>
+  <% end %>
+  <p>
+    <%= link_to_add_fields "Add items", f, :items, "items" %>
+  </p>
+
+  <%= f.submit "Edit Chapters", class: "btn btn-primary" %>
+  <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
+
+<% end %>

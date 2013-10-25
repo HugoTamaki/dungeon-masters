@@ -13,13 +13,14 @@
     <li><a href="#tabs-1">Chapters</a></li>
     <li><a href="#tabs-2">Special Attributes</a></li>
     <li><a href="#tabs-3">Items</a></li>
+    <li><a href="#tabs-4">Graph</a></li>
   </ul>
   <div id="tabs-1">
     <% @chapters.each do |chapter| %>
       <div class="chapter-fields">
         <h3>Chapter <%= chapter.reference %></h3>
         <p>
-          Content: <%= chapter.content %>
+          Content: <%= simple_format chapter.content %>
         </p>
         <p>
           <%= image_tag chapter.image_url.to_s if chapter.image.present? %>
@@ -45,8 +46,8 @@
       <p>
         Special Attribute: <%= special_attribute.name %>
       </p>
+      <hr/>
     <% end %>
-    <hr/>
   </div>
   <div id="tabs-3">
     <% @items.each do |item| %>
@@ -58,6 +59,9 @@
       </p>
     <% end %>
     <hr/>
+  </div>
+  <div id="tabs-4">
+    <%= render "graph" %>
   </div>
 </div>
 

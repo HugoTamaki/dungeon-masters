@@ -7,6 +7,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @stories.each do |story| %>
@@ -14,6 +15,7 @@
     <td><%= story.title %></td>
     <td><%= story.resume %></td>
     <td><%= link_to 'Show', story %></td>
+    <td><%= link_to 'Read', read_stories_path(id: story.id, reference: "1") %></td>
     <td><%= link_to 'Edit', edit_story_path(story) %></td>
     <td><%= link_to 'Destroy', story, confirm: 'Are you sure?', method: :delete %></td>
   </tr>

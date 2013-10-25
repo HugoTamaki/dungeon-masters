@@ -1,0 +1,23 @@
+<div clas="chapter">
+  <h3><%= @chapter.reference %></h3>
+  <p>
+    <%= image_tag @chapter.image_url.to_s if @chapter.image.present? %>
+  </p>
+  <p>
+    <%= simple_format @chapter.content %>
+  </p>
+  <div id="options">
+      <% @chapter.decisions.each do |decision| %>
+        <% button_opts = {reference: decision.destiny_num.to_s, :id => @story} %>
+        <%#= button_to "Chapter #{decision.destiny_num}",
+          read_stories_path(button_opts),
+          method: :get,
+          class: "btn btn-primary" %>
+    <p>
+      <%= link_to "Chapter #{decision.destiny_num}",
+                    read_stories_path(button_opts),
+                    class: "btn btn-primary"%>
+    </p>
+      <% end %>
+  </div>
+</div>

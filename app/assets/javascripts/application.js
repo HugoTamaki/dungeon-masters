@@ -32,7 +32,10 @@ function remove_fields(link, form) {
 $(document).ready(function(){
 
     $(function() {
-        $( "#tabs" ).tabs();
+        $( "#tabs" ).tabs().css({
+            'overflow': 'auto',
+            'min-width': '500px'
+        });
     });
 
 //    $(function() {
@@ -64,6 +67,7 @@ $(document).ready(function(){
 //        setTimeout(autoSavePost, 5000);
 //    }
 
+/*
     $(function() {
         if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
             $("#edit_story_"+document.getElementById('story_id').value+" input, textarea").change(function() {
@@ -94,6 +98,6 @@ $(document).ready(function(){
     function fadeMessage(){
         $('#message').fadeOut('slow');//just a function to fade out the message
     }
-
+*/
 
 });

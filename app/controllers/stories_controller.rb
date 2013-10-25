@@ -27,21 +27,21 @@ class StoriesController < ApplicationController
     end
   end
 
+  def read
+    story = Story.find(params[:id])
+    @story = story.id
+    @chapter = story.chapters.where(reference: params[:reference]).first
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @chapter }
+    end
+  end
+
   # GET /stories/new
   # GET /stories/new.json
   def new
     @story = Story.new
-    #    @story.chapters.build
-    @story.special_attributes.build
-    @story.items.build
-    chapter = @story.chapters.build
-    chapter.decisions.build
-    #    @story.chapters.decisions.build
-    #    3.times do
-    #      chapter = @story.chapters.build
-    #      special_attribute = @story.special_attributes.build
-    #      item = @story.items.build
-    #    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,6 +52,25 @@ class StoriesController < ApplicationController
   # GET /stories/1/edit
   def edit
     @story = Story.find(params[:id])
+    if @story.chapters.empty? and @story.special_attributes.empty? and @story.items.empty?
+      @story.special_attributes.build
+      @story.items.build
+      chapter = @story.chapters.build
+      chapter.decisions.build
+    end
+    @chapters = Chapter.by_story(params[:id])
+  end
+
+  def edit_items
+    @story = Story.find(params[:story_id])
+    @items = @story.items
+  end
+
+  def edit_special_attributes
+    
+    @story = Story.find(params[:story_id])
+    @spcial_attributes = @story.special_attributes
+
   end
 
   # POST /stories
@@ -76,22 +95,22 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
 
     respond_to do |format|
-      if params[:commit] == "Save"
-        if @story.update_attributes(params[:story])
+      if @story.update_attributes(params[:story])
+        if params[:commit] == "Save"
           format.html { redirect_to edit_story_path(@story), notice: 'Story was successfully saved.' }
-          format.json { head :no_content }
+        elsif params[:commit] == "Edit Special Attributes"
+          format.html { redirect_to story_edit_special_attributes_path(@story), notice: 'Data was successfully saved.' }
+        elsif params[:commit] == "Edit Items"
+          format.html { redirect_to story_edit_items_path(@story), notice: 'Data was successfully saved.' }
+        elsif params[:commit] == "Edit Chapters"
+          format.html { redirect_to edit_story_path(@story), notice: 'Data was successfully saved.' }
         else
-          format.html { render action: "edit" }
-          format.json { render json: @story.errors, status: :unprocessable_entity }
-        end
-      else
-        if @story.update_attributes(params[:story])
           format.html { redirect_to @story, notice: 'Story was successfully updated.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @story.errors, status: :unprocessable_entity }
         end
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
   end

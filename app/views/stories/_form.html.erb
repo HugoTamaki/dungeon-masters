@@ -4,6 +4,16 @@
   </p>
 </div>
 <%= simple_form_for(@story) do |f| %>
+  <div class="actions">
+    <% if params[:action] == "new" %>
+      <%= f.submit "Next", class: "btn btn-primary" %>
+    <% elsif params[:action] == "edit" %>
+      <%= f.submit "Finish Editing", class: "btn btn-primary" %>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+      <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
+      <%= f.submit "Edit Items", class: "btn btn-primary" %>
+    <% end %>
+  </div>
   <% if params[:action] == "new" %>
     <div class="field">
       <%= f.input :title %>
@@ -22,6 +32,7 @@
         <li><a href="#tabs-2">Special Attributes</a></li>
         <li><a href="#tabs-3">Items</a></li>
         <li><a href="#tabs-4">Story</a></li>
+        <li><a href="#tabs-5">Graph</a></li>
       </ul>
       <div id="tabs-1">
         <%= f.simple_fields_for :chapters do |builder| %>
@@ -57,6 +68,9 @@
           <%= f.input :resume, as: :text, input_html: { rows: 10, cols: 40 } %>
         </div>
       </div>
+      <div id="tabs-5">
+        <%= render "graph" %>
+      </div>
     </div><br/>
   <% end %>
 
@@ -66,6 +80,8 @@
     <% elsif params[:action] == "edit" %>
       <%= f.submit "Finish Editing", class: "btn btn-primary" %>
       <%= f.submit "Save", class: "btn btn-primary" %>
+      <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
+      <%= f.submit "Edit Items", class: "btn btn-primary" %>
     <% end %>
   </div>
 <% end %>
