@@ -3,17 +3,13 @@
   <%= @story.title %>
 </p>
 
-<p>
-  <b>Resume:</b>
-  <%= @story.resume %>
-</p>
-
 <div id="tabs">
   <ul>
     <li><a href="#tabs-1">Chapters</a></li>
     <li><a href="#tabs-2">Special Attributes</a></li>
     <li><a href="#tabs-3">Items</a></li>
-    <li><a href="#tabs-4">Graph</a></li>
+    <li><a href="#tabs-4">Story</a></li>
+    <li><a href="#tabs-5">Graph</a></li>
   </ul>
   <div id="tabs-1">
     <% @chapters.each do |chapter| %>
@@ -61,6 +57,17 @@
     <hr/>
   </div>
   <div id="tabs-4">
+    <p>
+      <b>Resume:</b>
+      <%= @story.resume %>
+    </p>
+
+    <p>
+      <b>Prelude:</b>
+      <%= simple_format @story.prelude %>
+    </p>
+  </div>
+  <div id="tabs-5">
     <%= render "graph" %>
   </div>
 </div>

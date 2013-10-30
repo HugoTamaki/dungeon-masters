@@ -4,6 +4,11 @@
     <%= f.input :reference %>
     <%= f.input :content, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
     <%= f.input :image %>
+    <% if f.object.image.blank? %>
+      No current image
+    <% else %>
+      Current image: <%= f.object.image.url.split("/").last %>
+    <% end %>
   </p>
   <div>
     <%= f.simple_fields_for :decisions do |builder| %>

@@ -32,9 +32,26 @@ function remove_fields(link, form) {
 $(document).ready(function(){
 
     $(function() {
-        $( "#tabs" ).tabs().css({
-            'overflow': 'auto',
-            'min-width': '500px'
+        var story_id = document.getElementById('story_id').value;
+        $("#tabs").tabs({
+            activate: function(event,ui) {
+                $.ajax({
+                   url: "update_tabs",
+                   type: "PUT",
+                   data: $("#edit_story_"+story_id).serialize(),
+                   dataType: "script",
+                   success: function() {
+                       $("#message").html("Data saved.").show();
+                       setTimeout("$('#message').fadeOut('slow');",2000);
+                       console.log("Saved.");
+                       $(this).tabs(); // verificar como faz pra re-renderizar (atualizar possivel select tag)
+                   },
+                   error: function() {
+                       $("#message").html("Data not saved");
+                       setTimeout("$('#message').fadeOut('slow');",2000);
+                   }
+                });
+            }
         });
     });
 
@@ -94,10 +111,11 @@ $(document).ready(function(){
             });
         }
     });
+*/
 
     function fadeMessage(){
         $('#message').fadeOut('slow');//just a function to fade out the message
     }
-*/
+
 
 });

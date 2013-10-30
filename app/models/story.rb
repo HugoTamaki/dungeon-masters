@@ -1,5 +1,11 @@
 class Story < ActiveRecord::Base
-  attr_accessible :resume, :title, :items_attributes, :chapters_attributes, :special_attributes_attributes, :user_id
+  attr_accessible :resume,
+                  :title,
+                  :prelude,
+                  :items_attributes,
+                  :chapters_attributes,
+                  :special_attributes_attributes,
+                  :user_id
 
   validates :title, presence: true
   validates :resume, presence: true

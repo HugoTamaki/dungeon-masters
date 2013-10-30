@@ -6,6 +6,8 @@ Calabouco::Application.routes.draw do
     put 'auto_save', on: :collection
     get 'edit_special_attributes', as: "edit_special_attributes"
     get 'edit_items'
+    get 'prelude'
+    put 'update_tabs'
   end
 
   devise_for :users

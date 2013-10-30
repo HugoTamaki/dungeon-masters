@@ -19,12 +19,16 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
     @items = @story.items
     @special_attributes = @story.special_attributes
-    @chapters = @story.chapters
+    @chapters = @story.chapters.includes(:decisions)
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @story }
     end
+  end
+
+  def prelude
+    @story = Story.find(params[:story_id])
   end
 
   def read
@@ -58,7 +62,8 @@ class StoriesController < ApplicationController
       chapter = @story.chapters.build
       chapter.decisions.build
     end
-    @chapters = Chapter.by_story(params[:id])
+    chapters = Chapter.by_story(params[:id])
+    @chapters = chapters.includes(:decisions)
   end
 
   def edit_items
@@ -84,6 +89,20 @@ class StoriesController < ApplicationController
         format.json { render json: @story, status: :created, location: @story }
       else
         format.html { render action: "new" }
+        format.json { render json: @story.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_tabs
+    @story = Story.find(params[:story_id].to_i)
+
+    respond_to do |format|
+      if @story.update_attributes(params[:story])
+        format.html { render nothing: true}
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end

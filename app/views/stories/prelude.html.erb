@@ -1,0 +1,10 @@
+<h3>Prelude</h3>
+
+<% unless @story.prelude.empty? %>
+  <%= simple_format @story.prelude %>
+<% end %>
+
+<% button_opts = {reference: "1", id: @story} %>
+<%= link_to "Chapter 1",
+                    read_stories_path(button_opts),
+                    class: "btn btn-primary"%>

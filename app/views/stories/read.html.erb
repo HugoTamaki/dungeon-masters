@@ -8,7 +8,7 @@
   </p>
   <div id="options">
       <% @chapter.decisions.each do |decision| %>
-        <% button_opts = {reference: decision.destiny_num.to_s, :id => @story} %>
+        <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
         <%#= button_to "Chapter #{decision.destiny_num}",
           read_stories_path(button_opts),
           method: :get,
