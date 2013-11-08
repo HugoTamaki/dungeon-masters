@@ -25,66 +25,147 @@ function add_fields(link, association, content) {
 
 function remove_fields(link, form) {
     $(link).prev("input[type=hidden]").val("1");
-    //$(link).closest(".fields").remove();
+    //$(link).closest("."+form+"-fields").remove();
     $(link).closest("."+form+"-fields").hide();
+}
+
+function validateFiles(inputFile) {
+    var maxExceededMessage = "This file exceeds the maximum allowed file size (300 KB)";
+    var extErrorMessage = "Only image file with extension: .jpg, .jpeg, .gif or .png is allowed";
+    var allowedExtension = ["jpg", "jpeg", "gif", "png"];
+
+    var extName;
+    var maxFileSize = $(inputFile).data('max-file-size');
+    var sizeExceeded = false;
+    var extError = false;
+
+    $.each(inputFile.files, function() {
+        if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {
+            sizeExceeded=true;
+        };
+        extName = this.name.split('.').pop();
+        if ($.inArray(extName, allowedExtension) == -1) {
+            extError=true;
+        };
+    });
+    if (sizeExceeded) {
+        window.alert(maxExceededMessage);
+        $(inputFile).val('');
+    };
+
+    if (extError) {
+        window.alert(extErrorMessage);
+        $(inputFile).val('');
+    };
 }
 
 $(document).ready(function(){
 
     $(function() {
-        var story_id = document.getElementById('story_id').value;
         $("#tabs").tabs({
-            activate: function(event,ui) {
-                $.ajax({
-                   url: "update_tabs",
-                   type: "PUT",
-                   data: $("#edit_story_"+story_id).serialize(),
-                   dataType: "script",
-                   success: function() {
-                       $("#message").html("Data saved.").show();
-                       setTimeout("$('#message').fadeOut('slow');",2000);
-                       console.log("Saved.");
-                       $(this).tabs(); // verificar como faz pra re-renderizar (atualizar possivel select tag)
-                   },
-                   error: function() {
-                       $("#message").html("Data not saved");
-                       setTimeout("$('#message').fadeOut('slow');",2000);
-                   }
-                });
-            }
-        });
+
+            });
     });
 
-//    $(function() {
-//        if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
-//            setTimeout(autoSavePost, 1000);
-//        }
-//    });
-//
-//    function autoSavePost() {
-//        var story_id = document.getElementById('story_id').value
-//        $.ajax({
-//            type: "POST",
-//            url: "/stories/auto_save?story_id=" + story_id,
-//            data: $("#edit_story_"+story_id).serialize(),
-//            dataType: "script",
-//            success: function(data) {
-//                $('#message').html("Data saved.").show();
-//                setTimeout("$('#message').fadeOut('slow');",2000);
-//                console.log(data);
-//            },
-//            error: function(data,status,error) {
-//                console.log(error);
-//                console.log(status);
-//                console.log(data);
-//                $('#message').html(error).show();
-//                fadeMessage();
-//            }
-//        });
-//        setTimeout(autoSavePost, 5000);
-//    }
+    $(document).on("blur", ".chapter-reference", function(){
+       var ref = $(this).val();
+       $(this).parent().parent().parent().prev().html("");
+       $(this).parent().parent().parent().prev().html("<h3>Chapter "+ref+"</h3>");
+    });
 
-/*
+
+    
+    $(document).on('click', '.accordionButton', function(){
+      //REMOVE THE ON CLASS FROM ALL BUTTONS
+      $('.accordionButton').removeClass('on');
+      //NO MATTER WHAT WE CLOSE ALL OPEN SLIDES
+      $('.accordionContent').slideUp('normal');
+      //IF THE NEXT SLIDE WASN'T OPEN THEN OPEN IT
+      if($(this).next().is(':hidden') == true) {
+        //ADD THE ON CLASS TO THE BUTTON
+        $(this).addClass('on');
+        //OPEN THE SLIDE
+        $(this).next().slideDown('normal');
+      }
+    });
+
+    /*** REMOVE IF MOUSEOVER IS NOT REQUIRED ***/
+    //ADDS THE .OVER CLASS FROM THE STYLESHEET ON MOUSEOVER
+
+    $('.accordionButton').mouseover(function() {
+      $(this).addClass('over');
+      //ON MOUSEOUT REMOVE THE OVER CLASS
+    }).mouseout(function() {
+      $(this).removeClass('over');
+    });
+
+    /*** END REMOVE IF MOUSEOVER IS NOT REQUIRED ***/
+    /********************************************************************************************************************
+    CLOSES ALL S ON PAGE LOAD
+    ********************************************************************************************************************/
+    $('.accordionContent').hide();
+
+
+    //    $(function() {
+    //
+    //        var story_id = document.getElementById('story_id').value;
+    //        $("#tabs").tabs({
+    //            activate: function(event,ui) {
+    //                $.ajax({
+    //                    url: "update_tabs",
+    //                    type: "PUT",
+    //                    data: $("#edit_story_"+story_id).serialize(),
+    //                    dataType: "script",
+    //                    success: function() {
+    //                        $("#message").html("Data saved.").show();
+    //                        setTimeout("$('#message').fadeOut('slow');",2000);
+    //                        console.log("Saved.");
+    //                        $(this).tabs("refresh"); // verificar como faz pra re-renderizar (atualizar possivel select tag)
+    //                    },
+    //                    error: function() {
+    //                        $("#message").html("Data not saved");
+    //                        setTimeout("$('#message').fadeOut('slow');",2000);
+    //                    }
+    //                });
+    //            }
+    //        });
+    //    });
+
+    $(function() {
+        $( document ).tooltip();
+    });
+
+
+    //    $(function() {
+    //        if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
+    //            setTimeout(autoSavePost, 1000);
+    //        }
+    //    });
+    //
+    //    function autoSavePost() {
+    //        var story_id = document.getElementById('story_id').value
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/stories/auto_save?story_id=" + story_id,
+    //            data: $("#edit_story_"+story_id).serialize(),
+    //            dataType: "script",
+    //            success: function(data) {
+    //                $('#message').html("Data saved.").show();
+    //                setTimeout("$('#message').fadeOut('slow');",2000);
+    //                console.log(data);
+    //            },
+    //            error: function(data,status,error) {
+    //                console.log(error);
+    //                console.log(status);
+    //                console.log(data);
+    //                $('#message').html(error).show();
+    //                fadeMessage();
+    //            }
+    //        });
+    //        setTimeout(autoSavePost, 5000);
+    //    }
+
+    /*
     $(function() {
         if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
             $("#edit_story_"+document.getElementById('story_id').value+" input, textarea").change(function() {

@@ -1,9 +1,14 @@
 <div class="chapter-fields">
-  <h3>Chapter</h3>
+  <div class="accordionButton">
+    <h3>Chapter <%= f.object.reference %></h3>
+  </div>
+  <div class="accordionContent">
   <p>
-    <%= f.input :reference %>
+    <%= f.input :reference, input_html: {
+                                  title: "Links chapters to each other. The first chapter must have reference '1'",
+                                  class: "chapter-reference"} %>
     <%= f.input :content, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
-    <%= f.input :image %>
+    <%= f.input :image, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
     <% if f.object.image.blank? %>
       No current image
     <% else %>
@@ -17,5 +22,6 @@
     <%= link_to_add_fields "Add decisions", f, :decisions, "decisions" %>
   </div>
   <p><%= link_to_remove_fields "Remove chapter", f, "chapter" %></p>
+  </div>
 </div>
 <br/>

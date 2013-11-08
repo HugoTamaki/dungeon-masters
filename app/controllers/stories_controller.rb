@@ -64,20 +64,78 @@ class StoriesController < ApplicationController
     end
     chapters = Chapter.by_story(params[:id])
     @chapters = chapters.includes(:decisions)
+
+    ### teste para preparar json pra grafos, refresh de tab graphs ###
+#    references = []
+#    chapters_with_decisions = {}
+#    @chapters.each do |c|
+#      references << c.reference
+#      chapters_with_decisions["chapter #{c.reference}"] = nil
+#    end
+#    chapters_with_decisions["references"] = references
+#
+#    @chapters.each do |c|
+#      destinies = []
+#      c.decisions.each do |d|
+#        if Chapter.exist(d.destiny_num,@story.id)
+#          destinies << d.destiny_num
+#        end
+#      end
+#      chapters_with_decisions["chapter #{c.reference}"] = destinies
+#    end
+
   end
 
-  def edit_items
-    @story = Story.find(params[:story_id])
-    @items = @story.items
+  def graph_json
+
+    chapters_of_story = Chapter.by_story(params[:id])
+    chapters = chapters_of_story.includes(:decisions)
+
+    references = []
+    chapters_with_decisions = {}
+    chapters.each do |c|
+      references << c.reference
+#      chapters_with_decisions["chapter #{c.reference}"] = nil
+    end
+
+    chapters_with_decisions["references"] = references
+    destines = []
+
+    chapters.each do |c|
+      aux = []
+      aux << c.reference
+      c.decisions.each do |d|
+        if Chapter.exist(d.destiny_num,params[:id])
+          aux << d.destiny_num
+        end
+      end
+      destines << aux
+    end
+
+    chapters_with_decisions["chapter_destinies"] = destines
+
+    duplicates = []
+    chapters_with_decisions["chapter_destinies"].each do |decisions|
+      duplicates << decisions.select {|element| decisions.count(element) > 1}
+    end
+
+    chapters_with_decisions["valid"] = []
+    duplicates.each do |duplicate|
+      if duplicate.empty?
+        chapters_with_decisions["valid"] << true
+      else
+        chapters_with_decisions["valid"] << false
+      end
+    end
+
+    @chapters = chapters_with_decisions
+
+    respond_to do |format|
+      format.json { render json: @chapters.to_json }
+    end
+
   end
-
-  def edit_special_attributes
-    
-    @story = Story.find(params[:story_id])
-    @spcial_attributes = @story.special_attributes
-
-  end
-
+  
   # POST /stories
   # POST /stories.json
   def create
@@ -117,12 +175,6 @@ class StoriesController < ApplicationController
       if @story.update_attributes(params[:story])
         if params[:commit] == "Save"
           format.html { redirect_to edit_story_path(@story), notice: 'Story was successfully saved.' }
-        elsif params[:commit] == "Edit Special Attributes"
-          format.html { redirect_to story_edit_special_attributes_path(@story), notice: 'Data was successfully saved.' }
-        elsif params[:commit] == "Edit Items"
-          format.html { redirect_to story_edit_items_path(@story), notice: 'Data was successfully saved.' }
-        elsif params[:commit] == "Edit Chapters"
-          format.html { redirect_to edit_story_path(@story), notice: 'Data was successfully saved.' }
         else
           format.html { redirect_to @story, notice: 'Story was successfully updated.' }
         end

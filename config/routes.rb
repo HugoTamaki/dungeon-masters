@@ -3,11 +3,10 @@ Calabouco::Application.routes.draw do
   resources :stories do
 #    put 'stories/auto_save', as: :auto_save_story_path
     get 'read', on: :collection
-    put 'auto_save', on: :collection
-    get 'edit_special_attributes', as: "edit_special_attributes"
-    get 'edit_items'
+#    put 'auto_save', on: :collection
     get 'prelude'
     put 'update_tabs'
+    get 'graph_json'
   end
 
   devise_for :users
