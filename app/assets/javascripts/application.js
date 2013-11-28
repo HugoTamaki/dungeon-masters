@@ -42,11 +42,11 @@ function validateFiles(inputFile) {
     $.each(inputFile.files, function() {
         if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {
             sizeExceeded=true;
-        };
+        }
         extName = this.name.split('.').pop();
         if ($.inArray(extName, allowedExtension) == -1) {
             extError=true;
-        };
+        }
     });
     if (sizeExceeded) {
         window.alert(maxExceededMessage);
@@ -56,7 +56,7 @@ function validateFiles(inputFile) {
     if (extError) {
         window.alert(extErrorMessage);
         $(inputFile).val('');
-    };
+    }
 }
 
 $(document).ready(function(){
@@ -74,7 +74,7 @@ $(document).ready(function(){
     });
 
 
-    
+
     $(document).on('click', '.accordionButton', function(){
       //REMOVE THE ON CLASS FROM ALL BUTTONS
       $('.accordionButton').removeClass('on');
@@ -106,93 +106,10 @@ $(document).ready(function(){
     $('.accordionContent').hide();
 
 
-    //    $(function() {
-    //
-    //        var story_id = document.getElementById('story_id').value;
-    //        $("#tabs").tabs({
-    //            activate: function(event,ui) {
-    //                $.ajax({
-    //                    url: "update_tabs",
-    //                    type: "PUT",
-    //                    data: $("#edit_story_"+story_id).serialize(),
-    //                    dataType: "script",
-    //                    success: function() {
-    //                        $("#message").html("Data saved.").show();
-    //                        setTimeout("$('#message').fadeOut('slow');",2000);
-    //                        console.log("Saved.");
-    //                        $(this).tabs("refresh"); // verificar como faz pra re-renderizar (atualizar possivel select tag)
-    //                    },
-    //                    error: function() {
-    //                        $("#message").html("Data not saved");
-    //                        setTimeout("$('#message').fadeOut('slow');",2000);
-    //                    }
-    //                });
-    //            }
-    //        });
-    //    });
 
     $(function() {
         $( document ).tooltip();
     });
-
-
-    //    $(function() {
-    //        if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
-    //            setTimeout(autoSavePost, 1000);
-    //        }
-    //    });
-    //
-    //    function autoSavePost() {
-    //        var story_id = document.getElementById('story_id').value
-    //        $.ajax({
-    //            type: "POST",
-    //            url: "/stories/auto_save?story_id=" + story_id,
-    //            data: $("#edit_story_"+story_id).serialize(),
-    //            dataType: "script",
-    //            success: function(data) {
-    //                $('#message').html("Data saved.").show();
-    //                setTimeout("$('#message').fadeOut('slow');",2000);
-    //                console.log(data);
-    //            },
-    //            error: function(data,status,error) {
-    //                console.log(error);
-    //                console.log(status);
-    //                console.log(data);
-    //                $('#message').html(error).show();
-    //                fadeMessage();
-    //            }
-    //        });
-    //        setTimeout(autoSavePost, 5000);
-    //    }
-
-    /*
-    $(function() {
-        if ($("#edit_story_"+document.getElementById('story_id').value).length > 0) {
-            $("#edit_story_"+document.getElementById('story_id').value+" input, textarea").change(function() {
-                var story_id = document.getElementById('story_id').value;
-                $.ajax({
-                    type: "PUT",
-                    url: "/stories/auto_save?story_id=" + story_id,
-                    data: $("#edit_story_"+story_id).serialize(),
-                    dataType: "script",
-                    success: function(data) {
-                        $('#message').html("Data saved.").show();
-                        setTimeout("$('#message').fadeOut('slow');",2000);
-                        console.log(data);
-                    },
-                    error: function(data,status,error) {
-                        console.log(error);
-                        console.log(status);
-                        console.log(data);
-                        $('#message').html(error).show();
-                        fadeMessage();
-                    }
-                });
-
-            });
-        }
-    });
-*/
 
     function fadeMessage(){
         $('#message').fadeOut('slow');//just a function to fade out the message

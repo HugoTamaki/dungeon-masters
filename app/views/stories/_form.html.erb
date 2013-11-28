@@ -7,6 +7,8 @@
   <div class="actions">
     <% if params[:action] == "edit" %>
       <%= f.submit "Finish Editing", class: "btn btn-primary" %>
+      <%= f.submit "Edit Items", class: "btn btn-primary" %>
+      <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
       <%= f.submit "Save", class: "btn btn-primary" %>
     <% end %>
   </div>
@@ -34,7 +36,7 @@
         <li><a href="#tabs-5">Graph</a></li>
       </ul>
       <div id="tabs-1">
-        <div id="wrapper"> <!-- wrapper para accordion -->
+        <!--<div id="wrapper">--> <!-- wrapper para accordion -->
           <%= f.simple_fields_for :chapters do |builder| %>
             <%= render "chapters_fields", f: builder %>
           <% end %>
@@ -42,7 +44,7 @@
             <%= link_to_add_fields "Add chapters", f, :chapters, "chapters" %>
           </p>
           <br/>
-        </div>
+        <!--</div>-->
       </div>
       <div id="tabs-2">
         <%= f.simple_fields_for :special_attributes do |builder| %>

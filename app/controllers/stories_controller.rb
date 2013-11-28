@@ -64,26 +64,14 @@ class StoriesController < ApplicationController
     end
     chapters = Chapter.by_story(params[:id])
     @chapters = chapters.includes(:decisions)
+  end
 
-    ### teste para preparar json pra grafos, refresh de tab graphs ###
-#    references = []
-#    chapters_with_decisions = {}
-#    @chapters.each do |c|
-#      references << c.reference
-#      chapters_with_decisions["chapter #{c.reference}"] = nil
-#    end
-#    chapters_with_decisions["references"] = references
-#
-#    @chapters.each do |c|
-#      destinies = []
-#      c.decisions.each do |d|
-#        if Chapter.exist(d.destiny_num,@story.id)
-#          destinies << d.destiny_num
-#        end
-#      end
-#      chapters_with_decisions["chapter #{c.reference}"] = destinies
-#    end
+  def edit_items
+    @story = Story.find(params[:story_id])
+  end
 
+  def edit_special_attributes
+    @story = Story.find(params[:story_id])
   end
 
   def graph_json
@@ -154,6 +142,7 @@ class StoriesController < ApplicationController
 
   def update_tabs
     @story = Story.find(params[:story_id].to_i)
+    binding.pry
 
     respond_to do |format|
       if @story.update_attributes(params[:story])
@@ -174,7 +163,13 @@ class StoriesController < ApplicationController
     respond_to do |format|
       if @story.update_attributes(params[:story])
         if params[:commit] == "Save"
-          format.html { redirect_to edit_story_path(@story), notice: 'Story was successfully saved.' }
+          format.html { redirect_to :back, notice: 'Story was successfully saved.' }
+        elsif params[:commit] == "Edit Items"
+          format.html { redirect_to story_edit_items_path(@story), notice: 'Data saved' }
+        elsif params[:commit] == "Edit Special Attributes"
+          format.html { redirect_to story_edit_special_attributes_path(@story), notice: 'Data saved' }
+        elsif params[:commit] == "Edit Chapters"
+          format.html { redirect_to edit_story_path(@story), notice: 'Data saved' }
         else
           format.html { redirect_to @story, notice: 'Story was successfully updated.' }
         end

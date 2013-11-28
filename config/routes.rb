@@ -7,6 +7,8 @@ Calabouco::Application.routes.draw do
     get 'prelude'
     put 'update_tabs'
     get 'graph_json'
+    get 'edit_special_attributes'
+    get 'edit_items'
   end
 
   devise_for :users

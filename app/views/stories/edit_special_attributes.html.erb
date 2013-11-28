@@ -1,14 +1,18 @@
+<h3>Edit special attributes</h3>
 
 <%= simple_form_for(@story) do |f| %>
-
-  <%= f.simple_fields_for :special_attributes, @special_attributes do |builder| %>
+<div class="actions">
+  <%= f.submit "Finish Editing", class: "btn btn-primary" %>
+  <%= f.submit "Edit Chapters", class: "btn btn-primary" %>
+  <%= f.submit "Edit Items", class: "btn btn-primary" %>
+  <%= f.submit "Save", class: "btn btn-primary" %>
+</div>
+<div>
+  <%= f.simple_fields_for :special_attributes do |builder| %>
     <%= render "special_attributes_fields", f: builder %>
   <% end %>
   <p>
     <%= link_to_add_fields "Add Special Attributes", f, :special_attributes, "special_attributes" %>
   </p>
-
-  <%= f.submit "Edit Chapters", class: "btn btn-primary" %>
-  <%= f.submit "Edit Items", class: "btn btn-primary" %>
-
+</div>
 <% end %>
