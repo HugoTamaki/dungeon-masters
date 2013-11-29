@@ -74,6 +74,10 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:story_id])
   end
 
+  def graph
+    @story = Story.find(params[:story_id])
+  end
+
   def graph_json
 
     chapters_of_story = Chapter.by_story(params[:id])
@@ -170,6 +174,8 @@ class StoriesController < ApplicationController
           format.html { redirect_to story_edit_special_attributes_path(@story), notice: 'Data saved' }
         elsif params[:commit] == "Edit Chapters"
           format.html { redirect_to edit_story_path(@story), notice: 'Data saved' }
+        elsif params[:commit] == "Graph"
+          format.html { redirect_to story_graph_path(@story), notice: 'Data saved.' }
         else
           format.html { redirect_to @story, notice: 'Story was successfully updated.' }
         end
