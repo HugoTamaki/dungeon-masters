@@ -37,6 +37,7 @@ gem "pry"
 gem "awesome_print"
 gem "cancan"
 gem "carrierwave", '~> 0.9.0'
+gem "rmagick"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -79,48 +79,22 @@ class StoriesController < ApplicationController
   end
 
   def graph_json
-
     chapters_of_story = Chapter.by_story(params[:id])
     chapters = chapters_of_story.includes(:decisions)
 
-    references = []
-    chapters_with_decisions = {}
-    chapters.each do |c|
-      references << c.reference
-#      chapters_with_decisions["chapter #{c.reference}"] = nil
+    @chapters = Story.graph(chapters,params[:id])
+
+    respond_to do |format|
+      format.json { render json: @chapters.to_json }
     end
 
-    chapters_with_decisions["references"] = references
-    destines = []
+  end
 
-    chapters.each do |c|
-      aux = []
-      aux << c.reference
-      c.decisions.each do |d|
-        if Chapter.exist(d.destiny_num,params[:id])
-          aux << d.destiny_num
-        end
-      end
-      destines << aux
-    end
+  def graph_json_show
+    chapters_of_story = Chapter.by_story(params[:id])
+    chapters = chapters_of_story.includes(:decisions)
 
-    chapters_with_decisions["chapter_destinies"] = destines
-
-    duplicates = []
-    chapters_with_decisions["chapter_destinies"].each do |decisions|
-      duplicates << decisions.select {|element| decisions.count(element) > 1}
-    end
-
-    chapters_with_decisions["valid"] = []
-    duplicates.each do |duplicate|
-      if duplicate.empty?
-        chapters_with_decisions["valid"] << true
-      else
-        chapters_with_decisions["valid"] << false
-      end
-    end
-
-    @chapters = chapters_with_decisions
+    @chapters = Story.graph(chapters,params[:id])
 
     respond_to do |format|
       format.json { render json: @chapters.to_json }

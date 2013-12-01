@@ -12,7 +12,7 @@
     <% if f.object.image.blank? %>
       No current image
     <% else %>
-      Current image: <%= f.object.image.url.split("/").last %>
+      Current image: <%= image_tag f.object.image_url(:thumb).to_s %>
     <% end %>
   </p>
   <div>

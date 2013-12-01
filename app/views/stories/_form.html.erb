@@ -31,13 +31,10 @@
     <div id="tabs">
       <ul>
         <li><a href="#tabs-1">Chapters</a></li>
-        <li><a href="#tabs-2">Special Attributes</a></li>
-        <li><a href="#tabs-3">Items</a></li>
-        <li><a href="#tabs-4">Story</a></li>
-        <li><a href="#tabs-5">Graph</a></li>
+        <li><a href="#tabs-2">Story</a></li>
       </ul>
       <div id="tabs-1">
-        <!--<div id="wrapper">--> <!-- wrapper para accordion -->
+        <div id="wrapper"> <!-- wrapper para accordion -->
           <%= f.simple_fields_for :chapters do |builder| %>
             <%= render "chapters_fields", f: builder %>
           <% end %>
@@ -45,25 +42,9 @@
             <%= link_to_add_fields "Add chapters", f, :chapters, "chapters" %>
           </p>
           <br/>
-        <!--</div>-->
+        </div>
       </div>
       <div id="tabs-2">
-        <%= f.simple_fields_for :special_attributes do |builder| %>
-          <%= render "special_attributes_fields", f: builder %>
-        <% end %>
-        <p>
-          <%= link_to_add_fields "Add Special Attributes", f, :special_attributes, "special_attributes" %>
-        </p>
-      </div>
-      <div id="tabs-3">
-        <%= f.simple_fields_for :items do |builder| %>
-          <%= render "items_fields", f: builder %>
-        <% end %>
-        <p>
-          <%= link_to_add_fields "Add items", f, :items, "items" %>
-        </p>
-      </div>
-      <div id="tabs-4">
         <div class="field">
           <%= f.input :title %>
           <%= f.hidden_field :user_id, value: current_user.id %>
@@ -74,9 +55,6 @@
         <div class="field">
           <%= f.input :prelude, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
         </div>
-      </div>
-      <div id="tabs-5">
-        <%= render "graph" %>
       </div>
     </div><br/>
   <% end %>
