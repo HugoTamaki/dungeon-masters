@@ -60,5 +60,13 @@ class Story < ActiveRecord::Base
 
     chapters_with_decisions
   end
+
+  def self.search(search,user_id)
+    if search
+      find(:all, conditions: ['title LIKE ?', "%#{search}%"])
+    else
+      by_user(user_id)
+    end
+  end
   
 end

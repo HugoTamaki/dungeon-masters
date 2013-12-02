@@ -61,8 +61,13 @@
           <a class="brand" href="#">Calabouco</a>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Stories", stories_path  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
+              <li><%= link_to "My Stories", stories_path  %></li>
+              <li>
+                <%= form_tag stories_path, method: 'get' do %>
+                  <%= text_field_tag :search, params[:search], class: "navbar-search" %>&nbsp;
+                  <%= submit_tag "Search", class: "btn btn-primary", name: nil %>
+                <% end %>
+              </li>
               <li><%= link_to "Link3", "/path3"  %></li>
             </ul>
           </div><!--/.nav-collapse -->

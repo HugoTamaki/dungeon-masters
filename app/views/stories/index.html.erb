@@ -1,6 +1,9 @@
 <h1>Listing stories</h1>
 
-<table>
+<% if @stories.empty? %>
+  <p>No result.</p>
+<% else %>
+  <table>
   <tr>
     <th>Title</th>
     <th>Resume</th>
@@ -9,16 +12,16 @@
     <th></th>
     <th></th>
   </tr>
-
-<% @stories.each do |story| %>
-  <tr>
-    <td><%= story.title %></td>
-    <td><%= story.resume %></td>
-    <td><%= link_to 'Show', story %></td>
-    <td><%= link_to 'Read', story_prelude_path(story) %></td>
-    <td><%= link_to 'Edit', edit_story_path(story) %></td>
-    <td><%= link_to 'Destroy', story, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+  <% @stories.each do |story| %>
+    <tr>
+      <td><%= story.title %></td>
+      <td><%= story.resume %></td>
+      <td><%= link_to 'Show', story if params[:search].nil? %></td>
+      <td><%= link_to 'Read', story_prelude_path(story) %></td>
+      <td><%= link_to 'Edit', edit_story_path(story) if params[:search].nil? %></td>
+      <td><%= link_to 'Destroy', story, confirm: 'Are you sure?', method: :delete if params[:search].nil? %></td>
+    </tr>
+  <% end %>
 <% end %>
 </table>
 

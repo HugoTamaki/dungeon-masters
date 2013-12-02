@@ -5,7 +5,7 @@ class StoriesController < ApplicationController
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.by_user(current_user.id)
+    @stories = Story.search(params[:search],current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
