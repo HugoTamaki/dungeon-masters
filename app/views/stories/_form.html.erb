@@ -19,6 +19,9 @@
       <%= f.hidden_field :user_id, value: current_user.id %>
     </div>
     <div class="field">
+      <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
+    </div>
+    <div class="field">
       <%= f.input :resume, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
     </div>
     <div class="field">
@@ -49,6 +52,14 @@
           <%= f.input :title %>
           <%= f.hidden_field :user_id, value: current_user.id %>
         </div>
+        <div class="field">
+          <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
+        </div>
+        <% if f.object.cover.blank? %>
+          No current image
+        <% else %>
+          Current image: <%= image_tag f.object.cover_url(:thumb_cover).to_s %>
+        <% end %>
         <div class="field">
           <%= f.input :resume, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
         </div>

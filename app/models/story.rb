@@ -1,14 +1,18 @@
 class Story < ActiveRecord::Base
   attr_accessible :resume,
-    :title,
-    :prelude,
-    :items_attributes,
-    :chapters_attributes,
-    :special_attributes_attributes,
-    :user_id
+                  :title,
+                  :prelude,
+                  :items_attributes,
+                  :chapters_attributes,
+                  :special_attributes_attributes,
+                  :user_id,
+                  :cover
+
+  mount_uploader :cover, ImageUploader
 
   validates :title, presence: true
   validates :resume, presence: true
+  validate :image_size_validation
 
   belongs_to :user
   has_many :chapters, dependent: :destroy
@@ -68,5 +72,8 @@ class Story < ActiveRecord::Base
       by_user(user_id)
     end
   end
-  
+
+  def image_size_validation
+    flash[:alert] << "should be less than 300KB" if cover.size > 300.kilobytes
+  end
 end

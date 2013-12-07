@@ -1,29 +1,34 @@
-<h1>Listing stories</h1>
+<h1>Stories</h1>
 
-<% if @stories.empty? %>
-  <p>No stories.</p>
-<% else %>
-  <table>
-  <tr>
-    <th>Title</th>
-    <th>Resume</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-  <% @stories.each do |story| %>
-    <tr>
-      <td><%= story.title %></td>
-      <td><%= story.resume %></td>
-      <td><%= link_to 'Show', story if params[:search].nil? %></td>
-      <td><%= link_to 'Read', story_prelude_path(story) %></td>
-      <td><%= link_to 'Edit', edit_story_path(story) if params[:search].nil? %></td>
-      <td><%= link_to 'Destroy', story, confirm: 'Are you sure?', method: :delete if params[:search].nil? %></td>
-    </tr>
+<div class="stories">
+  <% if @stories.empty? %>
+    <p>No stories.</p>
+  <% else %>
+
+    <% @stories.each do |story| %>
+
+      <div class="story_div">
+        <h3><%= story.title %></h3>
+        <div class="image">
+          <%= image_tag story.cover_url(:index_cover).to_s %>
+        </div>
+        <div class="prelude">
+          <p>
+            <%= simple_format story.prelude %>
+          </p>
+        </div>
+      </div>
+      <div class="options">
+        <p>
+          <%= link_to 'Show', story if params[:search].nil? %> /
+          <%= link_to 'Read', story_prelude_path(story) %> /
+          <%= link_to 'Edit', edit_story_path(story) if params[:search].nil? %> /
+          <%= link_to 'Destroy', story, confirm: 'Are you sure?', method: :delete if params[:search].nil? %>
+        </p>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
-</table>
+</div>
 
 <br />
 

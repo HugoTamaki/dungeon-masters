@@ -32,9 +32,8 @@ class StoriesController < ApplicationController
   end
 
   def read
-    story = Story.find(params[:id])
-    @story = story.id
-    @chapter = story.chapters.where(reference: params[:reference]).first
+    @story = Story.find(params[:id])
+    @chapter = @story.chapters.where(reference: params[:reference]).first
 
     respond_to do |format|
       format.html # show.html.erb

@@ -7,4 +7,4 @@
 <% button_opts = {reference: "1", id: @story} %>
 <%= link_to "Chapter 1",
                     read_stories_path(button_opts),
-                    class: "btn btn-primary"%>
+                    class: "btn btn-primary" unless @story.chapters.where(reference: "1").empty? %>

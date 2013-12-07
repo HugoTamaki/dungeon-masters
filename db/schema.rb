@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131206091220) do
+ActiveRecord::Schema.define(:version => 20131207092127) do
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20131206091220) do
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
     t.text     "prelude"
+    t.string   "cover"
     t.index ["user_id"], :name => "index_stories_on_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_stories_user_id"
   end
