@@ -46,11 +46,11 @@
         <div class="container">
           <p class="navbar-text pull-right">
             <% if user_signed_in? %>
-              Logado como <strong><%= current_user.email %></strong>.
-              <%= link_to 'Editar perfil', edit_user_registration_path, :class => 'navbar-link' %> |
-              <%= link_to "Sair", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+              Signed as <strong><%= current_user.name %></strong>.
+              <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+              <%= link_to "Sign out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
             <% else %>
-              <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+              <%= link_to "Sign in", new_user_session_path, :class => 'navbar-link'  %>
             <% end %>
           </p>
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -81,17 +81,6 @@
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <h3>Sidebar</h3>
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
       </div><!--/row-->
 
       <footer>
