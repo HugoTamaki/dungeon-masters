@@ -1,32 +1,41 @@
-<div clas="chapter">
-  <h3><%= @chapter.reference %></h3>
-  <p>
-    <%= image_tag @chapter.image_url.to_s if @chapter.image.present? %>
-  </p>
-  <p>
-    <%= simple_format @chapter.content %>
-  </p>
-  <% if @chapter.monsters.present? %>
-  <hr/>
-    <% @chapter.monsters.each do |monster| %>
-      <p>
-        Monster: <%= monster.name %>
-      </p>
-      <p>
-        Skill: <span id="<%= monster.name %>_skill"><%= monster.skill %></span>
-      </p>
-      <p>
-        Energy: <span id="<%= monster.name %>_energy"><%= monster.energy %></span>
-      </p>
-      <hr/>
-    <% end %>
-  <% end %>
-  <% @chapter.decisions.each do |decision| %>
-    <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
+<div class="content">
+  <div class="chapter">
+    <h3><%= @chapter.reference %></h3>
     <p>
-      <%= link_to "Chapter #{decision.destiny_num}",
-        read_stories_path(button_opts),
-        class: "btn btn-primary" unless Chapter.by_story(@story).where(reference: "#{decision.destiny_num}").empty? %>
+      <%= image_tag @chapter.image_url.to_s if @chapter.image.present? %>
     </p>
-  <% end %>
+    <p>
+      <%= simple_format @chapter.content %>
+    </p>
+    <% if @chapter.monsters.present? %>
+    <hr/>
+      <% @chapter.monsters.each do |monster| %>
+        <p>
+          Monster: <%= monster.name %>
+        </p>
+        <p>
+          Skill: <span id="<%= monster.name %>_skill"><%= monster.skill %></span>
+        </p>
+        <p>
+          Energy: <span id="<%= monster.name %>_energy"><%= monster.energy %></span>
+        </p>
+        <hr/>
+      <% end %>
+    <% end %>
+    <% @chapter.decisions.each do |decision| %>
+      <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
+      <p>
+        <%= link_to "Chapter #{decision.destiny_num}",
+          read_stories_path(button_opts),
+          class: "btn btn-primary" unless Chapter.by_story(@story).where(reference: "#{decision.destiny_num}").empty? %>
+      </p>
+    <% end %>
   </div>
+  <div class="adventurer">
+    <h3>Adventurer sheet</h3>
+    <p>Skill: </p>
+    <p>Energy: </p>
+    <p>Luck: </p>
+  </div>
+</div>
+
