@@ -5,6 +5,7 @@ class Story < ActiveRecord::Base
                   :items_attributes,
                   :chapters_attributes,
                   :special_attributes_attributes,
+                  :monsters_attributes,
                   :user_id,
                   :cover
 
@@ -18,9 +19,11 @@ class Story < ActiveRecord::Base
   has_many :chapters, dependent: :destroy
   has_many :items, dependent: :destroy
   has_many :special_attributes, dependent: :destroy
+  has_many :monsters, dependent: :destroy
   accepts_nested_attributes_for :chapters, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :special_attributes, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :monsters, reject_if: :all_blank, allow_destroy: true
 
   scope :by_user, lambda {|user_id| where(user_id: user_id)}
 
@@ -67,7 +70,7 @@ class Story < ActiveRecord::Base
 
   def self.search(search,user_id)
     if search
-      find(:all, conditions: ['title LIKE ?', "%#{search}%"])
+      joins(:user).where('stories.title LIKE ? or users.name LIKE ?', "%#{search}%", "%#{search}%")
     else
       by_user(user_id)
     end

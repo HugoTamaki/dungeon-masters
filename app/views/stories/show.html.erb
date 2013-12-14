@@ -32,6 +32,22 @@
             <% end %>
           </div>
         <% end %>
+        <% if chapter.monsters.present? %>
+          <div class="monster-fields">
+            <h3>Monsters</h3>
+            <% chapter.monsters.each do |monster| %>
+              <p>
+                Name: <%= monster.name %>
+              </p>
+              <p>
+                Skill: <%= monster.skill %>
+              </p>
+              <p>
+                Energy: <%= monster.energy %>
+              </p>
+            <% end %>
+          </div>
+        <% end %>
         <hr/>
       </div><br/>
     <% end %>

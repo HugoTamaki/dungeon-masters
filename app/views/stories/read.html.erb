@@ -6,18 +6,27 @@
   <p>
     <%= simple_format @chapter.content %>
   </p>
-  <div id="options">
-      <% @chapter.decisions.each do |decision| %>
-        <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
-        <%#= button_to "Chapter #{decision.destiny_num}",
-          read_stories_path(button_opts),
-          method: :get,
-          class: "btn btn-primary" %>
+  <% if @chapter.monsters.present? %>
+  <hr/>
+    <% @chapter.monsters.each do |monster| %>
+      <p>
+        Monster: <%= monster.name %>
+      </p>
+      <p>
+        Skill: <span id="<%= monster.name %>_skill"><%= monster.skill %></span>
+      </p>
+      <p>
+        Energy: <span id="<%= monster.name %>_energy"><%= monster.energy %></span>
+      </p>
+      <hr/>
+    <% end %>
+  <% end %>
+  <% @chapter.decisions.each do |decision| %>
+    <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
     <p>
       <%= link_to "Chapter #{decision.destiny_num}",
-                    read_stories_path(button_opts),
-                    class: "btn btn-primary"%>
+        read_stories_path(button_opts),
+        class: "btn btn-primary" unless Chapter.by_story(@story).where(reference: "#{decision.destiny_num}").empty? %>
     </p>
-      <% end %>
+  <% end %>
   </div>
-</div>

@@ -1,5 +1,5 @@
 class Monster < ActiveRecord::Base
-  attr_accessible :ability, :energy, :name, :story_id
+  attr_accessible :skill, :energy, :name, :chapter_id
 
-  belongs_to :story
+  belongs_to :chapter
 end

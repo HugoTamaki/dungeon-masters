@@ -4,32 +4,32 @@
   <% if @stories.empty? %>
     <p>No stories.</p>
   <% else %>
+    <%= paginate @stories %>
 
     <% @stories.each do |story| %>
 
       <div class="story_div">
-        <h3><%= story.title %></h3>
+        <h3><%= story.title %> - by <%= story.user.name %></h3>
         <div class="image">
           <%= image_tag story.cover_url(:index_cover).to_s %>
         </div>
         <div class="prelude">
           <p>
-            <%= simple_format story.prelude %>
+            <%= simple_format story.resume %>
           </p>
         </div>
-      </div>
-      <div class="options">
-        <p>
-          <%= link_to 'Show', story if params[:search].nil? %> /
-          <%= link_to 'Read', story_prelude_path(story) %> /
-          <%= link_to 'Edit', edit_story_path(story) if params[:search].nil? %> /
-          <%= link_to 'Destroy', story, confirm: 'Are you sure?', method: :delete if params[:search].nil? %>
-        </p>
+        <div class="actions">
+            <%= link_to 'Show', story, class: "btn btn-primary" if story.user == current_user %>
+            <%= link_to 'Read', story_prelude_path(story), class: "btn btn-primary" %>
+            <%= link_to 'Edit', edit_story_path(story), class: "btn btn-primary" if story.user == current_user %>
+            <%= link_to 'Destroy', story, class: "btn btn-danger", confirm: 'Are you sure?', method: :delete if story.user == current_user %>
+        </div>
       </div>
     <% end %>
+
+    <%= paginate @stories %>
   <% end %>
 </div>
 
 <br />
 
-<%= link_to 'New Story', new_story_path %>

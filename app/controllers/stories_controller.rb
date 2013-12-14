@@ -5,7 +5,7 @@ class StoriesController < ApplicationController
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.search(params[:search],current_user.id)
+    @stories = Story.search(params[:search],current_user.id).page(params[:page]).per(5)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -149,6 +149,8 @@ class StoriesController < ApplicationController
           format.html { redirect_to edit_story_path(@story), notice: 'Data saved' }
         elsif params[:commit] == "Graph"
           format.html { redirect_to story_graph_path(@story), notice: 'Data saved.' }
+        elsif params[:commit] == "Edit Monsters"
+          format.html { redirect_to story_edit_monsters_path(@story), notice: 'Data saved.' }
         else
           format.html { redirect_to @story, notice: 'Story was successfully updated.' }
         end

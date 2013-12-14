@@ -10,6 +10,8 @@
    inflect.irregular 'SpecialAttribute', 'SpecialAttributes'
    inflect.irregular 'adventurer_item', 'adventurers_items'
    inflect.irregular 'AdventurerItem', 'AdventurersItems'
+   inflect.irregular 'ChapterMonster', 'ChaptersMonsters'
+   inflect.irregular 'chapter_monster', 'chapters_monsters'
 #   inflect.uncountable %w( fish sheep )
  end
 #

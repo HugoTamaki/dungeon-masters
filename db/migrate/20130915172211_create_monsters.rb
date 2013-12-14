@@ -2,9 +2,9 @@ class CreateMonsters < ActiveRecord::Migration
   def change
     create_table :monsters do |t|
       t.string :name, limit: 40
-      t.integer :ability
+      t.integer :skill
       t.integer :energy
-      t.integer :story_id, index: true
+      t.integer :chapter_id, index: true
 
       t.timestamps
     end

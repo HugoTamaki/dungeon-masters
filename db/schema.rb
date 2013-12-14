@@ -100,13 +100,13 @@ ActiveRecord::Schema.define(:version => 20131207092127) do
 
   create_table "monsters", :force => true do |t|
     t.string   "name",       :limit => 40
-    t.integer  "ability"
+    t.integer  "skill"
     t.integer  "energy"
-    t.integer  "story_id"
+    t.integer  "chapter_id"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.index ["story_id"], :name => "index_monsters_on_story_id"
-    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_monsters_story_id"
+    t.index ["chapter_id"], :name => "index_monsters_on_chapter_id"
+    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_monsters_chapter_id"
   end
 
   create_table "special_attributes", :force => true do |t|

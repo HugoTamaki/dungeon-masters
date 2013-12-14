@@ -32,13 +32,22 @@
     border-radius: 9px;
 }
 
-.message-container {
-    height: 30px;
+.monsters {
+    margin: 5px;
+    padding: 15px;
+    border: 1px solid;
+    border-radius: 9px;
 }
 
-a:visited {
-    text-decoration: none;
-    color: #fff;
+.monster-fields {
+    border: 1px solid;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 9px;
+}
+
+.message-container {
+    height: 30px;
 }
 
 .sigma {
@@ -62,8 +71,26 @@ label {
 }
 
 .stories {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.story_div {
     border: 1px solid;
     border-radius: 9px;
     padding: 10px;
-    margin: 0 auto;
+    margin: 15px;
+    width: 1000px;
+    height: 600px;
 }
+
+.image {
+    float: left;
+    width: 500px;
+}
+
+.prelude {
+    float: right;
+    width: 500px;
+}
+

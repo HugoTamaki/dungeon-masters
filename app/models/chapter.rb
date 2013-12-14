@@ -3,13 +3,17 @@ class Chapter < ActiveRecord::Base
                   :reference,
                   :story_id,
                   :image,
-                  :decisions_attributes
+                  :decisions_attributes,
+                  :monsters_attributes
 
   mount_uploader :image, ImageUploader
   belongs_to :story
+  has_many :monsters, dependent: :destroy
   has_many :decisions, dependent: :destroy
+  has_many :monsters, dependent: :destroy
 
   accepts_nested_attributes_for :decisions, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :monsters, reject_if: :all_blank, allow_destroy: true
 
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
 
