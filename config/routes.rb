@@ -13,6 +13,8 @@ Calabouco::Application.routes.draw do
     get 'graph'
   end
 
+  resources :adventurers
+
   devise_for :users
 
   root to: "custom_pages#index"

@@ -3,7 +3,7 @@ class CreateAdventurers < ActiveRecord::Migration
     create_table :adventurers do |t|
       t.string :name, limit: 40
       t.integer :user_id, index: true
-      t.integer :ability
+      t.integer :skill
       t.integer :energy
       t.integer :luck
       t.integer :gold

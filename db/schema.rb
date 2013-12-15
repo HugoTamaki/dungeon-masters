@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20131207092127) do
   create_table "adventurers", :force => true do |t|
     t.string   "name",       :limit => 40
     t.integer  "user_id"
-    t.integer  "ability"
+    t.integer  "skill"
     t.integer  "energy"
     t.integer  "luck"
     t.integer  "gold"

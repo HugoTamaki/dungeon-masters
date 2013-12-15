@@ -29,12 +29,14 @@ class StoriesController < ApplicationController
 
   def prelude
     @story = Story.find(params[:story_id])
+    @adventurer = Adventurer.new
   end
 
   def read
     @story = Story.find(params[:id])
     @chapter = @story.chapters.where(reference: params[:reference]).first
-
+    @adventurer = Adventurer.by_user(current_user.id).first
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @chapter }
@@ -119,7 +121,6 @@ class StoriesController < ApplicationController
 
   def update_tabs
     @story = Story.find(params[:story_id].to_i)
-    binding.pry
 
     respond_to do |format|
       if @story.update_attributes(params[:story])
@@ -188,4 +189,5 @@ class StoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
 end
