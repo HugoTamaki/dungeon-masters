@@ -5,7 +5,6 @@ class Story < ActiveRecord::Base
                   :items_attributes,
                   :chapters_attributes,
                   :special_attributes_attributes,
-                  :monsters_attributes,
                   :user_id,
                   :cover
 

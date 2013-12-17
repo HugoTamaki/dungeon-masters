@@ -8,7 +8,6 @@ class Chapter < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
   belongs_to :story
-  has_many :monsters, dependent: :destroy
   has_many :decisions, dependent: :destroy
   has_many :monsters, dependent: :destroy
 

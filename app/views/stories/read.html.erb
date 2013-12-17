@@ -21,6 +21,8 @@
         </p>
         <hr/>
       <% end %>
+      <%= button_tag "Combat!", class: "btn btn-primary", id: "combat" %>
+      <div id="combat-result"></div>
     <% end %>
     <% @chapter.decisions.each do |decision| %>
       <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
@@ -31,12 +33,71 @@
       </p>
     <% end %>
   </div>
-  <div class="adventurer">
-    <h3>Adventurer sheet</h3>
-    <p>Name: <%= @adventurer.name %></p>
-    <p>Skill: <%= @adventurer.skill %></p>
-    <p>Energy: <%= @adventurer.energy %></p>
-    <p>Luck: <%= @adventurer.luck %></p>
-  </div>
+  <% if @adventurer.present? %>
+    <div class="adventurer">
+      <h3>Adventurer sheet</h3>
+      <p>Name: <%= @adventurer.name %></p>
+      <p>Skill: <%= @adventurer.skill %></p>
+      <p>Energy: <%= @adventurer.energy %></p>
+      <p>Luck: <%= @adventurer.luck %></p>
+    </div>
+  <% end %>
 </div>
+
+<% if @chapter.monsters.present? %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      $("#combat").click(function() {
+        var result = "";
+        var finish;
+        var morreu = false;
+        var adventurer_skill = <%= @adventurer.skill %>;
+        var adventurer_energy = <%= @adventurer.energy %>;
+
+        <% @chapter.monsters.each do |monster| %>
+          var <%= monster.name.downcase.tr(" ","_") %>_skill = <%= monster.skill %>;
+          var <%= monster.name.downcase.tr(" ","_") %>_energy = <%= monster.energy %>;
+
+          finish = false;
+
+          while (!finish) {
+            console.log("adventurer energy: "+adventurer_energy);
+            var enemyAttackPower = 2 + Math.floor(Math.random()*11) + 12 + <%= monster.name.downcase.tr(" ","_") %>_skill;
+            var adventurerAttackPower = 2 + Math.floor(Math.random()*11) + 12 + adventurer_skill;
+
+            if (enemyAttackPower > adventurerAttackPower) {
+              result += "<p>"+ "<%= @adventurer.name %>" +" Attack Power - "+ adventurerAttackPower +"<strong> "+ "<%= monster.name %>" +" - Attack Power - "+ enemyAttackPower +"</strong><p>";
+              adventurer_energy -= 2;
+              if (adventurer_energy < 1) {
+                finish = true;
+                morreu = true;
+                result += "<p>You died!</p>";
+                $("#combat-result").html(result);
+                return;
+              } else if (<%= monster.name.downcase.tr(" ","_") %>_energy < 1) {
+                finish = true;
+                result += "<p><%= monster.name %> died!</p>";
+              }
+            } else if (enemyAttackPower < adventurerAttackPower) {
+              result += "<p><strong>"+ "<%= @adventurer.name %>" +" Attack Power - "+ adventurerAttackPower +"</strong> "+ "<%= monster.name %>" +" - Attack Power - "+ enemyAttackPower +"<p>";
+              <%= monster.name.downcase.tr(" ","_") %>_energy -= 2;
+              if (adventurer_energy < 1) {
+                finish = true;
+                morreu = true;
+                result += "<p>You died!</p>";
+                $("#combat-result").html(result);
+                return;
+              } else if (<%= monster.name.downcase.tr(" ","_") %>_energy < 1) {
+                finish = true;
+                result += "<p><%= monster.name %> died!</p>";
+              }
+            }
+          }
+        <% end %>
+        $("#combat-result").html(result);
+      });
+    });
+  </script>
+<% end %>
 
