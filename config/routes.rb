@@ -13,7 +13,9 @@ Calabouco::Application.routes.draw do
     get 'graph'
   end
 
-  resources :adventurers
+  resources :adventurers do
+    put 'update_adventurer_status', on: :collection
+  end
 
   devise_for :users
 

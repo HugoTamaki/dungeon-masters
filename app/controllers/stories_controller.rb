@@ -57,7 +57,7 @@ class StoriesController < ApplicationController
   # GET /stories/1/edit
   def edit
     @story = Story.find(params[:id])
-    if @story.chapters.empty? and @story.special_attributes.empty? and @story.items.empty?
+    if @story.chapters.empty?
       @story.special_attributes.build
       @story.items.build
       chapter = @story.chapters.build
@@ -69,10 +69,16 @@ class StoriesController < ApplicationController
 
   def edit_items
     @story = Story.find(params[:story_id])
+    if @story.items.empty?
+      item = @story.items.build
+    end
   end
 
   def edit_special_attributes
     @story = Story.find(params[:story_id])
+    if @story.special_attributes.empty?
+      special_attributes = @story.special_attributes.build
+    end
   end
 
   def graph

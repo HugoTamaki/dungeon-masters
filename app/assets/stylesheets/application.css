@@ -18,15 +18,69 @@
     border-radius: 9px;
 }
 
-.chapter {
-    width: 800px;
+.attribute-fields {
+    border: 1px solid;
+    padding: 5px;
+    border-radius: 9px;
+    margin: 10px;
+}
+
+.item-fields {
+    border: 1px solid;
+    padding: 5px;
+    border-radius: 9px;
+    margin: 10px;
+}
+
+.chapter-image {
+    display: block;
+}
+
+.item {
     float: left;
+    margin: 10px;
+    border: 1px solid;
+    border-radius: 9px;
+    overflow: auto;
+    top: 20px;
+    bottom: 20px;
+    padding: 10px;
+    background-color: #ECEAE0;
+}
+
+.special-attribute {
+    float: left;
+    margin: 10px;
+    border: 1px solid;
+    border-radius: 9px;
+    overflow: auto;
+    top: 20px;
+    bottom: 20px;
+    padding: 10px;
+    background-color: #ECEAE0;
+}
+
+.chapter {
+    float: left;
+    margin: 10px;
+    border: 1px solid;
+    border-radius: 9px;
+    overflow: auto;
+    top: 20px;
+    bottom: 20px;
+    padding: 10px;
+    background-color: #ECEAE0;
 }
 
 .adventurer {
-    width: 300px;
     float: right;
-    margin-top: 20px;
+    margin: 10px;
+    border: 1px solid;
+    border-radius: 9px;
+    top: 20px;
+    bottom: 20px;
+    padding: 10px;
+    background-color: #ECEAE0;
 }
 
 .decisions {
@@ -58,7 +112,8 @@
 }
 
 .message-container {
-    height: 30px;
+    height: 20px;
+    display: block;
 }
 
 .sigma {
@@ -93,6 +148,7 @@ label {
     margin: 15px;
     width: 1000px;
     height: 600px;
+    background-color: #ECEAE0;
 }
 
 .image {
@@ -107,5 +163,8 @@ label {
 
 .content {
     margin: 0 auto !important;
-    width: 1100px;
+    width: 100%;
+    border: 1px solid;
+    border-radius: 9px;
+    background-color: #E2ECDF;
 }

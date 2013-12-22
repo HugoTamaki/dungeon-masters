@@ -1,12 +1,19 @@
+
+<%= javascript_include_tag "resize" %>
+<div class="message-container"></div>
 <div class="content">
   <div class="chapter">
-    <h3><%= @chapter.reference %></h3>
-    <p>
-      <%= image_tag @chapter.image_url.to_s if @chapter.image.present? %>
-    </p>
-    <p>
-      <%= simple_format @chapter.content %>
-    </p>
+    <h3>Chapter <%= @chapter.reference %></h3>
+    <div class="chapter-image">
+      <p>
+        <%= image_tag @chapter.image_url.to_s if @chapter.image.present? %>
+      </p>
+    </div>
+    <div class="chapter-content">
+      <p>
+        <%= simple_format @chapter.content %>
+      </p>
+    </div>
     <% if @chapter.monsters.present? %>
     <hr/>
       <% @chapter.monsters.each do |monster| %>
@@ -21,7 +28,9 @@
         </p>
         <hr/>
       <% end %>
-      <%= button_tag "Combat!", class: "btn btn-primary", id: "combat" %>
+      <p>
+        <%= button_tag "Combat!", class: "btn btn-primary", id: "combat" %>
+      </p>
       <div id="combat-result"></div>
     <% end %>
     <% @chapter.decisions.each do |decision| %>
@@ -36,10 +45,10 @@
   <% if @adventurer.present? %>
     <div class="adventurer">
       <h3>Adventurer sheet</h3>
-      <p>Name: <%= @adventurer.name %></p>
-      <p>Skill: <%= @adventurer.skill %></p>
-      <p>Energy: <%= @adventurer.energy %></p>
-      <p>Luck: <%= @adventurer.luck %></p>
+      <p>Name: <span id="adventurer_name"><%= @adventurer.name %></span></p>
+      <p>Skill: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
+      <p>Energy: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
+      <p>Luck: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
     </div>
   <% end %>
 </div>
@@ -54,6 +63,7 @@
         var morreu = false;
         var adventurer_skill = <%= @adventurer.skill %>;
         var adventurer_energy = <%= @adventurer.energy %>;
+        var adventurer_luck = <%= @adventurer.luck %>;
 
         <% @chapter.monsters.each do |monster| %>
           var <%= monster.name.downcase.tr(" ","_") %>_skill = <%= monster.skill %>;
@@ -96,6 +106,21 @@
           }
         <% end %>
         $("#combat-result").html(result);
+        $("#adventurer_energy").html(adventurer_energy);
+        //resizeHeight($("#combat-result").height());
+
+        $.ajax({
+          url: "/adventurers/update_adventurer_status?adventurer_skill="+adventurer_skill+"&adventurer_energy="+adventurer_energy+"&adventurer_luck="+adventurer_luck,
+          type: 'PUT',
+          success: function() {
+            $(".message-container").html("<p class='message'>Adventurer updated.</p>");
+            setTimeout("$('.message').fadeOut()", 3000);
+          },
+          error: function() {
+            
+          }
+        });
+
       });
     });
   </script>

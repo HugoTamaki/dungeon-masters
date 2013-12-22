@@ -25,4 +25,27 @@ class AdventurersController < ApplicationController
     end
   end
 
+  def update_adventurer_status
+    user = User.find(current_user.id)
+    adventurer = user.adventurer
+
+    params[:adventurer_skill] = params[:adventurer_skill].to_i unless params[:adventurer_skill].nil?
+    params[:adventurer_energy] = params[:adventurer_energy].to_i unless params[:adventurer_energy].nil?
+    params[:adventurer_luck] = params[:adventurer_luck].to_i unless params[:adventurer_luck].nil?
+
+    args = {}
+    args[:adventurer] = {}
+    args[:adventurer][:skill] = params[:adventurer_skill]
+    args[:adventurer][:energy] = params[:adventurer_energy]
+    args[:adventurer][:luck] = params[:adventurer_luck]
+
+    respond_to do |format|
+      if adventurer.update_attributes(args[:adventurer])
+        format.html { render nothing: true }
+      else
+        format.html { render nothing: true }
+      end
+    end
+  end
+
 end
