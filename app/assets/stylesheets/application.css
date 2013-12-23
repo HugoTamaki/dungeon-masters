@@ -46,6 +46,7 @@
     bottom: 20px;
     padding: 10px;
     background-color: #ECEAE0;
+    width: 1100px;
 }
 
 .special-attribute {
@@ -58,6 +59,11 @@
     bottom: 20px;
     padding: 10px;
     background-color: #ECEAE0;
+    width: 1100px;
+}
+
+#tabs {
+    width: 1100px;
 }
 
 .chapter {
@@ -70,6 +76,7 @@
     bottom: 20px;
     padding: 10px;
     background-color: #ECEAE0;
+    width: 700px;
 }
 
 .adventurer {
@@ -81,6 +88,7 @@
     bottom: 20px;
     padding: 10px;
     background-color: #ECEAE0;
+    width: 300px;
 }
 
 .decisions {
@@ -163,7 +171,9 @@ label {
 
 .content {
     margin: 0 auto !important;
-    width: 100%;
+    /*width: 100%;*/
+    width: 1100px;
+    padding: 10px;
     border: 1px solid;
     border-radius: 9px;
     background-color: #E2ECDF;

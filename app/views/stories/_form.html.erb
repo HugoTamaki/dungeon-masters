@@ -22,6 +22,9 @@
     <div class="field">
       <%= f.input :prelude, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
     </div>
+    <div class="field">
+      <%= f.input :chapter_numbers, as: :string %>
+    </div>
 
   <% elsif params[:action] == "edit" %>
     <input type="hidden" id="story_id" value="<%= @story.id %>" />

@@ -10,24 +10,22 @@ $(document).ready(function() {
     });
 
     $(".chapter").css({
-       "height": height - 40,
-       //"width": width - 490
-       "width": (width * 60) / 100
+       "height": height - 40
+       //"width": (width * 60) / 100
     });
 
-    $(".item").css({
-       "width": (width * 60) / 100
-    });
-
-    $(".special-attribute").css({
-        "width": (width * 60) / 100
-    });
+//    $(".item").css({
+//       "width": (width * 60) / 100
+//    });
+//
+//    $(".special-attribute").css({
+//        "width": (width * 60) / 100
+//    });
 
 
     $(".adventurer").css({
-       "height": height - 40,
-       //"width": width - 990
-       "width": (width * 20) / 100
+       "height": height - 40
+       //"width": (width * 20) / 100
     });
 
 });

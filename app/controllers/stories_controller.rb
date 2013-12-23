@@ -56,12 +56,21 @@ class StoriesController < ApplicationController
 
   # GET /stories/1/edit
   def edit
+    chapter_numbers = params[:chapter_numbers].to_i
     @story = Story.find(params[:id])
     if @story.chapters.empty?
-      @story.special_attributes.build
-      @story.items.build
-      chapter = @story.chapters.build
-      chapter.decisions.build
+      if chapter_numbers.present?
+        for i in (1..chapter_numbers)
+          chapter = @story.chapters.build
+          chapter.decisions.build
+          chapter.reference = i
+          chapter.save
+        end
+      else
+        chapter = @story.chapters.build
+        chapter.decisions.build
+      end
+#      implementar automaticamente criar capitulos por parametro quantidade
     end
     chapters = Chapter.by_story(params[:id])
     @chapters = chapters.includes(:decisions)
@@ -116,7 +125,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if @story.save
-        format.html { redirect_to edit_story_path(@story), notice: 'Story was successfully created.' }
+        format.html { redirect_to edit_story_path(id: @story, chapter_numbers: params[:story][:chapter_numbers]), notice: 'Story was successfully created.' }
         format.json { render json: @story, status: :created, location: @story }
       else
         format.html { render action: "new" }

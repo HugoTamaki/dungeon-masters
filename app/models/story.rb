@@ -6,7 +6,10 @@ class Story < ActiveRecord::Base
                   :chapters_attributes,
                   :special_attributes_attributes,
                   :user_id,
-                  :cover
+                  :cover,
+                  :chapter_numbers
+
+  attr_accessor :chapter_numbers
 
   mount_uploader :cover, ImageUploader
 
