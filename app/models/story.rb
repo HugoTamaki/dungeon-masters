@@ -51,6 +51,15 @@ class Story < ActiveRecord::Base
 
     chapters_with_decisions["chapter_destinies"] = destines
 
+    infos = []
+
+    chapters.each do |c|
+      aux = []
+      infos << [c.x, c.y, c.color]
+    end
+
+    chapters_with_decisions["infos"] = infos
+
     duplicates = []
     chapters_with_decisions["chapter_destinies"].each do |decisions|
       duplicates << decisions.select {|element| decisions.count(element) > 1}

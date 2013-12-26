@@ -4,7 +4,10 @@ class Chapter < ActiveRecord::Base
                   :story_id,
                   :image,
                   :decisions_attributes,
-                  :monsters_attributes
+                  :monsters_attributes,
+                  :x,
+                  :y,
+                  :color
 
   mount_uploader :image, ImageUploader
   belongs_to :story
@@ -17,6 +20,26 @@ class Chapter < ActiveRecord::Base
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
 
   validate :image_size_validation
+
+  before_create do
+    self.x = Random.rand.round(3)
+    self.y = Random.rand.round(3)
+    number = Random.rand(6) + 1
+    case number
+    when 1
+      self.color = "#CCFF00"
+    when 2
+      self.color = "#CC00FF"
+    when 3
+      self.color = "#00CCFF"
+    when 4
+      self.color = "#FF3300"
+    when 5
+      self.color = "#FF9900"
+    when 6
+      self.color = "#FFFF00"
+    end
+  end
 
   def self.exist(destiny,story_id)
     chapter_exist = false
