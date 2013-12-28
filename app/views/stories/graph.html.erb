@@ -11,6 +11,7 @@
 <% end %>
 
 <div class="sigma" id="sig"></div>
+<div class="not-used"></div>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -66,11 +67,11 @@
             if ((data["chapter_destinies"][k].length != 0) && data["valid"][k]) {
               for (var l=1;l<data["chapter_destinies"][k].length;l++) {
                 sigInst.addEdge('cap'+data["chapter_destinies"][k][0]+'_cap'+data["chapter_destinies"][k][l], 'cap'+data["chapter_destinies"][k][0], 'cap'+data["chapter_destinies"][k][l]).draw();
-              } 
+              }
             }
           }
         }
-
+        $(".not-used").html("<p><strong>Not Used Chapters: "+data["not_used"]+"</strong></p>");
       }
     });
   });

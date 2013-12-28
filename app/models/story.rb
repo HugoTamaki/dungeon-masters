@@ -74,6 +74,21 @@ class Story < ActiveRecord::Base
       end
     end
 
+    references = []
+    decisions = []
+
+    chapters.each do |chapter|
+      references << chapter.reference.to_i
+    end
+
+    chapters.each do |chapter|
+      chapter.decisions.each do |decision|
+        decisions << decision.destiny_num unless decision.destiny_num.nil?
+      end
+    end
+
+    chapters_with_decisions["not_used"] = references - decisions
+
     chapters_with_decisions
   end
 
