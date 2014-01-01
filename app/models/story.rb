@@ -17,6 +17,7 @@ class Story < ActiveRecord::Base
   validates :resume, presence: true
   validate :image_size_validation
 
+
   belongs_to :user
   has_many :chapters, dependent: :destroy
   has_many :items, dependent: :destroy

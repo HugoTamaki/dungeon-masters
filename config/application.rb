@@ -10,6 +10,17 @@ if defined?(Bundler)
 end
 
 module Calabouco
+  
+  STORY_CHAPTER_NUMBERS = "Insert how many chapters you want your story to have. If you want to insert more chapters, don't worry, you can do that later."
+  STORY_RESUME = "This is the text that will be a quick resume of your story. It will be visible to users that search your story."
+  STORY_PRELUDE = "This is the start of your story. Here you can explain who is the protagonist, or what are his motivations."
+  CHAPTER_REFERENCE = "Links chapters to each other. The first chapter must have reference 1."
+  CHAPTER_CONTENT = "The content of the chapter."
+  CHAPTER_DESTINY = "It will point to the next chapter. Insert as many decisions you want in a chapter."
+  CHAPTER_MONSTER_NAME = "The monster's name. Use different names for the same chapter. ex: goblin A, goblin B"
+  CHAPTER_MONSTER_SKILL = "Monster's ability or dexterity. If it's high, it will be more difficult to win over a monster."
+  CHAPTER_MONSTER_ENERGY = "Monster's hit point. If it's high, the monster will have more vitality."
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

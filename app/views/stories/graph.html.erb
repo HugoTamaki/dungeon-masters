@@ -42,25 +42,13 @@
             maxRatio: 32
           });
 
-          <%#*var j = 0;%>
-          <%#*var color = 0%>
-          <%#*var color1 = '#ff0000'%>
-          <%#*var color2 = '#00ff00'%>
-          <%#*var color3 = '#ffff00'%>
           for (var i=0;i<data["references"].length;i++) {
             sigInst.addNode('cap'+data["references"][i], {
               label: 'cap '+data["references"][i],
               color: data["infos"][i][2],
               x: data["infos"][i][0],
               y: data["infos"][i][1]
-              <%#*color: color==0 ? color1 : color2,%>
-              <%#*x: j,%>
-              <%#*y: i%2==0 ? j*(-1) : j%>
             }).draw();
-            <%#*j = j + 0.1%>
-            <%#*color++;%>
-            <%#*if (color==2)%>
-              <%#*color = 0;%>
           }
 
           for (var k=0;k<data["chapter_destinies"].length;k++) {

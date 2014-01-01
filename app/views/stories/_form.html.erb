@@ -17,13 +17,13 @@
       <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
     </div>
     <div class="field">
-      <%= f.input :resume, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
+      <%= f.input :resume, as: :text, input_html: { rows: 10, style: 'width: 100%', title: Calabouco::STORY_RESUME } %>
     </div>
     <div class="field">
-      <%= f.input :prelude, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
+      <%= f.input :prelude, as: :text, input_html: { rows: 10, style: 'width: 100%', title: Calabouco::STORY_PRELUDE } %>
     </div>
     <div class="field">
-      <%= f.input :chapter_numbers, as: :string %>
+      <%= f.input :chapter_numbers, as: :string, input_html: { title: Calabouco::STORY_CHAPTER_NUMBERS } %>
     </div>
 
   <% elsif params[:action] == "edit" %>
@@ -54,7 +54,7 @@
           <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
         </div>
         <% if f.object.cover.blank? %>
-          No current image
+          <%= image_tag 'no_image_thumb.gif', height: 200, width: 200 %>
         <% else %>
           Current image: <%= image_tag f.object.cover_url(:thumb_cover).to_s %>
         <% end %>

@@ -128,7 +128,7 @@ class StoriesController < ApplicationController
         format.html { redirect_to edit_story_path(id: @story, chapter_numbers: params[:story][:chapter_numbers]), notice: 'Story was successfully created.' }
         format.json { render json: @story, status: :created, location: @story }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to :back, alert: 'some parameters are missing' }
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
