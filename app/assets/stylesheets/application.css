@@ -119,6 +119,20 @@
     border-radius: 9px;
 }
 
+.modifiers-items {
+    margin: 5px;
+    padding: 15px;
+    border: 1px solid;
+    border-radius: 9px;
+}
+
+.modifier-item-fields {
+    border: 1px solid;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 9px;
+}
+
 .message-container {
     height: 20px;
     display: block;

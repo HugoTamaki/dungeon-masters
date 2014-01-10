@@ -12,6 +12,10 @@
    inflect.irregular 'AdventurerItem', 'AdventurersItems'
    inflect.irregular 'ChapterMonster', 'ChaptersMonsters'
    inflect.irregular 'chapter_monster', 'chapters_monsters'
+   inflect.irregular 'modifier_item', 'modifiers_items'
+   inflect.irregular 'ModifierItem', 'ModifiersItems'
+   inflect.irregular 'modifier_attribute', 'modifiers_attributes'
+   inflect.irregular 'ModifierAttribute', 'ModifiersAttributes'
 #   inflect.uncountable %w( fish sheep )
  end
 #

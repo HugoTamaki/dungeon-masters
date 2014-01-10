@@ -20,7 +20,7 @@
 function add_fields(link, association, content) {
     var new_id = new Date().getTime();
     var regexp = new RegExp("new_" + association, "g");
-    if (association == "decisions" || association == "monsters") {
+    if (association == "decisions" || association == "monsters" || association == "modifiers_items" || association == "modifiers-attributes") {
         $(link).before(content.replace(regexp, new_id));
     } else {
         $(link).parent().before(content.replace(regexp, new_id));

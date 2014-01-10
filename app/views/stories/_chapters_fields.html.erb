@@ -27,6 +27,13 @@
       <% end %>
       <%= link_to_add_fields "Add monsters", f, :monsters, "monsters" %>
     </div>
+    <div class="modifiers-items">
+      <h3>Items</h3>
+      <%= f.simple_fields_for :modifiers_items do |builder| %>
+        <%= render "modifiers_items_fields", f: builder %>
+      <% end %>
+      <%= link_to_add_fields "Add items", f, :modifiers_items, "modifiers_items" %>
+    </div>
     <p><%= link_to_remove_fields "Remove chapter", f, "chapter" %></p>
   </div>
 </div>

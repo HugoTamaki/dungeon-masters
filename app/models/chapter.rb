@@ -5,6 +5,9 @@ class Chapter < ActiveRecord::Base
                   :image,
                   :decisions_attributes,
                   :monsters_attributes,
+                  :modifiers_items_attributes,
+                  :modifiers_attributes_attributes,
+                  :items_attributes,
                   :x,
                   :y,
                   :color
@@ -13,9 +16,13 @@ class Chapter < ActiveRecord::Base
   belongs_to :story
   has_many :decisions, dependent: :destroy
   has_many :monsters, dependent: :destroy
+  has_many :modifiers_items, dependent: :destroy
+  has_many :modifiers_attributes, dependent: :destroy
 
   accepts_nested_attributes_for :decisions, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :monsters, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :modifiers_items, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :modifiers_attributes, reject_if: :all_blank, allow_destroy: true
 
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
 

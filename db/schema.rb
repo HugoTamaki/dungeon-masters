@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131226091538) do
+ActiveRecord::Schema.define(:version => 20140107120824) do
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -99,6 +99,28 @@ ActiveRecord::Schema.define(:version => 20131226091538) do
     t.datetime "updated_at",  :null => false
     t.index ["chapter_id"], :name => "fk__decisions_chapter_id"
     t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_decisions_chapter_id"
+  end
+
+  create_table "modifiers_attributes", :force => true do |t|
+    t.integer  "chapter_id"
+    t.string   "attribute"
+    t.integer  "quantity"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.index ["chapter_id"], :name => "fk__modifiers_attributes_chapter_id"
+    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_attributes_chapter_id"
+  end
+
+  create_table "modifiers_items", :force => true do |t|
+    t.integer  "chapter_id"
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.index ["chapter_id"], :name => "fk__modifiers_items_chapter_id"
+    t.index ["item_id"], :name => "fk__modifiers_items_item_id"
+    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_items_chapter_id"
+    t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_items_item_id"
   end
 
   create_table "monsters", :force => true do |t|
