@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140107120824) do
+ActiveRecord::Schema.define(:version => 20140116172352) do
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(:version => 20140107120824) do
 
   create_table "modifiers_attributes", :force => true do |t|
     t.integer  "chapter_id"
-    t.string   "attribute"
+    t.string   "attr"
     t.integer  "quantity"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

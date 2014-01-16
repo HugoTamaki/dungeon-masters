@@ -34,6 +34,13 @@
       <% end %>
       <%= link_to_add_fields "Add items", f, :modifiers_items, "modifiers_items" %>
     </div>
+    <div class="modifiers-attributes">
+      <h3>Attribute modifiers</h3>
+      <%= f.simple_fields_for :modifiers_attributes do |builder| %>
+        <%= render "modifiers_attributes_fields", f: builder %>
+      <% end %>
+      <%= link_to_add_fields "Add modifier", f, :modifiers_attributes, "modifiers_attributes" %>
+    </div>
     <p><%= link_to_remove_fields "Remove chapter", f, "chapter" %></p>
   </div>
 </div>

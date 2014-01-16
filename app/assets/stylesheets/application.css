@@ -126,7 +126,21 @@
     border-radius: 9px;
 }
 
+.modifiers-attributes {
+    margin: 5px;
+    padding: 15px;
+    border: 1px solid;
+    border-radius: 9px;
+}
+
 .modifier-item-fields {
+    border: 1px solid;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 9px;
+}
+
+.modifier-atttribute-fields {
     border: 1px solid;
     padding: 5px;
     margin: 10px;

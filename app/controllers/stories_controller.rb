@@ -30,12 +30,36 @@ class StoriesController < ApplicationController
   def prelude
     @story = Story.find(params[:story_id])
     @adventurer = Adventurer.new
+    @adventurer.items.clear
   end
 
   def read
     @story = Story.find(params[:id])
     @chapter = @story.chapters.where(reference: params[:reference]).first
     @adventurer = Adventurer.by_user(current_user.id).first
+
+    if @chapter.modifiers_attributes.present?
+      @chapter.modifiers_attributes.each do |attribute|
+        case attribute.attr
+        when "skill"
+          @adventurer.skill = @adventurer.skill + attribute.quantity
+        when "energy"
+          @adventurer.energy = @adventurer.energy + attribute.quantity
+        when "luck"
+          @adventurer.luck = @adventurer.luck + attribute.quantity
+        when "gold"
+          @adventurer.gold = @adventurer.gold + attribute.quantity
+        end
+      end
+      @adventurer.save
+    end
+
+    if @chapter.modifiers_items.present?
+      @chapter.modifiers_items.each do |item|
+        @adventurer.items << item.item
+      end
+      @adventurer.save
+    end
     
     respond_to do |format|
       format.html # show.html.erb

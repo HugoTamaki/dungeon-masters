@@ -49,6 +49,12 @@
       <p>Skill: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
       <p>Energy: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
       <p>Luck: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
+      <% if @adventurer.items.present? %>
+        <h3>Adventurer Items</h3>
+        <% @adventurer.items.each do |item| %>
+        <p><%= item.name %> </p>
+        <% end %>
+      <% end %>
     </div>
   <% end %>
 </div>
