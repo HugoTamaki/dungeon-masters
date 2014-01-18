@@ -27,6 +27,7 @@ class Chapter < ActiveRecord::Base
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
 
   validate :image_size_validation
+  validates :content, presence: true
 
   before_create do
     self.x = Random.rand.round(3)

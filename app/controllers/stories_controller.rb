@@ -196,7 +196,6 @@ class StoriesController < ApplicationController
         end
         format.json { head :no_content }
       else
-        binding.pry
         format.html { redirect_to :back }
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
