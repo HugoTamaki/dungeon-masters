@@ -1,4 +1,4 @@
-<div class="content">
+<div class="story_div">
   <h3>Dungeon Masters</h3>
   <p>
     Lorem ipsum dolor sit amet, sit no novum soluta voluptua, cu usu nostrum dissentias dissentiunt. Mea quod veri vocibus no. Eirmod iriure ei per, te iriure offendit sed. Est ne bonorum invenire, pro agam regione offendit ei. Eros doctus argumentum sea eu. Probatus patrioque his ea.
@@ -7,4 +7,39 @@
   Ad eum timeam appareat dissentiet, eos no mutat tacimates definitionem, mazim libris iracundia et vel. Quas malis pri id. Has explicari intellegebat ea, at has vero harum. Movet maiorum adipiscing ea vis, errem everti volutpat eu eum.
   An vim wisi ludus everti, his nostrud fierent reprimique ne, vel at assum nusquam alienum. Scripta expetenda ea per, te nam detracto definiebas conclusionemque. Ut vis quas omnis necessitatibus, alterum salutatus constituto pri ut, id aeterno explicari mel. Habeo possim ne sed. His paulo everti efficiantur in. Pro ut fabulas minimum elaboraret.
   </p>
+</div>
+
+<div class="stories">
+  <% if @stories.empty? %>
+    <p>No stories.</p>
+  <% else %>
+    <%= paginate @stories %>
+
+    <% @stories.each do |story| %>
+
+      <div class="story_div">
+        <h3><%= story.title %> - by <%= story.user.name %></h3>
+        <div class="image">
+          <% if story.cover.blank? %>
+            <%= image_tag 'no_image_thumb.gif', height: 500, width: 400 %>
+          <% else %>
+            <%= image_tag story.cover_url(:index_cover).to_s %>
+          <% end %>
+        </div>
+        <div class="prelude">
+          <p>
+            <%= simple_format story.resume %>
+          </p>
+        </div>
+        <div class="actions">
+            <%= link_to 'Show', story, class: "btn btn-primary" if story.user == current_user %>
+            <%= link_to 'Read', story_prelude_path(story), class: "btn btn-primary" %>
+            <%= link_to 'Edit', edit_story_path(story), class: "btn btn-primary" if story.user == current_user %>
+            <%= link_to 'Destroy', story, class: "btn btn-danger", confirm: 'Are you sure?', method: :delete if story.user == current_user %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= paginate @stories %>
+  <% end %>
 </div>
