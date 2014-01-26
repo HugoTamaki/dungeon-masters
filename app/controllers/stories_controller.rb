@@ -29,8 +29,12 @@ class StoriesController < ApplicationController
 
   def prelude
     @story = Story.find(params[:story_id])
-    @adventurer = Adventurer.new
-    @adventurer.items.clear
+    if current_user.adventurer.present?
+      @adventurer = Adventurer.new
+      current_user.adventurer.items.clear
+    else
+      @adventurer = Adventurer.new
+    end
   end
 
   def read
