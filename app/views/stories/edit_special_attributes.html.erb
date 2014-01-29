@@ -10,7 +10,7 @@
   </div>
   <div>
     <%= f.simple_fields_for :special_attributes do |builder| %>
-      <%= render "special_attributes_fields", f: builder %>
+      <%= render partial: "/special_attributes/special_attributes_fields", :locals => {:f => builder} %>
     <% end %>
     <p>
       <%= link_to_add_fields "Add Special Attributes", f, :special_attributes, "special_attributes" %>

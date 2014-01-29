@@ -1,0 +1,5 @@
+<div class="modifier-item-fields">
+  <%= f.collection_select :item_id, Item.by_story(@story), :id, :name, prompt: "select an item" %>
+  <%= f.input :quantity, as: :string, input_html: {title: Calabouco::CHAPTER_MOD_ITEM} %>
+  <%= link_to_remove_fields "Remove item", f, "modifier-item" %>
+</div>

@@ -86,6 +86,7 @@ class StoriesController < ApplicationController
   def edit
     chapter_numbers = params[:chapter_numbers].to_i
     @story = Story.find(params[:id])
+
     if @story.chapters.empty?
       if chapter_numbers.present?
         for i in (1..chapter_numbers)
@@ -201,7 +202,11 @@ class StoriesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { redirect_to :back }
+#        ver pq n funciona
+        format.html { render action: :edit, controller: :stories }
+#        format.html { redirect_to edit_story_path(@story), alert: '#{@story.errors.full_messages.to_sentence}' }
         format.json { render json: @story.errors, status: :unprocessable_entity }
+        binding.pry
       end
     end
   end

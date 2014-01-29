@@ -1,0 +1,6 @@
+<div class="modifier-attribute-fields">
+  <%= f.input :attr, label: "Attribute",
+    collection: attributes, prompt: "select an attribute" %>
+  <%= f.input :quantity, as: :string, input_html: {title: Calabouco::CHAPTER_MOD_ATTRIBUTE} %>
+  <%= link_to_remove_fields "Remove modifier", f, "modifier-attribute" %>
+</div>

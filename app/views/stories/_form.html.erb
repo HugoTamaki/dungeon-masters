@@ -36,8 +36,8 @@
       </ul>
       <div id="tabs-1">
         <div id="wrapper"> <!-- wrapper para accordion -->
-          <%= f.simple_fields_for :chapters do |builder| %>
-            <%= render "chapters_fields", f: builder %>
+          <%= f.simple_fields_for :chapters, @story.chapters do |builder| %>
+            <%= render partial: "/chapters/chapters_fields", :locals => {:f => builder} %>
           <% end %>
           <p>
             <%= link_to_add_fields "Add chapters", f, :chapters, "chapters" %>
@@ -77,5 +77,4 @@
     <% end %>
   </div>
 <% end %>
-
 
