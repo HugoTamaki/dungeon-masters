@@ -36,7 +36,7 @@ gem "simple_form"
 gem "pry"
 gem "awesome_print"
 gem "cancan"
-gem "carrierwave", '~> 0.9.0'
+gem "paperclip", "~> 3.0"
 gem "rmagick"
 gem "kaminari"
 

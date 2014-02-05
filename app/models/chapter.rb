@@ -2,22 +2,25 @@ class Chapter < ActiveRecord::Base
   attr_accessible :content, 
                   :reference,
                   :story_id,
-                  :image,
                   :decisions_attributes,
                   :monsters_attributes,
                   :modifiers_items_attributes,
                   :modifiers_attributes_attributes,
                   :items_attributes,
+                  :image,
                   :x,
                   :y,
                   :color
 
-  mount_uploader :image, ImageUploader
+  has_attached_file :image, styles: {thumbnail: "200x200>"}
   belongs_to :story
   has_many :decisions, dependent: :destroy
   has_many :monsters, dependent: :destroy
   has_many :modifiers_items, dependent: :destroy
   has_many :modifiers_attributes, dependent: :destroy
+
+  validates_attachment_size :image, :less_than => 300.kilobytes
+  validates_attachment_content_type :image, content_type: ["image/jpg", "image/png", "image/gif"]
 
   accepts_nested_attributes_for :decisions, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :monsters, reject_if: :all_blank, allow_destroy: true
@@ -25,9 +28,6 @@ class Chapter < ActiveRecord::Base
   accepts_nested_attributes_for :modifiers_attributes, reject_if: :all_blank, allow_destroy: true
 
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
-
-  validate :image_size_validation
-  validates :content, presence: true
 
   before_create do
     self.x = Random.rand.round(3)
@@ -49,9 +49,4 @@ class Chapter < ActiveRecord::Base
     end
   end
 
-  private
-
-  def image_size_validation
-    flash[:alert] << "should be less than 300KB" if image.size > 300.kilobytes
-  end
 end

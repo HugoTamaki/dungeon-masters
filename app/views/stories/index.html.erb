@@ -14,7 +14,7 @@
           <% if story.cover.blank? %>
             <%= image_tag 'no_image_thumb.gif', height: 500, width: 400 %>
           <% else %>
-            <%= image_tag story.cover_url(:index_cover).to_s %>
+            <%= image_tag story.cover(:index_cover) %>
           <% end %>
         </div>
         <div class="prelude">

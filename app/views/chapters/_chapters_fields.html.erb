@@ -10,7 +10,7 @@
       <% if f.object.image.blank? %>
         No current image
       <% else %>
-        Current image: <%= image_tag f.object.image_url(:thumb_chapter).to_s %>
+        Current image: <%= image_tag f.object.image(:thumbnail) %>
       <% end %>
     </p>
     <div class="decisions">

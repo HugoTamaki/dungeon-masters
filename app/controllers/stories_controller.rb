@@ -127,7 +127,7 @@ class StoriesController < ApplicationController
     chapters_of_story = Chapter.by_story(params[:id])
     chapters = chapters_of_story.includes(:decisions)
 
-    @chapters = Story.graph(chapters,params[:id])
+    @chapters = Story.graph(chapters)
 
     respond_to do |format|
       format.json { render json: @chapters.to_json }
@@ -139,7 +139,7 @@ class StoriesController < ApplicationController
     chapters_of_story = Chapter.by_story(params[:id])
     chapters = chapters_of_story.includes(:decisions)
 
-    @chapters = Story.graph(chapters, params[:id])
+    @chapters = Story.graph(chapters)
 
     respond_to do |format|
       format.json { render json: @chapters.to_json }
@@ -206,7 +206,6 @@ class StoriesController < ApplicationController
         format.html { render action: :edit, controller: :stories }
 #        format.html { redirect_to edit_story_path(@story), alert: '#{@story.errors.full_messages.to_sentence}' }
         format.json { render json: @story.errors, status: :unprocessable_entity }
-        binding.pry
       end
     end
   end

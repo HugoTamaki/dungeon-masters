@@ -6,17 +6,17 @@ class Story < ActiveRecord::Base
     :chapters_attributes,
     :special_attributes_attributes,
     :user_id,
-    :cover,
-    :chapter_numbers
+    :chapter_numbers,
+    :cover
 
+
+  has_attached_file :cover, styles: {thumbnail: "200x200>", index_cover: "500x400>"}
   attr_accessor :chapter_numbers
-
-  mount_uploader :cover, ImageUploader
 
   validates :title, presence: true
   validates :resume, presence: true
-  validate :image_size_validation
-
+  validates_attachment_size :cover, :less_than => 300.kilobytes
+  validates_attachment_content_type :cover, content_type: ["image/jpg", "image/png", "image/gif", "image/jpeg"]
 
   belongs_to :user
   has_many :chapters, dependent: :destroy
@@ -28,7 +28,7 @@ class Story < ActiveRecord::Base
 
   scope :by_user, lambda {|user_id| where(user_id: user_id)}
 
-  def self.graph(chapters,id)
+  def self.graph(chapters)
     references = []
     chapters_with_decisions = {}
     chapters.each do |c|
@@ -100,7 +100,4 @@ class Story < ActiveRecord::Base
     end
   end
 
-  def image_size_validation
-    flash[:alert] << "should be less than 300KB" if cover.size > 300.kilobytes
-  end
 end

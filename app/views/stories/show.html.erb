@@ -18,7 +18,7 @@
           Content: <%= simple_format chapter.content %>
         </p>
         <p>
-          <%= image_tag chapter.image_url.to_s if chapter.image.present? %>
+          <%= image_tag chapter.image if chapter.image.present? %>
         </p>
         <% if chapter.decisions.present? %>
           <div class="decision-fields">

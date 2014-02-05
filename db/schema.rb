@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140116172352) do
+ActiveRecord::Schema.define(:version => 20140205152455) do
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -45,13 +45,16 @@ ActiveRecord::Schema.define(:version => 20140116172352) do
   end
 
   create_table "stories", :force => true do |t|
-    t.string   "title",      :limit => 40
+    t.string   "title",              :limit => 40
     t.text     "resume"
     t.integer  "user_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.text     "prelude"
-    t.string   "cover"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
     t.index ["user_id"], :name => "index_stories_on_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_stories_user_id"
   end
@@ -80,14 +83,18 @@ ActiveRecord::Schema.define(:version => 20140116172352) do
 
   create_table "chapters", :force => true do |t|
     t.integer  "story_id"
-    t.string   "reference",  :limit => 10
+    t.string   "reference",          :limit => 10
     t.text     "content"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.string   "image"
     t.float    "x"
     t.float    "y"
     t.string   "color"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["story_id"], :name => "index_chapters_on_story_id"
     t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_chapters_story_id"
   end
