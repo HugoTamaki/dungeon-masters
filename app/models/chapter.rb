@@ -49,18 +49,6 @@ class Chapter < ActiveRecord::Base
     end
   end
 
-  def self.exist(destiny,story_id)
-    chapter_exist = false
-    chapters = Chapter.by_story(story_id)
-    chapters.each do |chapter|
-      if chapter.reference == destiny.to_s
-        chapter_exist = true
-        break
-      end
-    end
-    chapter_exist
-  end
-
   private
 
   def image_size_validation

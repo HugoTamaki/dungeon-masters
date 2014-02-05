@@ -100,15 +100,42 @@
             type: "GET",
             dataType: "json",
             success: function(data) {
-              
-              s = new sigma({
-              graph: data["graph"],
-              container: 'sig',
-              settings: {
-                defaultLabelColor: "fff",
-                labelThreshold: 2
+              if (data["valid"]) {
+                var sigRoot = document.getElementById('sig');
+                var sigInst = sigma.init(sigRoot).drawingProperties({
+                  defaultLabelColor: '#ccc',
+                  defaultLabelSize: 10,
+                  font: 'Arial',
+                  edgeColor: 'source',
+                  defaultEdgeType: 'curve',
+                  defaultEdgeArrow: 'target',
+                  labelThreshold: 0
+                }).graphProperties({
+                  minNodeSize: 0.5,
+                  maxNodeSize: 5,
+                  maxEdgeSize: 3
+                }).mouseProperties({
+                  maxRatio: 32
+                });
+
+                for (var i=0;i<data["references"].length;i++) {
+                  sigInst.addNode('cap'+data["references"][i], {
+                    label: 'cap '+data["references"][i],
+                    color: data["infos"][i][2],
+                    x: data["infos"][i][0],
+                    y: data["infos"][i][1]
+                  }).draw();
+                }
+
+                for (var k=0;k<data["chapter_destinies"].length;k++) {
+                  if ((data["chapter_destinies"][k].length != 0) && data["valid"][k]) {
+                    for (var l=1;l<data["chapter_destinies"][k].length;l++) {
+                      sigInst.addEdge('cap'+data["chapter_destinies"][k][0]+'_cap'+data["chapter_destinies"][k][l], 'cap'+data["chapter_destinies"][k][0], 'cap'+data["chapter_destinies"][k][l]).draw();
+                    }
+                  }
+                }
               }
-              });
+
             }
           });
 
@@ -116,7 +143,7 @@
       }
     });
 
-        
+
   });
 </script>
 

@@ -28,44 +28,69 @@ class Story < ActiveRecord::Base
 
   scope :by_user, lambda {|user_id| where(user_id: user_id)}
 
-  def self.graph(chapters)
-    nodes = []
-    edges = []
+  def self.graph(chapters,id)
+    references = []
+    chapters_with_decisions = {}
+    chapters.each do |c|
+      references << c.reference
+    end
+
+    chapters_with_decisions["references"] = references
+    destines = []
+
+    chapters.each do |c|
+      aux = []
+      aux << c.reference
+      c.decisions.each do |d|
+        aux << d.destiny_num unless d.destiny_num.nil?
+      end
+      destines << aux
+    end
+
+    chapters_with_decisions["chapter_destinies"] = destines
+
+    infos = []
+
+    chapters.each do |c|
+      aux = []
+      infos << [c.x, c.y, c.color]
+    end
+
+    chapters_with_decisions["infos"] = infos
+
+    duplicates = []
+    chapters_with_decisions["chapter_destinies"].each do |decisions|
+      duplicates << decisions.select {|element| decisions.count(element) > 1}
+    end
+
+    chapters_with_decisions["valid"] = []
+    duplicates.each do |duplicate|
+      if duplicate.empty?
+        chapters_with_decisions["valid"] << true
+      else
+        chapters_with_decisions["valid"] << false
+      end
+    end
+
     references = []
     decisions = []
 
     chapters.each do |chapter|
-      node = {}
-      node["id"] = chapter.reference
-      node["label"] = chapter.reference
-      node["x"] = chapter.x
-      node["y"] = chapter.y
-      node["size"] = 1
-      node["color"] = chapter.color
-      nodes << node
       references << chapter.reference.to_i
-      if chapter.decisions.present?
-        chapter.decisions.each do |decision|
-          if decision.destiny_num.present?
-            edge = {}
-            edge["id"] = chapter.reference + decision.destiny_num.to_s
-            edge["source"] = chapter.reference
-            edge["target"] = decision.destiny_num.to_s
-            edges << edge
-            decisions << decision.destiny_num
-          end
-        end
+    end
+
+    chapters.each do |chapter|
+      chapter.decisions.each do |decision|
+        decisions << decision.destiny_num unless decision.destiny_num.nil?
       end
     end
-    data = {}
-    graph = {}
-    graph[:nodes] = nodes
-    graph[:edges] = edges
-    data[:graph] = graph
-    data[:not_used] = references - decisions
 
-    data
+    chapters_with_decisions["not_used"] = references - decisions
+
+    chapters_with_decisions
   end
+
+
 
   def self.search(search,user_id)
     if search

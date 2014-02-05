@@ -40,6 +40,14 @@ gem "carrierwave", '~> 0.9.0'
 gem "rmagick"
 gem "kaminari"
 
+gem "rspec-rails", :group => [:test, :development]
+group :test do
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "guard-rspec"
+  gem "cucumber-rails"
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
