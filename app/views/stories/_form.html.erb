@@ -1,6 +1,16 @@
+
+<% if @story.errors.present? %>
+  <div class="alert fade in alert-error">
+    <button class="close" data-dismiss="alert">×</button>
+    <% @story.errors.full_messages.each do |error| %>
+      <%= error %><br/>
+    <% end %>
+  </div>
+<% end %>
+
 <%= simple_form_for(@story) do |f| %>
   <div class="actions">
-    <% if params[:action] == "edit" %>
+    <% if params[:action] == "edit" || params[:action] == "update" %>
       <%= f.submit "Finish Editing", class: "btn btn-primary" %>
       <%= f.submit "Edit Items", class: "btn btn-primary" %>
       <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
@@ -26,7 +36,7 @@
       <%= f.input :chapter_numbers, as: :string, input_html: { title: Calabouco::STORY_CHAPTER_NUMBERS } %>
     </div>
 
-  <% elsif params[:action] == "edit" %>
+  <% elsif params[:action] == "edit" || params[:action] == "update" %>
     <input type="hidden" id="story_id" value="<%= @story.id %>" />
 
     <div id="tabs">

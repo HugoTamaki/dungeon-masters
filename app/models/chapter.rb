@@ -20,7 +20,7 @@ class Chapter < ActiveRecord::Base
   has_many :modifiers_attributes, dependent: :destroy
 
   validates_attachment_size :image, :less_than => 300.kilobytes
-  validates_attachment_content_type :image, content_type: ["image/jpg", "image/png", "image/gif"]
+  validates_attachment_content_type :image, content_type: ["image/jpg", "image/png", "image/gif", "image/jpeg"]
 
   accepts_nested_attributes_for :decisions, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :monsters, reject_if: :all_blank, allow_destroy: true

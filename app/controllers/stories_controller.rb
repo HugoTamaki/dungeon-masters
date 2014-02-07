@@ -201,10 +201,7 @@ class StoriesController < ApplicationController
         end
         format.json { head :no_content }
       else
-        format.html { redirect_to :back }
-#        ver pq n funciona
         format.html { render action: :edit, controller: :stories }
-#        format.html { redirect_to edit_story_path(@story), alert: '#{@story.errors.full_messages.to_sentence}' }
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
