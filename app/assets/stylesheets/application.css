@@ -187,6 +187,11 @@ label {
     background-color: #ECEAE0;
 }
 
+.index_stories {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .image {
     float: left;
     width: 500px;

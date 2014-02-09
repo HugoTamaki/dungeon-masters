@@ -7,39 +7,25 @@
   Ad eum timeam appareat dissentiet, eos no mutat tacimates definitionem, mazim libris iracundia et vel. Quas malis pri id. Has explicari intellegebat ea, at has vero harum. Movet maiorum adipiscing ea vis, errem everti volutpat eu eum.
   An vim wisi ludus everti, his nostrud fierent reprimique ne, vel at assum nusquam alienum. Scripta expetenda ea per, te nam detracto definiebas conclusionemque. Ut vis quas omnis necessitatibus, alterum salutatus constituto pri ut, id aeterno explicari mel. Habeo possim ne sed. His paulo everti efficiantur in. Pro ut fabulas minimum elaboraret.
   </p>
-</div>
-
-<div class="stories">
+  <h3>Last Stories</h3>
   <% if @stories.empty? %>
     <p>No stories.</p>
   <% else %>
-    <%= paginate @stories %>
-
+  <table>
+    <tr>
     <% @stories.each do |story| %>
-
-      <div class="story_div">
-        <h3><%= story.title %> - by <%= story.user.name %></h3>
-        <div class="image">
-          <% if story.cover.blank? %>
-            <%= image_tag 'no_image_thumb.gif', height: 500, width: 400 %>
-          <% else %>
-            <%= image_tag story.cover(:index_cover) %>
-          <% end %>
-        </div>
-        <div class="prelude">
-          <p>
-            <%= simple_format story.resume %>
-          </p>
-        </div>
-        <div class="actions">
-            <%= link_to 'Show', story, class: "btn btn-primary" if story.user == current_user %>
-            <%= link_to 'Read', story_prelude_path(story), class: "btn btn-primary" %>
-            <%= link_to 'Edit', edit_story_path(story), class: "btn btn-primary" if story.user == current_user %>
-            <%= link_to 'Destroy', story, class: "btn btn-danger", confirm: 'Are you sure?', method: :delete if story.user == current_user %>
-        </div>
+      <td>
+      <div class="index_stories">
+        <p><strong><%= link_to story.title, story_prelude_path(story) %></strong></p>
+        <% if story.cover.blank? %>
+          <%= image_tag 'no_image_small.png' %>
+        <% else %>
+          <%= image_tag story.cover(:thumbnail) %>
+        <% end %>
       </div>
+      </td>
     <% end %>
-
-    <%= paginate @stories %>
+    </tr>
+  </table>
   <% end %>
 </div>
