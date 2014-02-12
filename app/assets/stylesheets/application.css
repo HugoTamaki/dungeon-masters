@@ -213,13 +213,20 @@ label {
 }
 
 .not-used {
-    float: left;
-    margin: 10px;
     border: 1px solid;
     border-radius: 9px;
     top: 20px;
     bottom: 20px;
     padding: 10px;
     background-color: #ECEAE0;
-    width: 1000px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 20px;
+    position: relative;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    scroll: false;
+    top: 0;
+    left: 0;
 }

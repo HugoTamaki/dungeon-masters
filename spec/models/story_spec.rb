@@ -9,7 +9,17 @@ describe Story do
     it {should have_attribute :resume}
     it {should have_attribute :prelude}
     it {should have_attribute :user_id}
-    it {should have_attribute :cover}
+    it {should have_attribute :cover_file_name}
+    it {should have_attribute :cover_content_type}
+    it {should have_attribute :cover_file_size}
+    it {should have_attribute :cover_updated_at}
+  end
+
+  describe "Relacionamentos" do
+    it {should respond_to :user}
+    it {should respond_to :chapters}
+    it {should respond_to :items}
+    it {should respond_to :special_attributes}
   end
 
   describe "Validações" do

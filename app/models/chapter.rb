@@ -30,8 +30,8 @@ class Chapter < ActiveRecord::Base
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
 
   before_create do
-    self.x = Random.rand.round(3)
-    self.y = Random.rand.round(3)
+    self.x = Random.rand.round(10)
+    self.y = Random.rand.round(10)
     number = Random.rand(6) + 1
     case number
     when 1

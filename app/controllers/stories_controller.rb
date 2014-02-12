@@ -1,6 +1,7 @@
 class StoriesController < ApplicationController
 
   before_filter :authenticate_user!
+  load_and_authorize_resource
   
   # GET /stories
   # GET /stories.json
@@ -41,6 +42,7 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
     @chapter = @story.chapters.where(reference: params[:reference]).first
     @adventurer = Adventurer.by_user(current_user.id).first
+    @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
 
     if @chapter.modifiers_attributes.present?
       @chapter.modifiers_attributes.each do |attribute|
@@ -85,7 +87,7 @@ class StoriesController < ApplicationController
   # GET /stories/1/edit
   def edit
     chapter_numbers = params[:chapter_numbers].to_i
-    @story = Story.find(params[:id])
+    @story = Story.includes(:chapters, :items, :special_attributes).find(params[:id])
 
     if @story.chapters.empty?
       if chapter_numbers.present?
@@ -99,10 +101,9 @@ class StoriesController < ApplicationController
         chapter = @story.chapters.build
         chapter.decisions.build
       end
-#      implementar automaticamente criar capitulos por parametro quantidade
     end
     chapters = Chapter.by_story(params[:id])
-    @chapters = chapters.includes(:decisions)
+    @chapters = chapters.includes(:decisions, :monsters)
   end
 
   def edit_items

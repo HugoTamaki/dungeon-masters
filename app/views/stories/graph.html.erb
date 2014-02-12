@@ -57,8 +57,13 @@
                }
              }
            }
-        
-        $(".not-used").html("<p><strong>Not Used Chapters: "+data["not_used"]+"</strong></p>");
+        //$(".not-used").html("<p><strong>Not Used Chapters: "+data["not_used"]+"</strong></p>");
+        var notUsed = "";
+        for (i=1;i<data["not_used"].length-1;i++) {
+          notUsed += data["not_used"][i] + ", ";
+          i%30==0 ? notUsed += "<br/>" : "";
+        }
+        $(".not-used").html(notUsed);
       }
     }
   });

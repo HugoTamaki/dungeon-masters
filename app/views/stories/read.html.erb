@@ -49,10 +49,17 @@
       <p>Skill: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
       <p>Energy: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
       <p>Luck: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
-      <% if @adventurer.items.present? %>
+      <% if @adventurers_items.present? %>
         <h3>Adventurer Items</h3>
-        <% @adventurer.items.each do |item| %>
-        <p><%= item.name %> </p>
+        <% @adventurers_items.each do |item| %>
+          <p>
+            <%= item.item.name %> -
+            <% if item.status == 1 %>
+              not used
+            <% else %>
+              used
+            <% end %>
+          </p>
         <% end %>
       <% end %>
     </div>
