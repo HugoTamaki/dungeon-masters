@@ -39,6 +39,9 @@ gem "cancan"
 gem "paperclip", "~> 3.0"
 gem "rmagick"
 gem "kaminari"
+gem "chromedriver-helper"
+gem "database_cleaner"
+gem "launchy"
 
 gem "rspec-rails", :group => [:test, :development]
 group :test do
@@ -46,6 +49,7 @@ group :test do
   gem "capybara"
   gem "guard-rspec"
   gem "cucumber-rails"
+  gem "selenium-webdriver", "~> 2.38.0"
 end
 
 # To use ActiveModel has_secure_password
