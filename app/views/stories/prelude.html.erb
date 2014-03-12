@@ -16,8 +16,9 @@
         <%= f.hidden_field :name, value: current_user.name %>
         <%= hidden_field_tag :story_id, @story.id %>
         <%= hidden_field_tag :reference, "1" %>
+      
+        <%= f.submit "Chapter 1", class: "btn btn-primary" unless @story.chapters.where(reference: "1").empty? %>
       </div>
-      <%= f.submit "Chapter 1", class: "btn btn-primary" unless @story.chapters.where(reference: "1").empty? %>
     <% end %>
     <%= button_tag "Roll dices", class: "btn btn-primary", id: "generator" %>
     <!-- fim do form -->
