@@ -6,7 +6,7 @@ FactoryGirl.define do
     resume "Resumo"
     prelude "Preludio"
     user_id 1
-    cover { File.new("#{Rails.root}/spec/photos/test.png") }
+#    cover { File.new("#{Rails.root}/spec/photos/test.png") }
   end
 
 end

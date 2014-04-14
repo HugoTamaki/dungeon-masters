@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20140205152455) do
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
     t.text     "prelude"
+    t.string   "cover"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"

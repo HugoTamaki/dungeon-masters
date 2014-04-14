@@ -30,7 +30,6 @@ gem "jquery-rails"
 gem "devise"
 gem "therubyracer", "0.10.2"
 gem "less-rails"
-gem "simple_form"
 gem "schema_plus"
 gem "simple_form"
 gem "pry"
@@ -41,6 +40,7 @@ gem "rmagick"
 gem "kaminari"
 gem "chromedriver-helper"
 gem "launchy"
+#gem 'cocaine', '0.3.2'
 
 gem "rspec-rails", :group => [:test, :development]
 group :test do

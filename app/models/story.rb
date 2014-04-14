@@ -10,7 +10,7 @@ class Story < ActiveRecord::Base
     :cover
 
 
-  has_attached_file :cover, styles: {thumbnail: "200x200>", index_cover: "500x400>"}
+  has_attached_file :cover, styles: {thumbnail: "200x200>", index_cover: "500x400>"}, :default_url => "no_image_thumb.gif"
   attr_accessor :chapter_numbers
 
   validates :title, presence: true

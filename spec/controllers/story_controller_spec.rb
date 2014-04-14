@@ -210,7 +210,7 @@ def criar_historia_com_capitulos
 #  - O capitulo 3 tem um modificador de item (espada)
 #  - O capítulo 2 também tem um monstro (goblin)
 
-  story = FactoryGirl.build(:story)
+  story = FactoryGirl.create(:story)
   user = User.last
   user.stories << story
   for i in (1..5)
