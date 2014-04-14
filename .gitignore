@@ -16,3 +16,7 @@
 /public/system/*
 /public/uploads/*
 public/.DS_Store
+.swp
+app/.DS_Store
+app/assets/.DS_Store
+app/assets/images/.DS_Store
