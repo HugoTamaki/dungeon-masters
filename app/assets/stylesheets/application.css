@@ -195,6 +195,7 @@ label {
 .image {
     float: left;
     width: 500px;
+    margin-bottom: 10px;
 }
 
 .prelude {
