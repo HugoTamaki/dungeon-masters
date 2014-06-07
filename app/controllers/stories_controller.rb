@@ -162,25 +162,10 @@ class StoriesController < ApplicationController
   def update
     @story = Story.find(params[:id])
 
-    respond_to do |format|
-      if @story.update_attributes(params[:story])
-        if params[:commit] == "Save"
-          format.html { redirect_to :back, notice: 'Story was successfully saved.' }
-        elsif params[:commit] == "Edit Items"
-          format.html { redirect_to story_edit_items_path(@story), notice: 'Data saved' }
-        elsif params[:commit] == "Edit Special Attributes"
-          format.html { redirect_to story_edit_special_attributes_path(@story), notice: 'Data saved' }
-        elsif params[:commit] == "Edit Chapters"
-          format.html { redirect_to edit_story_path(@story), notice: 'Data saved' }
-        elsif params[:commit] == "Graph"
-          format.html { redirect_to story_graph_path(@story), notice: 'Data saved.' }
-        elsif params[:commit] == "Edit Monsters"
-          format.html { redirect_to story_edit_monsters_path(@story), notice: 'Data saved.' }
-        else
-          format.html { redirect_to @story, notice: 'Story was successfully updated.' }
-        end
-        format.json { head :no_content }
-      else
+    if @story.update_attributes(params[:story])
+      redirect_story(@story, params)
+    else
+      respond_to do |format|
         format.html { render action: :edit, controller: :stories }
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
@@ -214,4 +199,24 @@ class StoriesController < ApplicationController
     end
   end
   
+  private
+
+    def redirect_story(story, params)
+      case params[:commit]
+        when "Save"
+          redirect_to :back, notice: 'Story was successfully saved.'
+        when "Edit Items"
+          redirect_to story_edit_items_path(story), notice: 'Data saved'
+        when "Edit Special Attributes"
+          redirect_to story_edit_special_attributes_path(story), notice: 'Data saved'
+        when "Edit Chapters"
+          redirect_to edit_story_path(story), notice: 'Data saved'
+        when "Graph"
+          redirect_to story_graph_path(story), notice: 'Data saved.'
+        when "Edit Monters"
+          redirect_to story_edit_monsters_path(story), notice: 'Data saved.'
+        else
+          redirect_to story, notice: 'Story was successfully updated.'
+      end
+    end
 end
