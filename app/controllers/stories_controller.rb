@@ -44,28 +44,7 @@ class StoriesController < ApplicationController
     @adventurer = Adventurer.by_user(current_user.id).first
     @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
 
-    if @chapter.modifiers_attributes.present?
-      @chapter.modifiers_attributes.each do |attribute|
-        case attribute.attr
-        when "skill"
-          @adventurer.skill = @adventurer.skill + attribute.quantity
-        when "energy"
-          @adventurer.energy = @adventurer.energy + attribute.quantity
-        when "luck"
-          @adventurer.luck = @adventurer.luck + attribute.quantity
-        when "gold"
-          @adventurer.gold = @adventurer.gold + attribute.quantity
-        end
-      end
-      @adventurer.save
-    end
-
-    if @chapter.modifiers_items.present?
-      @chapter.modifiers_items.each do |item|
-        @adventurer.items << item.item
-      end
-      @adventurer.save
-    end
+    Adventurer.attribute_changer(@adventurer, @chapter)
     
     respond_to do |format|
       format.html # show.html.erb
