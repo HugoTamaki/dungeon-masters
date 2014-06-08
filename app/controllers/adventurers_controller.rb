@@ -48,4 +48,15 @@ class AdventurersController < ApplicationController
     end
   end
 
+  private
+
+    def set_adventurer
+      @adventurer = Adventurer.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def adventurer_params
+      params.require(:adventurer).permit(:skill, :energy, :gold, :luck, :name, :user_id)
+    end
+
 end

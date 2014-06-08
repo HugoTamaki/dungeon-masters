@@ -219,4 +219,35 @@ class StoriesController < ApplicationController
           redirect_to story, notice: 'Story was successfully updated.'
       end
     end
+
+    def set_story
+      @story = Story.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def story_params
+      params.require(:story).permit(:resume,
+                                    :title,
+                                    :prelude,
+                                    :user_id,
+                                    :chapter_numbers,
+                                    :cover,
+                                    items_attributes: [:id, :description, :name, :story_id, :_destroy],
+                                    special_attributes_attributes: [:id, :adventurer_id, :name, :value, :story_id, :_destroy],
+                                    chapters_attributes: [:id,
+                                                          :content,
+                                                          :reference,
+                                                          :story_id,
+                                                          :image,
+                                                          :x,
+                                                          :y,
+                                                          :color,
+                                                          :_destroy,
+                                                          decisions_attributes: [:id, :destiny_num, :chapter_id, :_destroy],
+                                                          monsters_attributes: [:id, :skill, :energy, :name, :chapter_id, :_destroy],
+                                                          modifiers_items_attributes: [:id, :chapter_id, :item_id, :quantity, items_attributes: [:id, :description, :name, :story_id, :_destroy]],
+                                                          modifiers_attributes_attributes: [:id, :attr, :chapter_id, :quantity, :_destroy],
+                                                          items_attributes: [:id, :description, :name, :story_id, :_destroy],
+                                                          ])
+    end
 end
