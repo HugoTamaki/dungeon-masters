@@ -1,5 +1,4 @@
 class Adventurer < ActiveRecord::Base
-  attr_accessible :skill, :energy, :gold, :luck, :name, :user_id
 
   validates :skill, presence: true, numericality: true
   validates :energy, presence: true, numericality: true

@@ -1,16 +1,4 @@
 class Chapter < ActiveRecord::Base
-  attr_accessible :content, 
-                  :reference,
-                  :story_id,
-                  :decisions_attributes,
-                  :monsters_attributes,
-                  :modifiers_items_attributes,
-                  :modifiers_attributes_attributes,
-                  :items_attributes,
-                  :image,
-                  :x,
-                  :y,
-                  :color
 
   has_attached_file :image, styles: {thumbnail: "200x200>"}
   belongs_to :story
