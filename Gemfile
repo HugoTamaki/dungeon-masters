@@ -10,16 +10,14 @@ gem 'mysql2'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'twitter-bootstrap-rails'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'twitter-bootstrap-rails'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'uglifier', '>= 1.0.3'
 
 group :development do
   gem "better_errors"
@@ -42,14 +40,14 @@ gem "chromedriver-helper"
 gem "launchy"
 #gem 'cocaine', '0.3.2'
 
-gem "rspec-rails", :group => [:test, :development]
+gem "rspec-rails", '2.14.0', :group => [:test, :development]
 group :test do
   gem "factory_girl_rails"
   gem "capybara"
   gem "database_cleaner"
   gem "guard-rspec"
   gem "cucumber-rails"
-  gem "selenium-webdriver", "~> 2.38.0"
+  gem "selenium-webdriver"
 end
 
 # To use ActiveModel has_secure_password

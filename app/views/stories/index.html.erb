@@ -26,7 +26,7 @@
             <%= link_to 'Show', story, class: "btn btn-primary" if story.user == current_user %>
             <%= link_to 'Read', story_prelude_path(story), class: "btn btn-primary" %>
             <%= link_to 'Edit', edit_story_path(story), class: "btn btn-primary" if story.user == current_user %>
-            <%= link_to 'Destroy', story, class: "btn btn-danger", confirm: 'Are you sure?', method: :delete if story.user == current_user %>
+            <%= link_to 'Destroy', story, class: "btn btn-danger", data: {confirm: 'Are you sure?'}, method: :delete if story.user == current_user %>
         </div>
       </div>
     <% end %>
