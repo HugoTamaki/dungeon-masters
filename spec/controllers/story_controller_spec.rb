@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 
-feature "CRUD de história", js: true do
+feature "CRUD de história" do
 
   before :each do
     login
@@ -19,7 +19,7 @@ feature "CRUD de história", js: true do
 
       click_button "Next"
 
-      expect(page).to have_text("Story was successfully created.")
+      page.should have_text("Story was successfully created.")
       current_path.should == "/stories/#{Story.last.id}/edit"
     end
 
@@ -33,7 +33,7 @@ feature "CRUD de história", js: true do
       click_button "Next"
 
       current_path.should == "/stories/new"
-      expect(page).to have_text("some parameters are missing")
+      page.should have_text("some parameters are missing")
     end
   end
 
@@ -44,7 +44,7 @@ feature "CRUD de história", js: true do
       editando_items
     end
 
-    scenario "usuário cria um capitulo com sucesso" do
+    scenario "usuário cria um capitulo com sucesso", js: true do
       click_link "Add chapters"
       fill_in "Reference", with: "Referencia"
       fill_in "Content", with: "Conteudo"
@@ -60,10 +60,10 @@ feature "CRUD de história", js: true do
 
       first(:button, "Finish Editing").click
       current_path.should == "/stories/#{Story.last.id}"
-      expect(page).to have_text("Story was successfully updated.")
+      page.should have_text("Story was successfully updated.")
     end
     
-    scenario "usuário cria um capitulo sem sucesso" do
+    scenario "usuário cria um capitulo sem sucesso", js: true do
       click_link "Add chapters"
       fill_in "Reference", with: ""
       fill_in "Content", with: ""
@@ -72,10 +72,10 @@ feature "CRUD de história", js: true do
 
       first(:button, "Finish Editing").click
       current_path.should == "/stories/#{Story.last.id}"
-      expect(page).to have_text("Chapters monsters skill can't be blank")
-      expect(page).to have_text("Chapters monsters skill is not a number")
-      expect(page).to have_text("Chapters monsters energy can't be blank")
-      expect(page).to have_text("Chapters monsters energy is not a number")
+      page.should have_text("Chapters monsters skill can't be blank")
+      page.should have_text("Chapters monsters skill is not a number")
+      page.should have_text("Chapters monsters energy can't be blank")
+      page.should have_text("Chapters monsters energy is not a number")
 
     end
   end
@@ -94,7 +94,7 @@ feature "CRUD de história", js: true do
       click_button "Edit Chapters"
 
       current_path.should == "/stories/#{Story.last.id}/edit"
-      expect(page).to have_text("Data saved")
+      page.should have_text("Data saved")
     end
 
     scenario "Criando itens associados à história sem sucesso" do
@@ -105,22 +105,22 @@ feature "CRUD de história", js: true do
       click_button "Edit Chapters"
 
       current_path.should == "/stories/#{Story.last.id}"
-      expect(page).to have_text("Items description can't be blank")
+      page.should have_text("Items description can't be blank")
     end
     
   end
   
   feature "Deletar história - " do
-    scenario "Deletando história" do
+    scenario "Deletando história", js: true do
       story = FactoryGirl.build(:story)
       user = User.last
       user.stories << story
 
       visit "/stories"
-      expect(page).to have_text("Titulo")
+      page.should have_text("Titulo")
       click_link("Destroy")
       page.driver.browser.switch_to.alert.accept
-      expect(page).to have_text("No stories.")
+      page.should have_text("No stories.")
       current_path.should == "/stories"
     end
   end
@@ -130,25 +130,25 @@ feature "CRUD de história", js: true do
       criar_historia_com_capitulos
     end
 
-    scenario "Testando conexão dos capitulos" do
+    scenario "Testando conexão dos capitulos", js: true do
       visit "/stories"
 
-      expect(page).to have_text("Titulo")
+      page.should have_text("Titulo")
       click_link("Read")
-      expect(page).to have_text("Prelude")
+      page.should have_text("Prelude")
       click_button "Roll dices"
       
       click_button "Chapter 1"
-      expect(page).to have_text("content 1")
+      page.should have_text("content 1")
       
       click_link "Chapter 2"
-      expect(page).to have_text("content 2")
+      page.should have_text("content 2")
 
       click_link "Chapter 5"
-      expect(page).to have_text("content 5")
+      page.should have_text("content 5")
     end
 
-    scenario "Testando combate" do
+    scenario "Testando combate", js: true do
       visit "/stories"
 
       click_link "Read"
@@ -159,10 +159,10 @@ feature "CRUD de história", js: true do
       page.should have_button 'Combat'
 
       click_button "Combat"
-      expect(page).to have_text("goblin died!")
+      page.should have_text("goblin died!")
     end
 
-    scenario "Testando recebimento de items" do
+    scenario "Testando recebimento de items", js: true do
       visit "/stories"
 
       click_link "Read"
@@ -170,7 +170,7 @@ feature "CRUD de história", js: true do
       click_button "Chapter 1"
       click_link "Chapter 3"
 
-      expect(page).to have_text("espada")
+      page.should have_text("espada")
     end
   end
 end
