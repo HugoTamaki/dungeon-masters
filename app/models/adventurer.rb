@@ -35,5 +35,6 @@ class Adventurer < ActiveRecord::Base
       end
       adventurer.save
     end
+    adventurer
   end
 end
