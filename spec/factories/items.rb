@@ -2,9 +2,8 @@
 
 FactoryGirl.define do
   factory :item do
-    name "item name"
-    description "item description"
-    story_id 1
+    name "espada"
+    description "uma espada"
   end
 
 end
