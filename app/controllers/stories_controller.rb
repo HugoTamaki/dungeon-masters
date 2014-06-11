@@ -41,10 +41,10 @@ class StoriesController < ApplicationController
   def read
     @story = Story.find(params[:id])
     @chapter = @story.chapters.where(reference: params[:reference]).first
-    @adventurer = Adventurer.by_user(current_user.id).first
-    @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
+    adventurer = Adventurer.by_user(current_user.id).first
 
-    Adventurer.attribute_changer(@adventurer, @chapter)
+    @adventurer = Adventurer.attribute_changer(adventurer, @chapter) unless @adventurer && @chapter
+    @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
     
     respond_to do |format|
       format.html # show.html.erb
