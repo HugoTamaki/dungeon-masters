@@ -5,7 +5,6 @@ FactoryGirl.define do
     title "Titulo"
     resume "Resumo"
     prelude "Preludio"
-    user_id 1
 #    cover { File.new("#{Rails.root}/spec/photos/test.png") }
   end
 
