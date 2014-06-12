@@ -17,7 +17,7 @@ gem 'bootstrap-sass', '~> 3.1.1'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', :platform => :ruby
 
-gem 'uglifier', '>= 1.0.3'
+gem 'uglifier'
 
 group :development do
   gem "better_errors"
