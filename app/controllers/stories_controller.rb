@@ -130,7 +130,7 @@ class StoriesController < ApplicationController
   # POST /stories
   # POST /stories.json
   def create
-    @story = Story.new(params[:story])
+    @story = Story.new(story_params)
 
     respond_to do |format|
       if @story.save

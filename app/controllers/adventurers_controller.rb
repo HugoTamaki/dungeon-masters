@@ -5,7 +5,7 @@ class AdventurersController < ApplicationController
 
     respond_to do |format|
       if adventurer.empty?
-        @adventurer = Adventurer.new(params[:adventurer])
+        @adventurer = Adventurer.new(adventurer_params)
         if @adventurer.save
           options = {reference: params[:reference], id: params[:story_id]}
           format.html { redirect_to read_stories_path(options) }
