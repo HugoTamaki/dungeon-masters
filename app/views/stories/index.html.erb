@@ -14,7 +14,7 @@
               <h3><%= story.title %> - by <%= story.user.name %></h3>
               <div class="image">
                 <% if story.cover.blank? %>
-                  <%= image_tag 'no_image_thumb.gif', height: 500, width: 400 %>
+                  <%= image_tag 'no_image_thumb.gif' %>
                 <% else %>
                   <%= image_tag story.cover(:index_cover) %>
                 <% end %>
