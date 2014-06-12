@@ -1,15 +1,15 @@
 <h3>Graph</h3>
 <%= javascript_include_tag "sigma" %>
 
-<%= simple_form_for(@story) do |f| %>
-  <div id="action">
+<div id="actions">
+  <%= simple_form_for(@story) do |f| %>
     <%= f.submit "Finish Editing", class: "btn btn-primary" %>
     <%= f.submit "Edit Chapters", class: "btn btn-primary" %>
     <%= f.submit "Edit Items", class: "btn btn-primary" %>
     <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
     <%= f.submit "Save", class: "btn btn-primary" %>
-  </div>
-<% end %>
+  <% end %>
+</div>
 
 <div class="sigma" id="sig"></div>
 <div class="not-used"></div>
