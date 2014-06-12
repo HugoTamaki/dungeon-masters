@@ -12,7 +12,7 @@ gem 'mysql2'
 # in production environments by default.
 gem 'sass-rails'
 gem 'coffee-rails'
-gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass', '~> 3.1.1'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', :platform => :ruby
