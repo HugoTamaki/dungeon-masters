@@ -79,14 +79,14 @@
         var adventurer_luck = <%= @adventurer.luck %>;
 
         <% @chapter.monsters.each do |monster| %>
-          var <%= monster.name.downcase.tr(" ","_") %>_skill = <%= monster.skill %>;
-          var <%= monster.name.downcase.tr(" ","_") %>_energy = <%= monster.energy %>;
+          var <%= monster.name.underscore.gsub(" ", "_") %>_skill = <%= monster.skill %>;
+          var <%= monster.name.underscore.gsub(" ", "_") %>_energy = <%= monster.energy %>;
 
           finish = false;
 
           while (!finish) {
             console.log("adventurer energy: "+adventurer_energy);
-            var enemyAttackPower = 2 + Math.floor(Math.random()*11) + 12 + <%= monster.name.downcase.tr(" ","_") %>_skill;
+            var enemyAttackPower = 2 + Math.floor(Math.random()*11) + 12 + <%= monster.name.underscore.gsub(" ", "_") %>_skill;
             var adventurerAttackPower = 2 + Math.floor(Math.random()*11) + 12 + adventurer_skill;
 
             if (enemyAttackPower > adventurerAttackPower) {
@@ -98,20 +98,20 @@
                 result += "<p>You died!</p>";
                 $("#combat-result").html(result);
                 return;
-              } else if (<%= monster.name.downcase.tr(" ","_") %>_energy < 1) {
+              } else if (<%= monster.name.underscore.gsub(" ", "_") %>_energy < 1) {
                 finish = true;
                 result += "<p><%= monster.name %> died!</p>";
               }
             } else if (enemyAttackPower < adventurerAttackPower) {
               result += "<p><strong>"+ "<%= @adventurer.name %>" +" Attack Power - "+ adventurerAttackPower +"</strong> "+ "<%= monster.name %>" +" - Attack Power - "+ enemyAttackPower +"<p>";
-              <%= monster.name.downcase.tr(" ","_") %>_energy -= 2;
+              <%= monster.name.underscore.gsub(" ", "_") %>_energy -= 2;
               if (adventurer_energy < 1) {
                 finish = true;
                 morreu = true;
                 result += "<p>You died!</p>";
                 $("#combat-result").html(result);
                 return;
-              } else if (<%= monster.name.downcase.tr(" ","_") %>_energy < 1) {
+              } else if (<%= monster.name.underscore.gsub(" ", "_") %>_energy < 1) {
                 finish = true;
                 result += "<p><%= monster.name %> died!</p>";
               }
