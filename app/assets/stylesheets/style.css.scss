@@ -36,20 +36,7 @@ body {
     display: block;
 }
 
-.item {
-    float: left;
-    margin: 10px;
-    border: 1px solid;
-    border-radius: 9px;
-    overflow: auto;
-    top: 20px;
-    bottom: 20px;
-    padding: 10px;
-    background-color: #ECEAE0;
-    width: 1100px;
-}
-
-.special-attribute {
+.wrapper {
     float: left;
     margin: 10px;
     border: 1px solid;
