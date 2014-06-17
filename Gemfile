@@ -22,6 +22,8 @@ gem 'uglifier'
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
+  gem "capistrano"
+  gem 'rvm-capistrano'
 end
 
 gem "jquery-rails"
