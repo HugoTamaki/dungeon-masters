@@ -65,25 +65,26 @@ class StoriesController < ApplicationController
 
   # GET /stories/1/edit
   def edit
-    chapter_numbers = params[:chapter_numbers].to_i
-    @story = Story.includes(:chapters, :items, :special_attributes).find(params[:id])
+  chapter_numbers = params[:chapter_numbers].to_i
+  @story = Story.includes(:chapters, :items, :special_attributes).find(params[:id])
 
-    if @story.chapters.empty?
-      if chapter_numbers.present?
-        for i in (1..chapter_numbers)
-          chapter = @story.chapters.build
-          chapter.decisions.build
-          chapter.reference = i
-          chapter.save
-        end
-      else
+  if @story.chapters.empty?
+    if chapter_numbers.present?
+      for i in (1..chapter_numbers)
         chapter = @story.chapters.build
         chapter.decisions.build
+        chapter.reference = i
+        chapter.save
       end
+    else
+      chapter = @story.chapters.build
+      chapter.decisions.build
     end
-    chapters = Chapter.by_story(params[:id])
-    @chapters = chapters.includes(:decisions, :monsters)
   end
+  # chapters = Chapter.by_story(params[:id])
+  # @chapters = chapters.includes(:decisions, :monsters)
+  @chapters = @story.chapters
+end
 
   def edit_items
     @story = Story.find(params[:story_id])
