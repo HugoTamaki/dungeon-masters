@@ -17,11 +17,7 @@
       <td>
       <div class="index_stories">
         <p><strong><%= link_to story.title, story_prelude_path(story) %></strong></p>
-        <% if story.cover.blank? %>
-          <%= image_tag 'no_image_small.png' %>
-        <% else %>
-          <%= image_tag story.cover(:thumbnail) %>
-        <% end %>
+        <%= image_tag story.cover(:thumbnail) %>
       </div>
       </td>
     <% end %>

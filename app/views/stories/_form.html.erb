@@ -66,7 +66,7 @@
             <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
           </div>
           <% if f.object.cover.blank? %>
-            <%= image_tag 'no_image_thumb.gif' %>
+            <%= image_tag 'no_image_thumbnail.png' %>
           <% else %>
             Current image: <%= image_tag f.object.cover(:thumbnail) %>
           <% end %>
