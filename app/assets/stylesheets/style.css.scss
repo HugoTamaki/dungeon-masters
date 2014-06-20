@@ -1,5 +1,6 @@
 
 .actions {
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -170,8 +171,8 @@ label {
     border-radius: 9px;
     padding: 10px;
     margin: 15px;
-    width: 1000px;
-    height: 600px;
+    // width: 1000px;
+    // height: 600px;
     background-color: #ECEAE0;
 }
 
@@ -181,14 +182,15 @@ label {
 }
 
 .image {
-    float: left;
     width: 500px;
+    margin-left: 50px;
     margin-bottom: 10px;
 }
 
 .prelude {
-    float: right;
-    width: 500px;
+    margin-top: 50px;
+    height: 500px;
+    overflow: auto;
 }
 
 .content {

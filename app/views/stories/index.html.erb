@@ -7,31 +7,29 @@
     <%= paginate @stories %>
 
     <% @stories.each do |story| %>
-      <div class="container">
+      <div class="container story_div">
         <div class="row">
-          <div class="story_div">
-            <div class="col-lg-6">
+          <div class="col-lg-4 col-sm-12">
+            <div class="image">
               <h3><%= story.title %> - by <%= story.user.name %></h3>
-              <div class="image">
-                <% if story.cover.blank? %>
-                  <%= image_tag 'no_image_thumb.gif' %>
-                <% else %>
-                  <%= image_tag story.cover(:index_cover) %>
-                <% end %>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="prelude">
-                <p>
-                  <%= simple_format story.resume %>
-                </p>
-              </div>
+              <% if story.cover.blank? %>
+                <%= image_tag 'no_image_thumb.gif' %>
+              <% else %>
+                <%= image_tag story.cover(:index_cover) %>
+              <% end %>
               <div class="actions">
                 <%= link_to 'Show', story, class: "btn btn-primary" if story.user == current_user %>
                 <%= link_to 'Read', story_prelude_path(story), class: "btn btn-primary" %>
                 <%= link_to 'Edit', edit_story_path(story), class: "btn btn-primary" if story.user == current_user %>
                 <%= link_to 'Destroy', story, class: "btn btn-danger", data: {confirm: 'Are you sure?'}, method: :delete if story.user == current_user %>
               </div>
+            </div>
+          </div>
+          <div class="col-lg-8 col-sm-12">
+            <div class="prelude">
+              <p>
+                <%= simple_format story.resume %>
+              </p>
             </div>
           </div>
         </div>
