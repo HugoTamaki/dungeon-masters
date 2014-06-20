@@ -40,7 +40,6 @@ gem "rmagick"
 gem "kaminari"
 gem "chromedriver-helper"
 gem "launchy"
-#gem 'cocaine', '0.3.2'
 
 gem "rspec-rails", '2.14.0', :group => [:test, :development]
 group :test do
