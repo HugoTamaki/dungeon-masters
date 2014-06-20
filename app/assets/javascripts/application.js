@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require_tree .
 //= require jquery-ui
-//= require jquery.autosave
+//= remove-image
 
 function add_fields(link, association, content) {
     var new_id = new Date().getTime();

@@ -8,7 +8,8 @@ Calabouco::Application.routes.draw do
     put 'update_tabs'
     get 'graph_json'
     get 'graph_json_show', on: :collection
-    get 'edit_special_attributes', as: "edit_special_attributes"
+    get 'erase_image', as: 'erase_image'
+    get 'edit_special_attributes', as: "edit_special_attributes", on: :collection
     get 'edit_items', as: "edit_items"
     get 'graph'
   end

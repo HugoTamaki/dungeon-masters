@@ -125,7 +125,16 @@ end
     respond_to do |format|
       format.json { render json: @chapters.to_json }
     end
+  end
 
+  def erase_image
+    current_chapter = Chapter.find(params[:chapter_id])
+    current_chapter.image_file_name = nil
+    current_chapter.image_content_type = nil
+    current_chapter.image_file_size = 0
+    current_chapter.save
+
+    render nothing: true
   end
   
   # POST /stories
