@@ -1,26 +1,14 @@
-# config valid only for Capistrano 3.1
-lock '3.2.1'
+set :user, "root"
+set :stages, %w(production)
+set :default_stage, 'production'
 
-require 'rvm/capistrano'
-require 'bundler/capistrano'
-
-set :rvm_path, '/usr/local/rvm'
-set :rvm_bin_path, '/usr/local/rvm/bin'
-set :rvm_ruby_string, 'ruby-2.1.1-p76'
-
-set :user, "HugotTamaki"
-
-set :stages, %w(staging production)
-set :default_stage, 'staging'
-
-require 'capistrano/ext/multistage'
-
-set :application, "dungeon_masters"
+set :application, "Dungeon Masters"
+set :scm, :git
 set :repository, 'git@github.com:HugoTamaki/dungeon-masters.git'
 set :branch,  'master'
 set :rails_env, 'production'
 set :deploy_via,  :remote_cache
-set :deploy_to, '/home/deploy'
+# set :deploy_to, '/home/deploy'
 set :copy_exclude, ['.git/*', '.DS_Store']
 
 
