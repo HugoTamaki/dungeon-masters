@@ -1,14 +1,21 @@
-set :user, "root"
-set :stages, %w(production)
-set :default_stage, 'production'
+lock '3.2.1'
 
-set :application, "Dungeon Masters"
+set :application, "dungeon-masters"
 set :scm, :git
-set :repository, 'git@github.com:HugoTamaki/dungeon-masters.git'
+set :repo_url, 'git@github.com:HugoTamaki/dungeon-masters.git'
 set :branch,  'master'
+
+set :deploy_to, '/var/www/dungeon-masters'
+
+set :format, :pretty
+
+set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+set :stage, :production
 set :rails_env, 'production'
+
 set :deploy_via,  :remote_cache
-# set :deploy_to, '/home/deploy'
 set :copy_exclude, ['.git/*', '.DS_Store']
 
 
@@ -48,7 +55,7 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 

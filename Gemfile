@@ -22,10 +22,11 @@ gem 'uglifier'
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'capistrano'
+  gem 'capistrano', '~> 3.2.1'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
+  gem 'capistrano3-unicorn'
 end
 
 gem "jquery-rails"
@@ -42,6 +43,7 @@ gem "rmagick"
 gem "kaminari"
 gem "chromedriver-helper"
 gem "launchy"
+gem "unicorn"
 
 gem "rspec-rails", '2.14.0', :group => [:test, :development]
 group :test do
