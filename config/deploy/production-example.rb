@@ -5,9 +5,9 @@
 # property set.  Don't declare `role :all`, it's a meta role.
 set :stage, :production
 
-role :app, %w{root@example}
-role :web, %w{root@example}
-role :db,  %w{root@example}
+role :app, %w{user@example}
+role :web, %w{user@example}
+role :db,  %w{user@example}
 
 set :ssh_options, forward_agent: true
 
