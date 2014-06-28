@@ -43,7 +43,7 @@ gem "rmagick"
 gem "kaminari"
 gem "chromedriver-helper"
 gem "launchy"
-gem "unicorn"
+# gem "unicorn"
 
 gem "rspec-rails", '2.14.0', :group => [:test, :development]
 group :test do
