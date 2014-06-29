@@ -1,20 +1,22 @@
-<h1>Edit special attributes</h1>
-<div class="wrapper">
-  <%= simple_form_for(@story) do |f| %>
-  <div class="actions">
-    <%= f.submit "Finish Editing", class: "btn btn-primary" %>
-    <%= f.submit "Edit Chapters", class: "btn btn-primary" %>
-    <%= f.submit "Edit Items", class: "btn btn-primary" %>
-    <%= f.submit "Graph", class: "btn btn-primary" %>
-    <%= f.submit "Save", class: "btn btn-primary" %>
-  </div>
-  <div>
-    <%= f.simple_fields_for :special_attributes do |builder| %>
-      <%= render partial: "/special_attributes/special_attributes_fields", :locals => {:f => builder} %>
+<div class="container">
+  <h1>Edit special attributes</h1>
+  <div class="wrapper">
+    <%= simple_form_for(@story) do |f| %>
+    <div class="actions">
+      <%= f.submit "Finish Editing", class: "btn btn-primary" %>
+      <%= f.submit "Edit Chapters", class: "btn btn-primary" %>
+      <%= f.submit "Edit Items", class: "btn btn-primary" %>
+      <%= f.submit "Graph", class: "btn btn-primary" %>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    </div>
+    <div>
+      <%= f.simple_fields_for :special_attributes do |builder| %>
+        <%= render partial: "/special_attributes/special_attributes_fields", :locals => {:f => builder} %>
+      <% end %>
+      <p>
+        <%= link_to_add_fields "Add Special Attributes", f, :special_attributes, "special_attributes" %>
+      </p>
+    </div>
     <% end %>
-    <p>
-      <%= link_to_add_fields "Add Special Attributes", f, :special_attributes, "special_attributes" %>
-    </p>
-  </div>
-  <% end %>
+  </div>  
 </div>

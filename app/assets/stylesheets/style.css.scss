@@ -1,218 +1,218 @@
 
 .actions {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .all {
-    margin-top: 60px;
+  margin-top: 60px;
 }
 
 body { 
-    background-color: #B2CECF; 
+  background-color: #B2CECF; 
 }
 
 .chapter-fields {
-    border: 1px solid;
-    padding: 15px;
-    border-radius: 9px;
-    left-margin: 0;
+  border: 1px solid;
+  padding: 15px;
+  border-radius: 9px;
+  left-margin: 0;
 }
 
 .attribute-fields {
-    border: 1px solid;
-    padding: 5px;
-    border-radius: 9px;
-    margin: 10px;
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 9px;
+  margin: 10px;
 }
 
 .item-fields {
-    border: 1px solid;
-    padding: 5px;
-    border-radius: 9px;
-    margin: 10px;
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 9px;
+  margin: 10px;
 }
 
 .chapter-image {
-    display: block;
+  display: block;
 }
 
 .wrapper {
-    float: left;
-    margin: 10px;
-    border: 1px solid;
-    border-radius: 9px;
-    overflow: auto;
-    top: 20px;
-    bottom: 20px;
-    padding: 10px;
-    background-color: #ECEAE0;
-    width: 1000px;
+  float: left;
+  margin: 10px;
+  border: 1px solid;
+  border-radius: 9px;
+  overflow: auto;
+  top: 20px;
+  bottom: 20px;
+  padding: 10px;
+  background-color: #ECEAE0;
+  width: 1000px;
 }
 
 #tabs {
-    width: 1100px;
+  width: 1100px;
 }
 
 .chapter {
-    float: left;
-    margin: 10px;
-    border: 1px solid;
-    border-radius: 9px;
-    overflow: auto;
-    top: 20px;
-    bottom: 20px;
-    padding: 10px;
-    background-color: #ECEAE0;
-    width: 700px;
+  margin: 5px 10px;
+  height: 500px;
+  border: 1px solid;
+  border-radius: 9px;
+  overflow: auto;
+  background-color: #ECEAE0;
 }
 
 .adventurer {
-    float: right;
-    margin: 10px;
-    border: 1px solid;
-    border-radius: 9px;
-    top: 20px;
-    bottom: 20px;
-    padding: 10px;
-    background-color: #ECEAE0;
-    width: 300px;
+  border: 1px solid;
+  margin: 5px 10px;
+  // margin: 10px;
+  border-radius: 9px;
+  background-color: #ECEAE0;
 }
 
 .decisions {
-    margin: 5px;
-    padding: 15px;
-    border: 1px solid;
-    border-radius: 9px;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid;
+  border-radius: 9px;
 }
 
 .decision-fields {
-    border: 1px solid;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 9px;
-    left-margin: 5px;
+  border: 1px solid;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 9px;
+  left-margin: 5px;
+}
+
+#dice-container {
+  margin: 10px 0;
 }
 
 .monsters {
-    margin: 5px;
-    padding: 15px;
-    border: 1px solid;
-    border-radius: 9px;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid;
+  border-radius: 9px;
 }
 
 .monster-fields {
-    border: 1px solid;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 9px;
+  border: 1px solid;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 9px;
 }
 
 .modifiers-items {
-    margin: 5px;
-    padding: 15px;
-    border: 1px solid;
-    border-radius: 9px;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid;
+  border-radius: 9px;
 }
 
 .modifiers-attributes {
-    margin: 5px;
-    padding: 15px;
-    border: 1px solid;
-    border-radius: 9px;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid;
+  border-radius: 9px;
 }
 
 .modifier-item-fields {
-    border: 1px solid;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 9px;
+  border: 1px solid;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 9px;
 }
 
 .modifier-attribute-fields {
-    border: 1px solid;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 9px;
+  border: 1px solid;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 9px;
 }
 
 .message-container {
-    height: 20px;
-    display: block;
+  height: 20px;
+  display: block;
 }
 
 .sigma {
-    margin-left:auto;
-    margin-right:auto;
-    position: relative;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    background: #222;
-    height: 500px;
-    overflow: auto;
-    scroll: false;
-    top: 0;
-    left: 0;
+  margin-left:auto;
+  margin-right:auto;
+  position: relative;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  background: #222;
+  height: 500px;
+  overflow: auto;
+  scroll: false;
+  top: 0;
+  left: 0;
+}
+
+#story-start {
+  margin-top: 10px;
 }
 
 label {
-    display: inline-block;
-    width: 6em;
+  display: inline-block;
+  width: 6em;
 }
 
 .stories {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .story_div {
-    border: 1px solid;
-    border-radius: 9px;
-    padding: 10px;
-    margin: 15px;
-    background-color: #ECEAE0;
+  border: 1px solid;
+  border-radius: 9px;
+  padding: 10px;
+  margin: 15px;
+  background-color: #ECEAE0;
 }
 
 .index_stories {
-    margin-left: 5px;
-    margin-right: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .image {
-    // width: 500px;
-    margin-left: 50px;
-    margin-bottom: 10px;
+  // width: 500px;
+  margin-left: 50px;
+  margin-bottom: 10px;
 }
 
 .prelude {
-    margin-top: 50px;
-    height: 500px;
-    overflow: auto;
+  margin-top: 50px;
+  height: 500px;
+  overflow: auto;
 }
 
 .content {
-    margin: 0 auto !important;
-    /*width: 100%;*/
-    width: 1100px;
-    padding: 10px;
-    border: 1px solid;
-    border-radius: 9px;
-    background-color: #E2ECDF;
+  padding-top: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+  border: 1px solid;
+  border-radius: 9px;
+  background-color: #E2ECDF;
 }
 
 .not-used {
-    width: 900px;
-    margin-left: 0;
-    border: 1px solid;
-    border-radius: 9px;
-    background-color: #ECEAE0;
-    margin-top: 20px;
-    position: relative;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    scroll: false;
-    top: 0;
-    left: 0;
+  width: 900px;
+  margin-left: 0;
+  border: 1px solid;
+  border-radius: 9px;
+  background-color: #ECEAE0;
+  margin-top: 20px;
+  position: relative;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  scroll: false;
+  top: 0;
+  left: 0;
 }

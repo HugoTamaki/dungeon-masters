@@ -58,28 +58,24 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-    <div class="container all">
-      <div class="row-fluid">
-        <div class="span12">
-          <div id="flashes">
-            <div class="container">
-              <% if flash[:notice] %>
-                <div class="alert alert-success">
-                  <%= flash[:notice] %>
-                </div>
-              <% end %>
-              <% if flash[:error] || flash[:errors] || flash[:alert] %>
-                <div class="alert alert-danger">
-                  <%= flash[:error] || flash[:errors] || flash[:alert]  %>
-                </div>
-              <% end %>
-
-              <% flash[:error] = flash[:errors] = flash[:notice] = nil %>
+    <div class="all">
+      <div id="flashes">
+        <div class="container">
+          <% if flash[:notice] %>
+            <div class="alert alert-success">
+              <%= flash[:notice] %>
             </div>
-          </div>
-          <%= yield %>
+          <% end %>
+          <% if flash[:error] || flash[:errors] || flash[:alert] %>
+            <div class="alert alert-danger">
+              <%= flash[:error] || flash[:errors] || flash[:alert]  %>
+            </div>
+          <% end %>
+
+          <% flash[:error] = flash[:errors] = flash[:notice] = nil %>
         </div>
-      </div><!--/row-->
+      </div>
+      <%= yield %>
 
       <!-- <footer>
         <p>&copy; Company 2013</p>

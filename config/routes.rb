@@ -1,4 +1,4 @@
-Calabouco::Application.routes.draw do
+  Calabouco::Application.routes.draw do
 
   resources :stories do
 #    put 'stories/auto_save', as: :auto_save_story_path
@@ -9,7 +9,7 @@ Calabouco::Application.routes.draw do
     get 'graph_json'
     get 'graph_json_show', on: :collection
     get 'erase_image', as: 'erase_image'
-    get 'edit_special_attributes', as: "edit_special_attributes", on: :collection
+    get 'edit_special_attributes', as: "edit_special_attributes"
     get 'edit_items', as: "edit_items"
     get 'graph'
   end

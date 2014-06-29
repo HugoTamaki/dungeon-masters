@@ -1,0 +1,20 @@
+<div class="col-lg-3 col-sm-12 adventurer">
+  <h3>Adventurer sheet</h3>
+  <p>Name: <span id="adventurer_name"><%= @adventurer.name %></span></p>
+  <p>Skill: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
+  <p>Energy: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
+  <p>Luck: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
+  <% if @adventurers_items.present? %>
+    <h3>Adventurer Items</h3>
+    <% @adventurers_items.each do |item| %>
+      <p>
+        <%= item.item.name %> -
+        <% if item.status == 1 %>
+          not used
+        <% else %>
+          used
+        <% end %>
+      </p>
+    <% end %>
+  <% end %>
+</div>

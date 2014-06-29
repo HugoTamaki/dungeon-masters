@@ -1,69 +1,53 @@
-
-<%= javascript_include_tag "resize" %>
 <div class="message-container"></div>
-<div class="content">
-  <div class="chapter">
-    <h3>Chapter <%= @chapter.reference %></h3>
-    <div class="chapter-image">
-      <p>
-        <%= image_tag @chapter.image if @chapter.image.present? %>
-      </p>
-    </div>
-    <div class="chapter-content">
-      <p>
-        <%= simple_format @chapter.content %>
-      </p>
-    </div>
-    <% if @chapter.monsters.present? %>
-    <hr/>
-      <% @chapter.monsters.each do |monster| %>
+<div class="container">
+  <div class="row content">
+    <div class="col-lg-8 col-sm-12 chapter">
+      <h3>Chapter <%= @chapter.reference %></h3>
+      <div class="chapter-image">
         <p>
-          Monster: <%= monster.name %>
+          <%= image_tag @chapter.image if @chapter.image.present? %>
         </p>
+      </div>
+      <div class="chapter-content">
         <p>
-          Skill: <span id="<%= monster.name %>_skill"><%= monster.skill %></span>
+          <%= simple_format @chapter.content %>
         </p>
-        <p>
-          Energy: <span id="<%= monster.name %>_energy"><%= monster.energy %></span>
-        </p>
-        <hr/>
-      <% end %>
-      <p>
-        <%= button_tag "Combat!", class: "btn btn-primary", id: "combat" %>
-      </p>
-      <div id="combat-result"></div>
-    <% end %>
-    <% @chapter.decisions.each do |decision| %>
-      <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
-      <p>
-        <%= link_to "Chapter #{decision.destiny_num}",
-          read_stories_path(button_opts),
-          class: "btn btn-primary" unless Chapter.by_story(@story).where(reference: "#{decision.destiny_num}").empty? %>
-      </p>
-    <% end %>
-  </div>
-  <% if @adventurer.present? %>
-    <div class="adventurer">
-      <h3>Adventurer sheet</h3>
-      <p>Name: <span id="adventurer_name"><%= @adventurer.name %></span></p>
-      <p>Skill: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
-      <p>Energy: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
-      <p>Luck: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
-      <% if @adventurers_items.present? %>
-        <h3>Adventurer Items</h3>
-        <% @adventurers_items.each do |item| %>
+      </div>
+      <% if @chapter.monsters.present? %>
+      <hr/>
+        <% @chapter.monsters.each do |monster| %>
           <p>
-            <%= item.item.name %> -
-            <% if item.status == 1 %>
-              not used
-            <% else %>
-              used
-            <% end %>
+            Monster: <%= monster.name %>
+          </p>
+          <p>
+            Skill: <span id="<%= monster.name %>_skill"><%= monster.skill %></span>
+          </p>
+          <p>
+            Energy: <span id="<%= monster.name %>_energy"><%= monster.energy %></span>
+          </p>
+          <hr/>
+        <% end %>
+        <p>
+          <%= button_tag "Combat!", class: "btn btn-primary", id: "combat" %>
+        </p>
+        <div id="combat-result"></div>
+      <% end %>
+      <div id="chapter-buttons">
+        <% @chapter.decisions.each do |decision| %>
+          <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
+          <% disabled = "disabled" if @chapter.monsters.present? %>
+          <p>
+            <%= link_to "Chapter #{decision.destiny_num}",
+              read_stories_path(button_opts),
+              class: "btn btn-primary #{disabled}" unless Chapter.by_story(@story).where(reference: "#{decision.destiny_num}").empty? %>
           </p>
         <% end %>
-      <% end %>
+      </div>
     </div>
-  <% end %>
+    <% if @adventurer.present? %>
+      <%= render partial: 'adventurers/adventurer' %>
+    <% end %>
+  </div>
 </div>
 
 <% if @chapter.monsters.present? %>
@@ -120,6 +104,9 @@
         <% end %>
         $("#combat-result").html(result);
         $("#adventurer_energy").html(adventurer_energy);
+        if (!morreu) {
+          $('#chapter-buttons').children().find('a').removeClass('disabled');
+        }
         //resizeHeight($("#combat-result").height());
 
         $.ajax({
@@ -138,4 +125,3 @@
     });
   </script>
 <% end %>
-

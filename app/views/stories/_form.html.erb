@@ -6,87 +6,95 @@
     <% end %>
   </div>
 <% end %>
-
-<% cache @story do %>
-  <%= simple_form_for(@story) do |f| %>
-    <div class="actions">
-      <% if params[:action] == "edit" || params[:action] == "update" %>
-        <%= f.submit "Finish Editing", class: "btn btn-primary" %>
-        <%= f.submit "Edit Items", class: "btn btn-primary" %>
-        <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
-        <%= f.submit "Graph", class: "btn btn-primary" %>
-        <%= f.submit "Save", class: "btn btn-primary" %>
-      <% end %>
-    </div>
-    <% if params[:action] == "new" %>
-      <div class="field">
-        <%= f.input :title %>
-        <%= f.hidden_field :user_id, value: current_user.id %>
-      </div>
-      <div class="field">
-        <%= f.input :cover %>
-      </div>
-      <div class="field">
-        <%= f.input :resume, as: :text, input_html: { rows: 10, style: 'width: 100%', title: Calabouco::STORY_RESUME } %>
-      </div>
-      <div class="field">
-        <%= f.input :prelude, as: :text, input_html: { rows: 10, style: 'width: 100%', title: Calabouco::STORY_PRELUDE } %>
-      </div>
-      <div class="field">
-        <%= f.input :chapter_numbers, as: :string, input_html: { title: Calabouco::STORY_CHAPTER_NUMBERS } %>
-      </div>
-
-    <% elsif params[:action] == "edit" || params[:action] == "update" %>
-      <input type="hidden" id="story_id" value="<%= @story.id %>" />
-
-      <div id="tabs">
-        <ul>
-          <li><a href="#tabs-1">Chapters</a></li>
-          <li><a href="#tabs-2">Story</a></li>
-        </ul>
-        <div id="tabs-1">
-          <div id="wrapper"> <!-- wrapper para accordion -->
-            <%= f.simple_fields_for :chapters, @chapters do |builder| %>
-              <% cache builder.object do %>
-                <%= render partial: "/chapters/chapters_fields", :locals => {:f => builder} %>
-              <% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <% cache @story do %>
+        <%= simple_form_for(@story) do |f| %>
+          <div class="actions">
+            <% if params[:action] == "edit" || params[:action] == "update" %>
+              <%= f.submit "Finish Editing", class: "btn btn-primary" %>
+              <%= f.submit "Edit Items", class: "btn btn-primary" %>
+              <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
+              <%= f.submit "Graph", class: "btn btn-primary" %>
+              <%= f.submit "Save", class: "btn btn-primary" %>
             <% end %>
-            <p>
-              <%= link_to_add_fields "Add chapters", f, :chapters, "chapters" %>
-            </p>
-            <br/>
           </div>
-        </div>
-        <div id="tabs-2">
-          <div class="field">
-            <%= f.input :title %>
-            <%= f.hidden_field :user_id, value: current_user.id %>
-          </div>
-          <div class="field">
-            <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
-          </div>
-          <% if f.object.cover.blank? %>
-            <%= image_tag 'no_image_thumbnail.png' %>
-          <% else %>
-            Current image: <%= image_tag f.object.cover(:thumbnail) %>
-          <% end %>
-          <div class="field">
-            <%= f.input :resume, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
-          </div>
-          <div class="field">
-            <%= f.input :prelude, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
-          </div>
-        </div>
-      </div><br/>
-    <% end %>
+          <% if params[:action] == "new" %>
+            <div class="field">
+              <%= f.input :title %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
+            </div>
+            <div class="field">
+              <%= f.input :cover %>
+            </div>
+            <div class="field">
+              <%= f.input :resume, as: :text, input_html: { rows: 10, style: 'width: 100%', title: Calabouco::STORY_RESUME } %>
+            </div>
+            <div class="field">
+              <%= f.input :prelude, as: :text, input_html: { rows: 10, style: 'width: 100%', title: Calabouco::STORY_PRELUDE } %>
+            </div>
+            <div class="field">
+              <%= f.input :chapter_numbers, as: :string, input_html: { title: Calabouco::STORY_CHAPTER_NUMBERS } %>
+            </div>
 
-    <div class="actions">
-      <% if params[:action] == "new" %>
-        <%= f.submit "Next", class: "btn btn-primary" %>
-      <% elsif params[:action] == "edit" %>
-        <%= f.submit "Finish Editing", class: "btn btn-primary" %>
-        <%= f.submit "Save", class: "btn btn-primary" %>
+          <% elsif params[:action] == "edit" || params[:action] == "update" %>
+            <input type="hidden" id="story_id" value="<%= @story.id %>" />
+
+            <div id="tabs">
+              <ul>
+                <li><a href="#tabs-1">Chapters</a></li>
+                <li><a href="#tabs-2">Story</a></li>
+              </ul>
+              <div id="tabs-1">
+                <div id="wrapper"> <!-- wrapper para accordion -->
+                  <%= f.simple_fields_for :chapters, @chapters do |builder| %>
+                    <% cache builder.object do %>
+                      <%= render partial: "/chapters/chapters_fields", :locals => {:f => builder} %>
+                    <% end %>
+                  <% end %>
+                  <p>
+                    <%= link_to_add_fields "Add chapters", f, :chapters, "chapters" %>
+                  </p>
+                  <br/>
+                </div>
+              </div>
+              <div id="tabs-2">
+                <div class="field">
+                  <%= f.input :title %>
+                  <%= f.hidden_field :user_id, value: current_user.id %>
+                </div>
+                <div class="field">
+                  <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
+                </div>
+                <% if f.object.cover.blank? %>
+                  <%= image_tag 'no_image_thumbnail.png' %>
+                <% else %>
+                  Current image: <%= image_tag f.object.cover(:thumbnail) %>
+                <% end %>
+                <div class="field">
+                  <%= f.input :resume, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
+                </div>
+                <div class="field">
+                  <%= f.input :prelude, as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
+                </div>
+              </div>
+            </div><br/>
+          <% end %>
+
+          <div class="actions">
+            <% if params[:action] == "new" %>
+              <%= f.submit "Next", class: "btn btn-primary" %>
+            <% elsif params[:action] == "edit" || params[:action] == "update" %>
+              <%= f.submit "Finish Editing", class: "btn btn-primary" %>
+              <%= f.submit "Edit Items", class: "btn btn-primary" %>
+              <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
+              <%= f.submit "Graph", class: "btn btn-primary" %>
+              <%= f.submit "Save", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     </div>
-  <% end %>
-<% end %>
+  </div>
+</div>

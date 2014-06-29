@@ -1,27 +1,31 @@
-<div class="content">
-  <div class="chapter">
-    <h3>Prelude</h3>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 chapter">
+      <h3>Prelude</h3>
 
-    <% unless @story.prelude.empty? %>
-      <%= simple_format @story.prelude %>
-    <% end %>
+      <% unless @story.prelude.empty? %>
+        <%= simple_format @story.prelude %>
+      <% end %>
 
-    <!-- fazendo form para aventureiro -->
-    <%= simple_form_for @adventurer do |f| %>
-      <div>
-        <%= f.input :skill, as: :string, html_input: { id: "adventurer_skill" } %>
-        <%= f.input :energy, as: :string, html_input: { id: "adventurer_energy" }  %>
-        <%= f.input :luck, as: :string, html_input: { id: "adventurer_luck" } %>
-        <%= f.hidden_field :user_id, value: current_user.id %>
-        <%= f.hidden_field :name, value: current_user.name %>
-        <%= hidden_field_tag :story_id, @story.id %>
-        <%= hidden_field_tag :reference, "1" %>
-      
-        <%= f.submit "Chapter 1", class: "btn btn-primary" unless @story.chapters.where(reference: "1").empty? %>
+      <!-- fazendo form para aventureiro -->
+      <%= simple_form_for @adventurer do |f| %>
+        <div>
+          <%= f.input :skill, as: :string, html_input: { id: "adventurer_skill" } %>
+          <%= f.input :energy, as: :string, html_input: { id: "adventurer_energy" }  %>
+          <%= f.input :luck, as: :string, html_input: { id: "adventurer_luck" } %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <%= f.hidden_field :name, value: current_user.name %>
+          <%= hidden_field_tag :story_id, @story.id %>
+          <%= hidden_field_tag :reference, "1" %>
+        
+          <%= f.submit "Chapter 1", id: 'story-start', class: "btn btn-primary disabled" unless @story.chapters.where(reference: "1").empty? %>
+        </div>
+      <% end %>
+      <div id="dice-container">
+        <%= button_tag "Roll dices", class: "btn btn-primary", id: "generator" %>
       </div>
-    <% end %>
-    <%= button_tag "Roll dices", class: "btn btn-primary", id: "generator" %>
-    <!-- fim do form -->
+      <!-- fim do form -->
+    </div>
   </div>
 </div>
 <%# button_opts = {reference: "1", id: @story} %>
@@ -40,6 +44,7 @@
       $("#adventurer_skill").attr("value", skill);
       $("#adventurer_energy").attr("value", energy);
       $("#adventurer_luck").attr("value", luck);
+      $("#story-start").removeClass('disabled');
     });
 
     
