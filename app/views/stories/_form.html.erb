@@ -9,7 +9,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <% cache @story do %>
+      <%# cache @story do %>
         <%= simple_form_for(@story) do |f| %>
           <div class="actions">
             <% if params[:action] == "edit" || params[:action] == "update" %>
@@ -49,9 +49,9 @@
               <div id="tabs-1">
                 <div id="wrapper"> <!-- wrapper para accordion -->
                   <%= f.simple_fields_for :chapters, @chapters do |builder| %>
-                    <% cache builder.object do %>
+                    <%# cache builder.object do %>
                       <%= render partial: "/chapters/chapters_fields", :locals => {:f => builder} %>
-                    <% end %>
+                    <%# end %>
                   <% end %>
                   <p>
                     <%= link_to_add_fields "Add chapters", f, :chapters, "chapters" %>
@@ -94,7 +94,7 @@
             <% end %>
           </div>
         <% end %>
-      <% end %>
+      <%# end %>
     </div>
   </div>
 </div>
