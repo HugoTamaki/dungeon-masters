@@ -37,7 +37,7 @@ gem "schema_plus"
 gem "simple_form"
 gem "pry"
 gem "awesome_print"
-gem "cancan"
+gem 'cancancan', '~> 1.8'
 gem "paperclip", "~> 3.0"
 gem "rmagick"
 gem "kaminari"
