@@ -164,6 +164,9 @@ feature "Story" do
       click_link "Chapter 2"
       page.should have_text("content 2")
 
+      page.should have_button 'Combat'
+      click_button "Combat"
+
       click_link "Chapter 5"
       page.should have_text("content 5")
     end
