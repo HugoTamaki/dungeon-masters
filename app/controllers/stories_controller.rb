@@ -172,7 +172,7 @@ end
   def update
     @story = Story.find(params[:id])
 
-    if @story.update_attributes(params[:story])
+    if @story.update_attributes(story_params)
       redirect_story(@story, params)
     else
       respond_to do |format|
