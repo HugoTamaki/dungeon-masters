@@ -14,7 +14,7 @@ class AdventurersController < ApplicationController
         end
       else
         @adventurer = Adventurer.by_user(current_user.id).first
-        if @adventurer.update_attributes(params[:adventurer])
+        if @adventurer.update_attributes(adventurer_params)
           options = {reference: params[:reference], id: params[:story_id]}
           format.html { redirect_to read_stories_path(options) }
         else
