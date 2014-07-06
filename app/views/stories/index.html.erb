@@ -11,7 +11,7 @@
           <div class="col-lg-4 col-sm-12">
             <div class="image">
               <h3><%= story.title %> - by <%= story.user.name %></h3>
-              <%= image_tag story.cover(:index_cover) %>
+              <%= image_tag story.cover(:index_cover), class: "img-responsive" %>
               <div class="actions">
                 <%= link_to 'Show', story, class: "btn btn-primary" if story.user == current_user %>
                 <%= link_to 'Read', story_prelude_path(story), class: "btn btn-primary" %>

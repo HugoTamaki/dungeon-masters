@@ -12,18 +12,14 @@
     <% if @stories.empty? %>
       <p>No stories.</p>
     <% else %>
-    <table>
-      <tr>
-      <% @stories.each do |story| %>
-        <td>
-        <div class="index_stories">
-          <p><strong><%= link_to story.title, story_prelude_path(story) %></strong></p>
-          <%= image_tag story.cover(:thumbnail) %>
-        </div>
-        </td>
-      <% end %>
-      </tr>
-    </table>
+      <div class="row">
+        <% @stories.each do |story| %>
+          <div class="index_stories col-lg-3 col-sm-12">
+            <p><strong><%= link_to story.title, story_prelude_path(story) %></strong></p>
+            <%= image_tag story.cover(:thumbnail) %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>

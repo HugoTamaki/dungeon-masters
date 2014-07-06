@@ -5,7 +5,7 @@
       <h3>Chapter <%= @chapter.reference %></h3>
       <div class="chapter-image">
         <p>
-          <%= image_tag @chapter.image if @chapter.image.present? %>
+          <%= image_tag @chapter.image(:normal), class: "img-responsive center-block" if @chapter.image.present? %>
         </p>
       </div>
       <div class="chapter-content">

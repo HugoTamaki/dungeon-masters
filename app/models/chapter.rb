@@ -1,6 +1,6 @@
 class Chapter < ActiveRecord::Base
 
-  has_attached_file :image, styles: {thumbnail: "200x200>"}
+  has_attached_file :image, styles: {thumbnail: "200x200>",normal: "600x600>"}
   belongs_to :story, touch: true
   has_many :decisions, dependent: :destroy
   has_many :monsters, dependent: :destroy
