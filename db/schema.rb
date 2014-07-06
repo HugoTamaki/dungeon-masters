@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140205152455) do
+ActiveRecord::Schema.define(version: 20140705230632) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20140205152455) do
     t.integer  "destiny_num"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "item_validator"
     t.index ["chapter_id"], :name => "fk__decisions_chapter_id"
     t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_decisions_chapter_id"
   end
