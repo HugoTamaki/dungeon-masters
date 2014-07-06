@@ -1,4 +1,5 @@
 <div class="decision-fields">
   <%= f.input :destiny_num, label: "Destiny", as: :string, input_html: {title: Calabouco::CHAPTER_DESTINY} %>
+  <p>Chapter can only be accessed if adventurer has <%= f.collection_select :item_validator, Item.by_story(@story), :id,:name, prompt: "--" %></p>
   <%= link_to_remove_fields "Remove decision", f, "decision" %>
 </div>
