@@ -36,6 +36,10 @@
         <% @chapter.decisions.each do |decision| %>
           <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
           <% disabled = "disabled" if @chapter.monsters.present? %>
+          <% disabled ||= "disabled" if  %>
+          <% if decision.item_validator? %>
+            <% disabled ||= "disabled" if Adventurer.dont_have_item(@adventurer,decision.item_validator) %>
+          <% end %>
           <p>
             <%= link_to "Chapter #{decision.destiny_num}",
               read_stories_path(button_opts),
