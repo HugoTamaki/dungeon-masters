@@ -138,16 +138,20 @@ feature "Story" do
     let(:story_sample) {FactoryGirl.create(:story, user_id: user.id)}
 
     before(:each) do
-      for i in (1..5)
+      for i in (1..7)
         story_sample.chapters.build(reference: "#{i}", content: "content #{i}")
       end
       story_sample.items.build(name: "espada", description: "uma espada")
+      story_sample.items.build(name: "escudo", description: "um escudo")
       story_sample.save
+      items = story.items
 
       story_sample.chapters[0].decisions.build(destiny_num: 2)
       story_sample.chapters[0].decisions.build(destiny_num: 3)
-      story_sample.chapters[2].modifiers_items.build(item_id: Item.last.id, quantity: 1)
+      story_sample.chapters[2].modifiers_items.build(item_id: items.first.id, quantity: 1)
       story_sample.chapters[1].decisions.build(destiny_num: 5)
+      story_sample.chapters[4].decisions.build(destiny_num: 6)
+      story_sample.chapters[4].decisions.build(destiny_num: 7, item_validator: items.last.id)
       story_sample.chapters[1].monsters.build(name: "goblin",skill: 1, energy: 1)
       story_sample.save   
       login_as user
@@ -193,6 +197,25 @@ feature "Story" do
       click_button "Chapter 1"
       click_link "Chapter 3"
       page.should have_text("espada")
+    end
+
+    scenario "user does not has an item", js: true do
+      visit "/stories/#{story_sample.id}/prelude"
+
+      click_button "Roll dices"
+      click_button "Chapter 1"
+
+      page.should have_text("content 1")
+      
+      click_link "Chapter 2"
+      page.should have_text("content 2")
+
+      page.should have_button 'Combat'
+      click_button "Combat"
+
+      click_link "Chapter 5"
+      page.should have_text("content 5")
+      page.should have_css ".disabled"
     end
   end
 end
