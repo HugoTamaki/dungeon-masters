@@ -31,10 +31,15 @@ class Adventurer < ActiveRecord::Base
 
     if chapter.modifiers_items.present?
       chapter.modifiers_items.each do |item|
-        adventurer.items << item.item
+        adventurer.items << item.item if dont_have_item(adventurer,item.item.id)
       end
       adventurer.save
     end
     adventurer
+  end
+
+  def self.dont_have_item(adventurer,item_id)
+    adventurer_items = adventurer.items.where(id: item_id)
+    adventurer_items.empty? ? true : false
   end
 end
