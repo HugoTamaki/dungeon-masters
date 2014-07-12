@@ -73,12 +73,15 @@
           finish = false;
 
           while (!finish) {
-            console.log("adventurer energy: "+adventurer_energy);
-            var enemyAttackPower = 2 + Math.floor(Math.random()*11) + 12 + <%= monster.name.parameterize.underscore %>_skill;
-            var adventurerAttackPower = 2 + Math.floor(Math.random()*11) + 12 + adventurer_skill;
+            var enemyDice1 = 1 + Math.floor(Math.random()*6);
+            var enemyDice2 = 1 + Math.floor(Math.random()*6);
+            var enemyAttackPower = enemyDice1 + enemyDice2 + <%= monster.name.parameterize.underscore %>_skill;
+            var advDice1 = 1 + Math.floor(Math.random()*6);
+            var advDice2 = 1 + Math.floor(Math.random()*6);
+            var adventurerAttackPower = advDice1 + advDice2 + adventurer_skill;
 
             if (enemyAttackPower > adventurerAttackPower) {
-              result += "<p>"+ "<%= @adventurer.name %>" +" Attack Power - "+ adventurerAttackPower +"<strong> "+ "<%= monster.name %>" +" - Attack Power - "+ enemyAttackPower +"</strong><p>";
+              result += "<p>"+ "<%= @adventurer.name %>" +" Attack Power - "+ advDice1 + " + " + advDice2 + " + " + adventurer_skill + " = "+ adventurerAttackPower + "<strong><br>" + "<%= monster.name %>" +" Attack Power - "+ enemyDice1 + " + " + enemyDice2 + " + " + <%= monster.name.parameterize.underscore %>_skill + " = " + enemyAttackPower + "</strong></p><hr>";
               adventurer_energy -= 2;
               if (adventurer_energy < 1) {
                 finish = true;
@@ -91,7 +94,7 @@
                 result += "<p><%= monster.name %> died!</p>";
               }
             } else if (enemyAttackPower < adventurerAttackPower) {
-              result += "<p><strong>"+ "<%= @adventurer.name %>" +" Attack Power - "+ adventurerAttackPower +"</strong> "+ "<%= monster.name %>" +" - Attack Power - "+ enemyAttackPower +"<p>";
+              result += "<p><strong>"+ "<%= @adventurer.name %>" +" Attack Power - "+ advDice1 + " + " + advDice2 + " + " + adventurer_skill + " = "+ adventurerAttackPower + "</strong> <i class='fa fa-check fa-1'></i><br>" + "<%= monster.name %>" +" Attack Power - "+ enemyDice1 + " + " + enemyDice2 + " + " + <%= monster.name.parameterize.underscore %>_skill + " = " + enemyAttackPower + "</p><hr>";
               <%= monster.name.parameterize.underscore %>_energy -= 2;
               if (adventurer_energy < 1) {
                 finish = true;
@@ -111,6 +114,7 @@
         if (!morreu) {
           $('#chapter-buttons').children().find('a').removeClass('disabled');
         }
+        $("#combat").addClass('disabled');
         //resizeHeight($("#combat-result").height());
 
         $.ajax({
