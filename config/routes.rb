@@ -18,7 +18,7 @@
     put 'update_adventurer_status', on: :collection
   end
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
 
   root to: "custom_pages#index"
 
