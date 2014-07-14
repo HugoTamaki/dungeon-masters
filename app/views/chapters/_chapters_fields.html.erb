@@ -4,7 +4,7 @@
   </div>
   <div class="accordionContent">
     <%= f.input :reference, input_html: { title: Calabouco::CHAPTER_REFERENCE, class: "chapter-reference"} %>
-    <%= f.input :content, as: :text, input_html: { rows: 10, style: 'width: 100%', title: Calabouco::CHAPTER_CONTENT } %>
+    <%= f.input :content, as: :text, input_html: { rows: 10, style: 'width: 100%', title: Calabouco::CHAPTER_CONTENT, class: 'chapter-content-wysiwyg' } %>
     <%= f.input :image, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
     <% if f.object.image.blank? %>
       No current image

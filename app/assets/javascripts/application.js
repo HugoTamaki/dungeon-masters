@@ -12,9 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require wysihtml5-0.3.0
+//= require bootstrap-wysihtml5-0.0.2
 //= require_tree .
 //= require jquery-ui
-//= remove-image
+//= require remove-image
 
 function add_fields(link, association, content) {
     var new_id = new Date().getTime();
@@ -30,17 +32,15 @@ function add_fields(link, association, content) {
 }
 
 function remove_fields(link, form) {
-    $(link).prev("input[type=hidden]").val("1");
-    //$(link).closest("."+form+"-fields").remove();
-    $(link).closest("."+form+"-fields").hide();
+  $(link).prev("input[type=hidden]").val("1");
+  //$(link).closest("."+form+"-fields").remove();
+  $(link).closest("."+form+"-fields").hide();
 }
 
 $(document).ready(function(){
 
     $(function() {
-        $("#tabs").tabs({
-
-            });
+      $("#tabs").tabs();
     });
 
     $(document).on("blur", ".chapter-reference", function(){
@@ -49,7 +49,23 @@ $(document).ready(function(){
        $(this).parent().parent().parent().prev().html("<h3>Chapter "+ref+"</h3>");
     });
 
+    var myCustomTemplates = {
+      html : function(locale) {
+        return  "<li class='dropdown'><a class='btn btn-primary dropdown-toggle' data-toggle='dropdown' href='#'><i class='icon-font'></i>&nbsp;<span class='current-font'>Normal text</span>&nbsp;<b class='caret'></b></a>" +
+                "<div class='btn-group'>" +
+                "<a class='btn btn-primary" + size + "' data-wysihtml5-action='change_view' title='" + locale.html.edit + "'><i class='fa fa-pencil'></i></a>" +
+                "</div>" +
+                "</li>";
+      }
+    };
 
+    $('.chapter-content-wysiwyg').wysihtml5({
+      customTemplates: myCustomTemplates,
+      html: true, //Button which allows you to edit the generated HTML.
+      link: false, //Button to insert a link.
+      image: false, //Button to insert an image.
+      color: true //Button to change color of font
+    });
 
     $(document).on('click', '.accordionButton', function(){
       //REMOVE THE ON CLASS FROM ALL BUTTONS
@@ -84,7 +100,7 @@ $(document).ready(function(){
 
 
     $(function() {
-        $( document ).tooltip();
+        $(document).tooltip();
     });
 
     function fadeMessage(){
