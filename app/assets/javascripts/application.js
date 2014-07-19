@@ -52,79 +52,32 @@ $(document).ready(function(){
     clearStyle: true,
   });
 
-  // $(document).on("blur", ".chapter-reference", function(){
-  //    var ref = $(this).val();
-  //    $(this).parent().parent().parent().prev().html("");
-  //    $(this).parent().parent().parent().prev().html("<h3>Chapter "+ref+"</h3>");
-  // });
-
-  var myCustomTemplates = {
-    // html: function(locale) {
-    //   return "<li>" +
-    //          "<div class='btn-group'>" +
-    //          "<a class='btn' data-wysihtml5-action='change_view' title='" + locale.html.edit + "'>HTML</a>" +
-    //          "</div>" +
-    //          "</li>";
-    // },
-    list: function(locale) {
-      return "<div class='btn-group'>" + 
-             "<a class='btn' data-wysihtml5-command='insertUnorderedList' title='Unordered List' href='javascript:;' unselectable='on'>" +
-             "<i class='fa fa-list'></i></a>" +
-             "<a class='btn' data-wysihtml5-command='insertOrderedList' title='Ordered List' href='javascript:;' unselectable='on'>" + 
-             "<i class='fa fa-list-ol'></i></a><a class='btn' data-wysihtml5-command='Outdent' title='Outdent' href='javascript:;' unselectable='on'>" + 
-             "<i class='icon-indent-right'></i></a><a class='btn' data-wysihtml5-command='Indent' title='Indent' href='javascript:;' unselectable='on'><i class='icon-indent-left'></i></a>" + 
-             "</div>";
-    }
-  };
-
   $('.chapter-content-wysiwyg').wysihtml5({
-    customTemplates: myCustomTemplates,
-    lists: false,
-    html: false, //Button which allows you to edit the generated HTML.
+    lists: true,
+    html: true, //Button which allows you to edit the generated HTML.
     link: false, //Button to insert a link.
     image: false, //Button to insert an image.
-    color: false //Button to change color of font
+    color: true, //Button to change color of font
+    events: {
+      load: function() {
+        $('.icon-list').addClass('fa fa-list').removeClass('icon-list');
+        $('.icon-th-list').addClass('fa fa-list-ol').removeClass('icon-th-list');
+        $('.icon-indent-right').addClass('fa fa-outdent').removeClass('icon-indent-right');
+        $('.icon-indent-left').addClass('fa fa-indent').removeClass('icon-indent-left');
+        $('.icon-pencil').addClass('fa fa-code').removeClass('icon-pencil');
+      }
+    }
   });
 
-    // $(document).on('click', '.accordionButton', function(){
-    //   //REMOVE THE ON CLASS FROM ALL BUTTONS
-    //   $('.accordionButton').removeClass('on');
-    //   //NO MATTER WHAT WE CLOSE ALL OPEN SLIDES
-    //   $('.accordionContent').slideUp('normal');
-    //   //IF THE NEXT SLIDE WASN'T OPEN THEN OPEN IT
-    //   if($(this).next().is(':hidden') == true) {
-    //     //ADD THE ON CLASS TO THE BUTTON
-    //     $(this).addClass('on');
-    //     //OPEN THE SLIDE
-    //     $(this).next().slideDown('normal');
-    //   }
-    // });
-
-    // /*** REMOVE IF MOUSEOVER IS NOT REQUIRED ***/
-    // //ADDS THE .OVER CLASS FROM THE STYLESHEET ON MOUSEOVER
-
-    // $('.accordionButton').mouseover(function() {
-    //   $(this).addClass('over');
-    //   //ON MOUSEOUT REMOVE THE OVER CLASS
-    // }).mouseout(function() {
-    //   $(this).removeClass('over');
-    // });
-
-    // /*** END REMOVE IF MOUSEOVER IS NOT REQUIRED ***/
-    // /********************************************************************************************************************
-    // CLOSES ALL S ON PAGE LOAD
-    // ********************************************************************************************************************/
-    // $('.accordionContent').hide();
-
-
-
-    $(function() {
-      $(document).tooltip();
+  $(function() {
+    $(document).tooltip({
+      tooltipClass: "tooltip-style"
     });
+  });
 
-    function fadeMessage(){
-      $('#message').fadeOut('slow');//just a function to fade out the message
-    }
+  function fadeMessage(){
+    $('#message').fadeOut('slow');//just a function to fade out the message
+  }
 
 
 });
