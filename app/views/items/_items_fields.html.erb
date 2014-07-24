@@ -1,5 +1,12 @@
 <div class="item-fields">
   <%= f.input :name %>
   <%= f.input :description, as: :text, input_html: { rows: 10, cols: 40 } %>
-  <%= link_to_remove_fields "Remove", f, "item" %>
+  <%= f.label :usable, "Usable Item" %>
+  <%= f.check_box :usable, class: "usable-checkbox" %>
+  <div class="usable-item-attributes <%= 'visible' if f.object.usable %>">
+    <%= f.input :attr, label: "Attribute",
+    collection: attributes, prompt: "Select an attribute" %>
+    <%= f.input :modifier, label: "Quantity" %>
+  </div>
+  <p><%= link_to_remove_fields "Remove", f, "item" %></p>
 </div>

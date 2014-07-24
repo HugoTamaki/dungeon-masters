@@ -31,6 +31,12 @@ body {
   padding: 5px;
   border-radius: 9px;
   margin: 10px;
+  .usable-item-attributes {
+    display: none;
+  }
+  .visible {
+    display: block;
+  }
 }
 
 .chapter-image {

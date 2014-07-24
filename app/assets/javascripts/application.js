@@ -79,5 +79,14 @@ $(document).ready(function(){
     $('#message').fadeOut('slow');//just a function to fade out the message
   }
 
+  $(document).on('click', '.usable-checkbox', function() {
+    if ($(this).prop('checked')) {
+      $(this).next().addClass('visible');
+      console.log($(this).next().html());
+    } else {
+      $(this).next().removeClass('visible');
+      console.log($(this).next().html());
+    }
+  });
 
 });

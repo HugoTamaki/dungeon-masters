@@ -7,5 +7,12 @@ class Item < ActiveRecord::Base
   validates :description, presence: true
   validates :name, presence: true
 
+  before_update do
+    unless self.usable
+      self.attr = ''
+      self.modifier = 0
+    end
+  end
+
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
 end
