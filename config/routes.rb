@@ -12,6 +12,7 @@
     get 'edit_special_attributes', as: "edit_special_attributes"
     get 'edit_items', as: "edit_items"
     get 'graph'
+    post 'use_item', on: :collection
   end
 
   resources :adventurers do

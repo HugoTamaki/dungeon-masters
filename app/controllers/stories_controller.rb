@@ -129,6 +129,38 @@ end
     end
   end
 
+  def use_item
+    item = Item.find(params["item-id"])
+    adventurer = current_user.adventurer
+    adventurer_item = adventurer.adventurers_items.find_by(item_id: params["item-id"])
+    adventurer_item.status = 0
+    case params[:attribute]
+      when "skill"
+        adventurer.skill += params[:modifier].to_i
+      when "energy"
+        adventurer.energy += params[:modifier].to_i
+      when "luck"
+        adventurer.luck += params[:modifier].to_i
+      when "gold"
+        adventurer.gold += params[:modifier].to_i
+    end
+
+    adventurer.save
+    adventurer_item.save
+
+    data = {
+      name: item.name,
+      skill: adventurer.skill,
+      energy: adventurer.energy,
+      luck: adventurer.luck,
+      gold: adventurer.gold
+    }
+
+    respond_to do |format|
+      format.json { render json: data.to_json }
+    end
+  end
+
   def erase_image
     current_chapter = Chapter.find(params[:chapter_id])
     current_chapter.image_file_name = nil
@@ -244,7 +276,7 @@ end
                                     :user_id,
                                     :chapter_numbers,
                                     :cover,
-                                    items_attributes: [:id, :description, :name, :story_id, :_destroy],
+                                    items_attributes: [:id, :description, :name, :story_id, :usable, :attr, :modifier, :_destroy],
                                     special_attributes_attributes: [:id, :adventurer_id, :name, :value, :story_id, :_destroy],
                                     chapters_attributes: [:id,
                                                           :content,

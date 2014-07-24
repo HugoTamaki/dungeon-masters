@@ -4,17 +4,25 @@
   <p>Skill: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
   <p>Energy: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
   <p>Luck: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
+  <p>Gold: <span id="adventurer_gold"><%= @adventurer.gold %></span></p>
   <% if @adventurers_items.present? %>
     <h3>Adventurer Items</h3>
     <% @adventurers_items.each do |item| %>
-      <p>
-        <%= item.item.name %> -
+      <% if item.item.usable %>
         <% if item.status == 1 %>
-          not used
+          <p>
+            <%= link_to item.item.name, "javascript:;", id: "#{item.item.name}-item", data: {item_id: "#{item.item.id}",attribute: "#{item.item.attr}", modifier: "#{item.item.modifier}"}, class: "usable-item" %>
+          </p>
         <% else %>
-          used
+          <p>
+            <strike><%= item.item.name %></strike>
+          </p>
         <% end %>
-      </p>
+      <% else %>
+        <p>
+          <%= item.item.name %> - not usable
+        </p>
+      <% end %>
     <% end %>
   <% end %>
 </div>

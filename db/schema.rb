@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140705230632) do
+ActiveRecord::Schema.define(version: 20140723102223) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -66,6 +66,9 @@ ActiveRecord::Schema.define(version: 20140705230632) do
     t.integer  "story_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "usable"
+    t.string   "attr"
+    t.integer  "modifier"
     t.index ["story_id"], :name => "index_items_on_story_id"
     t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_items_story_id"
   end
