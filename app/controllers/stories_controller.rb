@@ -139,7 +139,7 @@ end
     adventurer_item.save
 
     data = {
-      name: adventurer_item.item.name.parameterize,
+      name: adventurer_item.item.name.parameterize.underscore,
       skill: adventurer.skill,
       energy: adventurer.energy,
       luck: adventurer.luck,
