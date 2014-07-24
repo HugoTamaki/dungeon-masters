@@ -19,9 +19,15 @@
           </p>
         <% end %>
       <% else %>
-        <p>
-          <%= item.item.name %> - not usable
-        </p>
+        <% if item.status == 1 %>
+          <p>
+            <%= item.item.name %> - not usable
+          </p>
+        <% else %>
+          <p>
+            <strike><%= item.item.name %> - not usable</strike>
+          </p>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>

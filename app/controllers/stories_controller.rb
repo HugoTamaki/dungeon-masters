@@ -45,8 +45,12 @@ class StoriesController < ApplicationController
     @chapter = @story.chapters.where(reference: params[:reference]).first
     adventurer = Adventurer.by_user(current_user.id).first
 
-    @adventurer = Adventurer.attribute_changer(adventurer, @chapter) unless @adventurer && @chapter
+    @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
     @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
+
+    this_decision = Decision.find_by(destiny_num: @chapter.id)
+    Adventurer.use_required_item(this_decision, @adventurer)
+
     
     respond_to do |format|
       format.html # show.html.erb
@@ -54,8 +58,6 @@ class StoriesController < ApplicationController
     end
   end
 
-  # GET /stories/new
-  # GET /stories/new.json
   def new
     @story = Story.new
 
@@ -130,26 +132,14 @@ end
   end
 
   def use_item
-    item = Item.find(params["item-id"])
     adventurer = current_user.adventurer
     adventurer_item = adventurer.adventurers_items.find_by(item_id: params["item-id"])
+    Adventurer.change_attribute(adventurer, params[:attribute], params[:modifier])
     adventurer_item.status = 0
-    case params[:attribute]
-      when "skill"
-        adventurer.skill += params[:modifier].to_i
-      when "energy"
-        adventurer.energy += params[:modifier].to_i
-      when "luck"
-        adventurer.luck += params[:modifier].to_i
-      when "gold"
-        adventurer.gold += params[:modifier].to_i
-    end
-
-    adventurer.save
     adventurer_item.save
 
     data = {
-      name: item.name,
+      name: adventurer_item.item.name,
       skill: adventurer.skill,
       energy: adventurer.energy,
       luck: adventurer.luck,

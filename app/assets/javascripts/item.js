@@ -10,7 +10,6 @@ $(document).ready(function(){
       },
       dataType: "json",
       success: function(data) {
-        console.log($(this).html());
         $('#adventurer_skill').html(data["skill"]);
         $('#adventurer_energy').html(data["energy"]);
         $('#adventurer_luck').html(data["luck"]);

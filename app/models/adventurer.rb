@@ -12,21 +12,11 @@ class Adventurer < ActiveRecord::Base
 
   scope :by_user, lambda {|user_id| where(user_id: user_id)}
 
-  def self.attribute_changer(adventurer, chapter)
+  def self.attribute_and_item_changer(adventurer, chapter)
     if chapter.modifiers_attributes.present?
       chapter.modifiers_attributes.each do |attribute|
-        case attribute.attr
-        when "skill"
-          adventurer.skill = adventurer.skill + attribute.quantity
-        when "energy"
-          adventurer.energy = adventurer.energy + attribute.quantity
-        when "luck"
-          adventurer.luck = adventurer.luck + attribute.quantity
-        when "gold"
-          adventurer.gold = adventurer.gold + attribute.quantity
-        end
+        change_attribute(adventurer, attribute.attr, attribute.quantity)
       end
-      adventurer.save
     end
 
     if chapter.modifiers_items.present?
@@ -41,5 +31,35 @@ class Adventurer < ActiveRecord::Base
   def self.dont_have_item(adventurer,item_id)
     adventurer_items = adventurer.items.where(id: item_id)
     adventurer_items.empty? ? true : false
+  end
+
+  def self.use_required_item(decision,adventurer)
+    unless decision.nil?
+      if decision.item_validator
+        required_item = Item.find(decision.item_validator)
+        if required_item.usable
+          change_attribute(adventurer, required_item.attr, required_item.modifier)
+        end
+        adventurer_item = AdventurerItem.find_by(item_id: required_item.id)
+        adventurer_item.status = 0
+        adventurer_item.save
+      end
+    end
+    adventurer
+  end
+
+  def self.change_attribute(adventurer, attribute, modifier)
+    case attribute
+      when "skill"
+        adventurer.skill += modifier.to_i
+      when "energy"
+        adventurer.energy += modifier.to_i
+      when "luck"
+        adventurer.luck += modifier.to_i
+      when "gold"
+        adventurer.gold += modifier.to_i
+    end
+
+    adventurer.save
   end
 end
