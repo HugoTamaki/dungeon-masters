@@ -13,7 +13,7 @@ $(document).ready(function(){
         $('#adventurer_skill').html(data["skill"]);
         $('#adventurer_energy').html(data["energy"]);
         $('#adventurer_luck').html(data["luck"]);
-        $('#' + data["name"] + '-item').parent().html("<strike>" + data["name"] + "</strike>");
+        $('#' + data["name"].parameterize + '-item').parent().html("<strike>" + data["name"] + "</strike>");
       },
       error: function() {
         console.log("aah");

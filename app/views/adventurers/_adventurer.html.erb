@@ -11,7 +11,7 @@
       <% if item.item.usable %>
         <% if item.status == 1 %>
           <p>
-            <%= link_to item.item.name, "javascript:;", id: "#{item.item.name}-item", data: {item_id: "#{item.item.id}",attribute: "#{item.item.attr}", modifier: "#{item.item.modifier}"}, class: "usable-item" %>
+            <%= link_to item.item.name, "javascript:;", id: "#{item.item.name.parameterize}-item", data: {item_id: "#{item.item.id}",attribute: "#{item.item.attr}", modifier: "#{item.item.modifier}"}, class: "usable-item" %>
           </p>
         <% else %>
           <p>
