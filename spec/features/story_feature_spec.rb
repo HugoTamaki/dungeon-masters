@@ -4,6 +4,7 @@ feature "Story" do
   let(:user) {FactoryGirl.create :user}
   let!(:story) {FactoryGirl.create(:story, user_id: user.id)}
   let!(:item) {FactoryGirl.create(:item, story_id: story.id)}
+  let!(:adventurer) {FactoryGirl.create(:adventurer, user_id: user.id, skill: 5, energy: 5, luck: 5)}
 
   feature "#create Story" do
     before(:each) do
@@ -143,12 +144,14 @@ feature "Story" do
       end
       story_sample.items.build(name: "espada", description: "uma espada")
       story_sample.items.build(name: "escudo", description: "um escudo")
+      story_sample.items.build(name: "Pastel", description: "Um pastelzinho", usable: true, modifier: 4, attr: "energy")
       story_sample.save
       items = story.items
 
       story_sample.chapters[0].decisions.build(destiny_num: 2)
       story_sample.chapters[0].decisions.build(destiny_num: 3)
-      story_sample.chapters[2].modifiers_items.build(item_id: items.first.id, quantity: 1)
+      story_sample.chapters[0].modifiers_items.build(item_id: Item.last.id, quantity: 1)
+      story_sample.chapters[2].modifiers_items.build(item_id: items.last.id, quantity: 1)
       story_sample.chapters[1].decisions.build(destiny_num: 5)
       story_sample.chapters[4].decisions.build(destiny_num: 6)
       story_sample.chapters[4].decisions.build(destiny_num: 7, item_validator: items.last.id)
@@ -216,6 +219,24 @@ feature "Story" do
       click_link "Chapter 5"
       page.should have_text("content 5")
       page.should have_css ".disabled"
+    end
+
+    scenario "user uses an usable item", js: true do
+      visit "/stories/#{story_sample.id}/prelude"
+
+      click_button "Roll dices"
+      click_button "Chapter 1"
+
+      energy = Adventurer.last.energy
+
+      page.should have_text("content 1")
+      
+      click_link "Chapter 2"
+      page.should have_text("content 2")
+
+      click_link "Pastel"
+
+      Adventurer.last.energy.should be_equal(energy + 4)
     end
   end
 end
