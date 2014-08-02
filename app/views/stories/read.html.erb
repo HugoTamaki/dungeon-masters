@@ -2,7 +2,7 @@
   <div class="message-container"></div>
   <div class="row content">
     <div class="col-lg-8 col-sm-12 chapter">
-      <h3>Chapter <%= @chapter.reference %></h3>
+      <h3><%= t('stories.read.chapter') %> <%= @chapter.reference %></h3>
       <div class="chapter-image">
         <p>
           <%= image_tag @chapter.image(:normal), class: "img-responsive center-block" if @chapter.image.present? %>
@@ -17,18 +17,18 @@
       <hr/>
         <% @chapter.monsters.each do |monster| %>
           <p>
-            Monster: <%= monster.name %>
+            <%= t('stories.read.monster') %>: <%= monster.name %>
           </p>
           <p>
-            Skill: <span id="<%= monster.name %>_skill"><%= monster.skill %></span>
+            <%= t('stories.read.skill') %>: <span id="<%= monster.name %>_skill"><%= monster.skill %></span>
           </p>
           <p>
-            Energy: <span id="<%= monster.name %>_energy"><%= monster.energy %></span>
+            <%= t('stories.read.energy') %>: <span id="<%= monster.name %>_energy"><%= monster.energy %></span>
           </p>
           <hr/>
         <% end %>
         <p>
-          <%= button_tag "Combat!", class: "btn btn-primary", id: "combat" %>
+          <%= button_tag t('stories.read.combat'), class: "btn btn-primary", id: "combat" %>
         </p>
         <div id="combat-result"></div>
       <% end %>
@@ -41,7 +41,7 @@
             <% disabled ||= "disabled" if Adventurer.dont_have_item(@adventurer,decision.item_validator) %>
           <% end %>
           <p>
-            <%= link_to "Chapter #{decision.destiny_num}",
+            <%= link_to  "#{t('stories.read.chapter')} #{decision.destiny_num}",
               read_stories_path(button_opts),
               class: "btn btn-primary #{disabled}" unless Chapter.by_story(@story).where(reference: "#{decision.destiny_num}").empty? %>
           </p>
@@ -81,30 +81,30 @@
             var adventurerAttackPower = advDice1 + advDice2 + adventurer_skill;
 
             if (enemyAttackPower > adventurerAttackPower) {
-              result += "<p>"+ "<%= @adventurer.name %>" +" Attack Power - "+ advDice1 + " + " + advDice2 + " + " + adventurer_skill + " = "+ adventurerAttackPower + "<strong><br>" + "<%= monster.name %>" +" Attack Power - "+ enemyDice1 + " + " + enemyDice2 + " + " + <%= monster.name.parameterize.underscore %>_skill + " = " + enemyAttackPower + "</strong></p><hr>";
+              result += "<p>"+ "<%= @adventurer.name %> <%= t('stories.read.attack_power') %> - "+ advDice1 + " + " + advDice2 + " + " + adventurer_skill + " = "+ adventurerAttackPower + "<strong><br>" + "<%= monster.name %> <%= t('stories.read.attack_power') %> - "+ enemyDice1 + " + " + enemyDice2 + " + " + <%= monster.name.parameterize.underscore %>_skill + " = " + enemyAttackPower + "</strong></p><hr>";
               adventurer_energy -= 2;
               if (adventurer_energy < 1) {
                 finish = true;
                 morreu = true;
-                result += "<p>You died!</p>";
+                result += "<p><%= t('stories.read.you_died') %></p>";
                 $("#combat-result").html(result);
                 return;
               } else if (<%= monster.name.parameterize.underscore %>_energy < 1) {
                 finish = true;
-                result += "<p><%= monster.name %> died!</p>";
+                result += "<p><%= monster.name %> <%= t('stories.read.died') %></p>";
               }
             } else if (enemyAttackPower < adventurerAttackPower) {
-              result += "<p><strong>"+ "<%= @adventurer.name %>" +" Attack Power - "+ advDice1 + " + " + advDice2 + " + " + adventurer_skill + " = "+ adventurerAttackPower + "</strong> <i class='fa fa-check fa-1'></i><br>" + "<%= monster.name %>" +" Attack Power - "+ enemyDice1 + " + " + enemyDice2 + " + " + <%= monster.name.parameterize.underscore %>_skill + " = " + enemyAttackPower + "</p><hr>";
+              result += "<p><strong>"+ "<%= @adventurer.name %> <%= t('stories.read.attack_power') %> - "+ advDice1 + " + " + advDice2 + " + " + adventurer_skill + " = "+ adventurerAttackPower + "</strong> <i class='fa fa-check fa-1'></i><br>" + "<%= monster.name %> <%= t('stories.read.attack_power') %> - "+ enemyDice1 + " + " + enemyDice2 + " + " + <%= monster.name.parameterize.underscore %>_skill + " = " + enemyAttackPower + "</p><hr>";
               <%= monster.name.parameterize.underscore %>_energy -= 2;
               if (adventurer_energy < 1) {
                 finish = true;
                 morreu = true;
-                result += "<p>You died!</p>";
+                result += "<p><%= t('stories.read.you_died') %></p>";
                 $("#combat-result").html(result);
                 return;
               } else if (<%= monster.name.parameterize.underscore %>_energy < 1) {
                 finish = true;
-                result += "<p><%= monster.name %> died!</p>";
+                result += "<p><%= monster.name %> <%= t('stories.read.died') %></p>";
               }
             }
           }

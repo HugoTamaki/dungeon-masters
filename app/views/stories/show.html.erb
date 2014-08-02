@@ -5,28 +5,28 @@
 
   <div id="tabs">
     <ul>
-      <li><a href="#tabs-1">Chapters</a></li>
-      <li><a href="#tabs-2">Special Attributes</a></li>
-      <li><a href="#tabs-3">Items</a></li>
-      <li><a href="#tabs-4">Story</a></li>
-      <li><a href="#tabs-5">Graph</a></li>
+      <li><a href="#tabs-1"><%= t('tabs.chapters') %></a></li>
+      <li><a href="#tabs-2"><%= t('tabs.special_attributes') %></a></li>
+      <li><a href="#tabs-3"><%= t('tabs.items') %></a></li>
+      <li><a href="#tabs-4"><%= t('tabs.story') %></a></li>
+      <li><a href="#tabs-5"><%= t('tabs.graph') %></a></li>
     </ul>
     <div id="tabs-1">
       <% @chapters.each do |chapter| %>
         <div class="chapter-fields">
-          <h3>Chapter <%= chapter.reference %></h3>
+          <h3><%= t('stories.show.chapter') %> <%= chapter.reference %></h3>
           <p>
-            Content: <%= simple_format chapter.content %>
+            <%= t('stories.show.content') %> <%= simple_format chapter.content %>
           </p>
           <p>
             <%= image_tag chapter.image if chapter.image.present? %>
           </p>
           <% if chapter.decisions.present? %>
             <div class="decision-fields">
-              <h3>Decisions</h3>
+              <h3><%= t('stories.show.decisions') %></h3>
               <% chapter.decisions.each do |decision| %>
                 <p>
-                  Destiny: <%= decision.destiny_num %>
+                  <%= t('stories.show.destiny') %>: <%= decision.destiny_num %>
                 </p>
                 <hr/>
               <% end %>
@@ -34,16 +34,16 @@
           <% end %>
           <% if chapter.monsters.present? %>
             <div class="monster-fields">
-              <h3>Monsters</h3>
+              <h3><%= t('stories.show.monsters') %></h3>
               <% chapter.monsters.each do |monster| %>
                 <p>
-                  Name: <%= monster.name %>
+                  <%= t('stories.show.name') %>: <%= monster.name %>
                 </p>
                 <p>
-                  Skill: <%= monster.skill %>
+                  <%= t('stories.show.skill') %>: <%= monster.skill %>
                 </p>
                 <p>
-                  Energy: <%= monster.energy %>
+                  <%= t('stories.show.energy') %>: <%= monster.energy %>
                 </p>
               <% end %>
             </div>
@@ -56,7 +56,7 @@
     <div id="tabs-2">
       <% @special_attributes.each do |special_attribute| %>
         <p>
-          Special Attribute: <%= special_attribute.name %>
+          <%= t('stories.show.special_attribute') %>: <%= special_attribute.name %>
         </p>
         <hr/>
       <% end %>
@@ -64,22 +64,23 @@
     <div id="tabs-3">
       <% @items.each do |item| %>
         <p>
-          Item: <%= item.name %>
+          <%= t('stories.show.item_name') %>: <%= item.name %>
         </p>
         <p>
-          Description: <%= item.description %>
+          <%= t('stories.show.item_description') %>: <%= item.description %>
         </p>
+        <hr>
       <% end %>
       <hr/>
     </div>
     <div id="tabs-4">
       <p>
-        <b>Resume:</b>
+        <b><%= t('stories.show.story_resume') %>:</b>
         <%= @story.resume %>
       </p>
 
       <p>
-        <b>Prelude:</b>
+        <b><%= t('stories.show.prelude') %>:</b>
         <%= simple_format @story.prelude %>
       </p>
     </div>

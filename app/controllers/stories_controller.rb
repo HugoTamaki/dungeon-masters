@@ -168,10 +168,10 @@ end
 
     respond_to do |format|
       if @story.save
-        format.html { redirect_to edit_story_path(id: @story, chapter_numbers: params[:story][:chapter_numbers]), notice: 'Story was successfully created.' }
+        format.html { redirect_to edit_story_path(id: @story, chapter_numbers: params[:story][:chapter_numbers]), notice: I18n.t('actions.messages.create_success') }
         format.json { render json: @story, status: :created, location: @story }
       else
-        format.html { redirect_to new_story_path, alert: 'some parameters are missing' }
+        format.html { redirect_to new_story_path, alert: I18n.t('actions.messages.params_missing') }
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
@@ -199,9 +199,13 @@ end
     if @story.update_attributes(story_params)
       redirect_story(@story, params)
     else
+      @errors = get_errors(@story)
+      @chapters_with_errors = get_chapters_with_errors(@story)
       respond_to do |format|
         format.html { render action: :edit, controller: :stories }
-        format.json { render json: @story.errors, status: :unprocessable_entity }
+        format.json { render json: {errors: @errors.to_json, 
+                                    chapters_with_errors: @chapters_with_errors}, 
+                                    status: :unprocessable_entity }
       end
     end
   end
@@ -235,22 +239,40 @@ end
   
   private
 
+    def get_errors(story)
+      errors = []
+      story.errors.full_messages.each do |error|
+        errors << error
+      end
+      errors
+    end
+
+    def get_chapters_with_errors(story)
+      chapters = ""
+      story.chapters.each do |chapter|
+        if chapter.errors.any?
+          chapters << chapter.reference + ", "
+        end
+      end
+      chapters[0...-2]
+    end
+
     def redirect_story(story, params)
       case params[:commit]
-        when "Save"
-          redirect_to :back, notice: 'Story was successfully saved.'
-        when "Edit Items"
-          redirect_to story_edit_items_path(story), notice: 'Data saved'
-        when "Edit Special Attributes"
-          redirect_to story_edit_special_attributes_path(story), notice: 'Data saved'
-        when "Edit Chapters"
-          redirect_to edit_story_path(story), notice: 'Data saved'
-        when "Graph"
-          redirect_to story_graph_path(story), notice: 'Data saved.'
-        when "Edit Monters"
-          redirect_to story_edit_monsters_path(story), notice: 'Data saved.'
+        when I18n.t('actions.save')
+          redirect_to :back, notice: I18n.t('actions.messages.save_success')
+        when I18n.t('actions.edit_items')
+          redirect_to story_edit_items_path(story), notice: I18n.t('actions.messages.data_saved')
+        when I18n.t('actions.edit_special_attributes')
+          redirect_to story_edit_special_attributes_path(story), notice: I18n.t('actions.messages.save_success')
+        when I18n.t('actions.edit_chapters')
+          redirect_to edit_story_path(story), notice: I18n.t('actions.messages.data_saved')
+        when I18n.t('actions.graph')
+          redirect_to story_graph_path(story), notice: I18n.t('actions.messages.save_success')
+        when I18n.t('actions.edit_monsters')
+          redirect_to story_edit_monsters_path(story), notice: I18n.t('actions.messages.save_success')
         else
-          redirect_to story, notice: 'Story was successfully updated.'
+          redirect_to story, notice: I18n.t('actions.messages.update_success')
       end
     end
 

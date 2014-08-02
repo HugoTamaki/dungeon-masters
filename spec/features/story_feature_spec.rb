@@ -21,7 +21,7 @@ feature "Story" do
 
       click_button "Next"
 
-      page.should have_text("Story was successfully created.")
+      page.should have_text("História foi criada com sucesso.")
       current_path.should == "/stories/#{Story.last.id}/edit" 
     end
 
@@ -35,7 +35,7 @@ feature "Story" do
       click_button "Next"
 
       current_path.should == "/stories/new"
-      page.should have_text("some parameters are missing")
+      page.should have_text("alguns dados estão faltando")
     end
   end
 
@@ -48,22 +48,22 @@ feature "Story" do
     scenario "user creates story successfully", js: true do
       visit "/stories/#{story.id}/edit"
 
-      click_link "Add chapters"
-      fill_in "Reference", with: "Referencia"
-      fill_in "Content", with: "Conteudo"
-      click_link "Add decisions"
-      fill_in "Destiny", with: 5
-      click_link "Add monsters"
-      fill_in "Name", with: "monster"
-      fill_in "Skill", with: 5
-      fill_in "Energy", with: 5
-      click_link "Add items"
+      click_link "Adicionar Capítulo"
+      fill_in "Referencia", with: "Referencia"
+      fill_in "Conteúdo", with: "Conteudo"
+      click_link "Adicionar decisões"
+      fill_in "Destino", with: 5
+      click_link "Adicionar Monstros"
+      fill_in "Nome", with: "monster"
+      fill_in "Habilidade", with: 5
+      fill_in "Energia", with: 5
+      click_link "Adicionar item"
       select "espada", from: "Item"
-      fill_in "Quantity", with: 1
+      fill_in "Quantidade", with: 1
 
-      first(:button, "Finish Editing").click
+      first(:button, "Terminar Edição").click
       current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text("Story was successfully updated.")
+      page.should have_text("História atualizada com sucesso.")
     end
 
     scenario "user creates story without success", js: true do
@@ -77,10 +77,10 @@ feature "Story" do
 
       first(:button, "Finish Editing").click
       current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text("Chapters monsters skill can't be blank")
-      page.should have_text("Chapters monsters skill is not a number")
-      page.should have_text("Chapters monsters energy can't be blank")
-      page.should have_text("Chapters monsters energy is not a number")
+      page.should have_text("Chapters monsters skill não deve estar em branco")
+      page.should have_text("Chapters monsters skill não é um número")
+      page.should have_text("Chapters monsters energy não deve estar em branco")
+      page.should have_text("Chapters monsters energy não é um número")
     end
   end
 
@@ -98,7 +98,7 @@ feature "Story" do
       click_button "Edit Chapters"
 
       current_path.should == "/stories/#{Story.last.id}/edit"
-      page.should have_text("Data saved")
+      page.should have_text("Dados salvos.")
       Item.last.name.should == "Escudo"
       Item.last.description.should == "um escudo"
     end
@@ -112,7 +112,7 @@ feature "Story" do
       click_button "Edit Chapters"
 
       current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text("Items name can't be blank")
+      page.should have_text("Items name não deve estar em branco")
       Item.last.name.should_not == "Escudo"
       Item.last.description.should_not == "um escudo"
     end
@@ -128,7 +128,7 @@ feature "Story" do
       visit "/stories"
 
       page.should have_text("Titulo")
-      click_link("Destroy")
+      click_link("Deletar história")
       page.driver.browser.switch_to.alert.accept
       page.should have_text("No stories.")
       current_path.should == "/stories"
@@ -254,8 +254,8 @@ feature "Story" do
 
       Adventurer.last.energy.should be_equal(energy + 4)
 
-      sleep(0.2)
-      page.body.should include("<strike>Pastel</strike>")
+      sleep(0.5)
+      page.body.should include("<strike>pastel</strike>")
     end
   end
 end

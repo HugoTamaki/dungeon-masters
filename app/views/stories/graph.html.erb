@@ -1,17 +1,17 @@
 <%= javascript_include_tag "sigma" %>
 
 <div class="container">
-  <h1>Graph</h1>
+  <h1><%= t('graph.title') %></h1>
   <div class="row">
     <div class="col-lg-12">
       <div class="wrapper">
         <%= simple_form_for(@story) do |f| %>
           <div class="actions">
-            <%= f.submit "Finish Editing", class: "btn btn-primary" %>
-            <%= f.submit "Edit Chapters", class: "btn btn-primary" %>
-            <%= f.submit "Edit Items", class: "btn btn-primary" %>
-            <%= f.submit "Edit Special Attributes", class: "btn btn-primary" %>
-            <%= f.submit "Save", class: "btn btn-primary" %>
+            <%= f.submit t('actions.finish_editing'), class: "btn btn-primary" %>
+            <%= f.submit t('actions.edit_chapters'), class: "btn btn-primary" %>
+            <%= f.submit t('actions.edit_items'), class: "btn btn-primary" %>
+            <%= f.submit t('actions.edit_special_attributes'), class: "btn btn-primary" %>
+            <%= f.submit t('actions.save'), class: "btn btn-primary" %>
           </div>
         <% end %>
         <div class="sigma" id="sig"></div>
@@ -70,7 +70,7 @@
           }
         
           // writting not used chapters
-          var notUsed = "<h3>Not used chapters</h3>";
+          var notUsed = "<h3>"+ "<%= t('graph.not_used_chapters') %>" +"</h3>";
           notUsed += "<p>";
           for (i=0;i<data["not_used"].length;i++) {
             if (i%10==0 && i!=0) {

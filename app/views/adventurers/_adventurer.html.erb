@@ -1,12 +1,12 @@
 <div class="col-lg-3 col-sm-12 adventurer">
-  <h3>Adventurer sheet</h3>
-  <p>Name: <span id="adventurer_name"><%= @adventurer.name %></span></p>
-  <p>Skill: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
-  <p>Energy: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
-  <p>Luck: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
-  <p>Gold: <span id="adventurer_gold"><%= @adventurer.gold %></span></p>
+  <h3><%= t('stories.read.adventurer_sheet') %></h3>
+  <p><%= t('stories.read.name') %>: <span id="adventurer_name"><%= @adventurer.name %></span></p>
+  <p><%= t('stories.read.skill') %>: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
+  <p><%= t('stories.read.energy') %>: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
+  <p><%= t('stories.read.luck') %>: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
+  <p><%= t('stories.read.gold') %>: <span id="adventurer_gold"><%= @adventurer.gold %></span></p>
   <% if @adventurers_items.present? %>
-    <h3>Adventurer Items</h3>
+    <h3><%= t('stories.read.adventurer_items') %></h3>
     <% @adventurers_items.each do |item| %>
       <% if item.item.usable %>
         <% if item.status == 1 %>

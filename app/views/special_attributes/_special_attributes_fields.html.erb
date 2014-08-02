@@ -1,4 +1,4 @@
 <div class="attribute-fields">
-  <%= f.input :name %>
-  <%= link_to_remove_fields "Remove", f, "attribute" %>
+  <%= f.input :name, label: t('special_attributes.edit.name') %>
+  <%= link_to_remove_fields t('special_attributes.edit.remove'), f, "attribute" %>
 </div>

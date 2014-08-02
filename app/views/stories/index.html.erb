@@ -1,5 +1,5 @@
 <div class="container stories">
-  <h1>Stories</h1>
+  <h1><%= t('stories.index.title') %></h1>
   <% if @stories.empty? %>
     <p>No stories.</p>
   <% else %>
@@ -13,10 +13,22 @@
               <h3><%= story.title %> - by <%= story.user.name %></h3>
               <%= image_tag story.cover(:index_cover), class: "img-responsive" %>
               <div class="actions">
-                <%= link_to 'Show', story, class: "btn btn-primary" if story.user == current_user %>
-                <%= link_to 'Read', story_prelude_path(story), class: "btn btn-primary" %>
-                <%= link_to 'Edit', edit_story_path(story), class: "btn btn-primary" if story.user == current_user %>
-                <%= link_to 'Destroy', story, class: "btn btn-danger", data: {confirm: 'Are you sure?'}, method: :delete if story.user == current_user %>
+                <div class="row">
+                  <div class="col-lg-5">
+                    <%= link_to t('actions.show'), story, class: "btn btn-primary" if story.user == current_user %>
+                  </div>
+                  <div class="col-lg-5">
+                    <%= link_to t('actions.read'), story_prelude_path(story), class: "btn btn-primary" %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-5">
+                    <%= link_to t('actions.edit'), edit_story_path(story), class: "btn btn-primary" if story.user == current_user %>
+                  </div>
+                  <div class="col-lg-5">
+                    <%= link_to t('actions.destroy'), story, class: "btn btn-danger", data: {confirm: 'Are you sure?'}, method: :delete if story.user == current_user %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

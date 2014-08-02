@@ -6,18 +6,6 @@ require 'sprockets/railtie'
 Bundler.require(:default, Rails.env)
 
 module Calabouco
-  
-  STORY_CHAPTER_NUMBERS = "Insert how many chapters you want your story to have. If you want to insert more chapters, don't worry, you can do that later."
-  STORY_RESUME = "This is the text that will be a quick resume of your story. It will be visible to users that search your story."
-  STORY_PRELUDE = "This is the start of your story. Here you can explain who is the protagonist, or what are his motivations."
-  CHAPTER_REFERENCE = "Links chapters to each other. The first chapter must have reference 1."
-  CHAPTER_CONTENT = "The content of the chapter."
-  CHAPTER_DESTINY = "It will point to the next chapter. Insert as many decisions you want in a Chapter."
-  CHAPTER_MONSTER_NAME = "The monster's name. Use different names for each chapter. ex: goblin A, goblin B"
-  CHAPTER_MONSTER_SKILL = "Monster's ability or dexterity. If it's high, it will be more difficult to win over a monster."
-  CHAPTER_MONSTER_ENERGY = "Monster's hit point. If it's high, the monster will have more vitality."
-  CHAPTER_MOD_ITEM = "Choose here how many items you want the adventurer to receive in the chapter, and above, which item."
-  CHAPTER_MOD_ATTRIBUTE = "Choose here how much the adventurer will loose or gain of an attribute. Eg. -3, 4. Choose which attribute above."
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -40,7 +28,7 @@ module Calabouco
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    config.i18n.default_locale = 'pt-BR'
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 

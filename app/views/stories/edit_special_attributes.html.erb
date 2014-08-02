@@ -1,20 +1,20 @@
 <div class="container">
-  <h1>Edit special attributes</h1>
+  <h1><%= t('special_attributes.edit.title') %></h1>
   <div class="wrapper">
     <%= simple_form_for(@story) do |f| %>
     <div class="actions">
-      <%= f.submit "Finish Editing", class: "btn btn-primary" %>
-      <%= f.submit "Edit Chapters", class: "btn btn-primary" %>
-      <%= f.submit "Edit Items", class: "btn btn-primary" %>
-      <%= f.submit "Graph", class: "btn btn-primary" %>
-      <%= f.submit "Save", class: "btn btn-primary" %>
+      <%= f.submit t('actions.finish_editing'), class: "btn btn-primary" %>
+      <%= f.submit t('actions.edit_chapters'), class: "btn btn-primary" %>
+      <%= f.submit t('actions.edit_items'), class: "btn btn-primary" %>
+      <%= f.submit t('actions.graph'), class: "btn btn-primary" %>
+      <%= f.submit t('actions.save'), class: "btn btn-primary" %>
     </div>
     <div>
       <%= f.simple_fields_for :special_attributes do |builder| %>
         <%= render partial: "/special_attributes/special_attributes_fields", :locals => {:f => builder} %>
       <% end %>
       <p>
-        <%= link_to_add_fields "Add Special Attributes", f, :special_attributes, "special_attributes" %>
+        <%= link_to_add_fields t('special_attributes.edit.add_special_attributes'), f, :special_attributes, "special_attributes" %>
       </p>
     </div>
     <% end %>
