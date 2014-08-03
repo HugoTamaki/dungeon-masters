@@ -1,7 +1,7 @@
 <div class="container stories">
   <h1><%= t('stories.index.title') %></h1>
   <% if @stories.empty? %>
-    <p>No stories.</p>
+    <p><%= t('stories.index.no_stories') %></p>
   <% else %>
     <%= paginate @stories %>
 

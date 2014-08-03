@@ -138,13 +138,20 @@ end
     adventurer_item.status = 0
     adventurer_item.save
 
-    data = {
-      name: adventurer_item.item.name.parameterize.underscore,
-      skill: adventurer.skill,
-      energy: adventurer.energy,
-      luck: adventurer.luck,
-      gold: adventurer.gold
-    }
+    if adventurer_item.save
+      data = {
+        name: adventurer_item.item.name.parameterize.underscore,
+        skill: adventurer.skill,
+        energy: adventurer.energy,
+        luck: adventurer.luck,
+        gold: adventurer.gold,
+        message: I18n.t('actions.messages.adventurer_update_success')
+      }
+    else
+      data = {
+        message: I18n.t('actions.messages.adventurer_update_fail')
+      }
+    end
 
     respond_to do |format|
       format.json { render json: data.to_json }

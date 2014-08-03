@@ -48,6 +48,8 @@ en:
       save_success: "Story was successfully saved."
       data_saved: "Data saved."
       update_success: "Story was successfully updated."
+      adventurer_update_success: "Adventurer updated."
+      adventurer_update_fail: "An error ocurred. Adventurer not updated."
   tabs:
     story: "Story"
     chapters: "Chapters"
@@ -57,7 +59,8 @@ en:
     graph: "Graph"
   stories:
     index:
-      title: "Stories"
+      title: "My Stories"
+      no_stories: "No stories"
     show:
       story_resume: "Resume"
       prelude: "Prelude"
@@ -159,6 +162,13 @@ en:
   back: "Back"
   custom_pages:
     last_stories: "Last stories"
+    paragraph1: "This site is for fans of the famous gamebooks of the 80's and 90's. Create your own customized stories and share it with your friends!"
+    feature_title: "Features"
+    feature1: "Create as many chapters as you want!"
+    feature2: "Define destiny chapters that the adventurer can choose!"
+    feature3: "Create monsters with customized skill and energy, and choose in what chapters the encounters will occur!"
+    feature4: "Create usable or not usable items, with customized attribute modifiers!"
+    feature5: "Create modifiers that can add or take points of adventurer attributes!"
   messages:
     chapters_with_errors: "Chapters with errors: "
   menu:

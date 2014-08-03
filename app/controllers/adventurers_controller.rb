@@ -41,9 +41,11 @@ class AdventurersController < ApplicationController
 
     respond_to do |format|
       if adventurer.update_attributes(args[:adventurer])
-        format.html { render nothing: true }
+        data = { message: I18n.t('actions.messages.adventurer_update_success') }
+        format.json { render json: data.to_json }
       else
-        format.html { render nothing: true }
+        data = { message: I18n.t('actions.messages.adventurer_update_fail') }
+        format.json { render json: data.to_json }
       end
     end
   end

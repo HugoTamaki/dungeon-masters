@@ -46,6 +46,8 @@ pt-BR:
       save_success: "História salva com sucesso."
       data_saved: "Dados salvos."
       update_success: "História atualizada com sucesso."
+      adventurer_update_success: "Aventureiro atualizado."
+      adventurer_update_fail: "Ocorreu um erro. Aventureiro não pode ser atualizado."
   tabs:
     story: "História"
     chapters: "Capítulos"
@@ -55,7 +57,8 @@ pt-BR:
     graph: "Grafo"
   stories:
     index:
-      title: "Histórias"
+      title: "Minhas Histórias"
+      no_stories: "Nenhuma história"
     show:
       story_resume: "Resumo"
       prelude: "Prelúdio"
@@ -157,6 +160,13 @@ pt-BR:
   back: "Voltar"
   custom_pages:
     last_stories: "Últimas Histórias"
+    paragraph1: "Este site é para os fans dos famosos livro-jogos da década de 80 / 90! Crie suas próprias histórias customizadas, e compartilhe para que seus amigos joguem e se divirtam!"
+    feature_title: "O que posso fazer?"
+    feature1: "Crie quantos capítulos quiser!"
+    feature2: "Defina para quais são os capítulos de opções que o aventureiro tem como destino!"
+    feature3: "Crie monstros com habilidade e energia customizadas, e em que capítulos ocorrem os encontros!"
+    feature4: "Crie itens usáveis ou não, com modificadores de atributos customizados!"
+    feature5: "Crie modificadores nos capítulos que permitem perda ou ganho de atributos!"
   messages:
     chapters_with_errors: "Capítulos com erros: "
   menu:
