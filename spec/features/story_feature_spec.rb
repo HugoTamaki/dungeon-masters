@@ -14,12 +14,12 @@ feature "Story" do
     scenario "user creates story successfully" do
       visit "/stories/new"
 
-      fill_in "Title", with: "Titulo"
-      fill_in "Resume", with: "Resumo"
-      fill_in "Prelude", with: "Preludio"
-      fill_in "Chapter numbers", with: 5
+      fill_in "Título", with: "Titulo"
+      fill_in "Resumo", with: "Resumo"
+      fill_in "Prelúdio", with: "Preludio"
+      fill_in "Número de capítulos", with: 5
 
-      click_button "Next"
+      click_button "Próximo"
 
       page.should have_text("História foi criada com sucesso.")
       current_path.should == "/stories/#{Story.last.id}/edit" 
@@ -28,11 +28,11 @@ feature "Story" do
     scenario "user fails to create story" do
       visit "/stories/new"
 
-      fill_in "Title", with: ""
-      fill_in "Resume", with: ""
-      fill_in "Prelude", with: ""
+      fill_in "Título", with: ""
+      fill_in "Resumo", with: ""
+      fill_in "Prelúdio", with: ""
 
-      click_button "Next"
+      click_button "Próximo"
 
       current_path.should == "/stories/new"
       page.should have_text("alguns dados estão faltando")
@@ -51,13 +51,13 @@ feature "Story" do
       click_link "Adicionar Capítulo"
       fill_in "Referencia", with: "Referencia"
       fill_in "Conteúdo", with: "Conteudo"
-      click_link "Adicionar decisões"
+      click_link "Adicionar Destino"
       fill_in "Destino", with: 5
-      click_link "Adicionar Monstros"
+      click_link "Adicionar Monstro"
       fill_in "Nome", with: "monster"
       fill_in "Habilidade", with: 5
       fill_in "Energia", with: 5
-      click_link "Adicionar item"
+      click_link "Adicionar Item"
       select "espada", from: "Item"
       fill_in "Quantidade", with: 1
 
@@ -69,13 +69,13 @@ feature "Story" do
     scenario "user creates story without success", js: true do
       visit "/stories/#{story.id}/edit"
 
-      click_link "Add chapters"
-      fill_in "Reference", with: ""
-      fill_in "Content", with: ""
-      click_link "Add monsters"
-      fill_in "Name", with: "monster"
+      click_link "Adicionar Capítulo"
+      fill_in "Referencia", with: ""
+      fill_in "Conteúdo", with: ""
+      click_link "Adicionar Monstro"
+      fill_in "Nome", with: "monster"
 
-      first(:button, "Finish Editing").click
+      first(:button, "Terminar Edição").click
       current_path.should == "/stories/#{Story.last.id}"
       page.should have_text("Chapters monsters skill não deve estar em branco")
       page.should have_text("Chapters monsters skill não é um número")
@@ -92,10 +92,10 @@ feature "Story" do
     scenario "user creates item successfully" do
       visit "stories/#{story.id}/edit_items"
 
-      fill_in "Name", with: "Escudo"
-      fill_in "Description", with: "um escudo"
+      fill_in "Nome", with: "Escudo"
+      fill_in "Descrição", with: "um escudo"
 
-      click_button "Edit Chapters"
+      click_button "Editar Capítulos"
 
       current_path.should == "/stories/#{Story.last.id}/edit"
       page.should have_text("Dados salvos.")
@@ -106,10 +106,10 @@ feature "Story" do
     scenario "user fails to create item" do
       visit "stories/#{story.id}/edit_items"
 
-      fill_in "Name", with: ""
-      fill_in "Description", with: "um escudo"
+      fill_in "Nome", with: ""
+      fill_in "Descrição", with: "um escudo"
 
-      click_button "Edit Chapters"
+      click_button "Editar Capítulos"
 
       current_path.should == "/stories/#{Story.last.id}"
       page.should have_text("Items name não deve estar em branco")
@@ -164,60 +164,60 @@ feature "Story" do
     scenario "user passes through chapters", js: true do
       visit "/stories/#{story_sample.id}/prelude"
 
-      click_button "Roll dices"
-      click_button "Chapter 1"
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
 
       page.should have_text("content 1")
       
-      click_link "Chapter 2"
+      click_link "Capítulo 2"
       page.should have_text("content 2")
 
       page.should have_button 'Combat'
-      click_button "Combat"
+      click_button "Combate"
 
-      click_link "Chapter 5"
+      click_link "Capítulo 5"
       page.should have_text("content 5")
     end
 
     scenario "user does combat", js: true do
       visit "/stories/#{story_sample.id}/prelude"
 
-      click_button "Roll dices"
+      click_button "Rolar dados"
 
-      click_button "Chapter 1"
-      click_link "Chapter 2"
+      click_button "Capítulo 1"
+      click_link "Capítulo 2"
 
-      page.should have_button 'Combat'
+      page.should have_button 'Combate'
 
-      click_button "Combat"
-      page.should have_text("goblin died!")
+      click_button "Combate"
+      page.should have_text("goblin morreu!")
     end
 
     scenario "user receives an item", js: true do
       visit "/stories/#{story_sample.id}/prelude"
 
-      click_button "Roll dices"
+      click_button "Rolar dados"
 
-      click_button "Chapter 1"
-      click_link "Chapter 3"
+      click_button "Capítulo 1"
+      click_link "Capítulo 3"
       page.should have_text("espada")
     end
 
     scenario "user does not has an item", js: true do
       visit "/stories/#{story_sample.id}/prelude"
 
-      click_button "Roll dices"
-      click_button "Chapter 1"
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
 
       page.should have_text("content 1")
       
-      click_link "Chapter 2"
+      click_link "Capítulo 2"
       page.should have_text("content 2")
 
       page.should have_button 'Combat'
-      click_button "Combat"
+      click_button "Combate"
 
-      click_link "Chapter 5"
+      click_link "Capítulo 5"
       page.should have_text("content 5")
       page.should have_css ".disabled"
     end
@@ -225,12 +225,12 @@ feature "Story" do
     scenario "user has an item and passes trough", js: true do
       visit "/stories/#{story_sample.id}/prelude"
 
-      click_button "Roll dices"
-      click_button "Chapter 1"
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
 
       page.should have_text("content 1")
       
-      click_link "Chapter 8"
+      click_link "Capítulo 8"
       page.should have_text("content 8")
 
       sleep(0.2)
@@ -240,14 +240,14 @@ feature "Story" do
     scenario "user uses an usable item", js: true do
       visit "/stories/#{story_sample.id}/prelude"
 
-      click_button "Roll dices"
-      click_button "Chapter 1"
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
 
       energy = Adventurer.last.energy
 
       page.should have_text("content 1")
       
-      click_link "Chapter 2"
+      click_link "Capítulo 2"
       page.should have_text("content 2")
 
       click_link "Pastel"

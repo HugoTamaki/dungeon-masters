@@ -125,7 +125,8 @@
             setTimeout("$('.message').fadeOut()", 3000);
           },
           error: function() {
-            
+            $(".message-container").html("<p class='message'>An error ocurred. Adventurer not updated.</p>");
+            setTimeout("$('.message').fadeOut()", 3000);
           }
         });
 
