@@ -1,5 +1,6 @@
 <div class="container">
   <h1><%= t('special_attributes.edit.title') %></h1>
+  <div class="message-container"></div>
   <div class="wrapper">
     <%= simple_form_for(@story) do |f| %>
     <div class="actions">
@@ -8,6 +9,8 @@
       <%= f.submit t('actions.edit_items'), class: "btn btn-primary" %>
       <%= f.submit t('actions.graph'), class: "btn btn-primary" %>
       <%= f.submit t('actions.save'), class: "btn btn-primary" %>
+      <% f.object.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
+      <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
     </div>
     <div>
       <%= f.simple_fields_for :special_attributes do |builder| %>
@@ -20,3 +23,4 @@
     <% end %>
   </div>  
 </div>
+<%= render partial: 'publish_script' %>

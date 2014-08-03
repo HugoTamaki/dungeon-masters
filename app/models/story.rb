@@ -17,6 +17,7 @@ class Story < ActiveRecord::Base
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
 
   scope :by_user, lambda {|user_id| where(user_id: user_id)}
+  scope :published, -> { where(published: true) }
 
   def self.graph(chapters)
     references = []
@@ -84,7 +85,7 @@ class Story < ActiveRecord::Base
 
   def self.search(search,user_id)
     if search
-      joins(:user).where('stories.title LIKE ? or users.name LIKE ?', "%#{search}%", "%#{search}%")
+      joins(:user).where('stories.title LIKE ? or users.name LIKE ? and published = true', "%#{search}%", "%#{search}%")
     else
       by_user(user_id)
     end

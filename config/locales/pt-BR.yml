@@ -40,6 +40,12 @@ pt-BR:
     graph: "Grafo"
     save: "Salvar"
     next: "Próximo"
+    publish: "Publicar"
+    unpublish: "Despublicar"
+    publish_success: "Publicado com sucesso."
+    unpublish_success: "Despublicado com sucesso."
+    publish_fail: "Publicação falhou."
+    unpublish_fail: "Despublicação falhou."
     messages:
       params_missing: "alguns dados estão faltando"
       create_success: "História foi criada com sucesso."

@@ -13,6 +13,7 @@
     get 'edit_items', as: "edit_items"
     get 'graph'
     post 'use_item', on: :collection
+    post 'publish'
   end
 
   resources :adventurers do

@@ -42,6 +42,12 @@ en:
     graph: "Graph"
     save: "Save"
     next: "Next"
+    publish: "Publish"
+    unpublish: "Unpublish"
+    publish_success: "Published with success."
+    unpublish_success: "Unpublished with success."
+    publish_fail: "Publish failed."
+    unpublish_fail: "Unpublish failed."
     messages:
       params_missing: "some parameters are missing"
       create_success: "Story was successfully created."

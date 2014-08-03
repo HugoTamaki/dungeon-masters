@@ -167,6 +167,11 @@ end
 
     render nothing: true
   end
+
+  def publish
+    story = Story.find(params[:story_id])
+    publish_story(story)
+  end
   
   # POST /stories
   # POST /stories.json
@@ -246,6 +251,44 @@ end
   
   private
 
+    def publish_story(story)
+      if story.published
+        story.published = false
+      else
+        story.published = true
+      end
+
+      if story.save
+        if story.published
+          data = {
+            button: I18n.t('actions.unpublish'),
+            message: I18n.t('actions.publish_success')
+          }
+        else
+          data = {
+            button: I18n.t('actions.publish'),
+            message: I18n.t('actions.unpublish_success')
+          }
+        end
+        respond_to do |format|
+          format.json { render json: data.to_json }
+        end
+      else
+        if story.published
+          data = {
+            message: I18n.t('actions.unpublish_fail')
+          }
+        else
+          data = {
+            message: I18n.t('actions.publish_fail')
+          }
+        end
+        respond_to do |format|
+          format.json { render json: data.to_json }
+        end
+      end
+    end
+
     def get_errors(story)
       errors = []
       story.errors.full_messages.each do |error|
@@ -295,6 +338,7 @@ end
                                     :user_id,
                                     :chapter_numbers,
                                     :cover,
+                                    :published,
                                     items_attributes: [:id, :description, :name, :story_id, :usable, :attr, :modifier, :_destroy],
                                     special_attributes_attributes: [:id, :adventurer_id, :name, :value, :story_id, :_destroy],
                                     chapters_attributes: [:id,

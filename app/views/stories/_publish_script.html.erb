@@ -1,0 +1,23 @@
+<script>
+  $(document).ready(function() {
+    $('#publish').click(function() {
+      $.ajax({
+        url: 'publish',
+        type: 'POST',
+        data: {
+          story_id: $('#story_id').val()
+        },
+        dataType: 'json',
+        success: function(data) {
+          $("#publish").html(data["button"]);
+          $(".message-container").html("<p class='message'>" + data["message"] + "</p>");
+          setTimeout("$('.message').fadeOut()", 3000);
+        },
+        error: function(response) {
+          $(".message-container").html("<p class='message'>" + response["message"] + "</p>");
+          setTimeout("$('.message').fadeOut()", 3000);
+        }
+      });
+    });
+  });
+</script>

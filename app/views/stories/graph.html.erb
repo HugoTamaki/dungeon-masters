@@ -2,6 +2,7 @@
 
 <div class="container">
   <h1><%= t('graph.title') %></h1>
+  <div class="message-container"></div>
   <div class="row">
     <div class="col-lg-12">
       <div class="wrapper">
@@ -12,6 +13,8 @@
             <%= f.submit t('actions.edit_items'), class: "btn btn-primary" %>
             <%= f.submit t('actions.edit_special_attributes'), class: "btn btn-primary" %>
             <%= f.submit t('actions.save'), class: "btn btn-primary" %>
+            <% f.object.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
+            <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
           </div>
         <% end %>
         <div class="sigma" id="sig"></div>
@@ -127,3 +130,5 @@
     });
   });
 </script>
+
+<%= render partial: 'publish_script' %>
