@@ -32,29 +32,37 @@ class StoriesController < ApplicationController
 
   def prelude
     @story = Story.find(params[:story_id])
-    if current_user.adventurer.present?
-      @adventurer = Adventurer.new
-      current_user.adventurer.items.clear
+    if @story.published || @story.user == current_user
+      if current_user.adventurer.present?
+        @adventurer = Adventurer.new
+        current_user.adventurer.items.clear
+      else
+        @adventurer = Adventurer.new
+      end
     else
-      @adventurer = Adventurer.new
+      redirect_to root_url, alert: I18n.t('actions.not_published')
     end
   end
 
   def read
     @story = Story.find(params[:id])
-    @chapter = @story.chapters.where(reference: params[:reference]).first
-    adventurer = Adventurer.by_user(current_user.id).first
+    if @story.published || @story.user == current_user
+      @chapter = @story.chapters.where(reference: params[:reference]).first
+      adventurer = Adventurer.by_user(current_user.id).first
 
-    @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
-    @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
+      @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
+      @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
 
-    this_decision = Decision.find_by(destiny_num: @chapter.id)
-    Adventurer.use_required_item(this_decision, @adventurer)
+      this_decision = Decision.find_by(destiny_num: @chapter.id)
+      Adventurer.use_required_item(this_decision, @adventurer)
 
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @chapter }
+      
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @chapter }
+      end
+    else
+      redirect_to root_url, alert: I18n.t('actions.not_published')
     end
   end
 

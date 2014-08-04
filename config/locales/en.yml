@@ -48,6 +48,7 @@ en:
     unpublish_success: "Unpublished with success."
     publish_fail: "Publish failed."
     unpublish_fail: "Unpublish failed."
+    not_published: "Not possible to access this story"
     messages:
       params_missing: "some parameters are missing"
       create_success: "Story was successfully created."

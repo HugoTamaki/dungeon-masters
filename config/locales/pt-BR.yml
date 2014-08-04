@@ -46,6 +46,7 @@ pt-BR:
     unpublish_success: "Despublicado com sucesso."
     publish_fail: "Publicação falhou."
     unpublish_fail: "Despublicação falhou."
+    not_published: "Não foi possível acessar essa história"
     messages:
       params_missing: "alguns dados estão faltando"
       create_success: "História foi criada com sucesso."
