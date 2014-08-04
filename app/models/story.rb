@@ -81,14 +81,10 @@ class Story < ActiveRecord::Base
     chapters_with_decisions
   end
 
-
-
-  def self.search(search,user_id)
-    if search
-      joins(:user).where('stories.title LIKE ? or users.name LIKE ? and published = true', "%#{search}%", "%#{search}%")
-    else
-      by_user(user_id)
-    end
+  def self.search(search)
+    joins('LEFT JOIN users AS u 
+            ON u.id = stories.user_id').where('u.name LIKE :search 
+            OR stories.title LIKE :search', search: "%#{search}%").order('stories.title ASC') if search
   end
 
 end

@@ -142,6 +142,8 @@ pt-BR:
       attack_power: "Força de ataque"
       you_died: "Você morreu!"
       died: "morreu!"
+    search_result:
+      title: "Resultados da busca"
   items:
     edit:
       title: "Editando items"

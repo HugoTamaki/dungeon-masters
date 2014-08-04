@@ -130,7 +130,7 @@ feature "Story" do
       page.should have_text("Titulo")
       click_link("Deletar história")
       page.driver.browser.switch_to.alert.accept
-      page.should have_text("No stories.")
+      page.should have_text("Nenhuma história")
       current_path.should == "/stories"
     end
   end

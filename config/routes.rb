@@ -14,6 +14,7 @@
     get 'graph'
     post 'use_item', on: :collection
     post 'publish'
+    get 'search_result',as: "search_result", on: :collection
   end
 
   resources :adventurers do

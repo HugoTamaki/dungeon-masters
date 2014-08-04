@@ -1,0 +1,50 @@
+<div class="container stories">
+  <h1><%= t('stories.search_result.title') %></h1>
+  <% if @stories.empty? %>
+    <p><%= t('stories.index.no_stories') %></p>
+  <% else %>
+    <%= paginate @stories %>
+
+    <% @stories.each do |story| %>
+      <div class="story_div">
+        <div class="row">
+          <div class="col-lg-4 col-sm-12">
+            <div class="image">
+              <h3><%= story.title %> - by <%= story.user.name %></h3>
+              <%= image_tag story.cover(:index_cover), class: "img-responsive" %>
+              <div class="actions">
+                <div class="row">
+                  <div class="col-lg-5">
+                    <%= link_to t('actions.show'), story, class: "btn btn-primary" if story.user == current_user %>
+                  </div>
+                  <div class="col-lg-5">
+                    <%= link_to t('actions.read'), story_prelude_path(story), class: "btn btn-primary" %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-5">
+                    <%= link_to t('actions.edit'), edit_story_path(story), class: "btn btn-primary" if story.user == current_user %>
+                  </div>
+                  <div class="col-lg-5">
+                    <%= link_to t('actions.destroy'), story, class: "btn btn-danger", data: {confirm: 'Are you sure?'}, method: :delete if story.user == current_user %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 col-sm-12">
+            <div class="prelude">
+              <p>
+                <%= simple_format story.resume %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= paginate @stories %>
+  <% end %>
+</div>
+
+<br />

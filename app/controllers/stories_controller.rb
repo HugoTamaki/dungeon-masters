@@ -8,7 +8,7 @@ class StoriesController < ApplicationController
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.search(params[:search],current_user.id).page(params[:page]).per(5)
+    @stories = Story.by_user(current_user.id).page(params[:page]).per(5)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -56,6 +56,10 @@ class StoriesController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @chapter }
     end
+  end
+
+  def search_result
+    @stories = Story.search(params[:search]).published.page(params[:page]).per(5)
   end
 
   def new

@@ -144,6 +144,8 @@ en:
       attack_power: "Attack power"
       you_died: "You died!"
       died: "died!"
+    search_result:
+      title: "Search result"
   items:
     edit:
       title: "Editing items"
