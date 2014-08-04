@@ -30,21 +30,21 @@ body {
 .chapter-fields {
   border: 1px solid;
   padding: 15px;
-  border-radius: 9px;
+  border-radius: 7px;
   left-margin: 0;
 }
 
 .attribute-fields {
   border: 1px solid;
   padding: 5px;
-  border-radius: 9px;
+  border-radius: 7px;
   margin: 10px;
 }
 
 .item-fields {
   border: 1px solid;
   padding: 5px;
-  border-radius: 9px;
+  border-radius: 7px;
   margin: 10px;
   .usable-item-attributes {
     display: none;
@@ -62,7 +62,7 @@ body {
   float: left;
   margin: 10px;
   border: 1px solid;
-  border-radius: 9px;
+  border-radius: 7px;
   overflow: auto;
   top: 20px;
   bottom: 20px;
@@ -76,33 +76,37 @@ body {
 }
 
 .chapter {
-  margin: 5px 10px;
-  height: 500px;
   border: 1px solid;
-  border-radius: 9px;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+  height: 700px;
   overflow: auto;
   background-color: #ECEAE0;
 }
 
 .adventurer {
-  border: 1px solid;
-  margin: 5px 10px;
-  border-radius: 9px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  height: 700px;
   background-color: #ECEAE0;
+  overflow: auto;
 }
 
 .decisions {
   margin: 5px;
   padding: 15px;
   border: 1px solid;
-  border-radius: 9px;
+  border-radius: 7px;
 }
 
 .decision-fields {
   border: 1px solid;
   padding: 5px;
   margin: 10px;
-  border-radius: 9px;
+  border-radius: 7px;
   left-margin: 5px;
 }
 
@@ -114,42 +118,42 @@ body {
   margin: 5px;
   padding: 15px;
   border: 1px solid;
-  border-radius: 9px;
+  border-radius: 7px;
 }
 
 .monster-fields {
   border: 1px solid;
   padding: 5px;
   margin: 10px;
-  border-radius: 9px;
+  border-radius: 7px;
 }
 
 .modifiers-items {
   margin: 5px;
   padding: 15px;
   border: 1px solid;
-  border-radius: 9px;
+  border-radius: 7px;
 }
 
 .modifiers-attributes {
   margin: 5px;
   padding: 15px;
   border: 1px solid;
-  border-radius: 9px;
+  border-radius: 7px;
 }
 
 .modifier-item-fields {
   border: 1px solid;
   padding: 5px;
   margin: 10px;
-  border-radius: 9px;
+  border-radius: 7px;
 }
 
 .modifier-attribute-fields {
   border: 1px solid;
   padding: 5px;
   margin: 10px;
-  border-radius: 9px;
+  border-radius: 7px;
 }
 
 .message-container {
@@ -188,7 +192,7 @@ label {
 
 .story_div {
   border: 1px solid;
-  border-radius: 9px;
+  border-radius: 7px;
   padding: 10px;
   margin: 15px;
   background-color: #ECEAE0;
@@ -217,7 +221,7 @@ label {
   // padding-right: 30px;
   padding-bottom: 20px;
   border: 1px solid;
-  border-radius: 9px;
+  border-radius: 7px;
   background-color: #E2ECDF;
 }
 
@@ -225,7 +229,7 @@ label {
   width: 900px;
   margin-left: 0;
   border: 1px solid;
-  border-radius: 9px;
+  border-radius: 7px;
   background-color: #ECEAE0;
   margin-top: 20px;
   position: relative;
@@ -245,10 +249,46 @@ label {
   .image {
     margin-left: 0;
   }
+  .chapter {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    height: 500px;
+    overflow: auto;
+  }
+  .adventurer {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-left: 1px solid;
+    border-top: 0;
+    height: 400px;
+    overflow: auto;
+  }
 }
 
-@media (min-width: 770px) and (max-width: 1200px) {
+@media (min-width: 500px) and (max-width: 1200px) {
   .all {
     margin-top: 100px;
+  }
+  .chapter {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    height: 500px;
+    overflow: auto;
+  }
+  .adventurer {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-left: 1px solid;
+    border-top: 0;
+    height: 400px;
+    overflow: auto;
   }
 }
