@@ -258,4 +258,61 @@ feature "Story" do
       page.body.should include("<strike>pastel</strike>")
     end
   end
+
+  feature "#publish/unpublish story" do
+    before(:each) do
+      login_as user
+    end
+
+    context "publish a story" do
+      let!(:unpublished_story) { FactoryGirl.create(:story, title: 'Unpublished Story', published: false, user: user) }
+
+      scenario "user publish a story", js: true do
+        visit root_path
+        page.should_not have_text "Unpublished Story"
+
+        visit "/stories/#{unpublished_story.id}/edit"
+
+        first(:link, "Publicar").click
+        page.should have_text "Publicado com sucesso."
+
+        visit root_path
+        page.should have_text "Unpublished Story"
+      end
+    end
+
+    context "user unpublish a story" do
+      let!(:published_story) { FactoryGirl.create(:story, title: 'Published Story', published: true, user: user) }
+
+      scenario "user unpublish a story", js: true do
+        visit root_path
+        page.should have_text "Published Story"
+
+        visit "/stories/#{published_story.id}/edit"
+
+        first(:link, "Despublicar").click
+        page.should have_text "Despublicado com sucesso."
+
+        visit root_path
+        page.should_not have_text "Published Story"
+      end      
+    end
+  end
+
+  feature "#search story" do
+    let!(:story_sample) { FactoryGirl.create(:story, title: "Story sample", published: true, user: user) }
+    
+    before(:each) do
+      login_as user
+    end
+
+    scenario "user search a story" do
+      visit root_path
+
+      page.find('.navbar-search').set 'Story sample'
+      click_button "Buscar"
+      page.should have_text "Story sample"
+      current_path.should == "/stories/search_result"
+    end
+  end
 end
