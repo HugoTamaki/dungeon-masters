@@ -1,6 +1,7 @@
 <div class="modifier-attribute-fields">
   <%= f.input :attr, label: t('stories.edit.attribute'),
     collection: attributes, prompt: "select an attribute" %>
-  <%= f.input :quantity, label: t('stories.edit.modifier'), as: :string, input_html: {title: t('tooltip.chapter_mod_attribute')} %>
+  <%= f.input :quantity, label: t('stories.edit.modifier'),
+    collection: modifiers, prompt: "select attribute modifier" %>
   <%= link_to_remove_fields t('stories.edit.remove_modifier'), f, "modifier-attribute" %>
 </div>

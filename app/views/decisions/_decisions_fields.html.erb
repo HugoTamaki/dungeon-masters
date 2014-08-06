@@ -1,5 +1,6 @@
 <div class="decision-fields">
-  <%= f.input :destiny_num, label: t('stories.edit.destiny'), as: :string, input_html: {title: t('tooltip.chapter_destiny')} %>
+  <%= f.label t('stories.edit.decisions') %>
+  <%= f.collection_select :destiny_num, Chapter.by_story(@story.id), :id, :reference, prompt: "--"  %>
   <p><%= t('stories.edit.chapter_restriction') %><%= f.collection_select :item_validator, Item.by_story(@story), :id,:name, prompt: "--" %></p>
   <%= link_to_remove_fields t('stories.edit.remove_decision'), f, "decision" %>
 </div>

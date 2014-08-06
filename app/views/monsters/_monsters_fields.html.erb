@@ -1,6 +1,8 @@
 <div class="monster-fields">
   <%= f.input :name, label: t('stories.edit.name'), input_html: {title: t('tooltip.chapter_monster_name')} %>
-  <%= f.input :skill, label: t('stories.edit.skill'), as: :string, input_html: {title: t('tooltip.chapter_monster_skill')} %>
-  <%= f.input :energy, label: t('stories.edit.energy'), as: :string, input_html: {title: t('tooltip.chapter_monster_energy')} %>
+  <%= f.input :skill, label: t('stories.edit.skill'),
+    collection: skills, prompt: "select skill value" %>
+  <%= f.input :energy, label: t('stories.edit.energy'),
+    collection: energy, prompt: "select energy value" %>
   <%= link_to_remove_fields t('stories.edit.remove_monster'), f, "monster" %>
 </div>

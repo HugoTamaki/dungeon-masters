@@ -17,6 +17,9 @@
               <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
             <% end %>
           </div>
+          <div class="actions">
+            <%= link_to "+5 chapters", story_add_five_chapters_path(@story), class: "btn btn-primary" %>
+          </div>
           <% if params[:action] == "new" %>
             <div class="field">
               <%= f.input :title, label: t('stories.new.story_title') %>
@@ -50,9 +53,6 @@
                       <%= render partial: "/chapters/chapters_fields", :locals => {:f => builder} %>
                     <%# end %>
                   <% end %>
-                  <p>
-                    <%= link_to_add_fields t('stories.edit.add_chapter'), f, :chapters, "chapters" %>
-                  </p>
                   <br/>
                 </div>
               </div>

@@ -1,10 +1,10 @@
 class Story < ActiveRecord::Base
 
   has_attached_file :cover, styles: {thumbnail: "200x200>", index_cover: "400x300>"}, :default_url => "no_image_:style.png"
-  attr_accessor :chapter_numbers
 
   validates :title, presence: true
   validates :resume, presence: true
+  validates :chapter_numbers, presence: true, numericality: true
   validates_attachment_size :cover, :less_than => 300.kilobytes
   validates_attachment_content_type :cover, content_type: ["image/jpg", "image/png", "image/gif", "image/jpeg"]
 

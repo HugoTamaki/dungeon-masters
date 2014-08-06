@@ -81,26 +81,42 @@ class StoriesController < ApplicationController
 
   # GET /stories/1/edit
   def edit
-  chapter_numbers = params[:chapter_numbers].to_i
-  @story = Story.includes(:chapters, :items, :special_attributes).find(params[:id])
+    chapter_numbers = params[:chapter_numbers].to_i
+    @story = Story.includes(:chapters, :items, :special_attributes).find(params[:id])
 
-  if @story.chapters.empty?
-    if chapter_numbers.present?
-      for i in (1..chapter_numbers)
+    if @story.chapters.empty?
+      if chapter_numbers.present?
+        for i in (1..chapter_numbers)
+          chapter = @story.chapters.build
+          chapter.decisions.build
+          chapter.reference = i
+          chapter.save
+        end
+      else
         chapter = @story.chapters.build
         chapter.decisions.build
-        chapter.reference = i
-        chapter.save
       end
-    else
+    end
+    # chapters = Chapter.by_story(params[:id])
+    # @chapters = chapters.includes(:decisions, :monsters)
+    @chapters = @story.chapters
+  end
+
+  def add_five_chapters
+    @story = Story.find(params[:story_id])
+    last_chapter_reference = @story.chapter_numbers + 1
+
+    for i in (last_chapter_reference..(last_chapter_reference + 4))
       chapter = @story.chapters.build
       chapter.decisions.build
+      chapter.reference = i
+      chapter.save
     end
+    @story.chapter_numbers = @story.chapters.last.reference.to_i
+    @story.save
+
+    redirect_to edit_story_path(@story)
   end
-  # chapters = Chapter.by_story(params[:id])
-  # @chapters = chapters.includes(:decisions, :monsters)
-  @chapters = @story.chapters
-end
 
   def edit_items
     @story = Story.find(params[:story_id])
@@ -195,7 +211,8 @@ end
         format.html { redirect_to edit_story_path(id: @story, chapter_numbers: params[:story][:chapter_numbers]), notice: I18n.t('actions.messages.create_success') }
         format.json { render json: @story, status: :created, location: @story }
       else
-        format.html { redirect_to new_story_path, alert: I18n.t('actions.messages.params_missing') }
+        @errors = get_errors(@story)
+        format.html { redirect_to new_story_path, alert: {errors: @errors} }
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
@@ -351,6 +368,7 @@ end
                                     :chapter_numbers,
                                     :cover,
                                     :published,
+                                    :chapter_numbers,
                                     items_attributes: [:id, :description, :name, :story_id, :usable, :attr, :modifier, :_destroy],
                                     special_attributes_attributes: [:id, :adventurer_id, :name, :value, :story_id, :_destroy],
                                     chapters_attributes: [:id,

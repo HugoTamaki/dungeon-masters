@@ -37,7 +37,13 @@
           <% end %>
           <% if flash[:error] || flash[:errors] || flash[:alert] %>
             <div class="alert alert-danger">
-              <%= flash[:error] || flash[:errors] || flash[:alert]  %>
+              <% if flash[:alert][:errors] %>
+                <% flash[:alert][:errors].each do |error| %>
+                  <p><%= error %></p>
+                <% end %>
+              <% else %>
+                <%= flash[:error] || flash[:errors] || flash[:alert]  %>
+              <% end %>
             </div>
           <% end %>
 
