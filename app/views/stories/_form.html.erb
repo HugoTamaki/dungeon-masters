@@ -18,7 +18,9 @@
             <% end %>
           </div>
           <div class="actions">
-            <%= link_to "+5 chapters", story_add_five_chapters_path(@story), class: "btn btn-primary" %>
+            <% unless params[:action] == "new" %>
+              <%= link_to "+5 chapters", story_add_five_chapters_path(@story), class: "btn btn-primary" %>
+            <% end %>
           </div>
           <% if params[:action] == "new" %>
             <div class="field">
