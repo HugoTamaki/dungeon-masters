@@ -102,11 +102,24 @@ class StoriesController < ApplicationController
     @chapters = @story.chapters
   end
 
-  def add_five_chapters
+  def add_chapters
     @story = Story.find(params[:story_id])
-    last_chapter_reference = @story.chapter_numbers + 1
+    if @story.chapters.present?
+      last_chapter_reference = @story.chapters.last.reference.to_i + 1
+    else
+      last_chapter_reference = 1
+    end
 
-    for i in (last_chapter_reference..(last_chapter_reference + 4))
+    case params[:chapters]
+    when "5"
+      quantity = 4
+    when "10"
+      quantity = 9
+    when "20"
+      quantity = 19
+    end
+
+    for i in (last_chapter_reference..(last_chapter_reference + quantity))
       chapter = @story.chapters.build
       chapter.decisions.build
       chapter.reference = i
@@ -114,6 +127,29 @@ class StoriesController < ApplicationController
     end
     @story.chapter_numbers = @story.chapters.last.reference.to_i
     @story.save
+
+    redirect_to edit_story_path(@story)
+  end
+
+  def remove_chapters
+    @story = Story.find(params[:story_id])
+
+    case params[:chapters]
+    when "5"
+      quantity = 5
+    when "10"
+      quantity = 10
+    when "20"
+      quantity = 20
+    when "50"
+      quantity = 50
+    end
+    chapter_quantity = @story.chapters.count
+    quantity = chapter_quantity if chapter_quantity <= quantity
+
+    quantity.times do
+      @story.reload.chapters.last.destroy
+    end
 
     redirect_to edit_story_path(@story)
   end
