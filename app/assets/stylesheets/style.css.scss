@@ -1,5 +1,9 @@
-@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+
+//colors
+$backgroundColor: #7BB8DC;
+$headerColor: #8EAAE9;
 
 .all {
   // font-family: 'Droid', serif;
@@ -7,7 +11,7 @@
 }
 
 h1, h2, h3 {
-  font-family: 'Ubuntu';
+  font-family: 'Droid Sans';
   font-weight: 700;
 }
 
@@ -24,7 +28,7 @@ h1, h2, h3 {
 }
 
 body { 
-  background-color: #B2CECF; 
+  background-color: $backgroundColor;
 }
 
 .chapter-fields {
@@ -112,6 +116,32 @@ body {
 
 #dice-container {
   margin: 10px 0;
+}
+
+.features {
+  .dungeon-description {
+    background-color: #3A8F9B;
+  }
+  .feature-content {
+    padding: 50px 0;
+  }
+  .feature {
+    font-family: "Ubuntu";
+    font-size: 18px;
+  }
+  .feature-even {
+    background-color: #04A5DB;
+  }
+  .last-stories {
+    padding: 10px 0;
+  }
+}
+
+.header {
+  height: 200px;
+  .header-content {
+    padding: 40px 0;
+  }
 }
 
 .monsters {
