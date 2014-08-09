@@ -5,7 +5,6 @@ FactoryGirl.define do
     content "algum conteudo"
     reference "200"
     story_id 1
-    image_file_name "test.png"
     x "1.0"
     y "1.0"
     color "#FFFFFF"

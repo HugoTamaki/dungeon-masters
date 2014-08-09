@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Story" do
   let(:user) {FactoryGirl.create :user}
-  let!(:story) {FactoryGirl.create(:story, user_id: user.id)}
+  let!(:story) {FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 10)}
   let!(:item) {FactoryGirl.create(:item, story_id: story.id)}
   let!(:adventurer) {FactoryGirl.create(:adventurer, user_id: user.id, skill: 5, energy: 5, luck: 5)}
 
@@ -17,7 +17,7 @@ feature "Story" do
       fill_in "Título", with: "Titulo"
       fill_in "Resumo", with: "Resumo"
       fill_in "Prelúdio", with: "Preludio"
-      fill_in "Número de capítulos", with: 5
+      select 20, from: "Número de Capítulos"
 
       click_button "Próximo"
 
@@ -35,11 +35,19 @@ feature "Story" do
       click_button "Próximo"
 
       current_path.should == "/stories/new"
-      page.should have_text("alguns dados estão faltando")
+      page.should have_text "Title não deve estar em branco"
+      page.should have_text "Resume não deve estar em branco"
+      page.should have_text "Chapter numbers não deve estar em branco"
+      page.should have_text "Chapter numbers não é um número"
     end
   end
 
   feature "#create chapters" do
+    let!(:chapter1) { FactoryGirl.create(:chapter, reference: "1", story_id: story.id) }
+    let!(:chapter2) { FactoryGirl.create(:chapter, reference: "2", story_id: story.id) }
+    let!(:chapter3) { FactoryGirl.create(:chapter, reference: "3", story_id: story.id) }
+    let!(:chapter4) { FactoryGirl.create(:chapter, reference: "4", story_id: story.id) }
+    let!(:chapter5) { FactoryGirl.create(:chapter, reference: "5", story_id: story.id) }
 
     before(:each) do
       login_as user
@@ -47,19 +55,17 @@ feature "Story" do
 
     scenario "user creates story successfully", js: true do
       visit "/stories/#{story.id}/edit"
+      all(".ui-accordion-header")[0].click
 
-      click_link "Adicionar Capítulo"
-      fill_in "Referencia", with: "Referencia"
-      fill_in "Conteúdo", with: "Conteudo"
       click_link "Adicionar Destino"
-      fill_in "Destino", with: 5
+      select "5", from: "Decisões"
       click_link "Adicionar Monstro"
       fill_in "Nome", with: "monster"
-      fill_in "Habilidade", with: 5
-      fill_in "Energia", with: 5
+      select "5", from: "Habilidade"
+      select "5", from: "Energia"
       click_link "Adicionar Item"
       select "espada", from: "Item"
-      fill_in "Quantidade", with: 1
+      select "1", from: "Quantidade"
 
       first(:button, "Terminar Edição").click
       current_path.should == "/stories/#{Story.last.id}"
@@ -68,19 +74,18 @@ feature "Story" do
 
     scenario "user creates story without success", js: true do
       visit "/stories/#{story.id}/edit"
+      all(".ui-accordion-header")[0].click
 
-      click_link "Adicionar Capítulo"
-      fill_in "Referencia", with: ""
-      fill_in "Conteúdo", with: ""
       click_link "Adicionar Monstro"
       fill_in "Nome", with: "monster"
 
       first(:button, "Terminar Edição").click
       current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text("Chapters monsters skill não deve estar em branco")
-      page.should have_text("Chapters monsters skill não é um número")
-      page.should have_text("Chapters monsters energy não deve estar em branco")
-      page.should have_text("Chapters monsters energy não é um número")
+      page.should have_text "Chapters monsters skill não deve estar em branco"
+      page.should have_text "Chapters monsters skill não é um número"
+      page.should have_text "Chapters monsters energy não deve estar em branco"
+      page.should have_text "Chapters monsters energy não é um número"
+      page.should have_text "Capítulos com erros: 1"
     end
   end
 
@@ -136,7 +141,7 @@ feature "Story" do
   end
 
   feature "#read story" do
-    let(:story_sample) {FactoryGirl.create(:story, user_id: user.id)}
+    let(:story_sample) {FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 0)}
 
     before(:each) do
       for i in (1..8)
@@ -265,7 +270,7 @@ feature "Story" do
     end
 
     context "publish a story" do
-      let!(:unpublished_story) { FactoryGirl.create(:story, title: 'Unpublished Story', published: false, user: user) }
+      let!(:unpublished_story) { FactoryGirl.create(:story, title: 'Unpublished Story', published: false, user: user, chapter_numbers: 0) }
 
       scenario "user publish a story", js: true do
         visit root_path
@@ -282,7 +287,7 @@ feature "Story" do
     end
 
     context "user unpublish a story" do
-      let!(:published_story) { FactoryGirl.create(:story, title: 'Published Story', published: true, user: user) }
+      let!(:published_story) { FactoryGirl.create(:story, title: 'Published Story', published: true, user: user, chapter_numbers: 0) }
 
       scenario "user unpublish a story", js: true do
         visit root_path
@@ -300,7 +305,7 @@ feature "Story" do
   end
 
   feature "#search story" do
-    let!(:story_sample) { FactoryGirl.create(:story, title: "Story sample", published: true, user: user) }
+    let!(:story_sample) { FactoryGirl.create(:story, title: "Story sample", published: true, user: user, chapter_numbers: 0) }
     
     before(:each) do
       login_as user

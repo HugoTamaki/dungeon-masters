@@ -6,8 +6,8 @@
     <div class="col-lg-12">
       <%# cache @story do %>
         <%= simple_form_for(@story) do |f| %>
-          <div class="actions">
-            <% if params[:action] == "edit" || params[:action] == "update" %>
+          <% if params[:action] == "edit" || params[:action] == "update" %>
+            <div class="actions">
               <%= f.submit t('actions.finish_editing'), class: "btn btn-primary" %>
               <%= f.submit t('actions.edit_items'), class: "btn btn-primary" %>
               <%= f.submit t('actions.edit_special_attributes'), class: "btn btn-primary" %>
@@ -15,23 +15,20 @@
               <%= f.submit t('actions.save'), class: "btn btn-primary" %>
               <% f.object.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
               <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
-            <% end %>
-          </div>
-          <div class="actions">
-            <% unless params[:action] == "new" %>
-              <%= link_to "+5 chapters", story_add_chapters_path(@story, chapters: 5), class: "btn btn-primary" %>
-              <%= link_to "+10 chapters", story_add_chapters_path(@story, chapters: 10), class: "btn btn-primary" %>
-              <%= link_to "+20 chapters", story_add_chapters_path(@story, chapters: 20), class: "btn btn-primary" %>
-            <% end %>
-          </div>
-          <div class="actions">
-            <% unless params[:action] == "new" %>
-              <%= link_to "-5 chapters", story_remove_chapters_path(@story, chapters: 5), class: "btn btn-primary" %>
-              <%= link_to "-10 chapters", story_remove_chapters_path(@story, chapters: 10), class: "btn btn-primary" %>
-              <%= link_to "-20 chapters", story_remove_chapters_path(@story, chapters: 20), class: "btn btn-primary" %>
-              <%= link_to "-50 chapters", story_remove_chapters_path(@story, chapters: 50), class: "btn btn-primary" %>
-            <% end %>
-          </div>
+            </div>
+            <div class="actions">
+              <%= f.submit t('actions.five_more'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.ten_more'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.twenty_more'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.fifty_more'), class: "btn btn-primary" %>
+            </div>
+            <div class="actions">
+              <%= f.submit t('actions.five_less'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.ten_less'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.twenty_less'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.fifty_less'), class: "btn btn-primary" %>
+            </div>
+          <% end %>
           <% if params[:action] == "new" %>
             <div class="field">
               <%= f.input :title, label: t('stories.new.story_title') %>
@@ -47,7 +44,8 @@
               <%= f.input :prelude, label: t('stories.new.prelude'), as: :text, input_html: { rows: 10, style: 'width: 100%', title: t('tooltip.story_prelude') } %>
             </div>
             <div class="field">
-              <%= f.input :chapter_numbers, label: t('stories.new.chapter_numbers'), as: :string, input_html: { title: t('tooltip.chapter_numbers') } %>
+              <%= f.input :chapter_numbers, label: t('stories.new.chapter_numbers'),
+                collection: chapter_numbers, prompt: "select number of chapters" %>
             </div>
 
           <% elsif params[:action] == "edit" || params[:action] == "update" %>
@@ -91,18 +89,33 @@
             </div><br/>
           <% end %>
 
-          <div class="actions">
-            <% if params[:action] == "new" %>
+          <% if params[:action] == "new" %>
+            <div class="actions">
               <%= f.submit t('actions.next'), class: "btn btn-primary" %>
-            <% elsif params[:action] == "edit" || params[:action] == "update" %>
+            </div>
+          <% elsif params[:action] == "edit" || params[:action] == "update" %>
+            <div class="actions">
               <%= f.submit t('actions.finish_editing'), class: "btn btn-primary" %>
               <%= f.submit t('actions.edit_items'), class: "btn btn-primary" %>
               <%= f.submit t('actions.edit_special_attributes'), class: "btn btn-primary" %>
               <%= f.submit t('actions.graph'), class: "btn btn-primary" %>
               <%= f.submit t('actions.save'), class: "btn btn-primary" %>
+              <% f.object.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
               <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
-            <% end %>
-          </div>
+            </div>
+            <div class="actions">
+              <%= f.submit t('actions.five_more'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.ten_more'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.twenty_more'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.fifty_more'), class: "btn btn-primary" %>
+            </div>
+            <div class="actions">
+              <%= f.submit t('actions.five_less'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.ten_less'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.twenty_less'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.fifty_less'), class: "btn btn-primary" %>
+            </div>
+          <% end %>
         <% end %>
       <%# end %>
     </div>

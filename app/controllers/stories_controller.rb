@@ -102,58 +102,6 @@ class StoriesController < ApplicationController
     @chapters = @story.chapters
   end
 
-  def add_chapters
-    @story = Story.find(params[:story_id])
-    if @story.chapters.present?
-      last_chapter_reference = @story.chapters.last.reference.to_i + 1
-    else
-      last_chapter_reference = 1
-    end
-
-    case params[:chapters]
-    when "5"
-      quantity = 4
-    when "10"
-      quantity = 9
-    when "20"
-      quantity = 19
-    end
-
-    for i in (last_chapter_reference..(last_chapter_reference + quantity))
-      chapter = @story.chapters.build
-      chapter.decisions.build
-      chapter.reference = i
-      chapter.save
-    end
-    @story.chapter_numbers = @story.chapters.last.reference.to_i
-    @story.save
-
-    redirect_to edit_story_path(@story)
-  end
-
-  def remove_chapters
-    @story = Story.find(params[:story_id])
-
-    case params[:chapters]
-    when "5"
-      quantity = 5
-    when "10"
-      quantity = 10
-    when "20"
-      quantity = 20
-    when "50"
-      quantity = 50
-    end
-    chapter_quantity = @story.chapters.count
-    quantity = chapter_quantity if chapter_quantity <= quantity
-
-    quantity.times do
-      @story.reload.chapters.last.destroy
-    end
-
-    redirect_to edit_story_path(@story)
-  end
-
   def edit_items
     @story = Story.find(params[:story_id])
     if @story.items.empty?
@@ -386,9 +334,78 @@ class StoriesController < ApplicationController
           redirect_to story_graph_path(story), notice: I18n.t('actions.messages.save_success')
         when I18n.t('actions.edit_monsters')
           redirect_to story_edit_monsters_path(story), notice: I18n.t('actions.messages.save_success')
+        when I18n.t('actions.five_more')
+          add_chapters(story,5)
+        when I18n.t('actions.ten_more')
+          add_chapters(story,10)
+        when I18n.t('actions.twenty_more')
+          add_chapters(story,20)
+        when I18n.t('actions.fifty_more')
+          add_chapters(story,50)
+        when I18n.t('actions.five_less')
+          remove_chapters(story,5)
+        when I18n.t('actions.ten_less')
+          remove_chapters(story,10)
+        when I18n.t('actions.twenty_less')
+          remove_chapters(story,20)
+        when I18n.t('actions.fifty_less')
+          remove_chapters(story,50)
         else
           redirect_to story, notice: I18n.t('actions.messages.update_success')
       end
+    end
+
+    def add_chapters(story,num_chapters)
+      if story.chapters.present?
+        last_chapter_reference = story.chapters.last.reference.to_i + 1
+      else
+        last_chapter_reference = 1
+      end
+      quantity = num_chapters - 1
+
+      for i in (last_chapter_reference..(last_chapter_reference + quantity))
+        chapter = story.chapters.build
+        chapter.decisions.build
+        chapter.reference = i
+        chapter.save
+      end
+      story.chapter_numbers = story.chapters.last.reference.to_i
+      story.save
+
+      case num_chapters
+      when 5
+        message = I18n.t('actions.messages.five_more')
+      when 10
+        message = I18n.t('actions.messages.ten_more')
+      when 20
+        message = I18n.t('actions.messages.twenty_more')
+      when 50
+        message = I18n.t('actions.messages.fifty_more')
+      end
+      redirect_to edit_story_path(story), notice: message
+    end
+
+    def remove_chapters(story, num_chapters)
+      quantity = num_chapters
+      chapter_quantity = story.chapters.count
+      quantity = chapter_quantity if chapter_quantity <= quantity
+
+      quantity.times do
+        story.reload.chapters.last.destroy
+      end
+
+      case num_chapters
+      when 5
+        message = I18n.t('actions.messages.five_less')
+      when 10
+        message = I18n.t('actions.messages.ten_less')
+      when 20
+        message = I18n.t('actions.messages.twenty_less')
+      when 50
+        message = I18n.t('actions.messages.fifty_less')
+      end
+
+      redirect_to edit_story_path(story), notice: message
     end
 
     def set_story

@@ -45,7 +45,7 @@ gem "chromedriver-helper"
 gem "launchy"
 # gem "unicorn"
 
-gem "rspec-rails", '2.14.0', :group => [:test, :development]
+gem "rspec-rails", :group => [:test, :development]
 group :test do
   gem "factory_girl_rails"
   gem "capybara"

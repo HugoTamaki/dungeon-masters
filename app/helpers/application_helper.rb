@@ -34,4 +34,8 @@ module ApplicationHelper
     [-5, -4, -3, -2, -1, +1, +2, +3, +4, +5]
   end
 
+  def chapter_numbers
+    [5, 10, 20, 50, 100]
+  end
+
 end

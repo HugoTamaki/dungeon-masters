@@ -12,6 +12,18 @@
         <% f.object.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
         <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
       </div>
+      <div class="actions">
+        <%= f.submit t('actions.five_more'), class: "btn btn-primary" %>
+        <%= f.submit t('actions.ten_more'), class: "btn btn-primary" %>
+        <%= f.submit t('actions.twenty_more'), class: "btn btn-primary" %>
+        <%= f.submit t('actions.fifty_more'), class: "btn btn-primary" %>
+      </div>
+      <div class="actions">
+        <%= f.submit t('actions.five_less'), class: "btn btn-primary" %>
+        <%= f.submit t('actions.ten_less'), class: "btn btn-primary" %>
+        <%= f.submit t('actions.twenty_less'), class: "btn btn-primary" %>
+        <%= f.submit t('actions.fifty_less'), class: "btn btn-primary" %>
+      </div>
       <div>
         <%= f.simple_fields_for :special_attributes do |builder| %>
           <%= render partial: "/special_attributes/special_attributes_fields", :locals => {:f => builder} %>

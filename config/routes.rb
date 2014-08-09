@@ -15,8 +15,6 @@
     post 'use_item', on: :collection
     post 'publish'
     get 'search_result',as: "search_result", on: :collection
-    get 'add_chapters'
-    get 'remove_chapters'
   end
 
   resources :adventurers do
