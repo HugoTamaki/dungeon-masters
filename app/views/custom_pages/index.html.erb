@@ -6,72 +6,74 @@
   </div>
 </div>
 <div class="features">
-  <div class="feature feature-even">
-    <div class="container">
-      <div class="row feature-content">
-        <div class="col-lg-4">
+  <% unless user_signed_in? %>
+    <div class="feature feature-even">
+      <div class="container">
+        <div class="row feature-content">
+          <div class="col-lg-4">
 
-        </div>
-        <div class="col-lg-8">
-          <h2><%= t('custom_pages.feature1') %></h2>
-          <p>Defina quantos capítulos sua história irá ter, e adicione quantos outros você quiser ou precisar!</p>
+          </div>
+          <div class="col-lg-8">
+            <h2><%= t('custom_pages.feature1') %></h2>
+            <p>Defina quantos capítulos sua história irá ter, e adicione quantos outros você quiser ou precisar!</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="feature feature-odd">
-    <div class="container">
-      <div class="row feature-content">
-        <div class="col-lg-8">
-          <h2><%= t('custom_pages.feature2') %></h2>
-          <p>Escolha quais capítulos o aventureiro pode escolher a partir dos seus capítulos!</p>
-        </div>
-        <div class="col-lg-4">
+    <div class="feature feature-odd">
+      <div class="container">
+        <div class="row feature-content">
+          <div class="col-lg-8">
+            <h2><%= t('custom_pages.feature2') %></h2>
+            <p>Escolha quais capítulos o aventureiro pode escolher a partir dos seus capítulos!</p>
+          </div>
+          <div class="col-lg-4">
 
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="feature feature-even">
-    <div class="container">
-      <div class="row feature-content">
-        <div class="col-lg-4">
-          
-        </div>
-        <div class="col-lg-8">
-          <h2><%= t('custom_pages.feature3') %></h2>
-          <p>Defina seus atributos, como energia e habilidade, e em que capítulos os aventureiros irão encontrá-los!</p>
+    <div class="feature feature-even">
+      <div class="container">
+        <div class="row feature-content">
+          <div class="col-lg-4">
+            
+          </div>
+          <div class="col-lg-8">
+            <h2><%= t('custom_pages.feature3') %></h2>
+            <p>Defina seus atributos, como energia e habilidade, e em que capítulos os aventureiros irão encontrá-los!</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="feature feature-odd">
-    <div class="container">
-      <div class="row feature-content">
-        <div class="col-lg-8">
-          <h2><%= t('custom_pages.feature4') %></h2>
-          <p>Crie itens para seus aventureiros, eles podem ser usáveis (como itens de cura), ou itens chave que definem se o aventureiro pode continuar ou não na história!</p>
-        </div>
-        <div class="col-lg-4">
+    <div class="feature feature-odd">
+      <div class="container">
+        <div class="row feature-content">
+          <div class="col-lg-8">
+            <h2><%= t('custom_pages.feature4') %></h2>
+            <p>Crie itens para seus aventureiros, eles podem ser usáveis (como itens de cura), ou itens chave que definem se o aventureiro pode continuar ou não na história!</p>
+          </div>
+          <div class="col-lg-4">
 
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="feature feature-even">
+      <div class="container">
+        <div class="row feature-content">
+          <div class="col-lg-4">
+            
+          </div>
+          <div class="col-lg-8">
+            <h2><%= t('custom_pages.feature5') %></h2>
+            <p>Faça os aventureiros ganharem ou perderem energia nos capítulos que desejar!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
   <div class="feature feature-even">
-    <div class="container">
-      <div class="row feature-content">
-        <div class="col-lg-4">
-          
-        </div>
-        <div class="col-lg-8">
-          <h2><%= t('custom_pages.feature5') %></h2>
-          <p>Faça os aventureiros ganharem ou perderem energia nos capítulos que desejar!</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="feature feature-odd">
     <div class="container">
       <h3><%= t('custom_pages.last_stories') %></h3>
       <% if @stories.empty? %>
@@ -89,4 +91,6 @@
     </div>
   </div>
 </div>
+
+
 

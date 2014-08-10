@@ -34,16 +34,16 @@
       <% end %>
       <div id="chapter-buttons">
         <% @chapter.decisions.each do |decision| %>
-          <% button_opts = {reference: decision.destiny_num.to_s, id: @story} %>
+          <% button_opts = {reference: decision.child.reference, id: @story} unless decision.destiny_num.nil? %>
           <% disabled = "disabled" if @chapter.monsters.present? %>
           <% disabled ||= "disabled" if  %>
           <% if decision.item_validator? %>
             <% disabled ||= "disabled" if Adventurer.dont_have_item(@adventurer,decision.item_validator) %>
           <% end %>
           <p>
-            <%= link_to  "#{t('stories.read.chapter')} #{decision.destiny_num}",
+            <%= link_to  "#{t('stories.read.chapter')} #{decision.child.reference}",
               read_stories_path(button_opts),
-              class: "btn btn-primary #{disabled}" unless Chapter.by_story(@story).where(reference: "#{decision.destiny_num}").empty? %>
+              class: "btn btn-primary #{disabled}" unless decision.destiny_num.nil? %>
           </p>
         <% end %>
       </div>

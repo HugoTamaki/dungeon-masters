@@ -129,7 +129,6 @@ class StoriesController < ApplicationController
     respond_to do |format|
       format.json { render json: @chapters.to_json }
     end
-
   end
 
   def graph_json_show
@@ -391,6 +390,10 @@ class StoriesController < ApplicationController
       quantity = chapter_quantity if chapter_quantity <= quantity
 
       quantity.times do
+        last_chapter = story.reload.chapters.last
+        last_chapter.decisions.each do |decision|
+          decision.destroy
+        end
         story.reload.chapters.last.destroy
       end
 

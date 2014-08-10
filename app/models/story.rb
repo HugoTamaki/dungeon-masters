@@ -23,7 +23,7 @@ class Story < ActiveRecord::Base
     references = []
     chapters_with_decisions = {}
     chapters.each do |c|
-      references << c.reference
+      references << c.reference if c.reference == "1" || c.has_parent?
     end
 
     chapters_with_decisions["references"] = references
@@ -33,7 +33,7 @@ class Story < ActiveRecord::Base
       aux = []
       aux << c.reference
       c.decisions.each do |d|
-        aux << d.destiny_num unless d.destiny_num.nil?
+        aux << Chapter.find(d.destiny_num).reference.to_i unless d.destiny_num.nil?
       end
       destines << aux
     end
@@ -72,7 +72,7 @@ class Story < ActiveRecord::Base
 
     chapters.each do |chapter|
       chapter.decisions.each do |decision|
-        decisions << decision.destiny_num unless decision.destiny_num.nil?
+        decisions << Chapter.find(decision.destiny_num).reference.to_i unless decision.destiny_num.nil?
       end
     end
 

@@ -37,4 +37,18 @@ class Chapter < ActiveRecord::Base
     end
   end
 
+  def has_parent?
+    decision = Decision.find_by(destiny_num: self.id)
+    if decision
+      chapters = decision.chapter.story.chapters
+      chapters.each do |c|
+        c.decisions.each do |d|
+          if decision == d
+            return true
+          end
+        end
+      end
+    end
+    false
+  end
 end
