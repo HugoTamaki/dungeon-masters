@@ -75,6 +75,7 @@ en:
       twenty_less: "Twenty chapters removed and story was updated."
       fifty_less: "Fifty chapters removed and story was updated."
       chapter_not_found: "Chapter not found, redefine the decisions of this chapter"
+      chapter_delete_message: "Are you sure? It can delete chapters that are destines of other chapters"
   tabs:
     story: "Story"
     chapters: "Chapters"

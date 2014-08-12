@@ -10,9 +10,9 @@
       <!-- fazendo form para aventureiro -->
       <%= simple_form_for @adventurer do |f| %>
         <div>
-          <%= f.input :skill, label: t('stories.prelude.skill'), as: :string, html_input: { id: "adventurer_skill" } %>
-          <%= f.input :energy, label: t('stories.prelude.energy'), as: :string, html_input: { id: "adventurer_energy" }  %>
-          <%= f.input :luck, label: t('stories.prelude.luck'), as: :string, html_input: { id: "adventurer_luck" } %>
+          <%= f.input :skill, label: t('stories.prelude.skill'), as: :string, html_input: { id: "adventurer_skill" }, disabled: true %>
+          <%= f.input :energy, label: t('stories.prelude.energy'), as: :string, html_input: { id: "adventurer_energy" }, disabled: true  %>
+          <%= f.input :luck, label: t('stories.prelude.luck'), as: :string, html_input: { id: "adventurer_luck" }, disabled: true %>
           <%= f.hidden_field :user_id, value: current_user.id %>
           <%= f.hidden_field :name, value: current_user.name %>
           <%= hidden_field_tag :story_id, @story.id %>
@@ -45,6 +45,7 @@
       $("#adventurer_energy").attr("value", energy);
       $("#adventurer_luck").attr("value", luck);
       $("#story-start").removeClass('disabled');
+      $("#generator").addClass('disabled');
     });
 
     

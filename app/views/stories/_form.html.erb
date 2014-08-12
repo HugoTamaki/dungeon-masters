@@ -23,10 +23,10 @@
               <%= f.submit t('actions.fifty_more'), class: "btn btn-primary" %>
             </div>
             <div class="actions">
-              <%= f.submit t('actions.five_less'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.ten_less'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.twenty_less'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.fifty_less'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.five_less'), class: "btn btn-primary", data: {confirm: t('actions.messages.chapter_delete_message')} %>
+              <%= f.submit t('actions.ten_less'), class: "btn btn-primary", data: {confirm: t('actions.messages.chapter_delete_message')} %>
+              <%= f.submit t('actions.twenty_less'), class: "btn btn-primary", data: {confirm: t('actions.messages.chapter_delete_message')} %>
+              <%= f.submit t('actions.fifty_less'), class: "btn btn-primary", data: {confirm: t('actions.messages.chapter_delete_message')} %>
             </div>
           <% end %>
           <% if params[:action] == "new" %>
@@ -110,10 +110,10 @@
               <%= f.submit t('actions.fifty_more'), class: "btn btn-primary" %>
             </div>
             <div class="actions">
-              <%= f.submit t('actions.five_less'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.ten_less'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.twenty_less'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.fifty_less'), class: "btn btn-primary" %>
+              <%= f.submit t('actions.five_less'), class: "btn btn-primary", data: {confirm: t('actions.messages.chapter_delete_message')} %>
+              <%= f.submit t('actions.ten_less'), class: "btn btn-primary", data: {confirm: t('actions.messages.chapter_delete_message')} %>
+              <%= f.submit t('actions.twenty_less'), class: "btn btn-primary", data: {confirm: t('actions.messages.chapter_delete_message')} %>
+              <%= f.submit t('actions.fifty_less'), class: "btn btn-primary", data: {confirm: t('actions.messages.chapter_delete_message')} %>
             </div>
           <% end %>
         <% end %>

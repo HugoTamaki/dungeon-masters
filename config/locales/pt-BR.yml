@@ -73,6 +73,7 @@ pt-BR:
       twenty_less: "Vinte capítulos foram removidos e história foi atualizada."
       fifty_less: "Cinquenta capítulos foram removidos e história foi atualizada."
       chapter_not_found: "Capítulo não encontrado, reveja os destinos deste capítulo"
+      chapter_delete_message: "Tem certeza? Você pode acabar apagando capítulos que são destinos de outros capítulos."
   tabs:
     story: "História"
     chapters: "Capítulos"

@@ -44,7 +44,6 @@
             <%= link_to  "#{t('stories.read.chapter')} #{decision.child.reference}",
               read_stories_path(button_opts),
               class: "btn btn-primary #{disabled}" unless decision.child.nil? %>
-            <%= t('actions.messages.chapter_not_found') if decision.child.nil? && @story.user == current_user %>
           </p>
         <% end %>
       </div>
