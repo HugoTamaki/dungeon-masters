@@ -74,6 +74,7 @@ en:
       ten_less: "Ten chapters removed and story was updated."
       twenty_less: "Twenty chapters removed and story was updated."
       fifty_less: "Fifty chapters removed and story was updated."
+      chapter_not_found: "Chapter not found, redefine the decisions of this chapter"
   tabs:
     story: "Story"
     chapters: "Chapters"
