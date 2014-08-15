@@ -2,16 +2,17 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
 
 //colors
-$backgroundColor: #7BB8DC;
-$headerColor: #8EAAE9;
+// based on copy of cablah - kuler
+$backgroundColor: #73A3A2;
+$beige: #F0EAD2;
+$darkBlue: #0A1D29;
 
 a {
-  color: #3453A8;
-}
-
-.all {
-  // font-family: 'Droid', serif;
-  // font-size: 15px;
+  color: $darkBlue;
+  &:hover {
+    color: $darkBlue;
+    text-decoration: underline;
+  }
 }
 
 h1, h2, h3 {
@@ -75,7 +76,7 @@ body {
   top: 20px;
   bottom: 20px;
   padding: 10px;
-  background-color: #ECEAE0;
+  background-color: $beige;
   width: 1000px;
 }
 
@@ -89,7 +90,7 @@ body {
   border-bottom-left-radius: 7px;
   height: 700px;
   overflow: auto;
-  background-color: #ECEAE0;
+  background-color: $beige;
 }
 
 .adventurer {
@@ -99,7 +100,7 @@ body {
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
   height: 700px;
-  background-color: #ECEAE0;
+  background-color: $beige;
   overflow: auto;
 }
 
@@ -124,7 +125,7 @@ body {
 
 .features {
   .dungeon-description {
-    background-color: #3A8F9B;
+    background-color: #73A3A2;
   }
   .feature-content {
     padding: 50px 0;
@@ -134,7 +135,7 @@ body {
     font-size: 18px;
   }
   .feature-even {
-    background-color: #04A5DB;
+    background-color: #98BFB7;
   }
   .last-stories {
     padding: 10px 0;
