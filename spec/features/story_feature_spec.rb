@@ -141,28 +141,37 @@ feature "Story" do
   end
 
   feature "#read story" do
-    let(:story_sample) {FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 0)}
+    let!(:story_sample) {FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 0)}
+    let!(:item1) { FactoryGirl.create(:item, name: "espada", description: "uma espada", story: story_sample, usable: false) }
+    let!(:item2) { FactoryGirl.create(:item, name: "escudo", description: "um escudo", story: story_sample, usable: false) }
+    let!(:item3) { FactoryGirl.create(:item, name: "Pastel", description: "um pastelzinho", story: story_sample, usable: true, attr: "energy", modifier: 4) }
+
+    let!(:chapter1) { FactoryGirl.create(:chapter, reference: "1", content: "content 1", story: story_sample) }
+    let!(:decision12) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 2) }
+    let!(:decision13) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 3) }
+    let!(:decision18) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 8, item_validator: item3.id) }
+    let!(:modifier_item1) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item3, quantity: 1) }
+
+    let!(:chapter2) { FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_sample) }
+    let!(:decision25) { FactoryGirl.create(:decision, chapter: chapter2, destiny_num: 5) }
+    let!(:monster) { FactoryGirl.create(:monster, chapter: chapter2, name: "goblin", skill: 1, energy: 1) }
+
+    let!(:chapter3) { FactoryGirl.create(:chapter, reference: "3", content: "content 3", story: story_sample) }
+    let!(:modifier_item) { FactoryGirl.create(:modifier_item, chapter: chapter3, item: item, quantity: 1) }
+
+    let!(:chapter4) { FactoryGirl.create(:chapter, reference: "4", content: "content 4", story: story_sample) }
+
+    let!(:chapter5) { FactoryGirl.create(:chapter, reference: "5", content: "content 5", story: story_sample) }
+    let!(:decision56) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: 6) }
+    let!(:decision57) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: 7, item_validator: item1.id) }
+
+    let!(:chapter6) { FactoryGirl.create(:chapter, reference: "6", content: "content 6", story: story_sample) }
+    let!(:chapter7) { FactoryGirl.create(:chapter, reference: "7", content: "content 7", story: story_sample) }
+
+    let!(:chapter8) { FactoryGirl.create(:chapter, reference: "8", content: "content 8", story: story_sample) }
+
 
     before(:each) do
-      for i in (1..8)
-        story_sample.chapters.build(reference: "#{i}", content: "content #{i}")
-      end
-      story_sample.items.build(name: "espada", description: "uma espada")
-      story_sample.items.build(name: "escudo", description: "um escudo")
-      story_sample.items.build(name: "Pastel", description: "Um pastelzinho", usable: true, modifier: 4, attr: "energy")
-      story_sample.save
-      items = story.items
-
-      story_sample.chapters[0].decisions.build(destiny_num: 2)
-      story_sample.chapters[0].decisions.build(destiny_num: 3)
-      story_sample.chapters[0].decisions.build(destiny_num: 8, item_validator: Item.last.id)
-      story_sample.chapters[0].modifiers_items.build(item_id: Item.last.id, quantity: 1)
-      story_sample.chapters[2].modifiers_items.build(item_id: items.last.id, quantity: 1)
-      story_sample.chapters[1].decisions.build(destiny_num: 5)
-      story_sample.chapters[4].decisions.build(destiny_num: 6)
-      story_sample.chapters[4].decisions.build(destiny_num: 7, item_validator: items.last.id)
-      story_sample.chapters[1].monsters.build(name: "goblin",skill: 1, energy: 1)
-      story_sample.save
       login_as user
     end
 
@@ -318,6 +327,95 @@ feature "Story" do
       click_button "Buscar"
       page.should have_text "Story sample"
       current_path.should == "/stories/search_result"
+    end
+  end
+
+  feature "add chapters" do
+    let!(:story_sample2) { FactoryGirl.create(:story, title: "Story sample", published: true, user: user, chapter_numbers: 10) }
+    let!(:chapter1) { FactoryGirl.create(:chapter, reference: "1", content: "content 1", story: story_sample2) }
+    let!(:chapter2) { FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_sample2) }
+    let!(:chapter3) { FactoryGirl.create(:chapter, reference: "3", content: "content 3", story: story_sample2) }
+    let!(:chapter4) { FactoryGirl.create(:chapter, reference: "4", content: "content 4", story: story_sample2) }
+    let!(:chapter5) { FactoryGirl.create(:chapter, reference: "5", content: "content 5", story: story_sample2) }
+
+    before(:each) do
+      login_as user
+    end
+
+    scenario "user adds 5 chapters" do
+      visit "/stories/#{story_sample2.id}/edit"
+
+      first(:button, "+5 capítulos").click
+      story_sample2.chapters.count.should == 10
+    end
+
+    scenario "user adds 10 chapters" do
+      visit "/stories/#{story_sample2.id}/edit"
+
+      first(:button, "+10 capítulos").click
+      story_sample2.chapters.count.should == 15
+    end
+
+    scenario "user adds 20 chapters" do
+      visit "/stories/#{story_sample2.id}/edit"
+
+      first(:button, "+20 capítulos").click
+      story_sample2.chapters.count.should == 25
+    end
+
+    scenario "user adds 50 chapters" do
+      visit "/stories/#{story_sample2.id}/edit"
+
+      first(:button, "+50 capítulos").click
+      story_sample2.chapters.count.should == 55
+    end
+  end
+
+  feature "remove chapters" do
+    let!(:story_sample3) { FactoryGirl.create(:story, title: "Story sample", published: true, user: user, chapter_numbers: 50) }
+
+    before(:each) do
+      for i in (1..50)
+        story_sample3.chapters.build(reference: "#{i}", content: "content #{i}")
+      end
+      story_sample3.save
+      login_as user
+    end
+
+    scenario "user removes 5 chapters", js: true do
+      visit "/stories/#{story_sample3.id}/edit"
+
+      first(:button, "-5 capítulos").click
+      page.driver.browser.switch_to.alert.accept
+      sleep(1)
+      story_sample3.chapters.count.should == 45
+    end
+
+    scenario "user removes 10 chapters", js: true do
+      visit "/stories/#{story_sample3.id}/edit"
+
+      first(:button, "-10 capítulos").click
+      page.driver.browser.switch_to.alert.accept
+      sleep(1)
+      story_sample3.chapters.count.should == 40
+    end
+
+    scenario "user removes 20 chapters", js: true do
+      visit "/stories/#{story_sample3.id}/edit"
+
+      first(:button, "-20 capítulos").click
+      page.driver.browser.switch_to.alert.accept
+      sleep(1)
+      story_sample3.chapters.count.should == 30
+    end
+
+    scenario "user removes 50 chapters", js: true do
+      visit "/stories/#{story_sample3.id}/edit"
+
+      first(:button, "-50 capítulos").click
+      page.driver.browser.switch_to.alert.accept
+      sleep(1)
+      story_sample3.chapters.count.should == 0
     end
   end
 end
