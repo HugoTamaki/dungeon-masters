@@ -1,4 +1,16 @@
 # encoding: UTF-8
+# == Schema Information
+#
+# Table name: modifiers_attributes
+#
+#  id         :integer          not null, primary key
+#  chapter_id :integer
+#  attr       :string(255)
+#  quantity   :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require "spec_helper"
 
 describe ModifierAttribute do

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: decisions
+#
+#  id             :integer          not null, primary key
+#  chapter_id     :integer
+#  destiny_num    :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  item_validator :integer
+#
+
 class Decision < ActiveRecord::Base
 
   belongs_to :chapter

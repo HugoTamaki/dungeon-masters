@@ -175,6 +175,49 @@ pt-BR:
       attribute: "Atributo"
       modifier: "Modificador"
       select_attribute: "Escolha um atributo"
+  number:    
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          # femto: Quadrillionth
+          # pico: Trillionth
+          # nano: Billionth
+          # micro: Millionth
+          # mili: Thousandth
+          # centi: Hundredth
+          # deci: Tenth
+          unit: ""
+          # ten:
+          # one: Ten
+          # other: Tens
+          # hundred: Hundred
+          thousand: "Mil"
+          million: "Milhão"
+          billion: "Bilhão"
+          trillion: "Trilhão"
+          quadrillion: "Quadrilhão"
   special_attributes:
     edit:
       title: "Editando atributos especiais"

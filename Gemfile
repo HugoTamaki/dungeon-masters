@@ -27,6 +27,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
   gem 'capistrano3-unicorn'
+  gem "rack-mini-profiler"
 end
 
 gem "jquery-rails"
@@ -43,6 +44,7 @@ gem "rmagick"
 gem "kaminari"
 gem "chromedriver-helper"
 gem "launchy"
+gem 'annotate', "~> 2.6.5"
 # gem "unicorn"
 
 gem "rspec-rails", :group => [:test, :development]

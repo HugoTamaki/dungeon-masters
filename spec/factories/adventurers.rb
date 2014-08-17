@@ -1,4 +1,19 @@
 #encoding: UTF-8
+# == Schema Information
+#
+# Table name: adventurers
+#
+#  id         :integer          not null, primary key
+#  name       :string(40)
+#  user_id    :integer
+#  skill      :integer
+#  energy     :integer
+#  luck       :integer
+#  gold       :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 
 FactoryGirl.define do
   factory :adventurer do

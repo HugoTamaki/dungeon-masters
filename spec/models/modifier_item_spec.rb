@@ -1,4 +1,16 @@
 # encoding: UTF-8
+# == Schema Information
+#
+# Table name: modifiers_items
+#
+#  id         :integer          not null, primary key
+#  chapter_id :integer
+#  item_id    :integer
+#  quantity   :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require "spec_helper"
 
 describe ModifierItem do

@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: chapters
+#
+#  id                 :integer          not null, primary key
+#  story_id           :integer
+#  reference          :string(10)
+#  content            :text
+#  created_at         :datetime
+#  updated_at         :datetime
+#  image              :string(255)
+#  x                  :float
+#  y                  :float
+#  color              :string(255)
+#  image_file_name    :string(255)
+#  image_content_type :string(255)
+#  image_file_size    :integer
+#  image_updated_at   :datetime
+#
+
 class Chapter < ActiveRecord::Base
 
   has_attached_file :image, styles: {thumbnail: "200x200>",normal: "600x600>"}

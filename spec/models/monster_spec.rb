@@ -1,4 +1,17 @@
 # encoding: UTF-8
+# == Schema Information
+#
+# Table name: monsters
+#
+#  id         :integer          not null, primary key
+#  name       :string(40)
+#  skill      :integer
+#  energy     :integer
+#  chapter_id :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require "spec_helper"
 
 describe Monster do
