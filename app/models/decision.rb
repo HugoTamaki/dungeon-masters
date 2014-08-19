@@ -12,7 +12,7 @@
 
 class Decision < ActiveRecord::Base
 
-  belongs_to :chapter
+  belongs_to :chapter, touch: true
 
   def child
     begin

@@ -12,7 +12,7 @@
 
 class ModifierAttribute < ActiveRecord::Base
 
-  belongs_to :chapter
+  belongs_to :chapter, touch: true
 
   validates :attr, presence: true
   validates :quantity, presence: true, numericality: true

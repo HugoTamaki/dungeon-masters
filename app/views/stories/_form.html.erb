@@ -59,9 +59,9 @@
               <div id="tabs-1">
                 <div id="wrapper"> <!-- wrapper para accordion -->
                   <%= f.simple_fields_for :chapters, @chapters do |builder| %>
-                    <%# cache builder.object do %>
+                    <% cache builder.object do %>
                       <%= render partial: "/chapters/chapters_fields", :locals => {:f => builder} %>
-                    <%# end %>
+                    <% end %>
                   <% end %>
                   <br/>
                 </div>

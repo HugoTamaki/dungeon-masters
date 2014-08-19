@@ -13,7 +13,7 @@
 
 class Monster < ActiveRecord::Base
 
-  belongs_to :chapter
+  belongs_to :chapter, touch: true
 
   validates :skill, presence: true, numericality: true
   validates :energy, presence: true, numericality: true
