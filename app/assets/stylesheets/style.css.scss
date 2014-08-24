@@ -1,11 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
-
-//colors
-// based on copy of cablah - kuler
-$backgroundColor: #73A3A2;
-$beige: #F0EAD2;
-$darkBlue: #0A1D29;
+@import 'colors';
 
 a {
   color: $darkBlue;
@@ -230,7 +225,7 @@ label {
   border-radius: 7px;
   padding: 10px;
   margin: 15px;
-  background-color: #ECEAE0;
+  background-color: $beige;
 }
 
 .index_stories {
@@ -257,7 +252,7 @@ label {
   padding-bottom: 20px;
   border: 1px solid;
   border-radius: 7px;
-  background-color: #E2ECDF;
+  background-color: $beige;
 }
 
 .not-used {
@@ -265,7 +260,7 @@ label {
   margin-left: 0;
   border: 1px solid;
   border-radius: 7px;
-  background-color: #ECEAE0;
+  background-color: $beige;
   margin-top: 20px;
   position: relative;
   border-radius: 4px;

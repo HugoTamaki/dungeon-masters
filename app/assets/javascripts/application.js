@@ -13,7 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require wysihtml5-0.3.0
-//= require bootstrap-wysihtml5-0.0.2.min
+//= require bootstrap.min
+//= require bootstrap3-wysihtml5
 //= require_tree .
 //= require jquery-ui
 //= require remove-image
@@ -54,19 +55,10 @@ $(document).ready(function(){
 
   $('.chapter-content-wysiwyg').wysihtml5({
     lists: true,
-    html: true, //Button which allows you to edit the generated HTML.
+    html: false, //Button which allows you to edit the generated HTML.
     link: false, //Button to insert a link.
     image: false, //Button to insert an image.
-    color: true, //Button to change color of font
-    events: {
-      load: function() {
-        $('.icon-list').addClass('fa fa-list').removeClass('icon-list');
-        $('.icon-th-list').addClass('fa fa-list-ol').removeClass('icon-th-list');
-        $('.icon-indent-right').addClass('fa fa-outdent').removeClass('icon-indent-right');
-        $('.icon-indent-left').addClass('fa fa-indent').removeClass('icon-indent-left');
-        $('.icon-pencil').addClass('fa fa-code').removeClass('icon-pencil');
-      }
-    }
+    color: false //Button to change color of font
   });
 
   $(function() {
