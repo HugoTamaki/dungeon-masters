@@ -45,6 +45,7 @@ gem "kaminari"
 gem "chromedriver-helper"
 gem "launchy"
 gem 'annotate', "~> 2.6.5"
+gem 'bootstrap-wysihtml5-rails'
 # gem "unicorn"
 
 gem "rspec-rails", :group => [:test, :development]
