@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-lg-12">
       <%# cache @story do %>
-        <%= simple_form_for(@story) do |f| %>
+        <%= simple_form_for @story, html: {class: 'chapter_form'} do |f| %>
           <% if params[:action] == "edit" || params[:action] == "update" %>
             <div class="actions">
               <%= f.submit t('actions.finish_editing'), class: "btn btn-primary" %>

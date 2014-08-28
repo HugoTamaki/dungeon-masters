@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
-//= require bootstrap-wysihtml5
+//= require summernote.min
 //= require_tree .
 //= require jquery-ui
 //= require remove-image
@@ -52,22 +52,28 @@ $(document).ready(function(){
     clearStyle: true,
   });
 
-  // $('.chapter-content-wysiwyg').wysihtml5({
-  //   "lists": true,
-  //   "html": false, //Button which allows you to edit the generated HTML.
-  //   "link": false, //Button to insert a link.
-  //   "image": false, //Button to insert an image.
-  //   "color": false //Button to change color of font
-  // });
+  $('.summernote').summernote({
+    height: 330,
+    toolbar: [
+      //[groupname, [button list]]
+       
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['height', ['height']]
+    ]
+  });
 
-  $('.wysihtml5').each(function(i, elem) {
-    $(elem).wysihtml5({
-      "lists": true,
-      "html": false, //Button which allows you to edit the generated HTML.
-      "link": false, //Button to insert a link.
-      "image": false, //Button to insert an image.
-      "color": false //Button to change color of font
+  $('.summernote').each(function(){
+    $(this).next().children(".note-editable").html($(this).val());
+  });
+
+  $('.chapter_form').submit(function(){
+    $('.note-editable').each(function(){
+      $(this).parent().prev().val($(this).html());
     });
+    return true;
   });
 
   $(function() {
