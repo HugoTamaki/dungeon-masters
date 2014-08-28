@@ -31,11 +31,24 @@ body {
   background-color: $backgroundColor;
 }
 
+.btn-toolbar {
+  padding: 10px 10px;
+  .btn-default {
+    background-color: $blue;
+  }
+  .ui-widget-content {
+    background-color: $white;
+  }
+}
+
 .chapter-fields {
   border: 1px solid;
   padding: 15px;
   border-radius: 7px;
   left-margin: 0;
+  .ui-widget-content {
+    background-color: $beige;
+  }
 }
 
 .attribute-fields {
@@ -198,6 +211,7 @@ body {
 .note-editable {
   background-color: $white;
   border: 1px solid $black;
+  overflow: auto;
 }
 
 .sigma {
