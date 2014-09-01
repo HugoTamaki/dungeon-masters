@@ -238,6 +238,7 @@ pt-BR:
     feature3: "Crie monstros customizados!"
     feature4: "Crie itens para sua história!"
     feature5: "Crie modificadores de atributos!"
+    feature6: "Acompanhe como os capítulos se interconectam!"
   messages:
     chapters_with_errors: "Capítulos com erros: "
   menu:
