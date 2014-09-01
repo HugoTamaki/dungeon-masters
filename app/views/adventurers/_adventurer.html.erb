@@ -9,23 +9,25 @@
     <h3><%= t('stories.read.adventurer_items') %></h3>
     <% @adventurers_items.each do |item| %>
       <% if item.item.usable %>
-        <% if item.status == 1 %>
+        <% if item.quantity > 0 %>
           <p>
-            <%= link_to item.item.name, "javascript:;", id: "#{item.item.name.parameterize.underscore}_item", data: {item_id: "#{item.item.id}",attribute: "#{item.item.attr}", modifier: "#{item.item.modifier}"}, class: "usable-item" %>
+            <%= link_to item.item.name, "javascript:;", id: "#{item.item.name.parameterize.underscore}_item", data: {item_id: "#{item.item.id}",attribute: "#{item.item.attr}", modifier: "#{item.item.modifier}"}, class: "usable-item" %> 
+            - <span id="quantity"><%= item.quantity %></span>
           </p>
         <% else %>
           <p>
-            <strike><%= item.item.name %></strike>
+            <strike><%= item.item.name %></strike> - 
+            <span id="quantity"><%= item.quantity %></span>
           </p>
         <% end %>
       <% else %>
         <% if item.status == 1 %>
           <p>
-            <%= item.item.name %> - not usable
+            <%= item.item.name %> - key item
           </p>
         <% else %>
           <p>
-            <strike><%= item.item.name %> - not usable</strike>
+            <strike><%= item.item.name %> - key item</strike>
           </p>
         <% end %>
       <% end %>

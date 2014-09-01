@@ -36,6 +36,7 @@ class StoriesController < ApplicationController
       if current_user.adventurer.present?
         @adventurer = Adventurer.new
         current_user.adventurer.items.clear
+        current_user.adventurer.chapters.clear
       else
         @adventurer = Adventurer.new
       end
@@ -52,6 +53,7 @@ class StoriesController < ApplicationController
 
       @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
       @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
+      @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
 
       this_decision = Decision.find_by(destiny_num: @chapter.id)
       Adventurer.use_required_item(this_decision, @adventurer)
@@ -146,8 +148,7 @@ class StoriesController < ApplicationController
     adventurer = current_user.adventurer
     adventurer_item = adventurer.adventurers_items.find_by(item_id: params["item-id"])
     Adventurer.change_attribute(adventurer, params[:attribute], params[:modifier])
-    adventurer_item.status = 0
-    adventurer_item.save
+    adventurer_item.quantity -= 1
 
     if adventurer_item.save
       data = {
@@ -156,6 +157,7 @@ class StoriesController < ApplicationController
         energy: adventurer.energy,
         luck: adventurer.luck,
         gold: adventurer.gold,
+        quantity: adventurer_item.quantity,
         message: I18n.t('actions.messages.adventurer_update_success')
       }
     else

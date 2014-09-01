@@ -240,6 +240,7 @@ en:
     feature3: "Create monsters with customized skill and energy, and choose in what chapters the encounters will occur!"
     feature4: "Create usable or not usable items, with customized attribute modifiers!"
     feature5: "Create modifiers that can add or take points of adventurer attributes!"
+    feature6: "See how your chapters between them!"
   messages:
     chapters_with_errors: "Chapters with errors: "
   menu:

@@ -22,6 +22,8 @@ class Adventurer < ActiveRecord::Base
   belongs_to :user
   has_many :adventurers_items, inverse_of: :adventurer, dependent: :destroy
   has_many :items, through: :adventurers_items
+  has_many :adventurer_chapters, inverse_of: :adventurer, dependent: :destroy
+  has_many :chapters, through: :adventurer_chapters
   has_many :special_attributes
   accepts_nested_attributes_for :adventurers_items, reject_if: :all_blank, allow_destroy: true
 
@@ -36,7 +38,17 @@ class Adventurer < ActiveRecord::Base
 
     if chapter.modifiers_items.present?
       chapter.modifiers_items.each do |item|
-        adventurer.items << item.item if dont_have_item(adventurer,item.item.id)
+        unless adventurer.chapters.include? chapter
+          if dont_have_item(adventurer, item.item.id)
+            adventurer.items << item.item
+            adventurer_item = adventurer.adventurers_items.find_by(item_id: item.item.id)
+            adventurer_item.quantity += item.quantity
+            adventurer_item.save
+          else
+            adventurer_item = adventurer.adventurers_items.find_by(item_id: item.item.id)
+            adventurer_item.quantity += item.quantity
+          end
+        end
       end
       adventurer.save
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806224441) do
+ActiveRecord::Schema.define(version: 20140901220359) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -62,6 +62,35 @@ ActiveRecord::Schema.define(version: 20140806224441) do
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_stories_user_id"
   end
 
+  create_table "chapters", force: true do |t|
+    t.integer  "story_id"
+    t.string   "reference",          limit: 10
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image"
+    t.float    "x"
+    t.float    "y"
+    t.string   "color"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.index ["story_id"], :name => "index_chapters_on_story_id"
+    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_chapters_story_id"
+  end
+
+  create_table "adventurer_chapters", force: true do |t|
+    t.integer  "adventurer_id"
+    t.integer  "chapter_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["adventurer_id"], :name => "fk__adventurer_chapters_adventurer_id"
+    t.index ["chapter_id"], :name => "fk__adventurer_chapters_chapter_id"
+    t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurer_chapters_adventurer_id"
+    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurer_chapters_chapter_id"
+  end
+
   create_table "items", force: true do |t|
     t.string   "name",        limit: 40
     t.text     "description"
@@ -81,28 +110,11 @@ ActiveRecord::Schema.define(version: 20140806224441) do
     t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "quantity",      default: 0
     t.index ["adventurer_id"], :name => "index_adventurers_items_on_adventurer_id"
     t.index ["item_id"], :name => "index_adventurers_items_on_item_id"
     t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_items_adventurer_id"
     t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_items_item_id"
-  end
-
-  create_table "chapters", force: true do |t|
-    t.integer  "story_id"
-    t.string   "reference",          limit: 10
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image"
-    t.float    "x"
-    t.float    "y"
-    t.string   "color"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.index ["story_id"], :name => "index_chapters_on_story_id"
-    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_chapters_story_id"
   end
 
   create_table "decisions", force: true do |t|

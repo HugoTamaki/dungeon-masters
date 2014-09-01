@@ -15,7 +15,11 @@ $(document).ready(function(){
         $('#adventurer_skill').html(data["skill"]);
         $('#adventurer_energy').html(data["energy"]);
         $('#adventurer_luck').html(data["luck"]);
-        $('#' + data["name"] + '_item').parent().html("<strike>" + data["name"] + "</strike>");
+        if (data["quantity"] > 0) {
+          $('#' + data["name"] + '_item').next("#quantity").html(data["quantity"]);
+        } else {
+          $('#' + data["name"] + '_item').parent().html("<strike>" + data["name"] + "</strike>");
+        }
       },
       error: function(response) {
         $(".message-container").html("<p class='message'>" + response["message"] + "</p>");
