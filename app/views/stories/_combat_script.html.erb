@@ -56,7 +56,12 @@
         $("#combat-result").html(result);
         $("#adventurer_energy").html(adventurer_energy);
         if (!morreu) {
-          $('#chapter-buttons').children().find('a').removeClass('disabled');
+          $('#chapter-buttons').children().find('a').each(function(){
+            if ($(this).attr('data-donthave') != "true") {
+              console.log($(this).attr('data-donthave'));
+              $(this).removeClass('disabled');
+            }
+          });
         }
         $("#combat").addClass('disabled');
 

@@ -36,14 +36,15 @@
         <% @chapter.decisions.each do |decision| %>
           <% button_opts = {reference: decision.child.reference, id: @story} unless decision.child.nil? %>
           <% disabled = "disabled" if @chapter.monsters.present? %>
-          <% disabled ||= "disabled" if  %>
+          <% donthave = false %>
+          <% donthave = true if decision.item_validator && Adventurer.dont_have_item(@adventurer,decision.item_validator) %>
           <% if decision.item_validator? %>
             <% disabled ||= "disabled" if Adventurer.dont_have_item(@adventurer,decision.item_validator) %>
           <% end %>
           <p>
             <%= link_to  "#{t('stories.read.chapter')} #{decision.child.reference}",
               read_stories_path(button_opts),
-              class: "btn btn-primary #{disabled}" unless decision.child.nil? %>
+              class: "btn btn-primary #{disabled}", data: {donthave: "#{donthave}" } unless decision.child.nil? %>
           </p>
         <% end %>
       </div>
