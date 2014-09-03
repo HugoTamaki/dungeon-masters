@@ -68,7 +68,8 @@ class Adventurer < ActiveRecord::Base
           change_attribute(adventurer, required_item.attr, required_item.modifier)
         end
         adventurer_item = AdventurerItem.find_by(item_id: required_item.id)
-        adventurer_item.status = 0
+        adventurer_item.status = 0 if !required_item.usable
+        adventurer_item.quantity -= 1 if adventurer_item.quantity > 0 && required_item.usable
         adventurer_item.save
       end
     end

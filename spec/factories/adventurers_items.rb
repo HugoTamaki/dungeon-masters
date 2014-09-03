@@ -9,8 +9,8 @@
 #  status        :integer
 #  created_at    :datetime
 #  updated_at    :datetime
+#  quantity      :integer          default(0)
 #
-
 
 FactoryGirl.define do
   factory :adventurer_item do

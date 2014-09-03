@@ -8,6 +8,7 @@
 #  status        :integer
 #  created_at    :datetime
 #  updated_at    :datetime
+#  quantity      :integer          default(0)
 #
 
 class AdventurerItem < ActiveRecord::Base
