@@ -46,6 +46,12 @@
       $("#adventurer_luck").attr("value", luck);
       $("#story-start").removeClass('disabled');
       $("#generator").addClass('disabled');
+      
+      $(".new_adventurer").submit(function(){
+        $("#adventurer_skill").removeProp('disabled');
+        $("#adventurer_energy").removeProp('disabled');
+        $("#adventurer_luck").removeProp('disabled');
+      });
     });
 
     
