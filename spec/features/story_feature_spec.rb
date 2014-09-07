@@ -145,12 +145,14 @@ feature "Story" do
     let!(:item1) { FactoryGirl.create(:item, name: "espada", description: "uma espada", story: story_sample, usable: false) }
     let!(:item2) { FactoryGirl.create(:item, name: "escudo", description: "um escudo", story: story_sample, usable: false) }
     let!(:item3) { FactoryGirl.create(:item, name: "Pastel", description: "um pastelzinho", story: story_sample, usable: true, attr: "energy", modifier: 4) }
+    let!(:item4) { FactoryGirl.create(:item, name: "health drink", description: "bebida revigorante", story: story_sample, usable: true, attr: "energy", modifier: 4) }
 
     let!(:chapter1) { FactoryGirl.create(:chapter, reference: "1", content: "content 1", story: story_sample) }
     let!(:decision12) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 2) }
     let!(:decision13) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 3) }
     let!(:decision18) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 8, item_validator: item3.id) }
     let!(:modifier_item1) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item3, quantity: 1) }
+    let!(:modifier_item2) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item4, quantity: 2) }
 
     let!(:chapter2) { FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_sample) }
     let!(:decision25) { FactoryGirl.create(:decision, chapter: chapter2, destiny_num: 5) }
@@ -251,7 +253,7 @@ feature "Story" do
       page.body.should include("<strike>Pastel</strike>")
     end
 
-    scenario "user uses an usable item", js: true do
+    scenario "user uses an usable item and it depletes", js: true do
       visit "/stories/#{story_sample.id}/prelude"
 
       click_button "Rolar dados"
@@ -270,6 +272,27 @@ feature "Story" do
 
       sleep(0.5)
       page.body.should include("<strike>pastel</strike>")
+    end
+
+    scenario "user uses an usable item and it does not deplete", js: true do
+      visit "/stories/#{story_sample.id}/prelude"
+
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
+
+      energy = Adventurer.last.energy
+
+      page.should have_text("content 1")
+      
+      click_link "Capítulo 2"
+      page.should have_text("content 2")
+
+      click_link "health drink"
+
+      Adventurer.last.energy.should be_equal(energy + 4)
+
+      sleep(0.5)
+      page.body.should have_text "health drink - 1"
     end
   end
 
