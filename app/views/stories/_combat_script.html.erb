@@ -70,6 +70,15 @@
           type: 'PUT',
           success: function(data) {
             $(".message-container").html("<p class='message'>" + data["message"] + "</p>");
+            $('#adventurer_skill').html(adventurer_skill);
+            $('#adventurer_energy').html(adventurer_energy);
+            $('#adventurer_luck').html(adventurer_luck);
+            $('#adventurer_skill_bar').attr('aria-valuenow', adventurer_skill);
+            $('#adventurer_energy_bar').attr('aria-valuenow', adventurer_energy);
+            $('#adventurer_luck_bar').attr('aria-valuenow', adventurer_luck);
+            $('#adventurer_skill_bar').css('width', (adventurer_skill / 12.0) * 100 + '%');
+            $('#adventurer_energy_bar').css('width', (adventurer_energy / 24.0) * 100 + '%');
+            $('#adventurer_luck_bar').css('width', (adventurer_luck / 12.0) * 100 + '%');
             setTimeout("$('.message').fadeOut()", 3000);
           },
           error: function(response) {

@@ -1,9 +1,24 @@
 <div class="col-lg-3 col-sm-12 adventurer">
   <h3><%= t('stories.read.adventurer_sheet') %></h3>
   <p><%= t('stories.read.name') %>: <span id="adventurer_name"><%= @adventurer.name %></span></p>
-  <p><%= t('stories.read.skill') %>: <span id="adventurer_skill"><%= @adventurer.skill %></span></p>
-  <p><%= t('stories.read.energy') %>: <span id="adventurer_energy"><%= @adventurer.energy %></span></p>
-  <p><%= t('stories.read.luck') %>: <span id="adventurer_luck"><%= @adventurer.luck %></span></p>
+  <p><%= t('stories.read.skill') %>: <span id="adventurer_skill"><%= @adventurer.skill %></span>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" id="adventurer_skill_bar" role="progressbar" aria-valuenow="<%= @adventurer.skill %>" aria-valuemin="0" aria-valuemax="12" style="width: <%= (@adventurer.skill / 12.0) * 100.to_i %>%;">
+      </div>
+    </div>
+  </p>
+  <p><%= t('stories.read.energy') %>: <span id="adventurer_energy"><%= @adventurer.energy %></span>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" id="adventurer_energy_bar" role="progressbar" aria-valuenow="<%= @adventurer.energy %>" aria-valuemin="0" aria-valuemax="24" style="width: <%= (@adventurer.energy / 24.0) * 100.to_i %>%;">
+      </div>
+    </div>
+  </p>
+  <p><%= t('stories.read.luck') %>: <span id="adventurer_luck"><%= @adventurer.luck %></span>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" id="adventurer_luck_bar" role="progressbar" aria-valuenow="<%= @adventurer.luck %>" aria-valuemin="0" aria-valuemax="24" style="width: <%= (@adventurer.luck / 12.0) * 100.to_i %>%;">
+      </div>
+    </div>
+  </p>
   <p><%= t('stories.read.gold') %>: <span id="adventurer_gold"><%= @adventurer.gold %></span></p>
   <% if @adventurers_items.present? %>
     <h3><%= t('stories.read.adventurer_items') %></h3>
