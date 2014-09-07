@@ -31,8 +31,10 @@ class Adventurer < ActiveRecord::Base
 
   def self.attribute_and_item_changer(adventurer, chapter)
     if chapter.modifiers_attributes.present?
-      chapter.modifiers_attributes.each do |attribute|
-        change_attribute(adventurer, attribute.attr, attribute.quantity)
+      unless adventurer.chapters.include? chapter
+        chapter.modifiers_attributes.each do |attribute|
+          change_attribute(adventurer, attribute.attr, attribute.quantity)
+        end
       end
     end
 
