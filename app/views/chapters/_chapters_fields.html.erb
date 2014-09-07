@@ -35,13 +35,6 @@
       <% end %>
       <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_items, "modifiers_items" %>
     </div>
-    <div class="modifiers-attributes">
-      <h3><%= t('stories.edit.attribute_modifiers') %></h3>
-      <%= f.simple_fields_for :modifiers_attributes do |builder| %>
-        <%= render "/modifiers_attributes/modifiers_attributes_fields", f: builder %>
-      <% end %>
-      <%= link_to_add_fields t('stories.edit.add_modifier'), f, :modifiers_attributes, "modifiers_attributes" %>
-    </div>
   </div>
 </div>
 <br/>

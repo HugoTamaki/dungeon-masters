@@ -24,7 +24,6 @@ class Adventurer < ActiveRecord::Base
   has_many :items, through: :adventurers_items
   has_many :adventurer_chapters, inverse_of: :adventurer, dependent: :destroy
   has_many :chapters, through: :adventurer_chapters
-  has_many :special_attributes
   accepts_nested_attributes_for :adventurers_items, reject_if: :all_blank, allow_destroy: true
 
   scope :by_user, lambda {|user_id| where(user_id: user_id)}

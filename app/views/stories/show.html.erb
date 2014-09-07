@@ -6,10 +6,9 @@
   <div id="tabs">
     <ul>
       <li><a href="#tabs-1"><%= t('tabs.chapters') %></a></li>
-      <li><a href="#tabs-2"><%= t('tabs.special_attributes') %></a></li>
-      <li><a href="#tabs-3"><%= t('tabs.items') %></a></li>
-      <li><a href="#tabs-4"><%= t('tabs.story') %></a></li>
-      <li><a href="#tabs-5"><%= t('tabs.graph') %></a></li>
+      <li><a href="#tabs-2"><%= t('tabs.items') %></a></li>
+      <li><a href="#tabs-3"><%= t('tabs.story') %></a></li>
+      <li><a href="#tabs-4"><%= t('tabs.graph') %></a></li>
     </ul>
     <div id="tabs-1">
       <% @chapters.each do |chapter| %>
@@ -54,14 +53,6 @@
 
     </div>
     <div id="tabs-2">
-      <% @special_attributes.each do |special_attribute| %>
-        <p>
-          <%= t('stories.show.special_attribute') %>: <%= special_attribute.name %>
-        </p>
-        <hr/>
-      <% end %>
-    </div>
-    <div id="tabs-3">
       <% @items.each do |item| %>
         <p>
           <%= t('stories.show.item_name') %>: <%= item.name %>
@@ -73,7 +64,7 @@
       <% end %>
       <hr/>
     </div>
-    <div id="tabs-4">
+    <div id="tabs-3">
       <p>
         <b><%= t('stories.show.story_resume') %>:</b>
         <%= @story.resume %>
@@ -84,7 +75,7 @@
         <%= simple_format @story.prelude %>
       </p>
     </div>
-    <div id="tabs-5">
+    <div id="tabs-4">
       <div class="sigma" id="sig" >
       </div>
     </div>
@@ -95,7 +86,7 @@
 
       $("#tabs").tabs({
         activate: function(event, ui) {
-          if (ui.newPanel.attr("id") == "tabs-5") {
+          if (ui.newPanel.attr("id") == "tabs-4") {
 
             $.ajax({
               url: "graph_json_show?id="+<%= @story.id %>,
@@ -103,39 +94,82 @@
               dataType: "json",
               success: function(data) {
                 if (data["valid"]) {
-                  var sigRoot = document.getElementById('sig');
-                  var sigInst = sigma.init(sigRoot).drawingProperties({
-                    defaultLabelColor: '#ccc',
-                    defaultLabelSize: 10,
-                    font: 'Arial',
-                    edgeColor: 'source',
-                    defaultEdgeType: 'curve',
-                    defaultEdgeArrow: 'target',
-                    labelThreshold: 0
-                  }).graphProperties({
-                    minNodeSize: 0.5,
-                    maxNodeSize: 5,
-                    maxEdgeSize: 3
-                  }).mouseProperties({
-                    maxRatio: 32
-                  });
+                 var sigRoot = document.getElementById('sig');
+                 var sigInst = sigma.init(sigRoot).drawingProperties({
+                   defaultLabelColor: '#ccc',
+                   defaultLabelSize: 10,
+                   font: 'Arial',
+                   edgeColor: 'source',
+                   defaultEdgeType: 'curve',
+                   defaultEdgeArrow: 'target',
+                   labelThreshold: 0
+                 }).graphProperties({
+                   minNodeSize: 0.5,
+                   maxNodeSize: 5,
+                   maxEdgeSize: 3
+                 }).mouseProperties({
+                   maxRatio: 32
+                 });
 
-                  for (var i=0;i<data["references"].length;i++) {
-                    sigInst.addNode('cap'+data["references"][i], {
-                      label: 'cap '+data["references"][i],
-                      color: data["infos"][i][2],
-                      x: data["infos"][i][0],
-                      y: data["infos"][i][1]
-                    }).draw();
+                // writting nodes
+                 for (var i=0;i<data["references"].length;i++) {
+                   sigInst.addNode('cap'+data["references"][i], {
+                     label: 'cap '+data["references"][i],
+                     color: data["infos"][i][2],
+                     x: data["infos"][i][0],
+                     y: data["infos"][i][1]
+                   }).draw();
+                 }
+
+                 // writting edges
+                 for (var k=0;k<data["chapter_destinies"].length;k++) {
+                   if ((data["chapter_destinies"][k].length != 0) && data["valid"][k]) {
+                     for (var l=1;l<data["chapter_destinies"][k].length;l++) {
+                       sigInst.addEdge('cap'+data["chapter_destinies"][k][0]+'_cap'+data["chapter_destinies"][k][l], 'cap'+data["chapter_destinies"][k][0], 'cap'+data["chapter_destinies"][k][l]).draw();
+                     }
+                   }
                   }
 
-                  for (var k=0;k<data["chapter_destinies"].length;k++) {
-                    if ((data["chapter_destinies"][k].length != 0) && data["valid"][k]) {
-                      for (var l=1;l<data["chapter_destinies"][k].length;l++) {
-                        sigInst.addEdge('cap'+data["chapter_destinies"][k][0]+'_cap'+data["chapter_destinies"][k][l], 'cap'+data["chapter_destinies"][k][0], 'cap'+data["chapter_destinies"][k][l]).draw();
+                  // change color of other nodes and edges to grey when mouseover
+                  var greyColor = '#666';
+                  sigInst.bind('overnodes',function(event){
+                    var nodes = event.content;
+                    var neighbors = {};
+                    sigInst.iterEdges(function(e){
+                      if(nodes.indexOf(e.source)<0 && nodes.indexOf(e.target)<0){
+                        if(!e.attr['grey']){
+                          e.attr['true_color'] = e.color;
+                          e.color = greyColor;
+                          e.attr['grey'] = 1;
+                        }
+                      }else{
+                        e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
+                        e.attr['grey'] = 0;
+
+                        neighbors[e.source] = 1;
+                        neighbors[e.target] = 1;
                       }
-                    }
-                  }
+                    }).iterNodes(function(n){
+                      if(!neighbors[n.id]){
+                        if(!n.attr['grey']){
+                          n.attr['true_color'] = n.color;
+                          n.color = greyColor;
+                          n.attr['grey'] = 1;
+                        }
+                      }else{
+                        n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+                        n.attr['grey'] = 0;
+                      }
+                    }).draw(2,2,2);
+                  }).bind('outnodes',function(){
+                    sigInst.iterEdges(function(e){
+                      e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
+                      e.attr['grey'] = 0;
+                    }).iterNodes(function(n){
+                      n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+                      n.attr['grey'] = 0;
+                    }).draw(2,2,2);
+                  });
                 }
 
               }

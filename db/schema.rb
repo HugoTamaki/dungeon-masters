@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140901220359) do
+ActiveRecord::Schema.define(version: 20140907215940) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -158,19 +158,6 @@ ActiveRecord::Schema.define(version: 20140901220359) do
     t.datetime "updated_at"
     t.index ["chapter_id"], :name => "index_monsters_on_chapter_id"
     t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_monsters_chapter_id"
-  end
-
-  create_table "special_attributes", force: true do |t|
-    t.string   "name",          limit: 40
-    t.integer  "adventurer_id"
-    t.integer  "story_id"
-    t.integer  "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["adventurer_id"], :name => "index_special_attributes_on_adventurer_id"
-    t.index ["story_id"], :name => "index_special_attributes_on_story_id"
-    t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_special_attributes_adventurer_id"
-    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_special_attributes_story_id"
   end
 
 end

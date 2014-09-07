@@ -21,7 +21,6 @@ class StoriesController < ApplicationController
   def show
     @story = Story.find(params[:id])
     @items = @story.items
-    @special_attributes = @story.special_attributes
     @chapters = @story.chapters.includes(:decisions)
 
     respond_to do |format|
@@ -84,7 +83,7 @@ class StoriesController < ApplicationController
   # GET /stories/1/edit
   def edit
     chapter_numbers = params[:chapter_numbers].to_i
-    @story = Story.includes(:chapters, :items, :special_attributes).find(params[:id])
+    @story = Story.includes(:chapters, :items).find(params[:id])
 
     if @story.chapters.empty?
       if chapter_numbers.present?
@@ -108,13 +107,6 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:story_id])
     if @story.items.empty?
       item = @story.items.build
-    end
-  end
-
-  def edit_special_attributes
-    @story = Story.find(params[:story_id])
-    if @story.special_attributes.empty?
-      special_attributes = @story.special_attributes.build
     end
   end
 
@@ -327,8 +319,6 @@ class StoriesController < ApplicationController
           redirect_to :back, notice: I18n.t('actions.messages.save_success')
         when I18n.t('actions.edit_items')
           redirect_to story_edit_items_path(story), notice: I18n.t('actions.messages.data_saved')
-        when I18n.t('actions.edit_special_attributes')
-          redirect_to story_edit_special_attributes_path(story), notice: I18n.t('actions.messages.save_success')
         when I18n.t('actions.edit_chapters')
           redirect_to edit_story_path(story), notice: I18n.t('actions.messages.data_saved')
         when I18n.t('actions.graph')
@@ -428,7 +418,6 @@ class StoriesController < ApplicationController
                                     :published,
                                     :chapter_numbers,
                                     items_attributes: [:id, :description, :name, :story_id, :usable, :attr, :modifier, :_destroy],
-                                    special_attributes_attributes: [:id, :adventurer_id, :name, :value, :story_id, :_destroy],
                                     chapters_attributes: [:id,
                                                           :content,
                                                           :reference,
