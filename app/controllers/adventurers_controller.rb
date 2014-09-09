@@ -1,19 +1,21 @@
 class AdventurersController < ApplicationController
   def create
-
-    adventurer = Adventurer.by_user(current_user.id)
+    adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
 
     respond_to do |format|
-      if adventurer.empty?
+      if adventurer.nil?
         @adventurer = Adventurer.new(adventurer_params)
+        @adventurer.story_id = params[:story_id]
         if @adventurer.save
+          current_user.adventurers << @adventurer
+          current_user.save
           options = {reference: params[:reference], id: params[:story_id]}
           format.html { redirect_to read_stories_path(options) }
         else
           format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
         end
       else
-        @adventurer = Adventurer.by_user(current_user.id).first
+        @adventurer = adventurer
         if @adventurer.update_attributes(adventurer_params)
           options = {reference: params[:reference], id: params[:story_id]}
           format.html { redirect_to read_stories_path(options) }
@@ -21,13 +23,12 @@ class AdventurersController < ApplicationController
           format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
         end
       end
-
     end
   end
 
   def update_adventurer_status
     user = User.find(current_user.id)
-    adventurer = user.adventurer
+    adventurer = user.adventurers.where(story_id: params[:story_id]).first
 
     params[:adventurer_skill] = params[:adventurer_skill].to_i unless params[:adventurer_skill].nil?
     params[:adventurer_energy] = params[:adventurer_energy].to_i unless params[:adventurer_energy].nil?

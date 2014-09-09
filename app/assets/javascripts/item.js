@@ -4,6 +4,7 @@ $(document).ready(function(){
       url: 'use_item',
       type: 'POST',
       data: {
+        "story_id": $(this).data("story-id"),
         "item-id": $(this).data("item-id"),
         "modifier": $(this).data("modifier"),
         "attribute": $(this).data("attribute")

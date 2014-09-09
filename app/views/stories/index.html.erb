@@ -1,3 +1,20 @@
+<div class="modal fade" id="continue-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Deseja continuar de onde parou?</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container stories">
   <h1><%= t('stories.index.title') %></h1>
   <% if @stories.empty? %>
@@ -18,7 +35,11 @@
                     <%= link_to t('actions.show'), story, class: "btn btn-primary" if story.user == current_user %>
                   </div>
                   <div class="col-lg-5">
-                    <%= link_to t('actions.read'), story_prelude_path(story), class: "btn btn-primary" %>
+                    <% if current_user and story.has_adventurer? current_user.adventurers %>
+                        <%= link_to t('actions.read'), "javascript:;", class: "read btn btn-primary", data: {continue: true, story_id: story.id} %>
+                      <% else %>
+                        <%= link_to t('actions.read'), story_prelude_path(story, new_story: true), class: "btn btn-primary", data: {continue: false} %>
+                      <% end %>
                   </div>
                 </div>
                 <div class="row">

@@ -1,3 +1,20 @@
+<div class="modal fade" id="continue-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Deseja continuar de onde parou?</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="header">
   <div class="container">
     <div class="header-content">
@@ -95,7 +112,11 @@
         <div class="row last-stories">
           <% @stories.each do |story| %>
             <div class="index_stories col-lg-3 col-sm-12">
-              <p><strong><%= link_to story.title, story_prelude_path(story) %></strong></p>
+              <% if current_user and story.has_adventurer? current_user.adventurers %>
+                <p><%= link_to story.title, "javascript:;", class: "read", data: {continue: true, story_id: story.id} %></p>
+              <% else %>
+                <p><%= link_to story.title, story_prelude_path(story, new_story: true), data: {continue: false} %></p>
+              <% end %>
               <%= image_tag story.cover(:thumbnail) %>
             </div>
           <% end %>

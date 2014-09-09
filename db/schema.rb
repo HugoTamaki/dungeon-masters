@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140907215940) do
+ActiveRecord::Schema.define(version: 20140908220937) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -29,19 +29,6 @@ ActiveRecord::Schema.define(version: 20140907215940) do
     t.string   "name"
     t.index ["email"], :name => "index_users_on_email", :unique => true
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  end
-
-  create_table "adventurers", force: true do |t|
-    t.string   "name",       limit: 40
-    t.integer  "user_id"
-    t.integer  "skill"
-    t.integer  "energy"
-    t.integer  "luck"
-    t.integer  "gold"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["user_id"], :name => "index_adventurers_on_user_id"
-    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_user_id"
   end
 
   create_table "stories", force: true do |t|
@@ -78,6 +65,25 @@ ActiveRecord::Schema.define(version: 20140907215940) do
     t.datetime "image_updated_at"
     t.index ["story_id"], :name => "index_chapters_on_story_id"
     t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_chapters_story_id"
+  end
+
+  create_table "adventurers", force: true do |t|
+    t.string   "name",       limit: 40
+    t.integer  "user_id"
+    t.integer  "skill"
+    t.integer  "energy"
+    t.integer  "luck"
+    t.integer  "gold"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "chapter_id"
+    t.integer  "story_id"
+    t.index ["chapter_id"], :name => "fk__adventurers_chapter_id"
+    t.index ["story_id"], :name => "fk__adventurers_story_id"
+    t.index ["user_id"], :name => "index_adventurers_on_user_id"
+    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_chapter_id"
+    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_story_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_user_id"
   end
 
   create_table "adventurer_chapters", force: true do |t|

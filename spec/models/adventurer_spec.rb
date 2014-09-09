@@ -12,6 +12,8 @@
 #  gold       :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  chapter_id :integer
+#  story_id   :integer
 #
 
 require "spec_helper"

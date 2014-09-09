@@ -12,8 +12,9 @@
 #  gold       :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  chapter_id :integer
+#  story_id   :integer
 #
-
 
 FactoryGirl.define do
   factory :adventurer do

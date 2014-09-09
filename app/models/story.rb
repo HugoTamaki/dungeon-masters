@@ -29,6 +29,7 @@ class Story < ActiveRecord::Base
   validates_attachment_content_type :cover, content_type: ["image/jpg", "image/png", "image/gif", "image/jpeg"]
 
   belongs_to :user
+  has_one :adventurer
   has_many :chapters, dependent: :destroy
   has_many :items, dependent: :destroy
   accepts_nested_attributes_for :chapters, reject_if: :all_blank, allow_destroy: true
@@ -36,6 +37,16 @@ class Story < ActiveRecord::Base
 
   scope :by_user, lambda {|user_id| where(user_id: user_id)}
   scope :published, -> { where(published: true) }
+
+  def has_adventurer? adventurers
+    has_adventurer = false
+    adventurers.each do |adventurer|
+      if adventurer.story == self
+        has_adventurer = true
+      end
+    end
+    has_adventurer
+  end
 
   def self.graph(chapters)
     references = []

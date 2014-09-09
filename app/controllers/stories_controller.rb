@@ -32,12 +32,22 @@ class StoriesController < ApplicationController
   def prelude
     @story = Story.find(params[:story_id])
     if @story.published || @story.user == current_user
-      if current_user.adventurer.present?
-        @adventurer = Adventurer.new
-        current_user.adventurer.items.clear
-        current_user.adventurer.chapters.clear
+      if params[:new_story]
+        adventurer = current_user.adventurers.where(story_id: @story.id).first
+        if adventurer.nil?
+          @adventurer = Adventurer.new
+        else
+          adventurer.chapters.clear
+          adventurer.items.clear
+          adventurer.skill = 0
+          adventurer.energy = 0
+          adventurer.luck = 0
+          adventurer.save
+          @adventurer = adventurer
+        end
       else
-        @adventurer = Adventurer.new
+        @adventurer = current_user.adventurers.where(story_id: @story.id).first
+        redirect_to read_stories_path(continue: true, chapter_id: @adventurer.chapter.id, id: @story.id, adventurer_id: @adventurer.id)
       end
     else
       redirect_to root_url, alert: I18n.t('actions.not_published')
@@ -47,20 +57,33 @@ class StoriesController < ApplicationController
   def read
     @story = Story.find(params[:id])
     if @story.published || @story.user == current_user
-      @chapter = @story.chapters.where(reference: params[:reference]).first
-      adventurer = Adventurer.by_user(current_user.id).first
+      if params[:continue]
+        @chapter = Chapter.find(params[:chapter_id])
+        @adventurer = Adventurer.find(params[:adventurer_id])
+        @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
+        respond_to do |format|
+          format.html # show.html.erb
+          format.json { render json: @chapter }
+        end
+      else
+        @chapter = @story.chapters.where(reference: params[:reference]).first
+        adventurer = current_user.adventurers.where(story_id: @story.id).first
+        adventurer.chapter_id = @chapter.id
+        adventurer.story = @story
+        adventurer.save
 
-      @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
-      @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
-      @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
+        @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
+        @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
+        @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
 
-      this_decision = Decision.find_by(destiny_num: @chapter.id)
-      Adventurer.use_required_item(this_decision, @adventurer)
+        this_decision = Decision.find_by(destiny_num: @chapter.id)
+        Adventurer.use_required_item(this_decision, @adventurer)
 
-      
-      respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @chapter }
+        
+        respond_to do |format|
+          format.html # show.html.erb
+          format.json { render json: @chapter }
+        end
       end
     else
       redirect_to root_url, alert: I18n.t('actions.not_published')
@@ -137,7 +160,7 @@ class StoriesController < ApplicationController
   end
 
   def use_item
-    adventurer = current_user.adventurer
+    adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
     adventurer_item = adventurer.adventurers_items.find_by(item_id: params["item-id"])
     Adventurer.change_attribute(adventurer, params[:attribute], params[:modifier])
     adventurer_item.quantity -= 1

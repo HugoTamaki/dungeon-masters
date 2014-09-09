@@ -11,6 +11,8 @@
 #  gold       :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  chapter_id :integer
+#  story_id   :integer
 #
 
 class Adventurer < ActiveRecord::Base
@@ -20,6 +22,8 @@ class Adventurer < ActiveRecord::Base
   validates :luck, presence: true, numericality: true
 
   belongs_to :user
+  belongs_to :story
+  belongs_to :chapter
   has_many :adventurers_items, inverse_of: :adventurer, dependent: :destroy
   has_many :items, through: :adventurers_items
   has_many :adventurer_chapters, inverse_of: :adventurer, dependent: :destroy
