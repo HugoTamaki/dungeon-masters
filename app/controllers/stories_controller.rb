@@ -33,13 +33,19 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:story_id])
     if @story.published || @story.user == current_user
       if params[:new_story]
-        adventurer = current_user.adventurers.by_story(@story.id).first
+        adventurer = current_user.adventurers.by_story(params[:story_id]).first
         adventurer.destroy unless adventurer.nil?
         @adventurer = Adventurer.new
         @adventurer.story_id = params[:story_id]
       else
-        @adventurer = current_user.adventurers.by_story(@story.id).first
-        redirect_to read_stories_path(continue: true, chapter_id: @adventurer.chapter.id, id: @story.id, adventurer_id: @adventurer.id)
+        @adventurer = current_user.adventurers.by_story(params[:story_id]).first
+        unless @adventurer.nil?
+          redirect_to read_stories_path(continue: true, chapter_id: @adventurer.chapter.id, id: @story.id, adventurer_id: @adventurer.id)
+        else
+          @adventurer.destroy unless @adventurer.nil?
+          @adventurer = Adventurer.new
+          @adventurer.story_id = params[:story_id]
+        end
       end
     else
       redirect_to root_url, alert: I18n.t('actions.not_published')

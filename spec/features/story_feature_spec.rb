@@ -178,7 +178,7 @@ feature "Story" do
     end
 
     scenario "user passes through chapters", js: true do
-      visit "/stories/#{story_sample.id}/prelude"
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
@@ -196,7 +196,7 @@ feature "Story" do
     end
 
     scenario "user does combat", js: true do
-      visit "/stories/#{story_sample.id}/prelude"
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
 
       click_button "Rolar dados"
 
@@ -210,7 +210,7 @@ feature "Story" do
     end
 
     scenario "user receives an item", js: true do
-      visit "/stories/#{story_sample.id}/prelude"
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
 
       click_button "Rolar dados"
 
@@ -220,7 +220,7 @@ feature "Story" do
     end
 
     scenario "user does not has an item", js: true do
-      visit "/stories/#{story_sample.id}/prelude"
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
@@ -239,7 +239,7 @@ feature "Story" do
     end
 
     scenario "user has an item and passes trough", js: true do
-      visit "/stories/#{story_sample.id}/prelude"
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
@@ -254,7 +254,7 @@ feature "Story" do
     end
 
     scenario "user uses an usable item and it depletes", js: true do
-      visit "/stories/#{story_sample.id}/prelude"
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
@@ -275,7 +275,7 @@ feature "Story" do
     end
 
     scenario "user uses an usable item and it does not deplete", js: true do
-      visit "/stories/#{story_sample.id}/prelude"
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
