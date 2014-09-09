@@ -30,7 +30,7 @@ class Adventurer < ActiveRecord::Base
   has_many :chapters, through: :adventurer_chapters
   accepts_nested_attributes_for :adventurers_items, reject_if: :all_blank, allow_destroy: true
 
-  scope :by_user, lambda {|user_id| where(user_id: user_id)}
+  scope :by_story, lambda {|story_id| where(story_id: story_id)}
 
   def self.attribute_and_item_changer(adventurer, chapter)
     if chapter.modifiers_attributes.present?

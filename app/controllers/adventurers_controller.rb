@@ -1,6 +1,6 @@
 class AdventurersController < ApplicationController
   def create
-    adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
+    adventurer = current_user.adventurers.by_story(params[:story_id]).first
 
     respond_to do |format|
       if adventurer.nil?
@@ -28,7 +28,7 @@ class AdventurersController < ApplicationController
 
   def update_adventurer_status
     user = User.find(current_user.id)
-    adventurer = user.adventurers.where(story_id: params[:story_id]).first
+    adventurer = user.adventurers.by_story(params[:story_id]).first
 
     params[:adventurer_skill] = params[:adventurer_skill].to_i unless params[:adventurer_skill].nil?
     params[:adventurer_energy] = params[:adventurer_energy].to_i unless params[:adventurer_energy].nil?

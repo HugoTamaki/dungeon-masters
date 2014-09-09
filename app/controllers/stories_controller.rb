@@ -33,20 +33,12 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:story_id])
     if @story.published || @story.user == current_user
       if params[:new_story]
-        adventurer = current_user.adventurers.where(story_id: @story.id).first
-        if adventurer.nil?
-          @adventurer = Adventurer.new
-        else
-          adventurer.chapters.clear
-          adventurer.items.clear
-          adventurer.skill = 0
-          adventurer.energy = 0
-          adventurer.luck = 0
-          adventurer.save
-          @adventurer = adventurer
-        end
+        adventurer = current_user.adventurers.by_story(@story.id).first
+        adventurer.destroy unless adventurer.nil?
+        @adventurer = Adventurer.new
+        @adventurer.story_id = params[:story_id]
       else
-        @adventurer = current_user.adventurers.where(story_id: @story.id).first
+        @adventurer = current_user.adventurers.by_story(@story.id).first
         redirect_to read_stories_path(continue: true, chapter_id: @adventurer.chapter.id, id: @story.id, adventurer_id: @adventurer.id)
       end
     else
@@ -66,8 +58,8 @@ class StoriesController < ApplicationController
           format.json { render json: @chapter }
         end
       else
-        @chapter = @story.chapters.where(reference: params[:reference]).first
-        adventurer = current_user.adventurers.where(story_id: @story.id).first
+        @chapter = @story.chapters.by_reference(params[:reference]).first
+        adventurer = current_user.adventurers.by_story(@story.id).first
         adventurer.chapter_id = @chapter.id
         adventurer.story = @story
         adventurer.save
@@ -160,7 +152,7 @@ class StoriesController < ApplicationController
   end
 
   def use_item
-    adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
+    adventurer = current_user.adventurers.by_story(params[:story_id]).first
     adventurer_item = adventurer.adventurers_items.find_by(item_id: params["item-id"])
     Adventurer.change_attribute(adventurer, params[:attribute], params[:modifier])
     adventurer_item.quantity -= 1
