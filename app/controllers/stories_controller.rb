@@ -65,22 +65,25 @@ class StoriesController < ApplicationController
         end
       else
         @chapter = @story.chapters.by_reference(params[:reference]).first
-        adventurer = current_user.adventurers.by_story(@story.id).first
-        adventurer.chapter_id = @chapter.id
-        adventurer.story = @story
-        adventurer.save
+        if @story and @story.has_adventurer?(current_user.adventurers) and @chapter.present?
+          adventurer = current_user.adventurers.by_story(@story.id).first
+          adventurer.chapter_id = @chapter.id
+          adventurer.story = @story
+          adventurer.save
 
-        @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
-        @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
-        @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
+          @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
+          @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
+          @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
 
-        this_decision = Decision.find_by(destiny_num: @chapter.id)
-        Adventurer.use_required_item(this_decision, @adventurer)
-
-        
-        respond_to do |format|
-          format.html # show.html.erb
-          format.json { render json: @chapter }
+          this_decision = Decision.find_by(destiny_num: @chapter.id)
+          Adventurer.use_required_item(this_decision, @adventurer)
+          
+          respond_to do |format|
+            format.html # show.html.erb
+            format.json { render json: @chapter }
+          end
+        else
+          redirect_to root_url, alert: I18n.t('actions.not_found')
         end
       end
     else
