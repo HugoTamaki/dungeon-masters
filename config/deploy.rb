@@ -16,7 +16,7 @@ set :stage, :production
 set :rails_env, 'production'
 
 set :deploy_via,  :remote_cache
-set :copy_exclude, ['.git/*', '.DS_Store']
+set :copy_exclude, ['.git/*', '.DS_Store', '.rvmrc']
 
 
 # Default branch is :master

@@ -42,87 +42,6 @@ feature "Story" do
     end
   end
 
-  feature "#create chapters" do
-    let!(:chapter1) { FactoryGirl.create(:chapter, reference: "1", story_id: story.id) }
-    let!(:chapter2) { FactoryGirl.create(:chapter, reference: "2", story_id: story.id) }
-    let!(:chapter3) { FactoryGirl.create(:chapter, reference: "3", story_id: story.id) }
-    let!(:chapter4) { FactoryGirl.create(:chapter, reference: "4", story_id: story.id) }
-    let!(:chapter5) { FactoryGirl.create(:chapter, reference: "5", story_id: story.id) }
-
-    before(:each) do
-      login_as user
-    end
-
-    scenario "user creates story successfully", js: true do
-      visit "/stories/#{story.id}/edit"
-      all(".ui-accordion-header")[0].click
-
-      click_link "Adicionar Destino"
-      select "5", from: "Decisões"
-      click_link "Adicionar Monstro"
-      fill_in "Nome", with: "monster"
-      select "5", from: "Habilidade"
-      select "5", from: "Energia"
-      click_link "Adicionar Item"
-      select "espada", from: "Item"
-      select "1", from: "Quantidade"
-
-      first(:button, "Terminar Edição").click
-      current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text("História atualizada com sucesso.")
-    end
-
-    scenario "user creates story without success", js: true do
-      visit "/stories/#{story.id}/edit"
-      all(".ui-accordion-header")[0].click
-
-      click_link "Adicionar Monstro"
-      fill_in "Nome", with: "monster"
-
-      first(:button, "Terminar Edição").click
-      current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text "Chapters monsters skill não deve estar em branco"
-      page.should have_text "Chapters monsters skill não é um número"
-      page.should have_text "Chapters monsters energy não deve estar em branco"
-      page.should have_text "Chapters monsters energy não é um número"
-      page.should have_text "Capítulos com erros: 1"
-    end
-  end
-
-  feature "#create items" do
-    before(:each) do
-      login_as user
-    end
-
-    scenario "user creates item successfully" do
-      visit "stories/#{story.id}/edit_items"
-
-      fill_in "Nome", with: "Escudo"
-      fill_in "Descrição", with: "um escudo"
-
-      click_button "Editar Capítulos"
-
-      current_path.should == "/stories/#{Story.last.id}/edit"
-      page.should have_text("Dados salvos.")
-      Item.last.name.should == "Escudo"
-      Item.last.description.should == "um escudo"
-    end
-
-    scenario "user fails to create item" do
-      visit "stories/#{story.id}/edit_items"
-
-      fill_in "Nome", with: ""
-      fill_in "Descrição", with: "um escudo"
-
-      click_button "Editar Capítulos"
-
-      current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text("Items name não deve estar em branco")
-      Item.last.name.should_not == "Escudo"
-      Item.last.description.should_not == "um escudo"
-    end
-  end
-
   feature "#delete story", js: true do
 
     before(:each) do
@@ -293,6 +212,42 @@ feature "Story" do
 
       sleep(0.5)
       page.body.should have_text "health drink - 1"
+    end
+
+    scenario "user continues from where he stoped", js: true do
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
+
+      page.should have_text("content 1")
+      
+      click_link "Capítulo 8"
+      page.should have_text("content 8")
+
+      visit "/stories"
+      find(:xpath, "(//a[text()='Ler história'])[2]").click
+      click_link "Continuar"
+
+      page.should have_text ("content 8")
+    end
+
+    scenario "user start story from beginning", js: true do
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
+
+      page.should have_text("content 1")
+      
+      click_link "Capítulo 8"
+      page.should have_text("content 8")
+
+      visit "/stories"
+      find(:xpath, "(//a[text()='Ler história'])[2]").click
+      click_link "Começar do Início"
+
+      page.should have_text ("Prelúdio")
     end
   end
 

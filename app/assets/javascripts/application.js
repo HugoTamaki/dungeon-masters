@@ -85,7 +85,7 @@ $(document).ready(function(){
   $(".read").click(function(){
     if ($(this).data('continue') == true) {
       var content = "<p><a href='/stories/"+$(this).data('story-id')+"/prelude?continue=true' class='btn btn-primary'>Continuar</a></p>";
-      content += "<p><a href='/stories/"+$(this).data('story-id')+"/prelude?new_story=true' class='btn btn-primary'>Comecar do inicio</a></p>";
+      content += "<p><a href='/stories/"+$(this).data('story-id')+"/prelude?new_story=true' class='btn btn-primary'>Começar do Início</a></p>";
       $(".modal-body").html(content);
       $("#continue-modal").modal();
     }

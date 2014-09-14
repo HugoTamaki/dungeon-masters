@@ -45,13 +45,16 @@ class Adventurer < ActiveRecord::Base
       chapter.modifiers_items.each do |item|
         unless adventurer.chapters.include? chapter
           if dont_have_item(adventurer, item.item.id)
-            adventurer.items << item.item
+            adventurer.items << item.item unless adventurer.items.include? item.item
             adventurer_item = adventurer.adventurers_items.find_by(item_id: item.item.id)
-            adventurer_item.quantity += item.quantity
+            adventurer_item.quantity += item.quantity if adventurer_item.item.usable
+            adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           else
             adventurer_item = adventurer.adventurers_items.find_by(item_id: item.item.id)
-            adventurer_item.quantity += item.quantity
+            adventurer_item.quantity += item.quantity if adventurer_item.item.usable
+            adventurer_item.status = 1 unless adventurer_item.item.usable
+            adventurer_item.save
           end
         end
       end
@@ -62,7 +65,8 @@ class Adventurer < ActiveRecord::Base
 
   def self.dont_have_item(adventurer,item_id)
     adventurer_items = adventurer.items.where(id: item_id)
-    adventurer_items.empty? ? true : false
+    used_item = AdventurerItem.where(adventurer_id: adventurer.id, item_id: item_id).first
+    (adventurer_items.empty? || used_item.status == 0) ? true : false
   end
 
   def self.use_required_item(decision,adventurer)
@@ -73,7 +77,7 @@ class Adventurer < ActiveRecord::Base
           change_attribute(adventurer, required_item.attr, required_item.modifier)
         end
         adventurer_item = AdventurerItem.find_by(item_id: required_item.id)
-        adventurer_item.status = 0 if !required_item.usable
+        adventurer_item.status = 0 unless required_item.usable
         adventurer_item.quantity -= 1 if adventurer_item.quantity > 0 && required_item.usable
         adventurer_item.save
       end
