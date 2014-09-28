@@ -24,7 +24,7 @@ require "spec_helper"
 describe Story do
   let(:story) { FactoryGirl.build(:story) }
 
-  describe "Atributos" do
+  describe "Attributes" do
     it {should have_attribute :title }
     it {should have_attribute :resume}
     it {should have_attribute :prelude}
@@ -35,25 +35,24 @@ describe Story do
     it {should have_attribute :cover_updated_at}
   end
 
-  describe "Relacionamentos" do
+  describe "Relationships" do
     it {should respond_to :user}
     it {should respond_to :chapters}
     it {should respond_to :items}
-    it {should respond_to :special_attributes}
   end
 
-  describe "Validações" do
-    describe "de atributos" do
+  describe "Validations" do
+    describe "of attributes" do
       describe "#title" do
-        context "é valido quando" do
-          it "está preenchido" do
+        context "is valid" do
+          it "when its filled" do
             story.title = "Titulo qualquer"
             story.should have(0).errors_on :title
           end
         end
 
-        context "é invalido quando" do
-          it "nao está preenchido" do
+        context "is invalid" do
+          it "when not filled" do
             story.title = ""
             story.should_not have(0).errors_on :title
           end
@@ -61,15 +60,15 @@ describe Story do
       end
 
       describe "#resume" do
-        context "é valido quando" do
-          it "está preenchido" do
+        context "is valid" do
+          it "when its filled" do
             story.resume = "um resumo qualquer"
             story.should have(0).errors_on :resume
           end
         end
 
-        context "é invalido quando" do
-          it "não esta preenchido" do
+        context "is invalid" do
+          it "when not filled" do
             story.resume = ""
             story.should_not have(0).errors_on :resume
           end
@@ -77,19 +76,72 @@ describe Story do
       end
 
       describe "#cover" do
-        context "é valido quando" do
-          it "é menor que 300K" do
+        context "is valid" do
+          it "when size is less than 300k" do
             story.cover = File.new("#{Rails.root}/spec/photos/test.png")
             story.should have(0).errors_on :cover
           end
         end
 
-        context "é invalido quando" do
-          it "é maior que 300K" do
+        context "is invalid" do
+          it "size is bigger then 300k" do
             story.cover = File.new("#{Rails.root}/spec/photos/test2.jpg")
             story.should_not have(0).errors_on :cover
           end
         end
+      end
+    end
+  end
+
+  describe :methods do
+    let!(:story_with_adventurer) {FactoryGirl.create(:story, title: "story with adventurer", chapter_numbers: 10)}
+    let!(:user_with_adventurer) {FactoryGirl.create(:user, email: "email1@email.com")}
+    let!(:user_without_adventurer) {FactoryGirl.create(:user, email: "email2@email.com")}
+    let!(:adventurer) {FactoryGirl.create(:adventurer, story: story_with_adventurer, user: user_with_adventurer)}
+
+    describe ".has_adventurer?" do
+      context "user has one adventurer for the story" do
+        it "return true" do
+          story_with_adventurer.has_adventurer?(user_with_adventurer.adventurers).should eq true
+        end
+      end
+
+      context "user does not have adventurer of story" do
+        it "return false" do
+          story_with_adventurer.has_adventurer?(user_without_adventurer.adventurers).should eq false
+        end
+      end
+    end
+
+    describe ".graph" do
+      let!(:chapter1) {FactoryGirl.create(:chapter, reference: "1", content: "content 1", story: story_with_adventurer)}
+      let!(:chapter2) {FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_with_adventurer)}
+      let!(:chapter3) {FactoryGirl.create(:chapter, reference: "3", content: "content 3", story: story_with_adventurer)}
+      let!(:chapter4) {FactoryGirl.create(:chapter, reference: "4", content: "content 4", story: story_with_adventurer)}
+      let!(:chapter5) {FactoryGirl.create(:chapter, reference: "5", content: "content 5", story: story_with_adventurer)}
+      let!(:chapter6) {FactoryGirl.create(:chapter, reference: "6", content: "content 6", story: story_with_adventurer)}
+      let!(:chapter7) {FactoryGirl.create(:chapter, reference: "7", content: "content 7", story: story_with_adventurer)}
+      let!(:chapter8) {FactoryGirl.create(:chapter, reference: "8", content: "content 8", story: story_with_adventurer)}
+      let!(:chapter9) {FactoryGirl.create(:chapter, reference: "9", content: "content 9", story: story_with_adventurer)}
+      let!(:chapter10) {FactoryGirl.create(:chapter, reference: "10", content: "content 10", story: story_with_adventurer)}
+      let!(:decision1_4) {FactoryGirl.create(:decision, chapter_id: chapter1.id, destiny_num: chapter4.id)}
+      let!(:decision1_7) {FactoryGirl.create(:decision, chapter_id: chapter1.id, destiny_num: chapter7.id)}
+      let!(:decision4_8) {FactoryGirl.create(:decision, chapter_id: chapter4.id, destiny_num: chapter8.id)}
+      let!(:decision7_3) {FactoryGirl.create(:decision, chapter_id: chapter7.id, destiny_num: chapter3.id)}
+
+      it "prepare json for graph" do
+        graph = Story.graph(story_with_adventurer.chapters)
+        graph["references"].should =~ ["1", "3", "4", "7", "8"]
+        graph["chapter_destinies"] =~ [["1", 4, 7], ["2"], ["3"], ["4", 8], ["5"], ["6"], ["7", 3], ["8"], ["9"], ["10"]]
+        graph["valid"] =~ [true, true, true, true, true, true, true, true, true, true]
+        graph["not_user"] =~ [1, 2, 5, 6, 9, 10]
+      end
+    end
+
+    describe ".search" do
+      it "return search for terms" do
+        search = Story.search("story")
+        search.first.should == story_with_adventurer
       end
     end
   end

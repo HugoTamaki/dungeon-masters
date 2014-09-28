@@ -4,7 +4,7 @@
   </div>
   <div class="accordionContent">
     <%= f.input :content, label: t('stories.edit.content'), input_html: { rows: 10, style: 'width: 100%', title: t('tooltip.chapter_content'), class: 'chapter-content-wysiwyg summernote' } %>
-    <%= f.input :image, label: t('stories.edit.image'), input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
+    <%= f.input :image, label: t('stories.edit.image'), hint: t('actions.messages.image_hint'), input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 300.kilobytes} %>
     <% if f.object.image.blank? %>
       <%= t('stories.edit.no_current_image') %>
     <% else %>

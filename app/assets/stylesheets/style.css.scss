@@ -163,6 +163,16 @@ body {
   }
 }
 
+.help-block {
+  margin-top: 3px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  &:before {
+    font-family: FontAwesome;
+    content: "\f059";
+  }
+}
+
 .monsters {
   margin: 5px;
   padding: 15px;
@@ -241,7 +251,8 @@ body {
 
 label {
   display: inline-block;
-  width: 6em;
+  width: auto;
+  margin-top: 3px;
 }
 
 .stories {

@@ -34,7 +34,6 @@ describe Adventurer do
     it {should respond_to :user}
     it {should respond_to :adventurers_items}
     it {should respond_to :items}
-    it {should respond_to :special_attributes}
   end
 
   describe "Validações" do

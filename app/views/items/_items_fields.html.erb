@@ -1,12 +1,13 @@
 <div class="item-fields">
-  <%= f.input :name, label: t('items.edit.name') %>
-  <%= f.input :description, label: t('items.edit.description'), as: :text, input_html: { rows: 10, cols: 40 } %>
+  <%= f.input :name, label: t('items.edit.name'), hint: t('actions.messages.') %>
+  <%= f.input :description, label: t('items.edit.description'), as: :text, input_html: { rows: 10, cols: 40 }, hint: t('actions.messages.item_description_hint') %>
   <%= f.label :usable, t('items.edit.usable_item') %>
   <%= f.check_box :usable, class: "usable-checkbox" %>
+  <p class="help-block"><%= t('actions.messages.item_usable_hint') %></p>
   <div class="usable-item-attributes <%= 'visible' if f.object.usable %>">
     <%= f.input :attr, label: t('items.edit.attribute'),
-    collection: attributes, prompt: t('items.edit.select_attribute') %>
-    <%= f.input :modifier, label: t('items.edit.modifier') %>
+    collection: attributes, prompt: t('items.edit.select_attribute'), hint: t('actions.messages.item_usable_attr_hint') %>
+    <%= f.input :modifier, label: t('items.edit.modifier'), hint: t('actions.messages.item_usable_quantity_hint') %>
   </div>
   <p><%= link_to_remove_fields t('items.edit.remove'), f, "item" %></p>
 </div>

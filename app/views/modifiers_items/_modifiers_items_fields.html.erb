@@ -1,7 +1,8 @@
 <div class="modifier-item-fields">
   <%= f.label :item_id, t('stories.edit.item') %>
   <%= f.collection_select :item_id, Item.by_story(@story), :id, :name, prompt: "select an item" %>
-  <p><%= f.input :quantity, label: t('stories.edit.item_quantity'),
-    collection: quantity, prompt: "select quantity of items" %></p>
+  <p class="help-block"><%= t('actions.messages.modifier_item_hint') %></p>
+  <%= f.input :quantity, label: t('stories.edit.item_quantity'),
+    collection: quantity, prompt: "select quantity of items", hint: t('actions.messages.modifier_item_quantity_hint') %>
   <%= link_to_remove_fields t('stories.edit.remove_item'), f, "modifier-item" %>
 </div>

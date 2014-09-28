@@ -97,11 +97,9 @@ $(document).ready(function(){
 
   $(document).on('click', '.usable-checkbox', function() {
     if ($(this).prop('checked')) {
-      $(this).next().addClass('visible');
-      console.log($(this).next().html());
+      $(this).next().next().addClass('visible');
     } else {
-      $(this).next().removeClass('visible');
-      console.log($(this).next().html());
+      $(this).next().next().removeClass('visible');
     }
   });
 
