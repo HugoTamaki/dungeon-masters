@@ -54,13 +54,6 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      within current_path do
-        if test("[ -f #{shared_path.join('tmp/pids/sidekiq.pid')} ]")
-          execute :sidekiqctl, "stop #{shared_path.join('tmp/pids/sidekiq.pid')}" 
-        end
-
-        execute :sidekiq, '-r ./main.rb -e development -C ./config/sidekiq.yml -d'
-      end
       # Your restart mechanism here, for example:
       execute :touch, release_path.join('tmp/restart.txt')
     end
