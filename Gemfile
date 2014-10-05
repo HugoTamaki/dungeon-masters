@@ -28,6 +28,7 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano3-unicorn'
   gem "rack-mini-profiler"
+  gem 'capistrano-sidekiq' , github: 'seuros/capistrano-sidekiq'
 end
 
 gem "jquery-rails"
@@ -46,9 +47,8 @@ gem "chromedriver-helper"
 gem "launchy"
 gem 'annotate', "~> 2.6.5"
 gem 'summernote-rails'
-# gem 'sidekiq'
-# gem "devise-async"
-# gem 'capistrano-sidekiq' , github: 'seuros/capistrano-sidekiq'
+gem 'sidekiq'
+gem "devise-async"
 # gem 'rvm1-capistrano3', :require => false
 # gem "unicorn"
 
