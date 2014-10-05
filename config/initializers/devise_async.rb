@@ -1,2 +1,0 @@
-
-Devise::Async.backend = :sidekiq
