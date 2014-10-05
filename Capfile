@@ -4,7 +4,7 @@ require 'capistrano/setup'
 # Includes default deployment tasks
 require 'capistrano/deploy'
 require 'capistrano3/unicorn'
-# require 'capistrano/sidekiq'
+require 'capistrano/sidekiq'
 require 'capistrano/rails'
 require 'capistrano/rails/assets'
 require 'capistrano/bundler'
