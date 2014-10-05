@@ -25,6 +25,7 @@ Calabouco::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  ActionMailer::Base.default :from => 'no-reply@dungeonmasters.com.br'
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -33,6 +34,7 @@ Calabouco::Application.configure do
     address: "smtp.gmail.com",
     port: 587,
     tls: true,
+    ssl: true,
     domain: "gmail.com",
     authentication: :plain,
     enable_starttls_auto: true,
