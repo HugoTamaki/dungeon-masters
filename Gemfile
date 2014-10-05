@@ -28,7 +28,7 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano3-unicorn'
   gem "rack-mini-profiler"
-  gem 'capistrano-sidekiq' , github: 'seuros/capistrano-sidekiq'
+  # gem 'capistrano-sidekiq' , github: 'seuros/capistrano-sidekiq'
 end
 
 gem "jquery-rails"
