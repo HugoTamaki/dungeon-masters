@@ -46,6 +46,9 @@ gem "chromedriver-helper"
 gem "launchy"
 gem 'annotate', "~> 2.6.5"
 gem 'summernote-rails'
+gem 'sidekiq'
+gem "devise-async"
+gem 'capistrano-sidekiq' , github: 'seuros/capistrano-sidekiq'
 # gem "unicorn"
 
 gem "rspec-rails", :group => [:test, :development]
