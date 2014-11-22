@@ -1,5 +1,3 @@
-<%= javascript_include_tag "sigma" %>
-
 <div class="container">
   <h1><%= t('graph.title') %></h1>
   <div class="message-container"></div>
@@ -35,41 +33,89 @@
       success: function(data) {
 
         if (data["valid"]) {
-         var sigRoot = document.getElementById('sig');
-         var sigInst = sigma.init(sigRoot).drawingProperties({
-           defaultLabelColor: '#ccc',
-           defaultLabelSize: 10,
-           font: 'Arial',
-           edgeColor: 'source',
-           defaultEdgeType: 'curve',
-           defaultEdgeArrow: 'target',
-           labelThreshold: 0
-         }).graphProperties({
-           minNodeSize: 0.5,
-           maxNodeSize: 5,
-           maxEdgeSize: 3
-         }).mouseProperties({
-           maxRatio: 32
-         });
 
-        // writting nodes
-         for (var i=0;i<data["references"].length;i++) {
-           sigInst.addNode('cap'+data["references"][i], {
-             label: 'cap '+data["references"][i],
-             color: data["infos"][i][2],
-             x: data["infos"][i][0],
-             y: data["infos"][i][1]
-           }).draw();
-         }
-
-         // writting edges
-         for (var k=0;k<data["chapter_destinies"].length;k++) {
-           if ((data["chapter_destinies"][k].length != 0) && data["valid"][k]) {
-             for (var l=1;l<data["chapter_destinies"][k].length;l++) {
-               sigInst.addEdge('cap'+data["chapter_destinies"][k][0]+'_cap'+data["chapter_destinies"][k][l], 'cap'+data["chapter_destinies"][k][0], 'cap'+data["chapter_destinies"][k][l]).draw();
-             }
-           }
+          // writting nodes
+          var getNodes = []
+          for (var i=0;i<data["references"].length;i++) {
+            var tempData = {}
+            var temp = {}
+            temp["id"] = "Cap " + data["references"][i];
+            tempData["data"] = temp;
+            tempData["position"] = {
+               "x": data["infos"][i][0]*500,
+               "y": data["infos"][i][1]*500
+            }
+            getNodes.push(tempData);
           }
+
+          // getting edges
+          var getEdges = []
+          for (var i=0;i<data["chapter_destinies"].length;i++) {
+            var tempData = {}
+            var node = data["chapter_destinies"][i][0];
+            var chapters = data["chapter_destinies"][i];
+            for (var j=1;j<chapters.length;j++) {
+              var temp = {}
+              temp["id"] = node + "-" + chapters[j]
+              temp["weight"] = 10;
+              temp["source"] = "Cap " + node;
+              temp["target"] = "Cap " + chapters[j]
+            }
+            tempData["data"] = temp;
+            getEdges.push(tempData);
+          }
+
+          var elementsJson = {
+            nodes: getNodes,
+            edges: getEdges
+          }
+
+          console.log(elementsJson);
+
+          $('#sig').cytoscape({
+            style: cytoscape.stylesheet()
+              .selector('node')
+                .css({
+                  'background-color': '#FFD700',
+                  'width': 'mapData(baz, 0, 10, 10, 40)',
+                  'height': 'mapData(baz, 0, 10, 10, 40)',
+                  'content': 'data(id)',
+                  'color': '#FFFFFF',
+                  'font-size': '15px'
+                })
+              .selector('edge')
+                .css({
+                  'line-color': '#FFD700',
+                  'target-arrow-color': '#FFD700',
+                  'width': 2,
+                  'target-arrow-shape': 'triangle',
+                  'opacity': 0.8
+                })
+              .selector(':selected')
+                .css({
+                  'background-color': '#FF0000',
+                  'line-color': '#FF0000',
+                  'target-arrow-color': '#FF0000',
+                  'source-arrow-color': '#FF0000',
+                  'opacity': 1
+                })
+              .selector('.faded')
+                .css({
+                  'opacity': 0.25,
+                  'text-opacity': 0
+                }),
+            
+            elements: elementsJson,
+            
+            layout: {
+              name: 'preset',
+              padding: 10
+            },
+            
+            ready: function(){
+              // ready 1
+            }
+          });
         
           // writting not used chapters
           var notUsed = "<h3>"+ "<%= t('graph.not_used_chapters') %>" +"</h3>";
@@ -83,47 +129,6 @@
           }
           notUsed += "</p>";
           $(".not-used").html(notUsed);
-
-          // change color of other nodes and edges to grey when mouseover
-          var greyColor = '#666';
-          sigInst.bind('overnodes',function(event){
-            var nodes = event.content;
-            var neighbors = {};
-            sigInst.iterEdges(function(e){
-              if(nodes.indexOf(e.source)<0 && nodes.indexOf(e.target)<0){
-                if(!e.attr['grey']){
-                  e.attr['true_color'] = e.color;
-                  e.color = greyColor;
-                  e.attr['grey'] = 1;
-                }
-              }else{
-                e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
-                e.attr['grey'] = 0;
-
-                neighbors[e.source] = 1;
-                neighbors[e.target] = 1;
-              }
-            }).iterNodes(function(n){
-              if(!neighbors[n.id]){
-                if(!n.attr['grey']){
-                  n.attr['true_color'] = n.color;
-                  n.color = greyColor;
-                  n.attr['grey'] = 1;
-                }
-              }else{
-                n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
-                n.attr['grey'] = 0;
-              }
-            }).draw(2,2,2);
-          }).bind('outnodes',function(){
-            sigInst.iterEdges(function(e){
-              e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
-              e.attr['grey'] = 0;
-            }).iterNodes(function(n){
-              n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
-              n.attr['grey'] = 0;
-            }).draw(2,2,2);
-          });
         }
       }
     });
