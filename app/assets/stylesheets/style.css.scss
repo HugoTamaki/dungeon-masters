@@ -2,13 +2,13 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
 @import 'colors';
 
-// a {
-//   color: $darkBlue;
-//   &:hover {
-//     color: $darkBlue;
-//     text-decoration: underline;
-//   }
-// }
+a {
+  color: $darkBlue;
+  &:hover {
+    color: $darkBlue;
+    text-decoration: underline;
+  }
+}
 
 h1, h2, h3 {
   font-family: 'Droid Sans';

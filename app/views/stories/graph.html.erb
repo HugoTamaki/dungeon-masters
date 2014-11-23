@@ -51,26 +51,24 @@
           // getting edges
           var getEdges = []
           for (var i=0;i<data["chapter_destinies"].length;i++) {
-            var tempData = {}
             var node = data["chapter_destinies"][i][0];
             var chapters = data["chapter_destinies"][i];
             for (var j=1;j<chapters.length;j++) {
               var temp = {}
+              var tempData = {}
               temp["id"] = node + "-" + chapters[j]
               temp["weight"] = 10;
               temp["source"] = "Cap " + node;
               temp["target"] = "Cap " + chapters[j]
+              tempData["data"] = temp;
+              getEdges.push(tempData);
             }
-            tempData["data"] = temp;
-            getEdges.push(tempData);
           }
 
           var elementsJson = {
             nodes: getNodes,
             edges: getEdges
           }
-
-          console.log(elementsJson);
 
           $('#sig').cytoscape({
             style: cytoscape.stylesheet()
