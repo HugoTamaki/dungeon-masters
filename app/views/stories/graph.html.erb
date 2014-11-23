@@ -70,49 +70,62 @@
             edges: getEdges
           }
 
-          $('#sig').cytoscape({
-            style: cytoscape.stylesheet()
-              .selector('node')
-                .css({
+          var cy = cytoscape({
+            container: document.getElementById('sig'),
+            elements: {
+              nodes: getNodes,
+              edges: getEdges
+            },
+            selected: false,
+            selectable: true,
+            style: [
+              {
+                selector: 'node',
+                css: {
                   'background-color': '#FFD700',
                   'width': 'mapData(baz, 0, 10, 10, 40)',
                   'height': 'mapData(baz, 0, 10, 10, 40)',
                   'content': 'data(id)',
                   'color': '#FFFFFF',
                   'font-size': '15px'
-                })
-              .selector('edge')
-                .css({
+                }
+              },
+              {
+                selector: 'edge',
+                css: {
                   'line-color': '#FFD700',
                   'target-arrow-color': '#FFD700',
                   'width': 2,
                   'target-arrow-shape': 'triangle',
                   'opacity': 0.8
-                })
-              .selector(':selected')
-                .css({
+                }
+              },
+              {
+                selector: ':selected',
+                css: {
                   'background-color': '#FF0000',
                   'line-color': '#FF0000',
                   'target-arrow-color': '#FF0000',
                   'source-arrow-color': '#FF0000',
                   'opacity': 1
-                })
-              .selector('.faded')
-                .css({
-                  'opacity': 0.25,
-                  'text-opacity': 0
-                }),
-            
-            elements: elementsJson,
-            
+                }
+              }
+            ],
             layout: {
               name: 'preset',
               padding: 10
             },
-            
             ready: function(){
-              // ready 1
+
             }
+          });
+
+          cy.on('tapend', 'node', function(evt){
+            // TODO: implement ajax to update position of graph node
+
+            var node = evt.cyTarget;
+            console.log( 'dragged ' + node.id() );
+            console.log(node.position());
           });
         
           // writting not used chapters
