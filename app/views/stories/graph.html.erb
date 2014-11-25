@@ -15,6 +15,7 @@
           </div>
         <% end %>
         <div class="sigma" id="sig"></div>
+        <input type="hidden" id="story_id", value="<%= @story.id %>">
           <div class="col-lg-12">
             <div class="not-used"></div>
           </div>
@@ -35,15 +36,18 @@
         if (data["valid"]) {
 
           // writting nodes
-          var getNodes = []
+          var getNodes = [];
           for (var i=0;i<data["references"].length;i++) {
             var tempData = {}
             var temp = {}
-            temp["id"] = "Cap " + data["references"][i];
+            temp["id"] = "Cap " + data["references"][i]["number"];
             tempData["data"] = temp;
             tempData["position"] = {
-               "x": data["infos"][i][0]*500,
-               "y": data["infos"][i][1]*500
+               "x": data["references"][i]["x"]*500,
+               "y": data["references"][i]["y"]*500
+            },
+            tempData["css"] = {
+              'background-color': data["references"][i]["color"]
             }
             getNodes.push(tempData);
           }
@@ -53,14 +57,19 @@
           for (var i=0;i<data["chapter_destinies"].length;i++) {
             var node = data["chapter_destinies"][i][0];
             var chapters = data["chapter_destinies"][i];
+            var color = data["infos"][i][2];
             for (var j=1;j<chapters.length;j++) {
               var temp = {}
               var tempData = {}
-              temp["id"] = node + "-" + chapters[j]
+              temp["id"] = node + "-" + chapters[j];
               temp["weight"] = 10;
               temp["source"] = "Cap " + node;
-              temp["target"] = "Cap " + chapters[j]
+              temp["target"] = "Cap " + chapters[j];
               tempData["data"] = temp;
+              tempData["css"] = {
+                'line-color': color,
+                'target-arrow-color': color
+              }
               getEdges.push(tempData);
             }
           }
@@ -69,6 +78,7 @@
             nodes: getNodes,
             edges: getEdges
           }
+          console.log(elementsJson);
 
           var cy = cytoscape({
             container: document.getElementById('sig'),
@@ -82,7 +92,6 @@
               {
                 selector: 'node',
                 css: {
-                  'background-color': '#FFD700',
                   'width': 'mapData(baz, 0, 10, 10, 40)',
                   'height': 'mapData(baz, 0, 10, 10, 40)',
                   'content': 'data(id)',
@@ -93,8 +102,6 @@
               {
                 selector: 'edge',
                 css: {
-                  'line-color': '#FFD700',
-                  'target-arrow-color': '#FFD700',
                   'width': 2,
                   'target-arrow-shape': 'triangle',
                   'opacity': 0.8
@@ -126,6 +133,22 @@
             var node = evt.cyTarget;
             console.log( 'dragged ' + node.id() );
             console.log(node.position());
+            $.ajax({
+              url: 'node_update',
+              type: 'POST',
+              data: {
+                id: document.getElementById('story_id').value,
+                x: parseFloat(node.position().x) / 500.0,
+                y: parseFloat(node.position().y) / 500.0,
+                cap: node.id()
+              },
+              success: function(data) {
+                console.log("success");
+              },
+              error: function(error) {
+                console.log("error");
+              }
+            });
           });
         
           // writting not used chapters

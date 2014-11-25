@@ -52,7 +52,14 @@ class Story < ActiveRecord::Base
     references = []
     chapters_with_decisions = {}
     chapters.each do |c|
-      references << c.reference if c.reference == "1" || c.has_parent?
+      if c.reference == "1" || c.has_parent?
+        temp = {}
+        temp[:number] = c.reference
+        temp[:x] = c.x
+        temp[:y] = c.y
+        temp[:color] = c.color
+        references << temp
+      end
     end
 
     chapters_with_decisions["references"] = references
@@ -92,8 +99,8 @@ class Story < ActiveRecord::Base
       end
     end
 
-    references = []
     decisions = []
+    references = []
 
     chapters.each do |chapter|
       references << chapter.reference.to_i

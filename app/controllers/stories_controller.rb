@@ -160,6 +160,20 @@ class StoriesController < ApplicationController
     end
   end
 
+  def node_update
+    chapter = Chapter.by_story(params[:story_id]).where(reference: params[:cap].gsub("Cap ","")).first
+    chapter.x = params[:x].to_f
+    chapter.y = params[:y].to_f
+
+    respond_to do |format|
+      if chapter.save
+        format.html { render nothing: true, notice: 'Update SUCCESSFUL!', status: 200 }
+      else
+        format.json { render nothing: true, status: 500 }
+      end
+    end
+  end
+
   def use_item
     adventurer = current_user.adventurers.by_story(params[:story_id]).first
     adventurer_item = adventurer.adventurers_items.find_by(item_id: params["item-id"])

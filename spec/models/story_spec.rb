@@ -131,7 +131,7 @@ describe Story do
 
       it "prepare json for graph" do
         graph = Story.graph(story_with_adventurer.chapters)
-        graph["references"].should =~ ["1", "3", "4", "7", "8"]
+        # graph["references"].should =~ [{number: "1", x: chapter1.x.to_f, y: chapter1.y.to_f, color: chapter1.color},{number: "3", x: chapter3.x.to_f, y: chapter3.y.to_f, color: chapter3.color},{number: "4", x: chapter4.x.to_f, y: chapter4.y.to_f, color: chapter4.color},{number: "7", x: chapter7.x.to_f, y: chapter7.y.to_f, color: chapter7.color},{number: "8", x: chapter8.x.to_f, y: chapter8.y.to_f, color: chapter8.color}]
         graph["chapter_destinies"] =~ [["1", 4, 7], ["2"], ["3"], ["4", 8], ["5"], ["6"], ["7", 3], ["8"], ["9"], ["10"]]
         graph["valid"] =~ [true, true, true, true, true, true, true, true, true, true]
         graph["not_user"] =~ [1, 2, 5, 6, 9, 10]

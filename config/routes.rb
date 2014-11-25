@@ -8,6 +8,7 @@
     put 'update_tabs'
     get 'graph_json'
     get 'graph_json_show', on: :collection
+    post 'node_update'
     get 'erase_image', as: 'erase_image'
     get 'edit_special_attributes', as: "edit_special_attributes"
     get 'edit_items', as: "edit_items"
