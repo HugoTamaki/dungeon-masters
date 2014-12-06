@@ -101,6 +101,10 @@ body {
   background-color: $beige;
 }
 
+.comment-form {
+  margin: 20px 0;
+}
+
 .adventurer {
   border-top: 1px solid;
   border-right: 1px solid;
@@ -241,10 +245,30 @@ body {
   background-color: $beige;
 }
 
+.prelude_div {
+  border: 1px solid;
+  border-radius: 7px;
+  height: auto;
+  background-color: $beige;
+  .image {
+    margin: 0;
+    img {
+      margin: 20px auto;
+    }
+  }
+  hr {
+    border: 0;
+    height: 1px;
+    background: $black;
+  }
+}
+
 #profile-tabs {
-  background-color: $beige !important;
+  background-color: $beige;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
+  border: 1px solid $black;
+  border-top: 0;
   .btn-action {
     display: block;
     color: $white;

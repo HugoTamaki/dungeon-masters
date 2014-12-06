@@ -1,12 +1,20 @@
-<div class="container">
+<div class="container prelude_div">
   <div class="row">
-    <div class="col-lg-12 chapter">
+    <div class="col-lg-4">
+      <div class="image">
+        <%= image_tag @story.cover(:index_cover), class: "img-responsive center" %>
+      </div>      
+    </div>
+    <div class="col-lg-8">
       <h3><%= t('stories.prelude.title') %></h3>
 
       <% unless @story.prelude.empty? %>
         <%= simple_format @story.prelude %>
       <% end %>
-
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
       <!-- fazendo form para aventureiro -->
       <%= simple_form_for @adventurer do |f| %>
         <div>
@@ -25,6 +33,30 @@
         <%= button_tag t('stories.prelude.roll_dices'), class: "btn btn-primary", id: "generator" %>
       </div>
       <!-- fim do form -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Comentários</h2>
+      <% @story.comments.each do |comment| %>
+        <div class="comment">
+          <div class="comment-author">
+            <p>Autor: <%= link_to comment.user.name, profile_path(comment.user) %></p>
+          </div>
+          <div class="comment-content">
+            <p><%= comment.content.gsub(/\n/, '<br/>').html_safe %></p>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 comment-form">
+      <%= simple_form_for([@story, @story.comments.build]) do |f| %>
+        <%= f.input :content, label: "Novo comentário", input_html: { rows: 10, cols: 70 }%>
+        <%= f.submit "Criar comentário", class: "btn btn-primary" %>
+      <% end %>
     </div>
   </div>
 </div>

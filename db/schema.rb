@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908220937) do
+ActiveRecord::Schema.define(version: 20141206182019) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -121,6 +121,18 @@ ActiveRecord::Schema.define(version: 20140908220937) do
     t.index ["item_id"], :name => "index_adventurers_items_on_item_id"
     t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_items_adventurer_id"
     t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_items_item_id"
+  end
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "story_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["story_id"], :name => "fk__comments_story_id"
+    t.index ["user_id"], :name => "fk__comments_user_id"
+    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_comments_story_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_comments_user_id"
   end
 
   create_table "decisions", force: true do |t|

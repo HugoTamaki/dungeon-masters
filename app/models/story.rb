@@ -32,6 +32,7 @@ class Story < ActiveRecord::Base
   has_one :adventurer
   has_many :chapters, dependent: :destroy
   has_many :items, dependent: :destroy
+  has_many :comments
   accepts_nested_attributes_for :chapters, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
 

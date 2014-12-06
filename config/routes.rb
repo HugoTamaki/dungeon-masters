@@ -16,6 +16,7 @@
     post 'use_item', on: :collection
     post 'publish'
     get 'search_result',as: "search_result", on: :collection
+    resources :comments
   end
 
   resources :adventurers do
@@ -24,7 +25,7 @@
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
   
-  get 'profile/:id' => 'users#profile'
+  get 'profile/:id' => 'users#profile', as: 'profile'
 
   root to: "custom_pages#index"
 
