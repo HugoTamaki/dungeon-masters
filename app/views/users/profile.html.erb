@@ -1,7 +1,64 @@
 <div class="container">
+  <div class="row profile">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+      <h1><%= @user.name %></h1>
+      <h2>Sobre mim:</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, rerum voluptas quasi modi repellendus illum cupiditate voluptatum officia, in odio eos recusandae, deserunt impedit at debitis labore magnam nobis consequatur.</p>
+    </div>
+  </div>
   <div class="row">
-    <div class="col-lg-12 chapter">
-      <p><%= @user.name %></p>
+    <div id="profile-tabs">
+      <ul>
+        <li><a href="#tabs-1">Minhas histórias</a></li>
+        <li><a href="#tabs-2">Favoritos</a></li>
+      </ul>
+      <div id="tabs-1">
+        <h2>Minhas histórias</h2>
+
+        <% @stories.each do |story| %>
+          <div class="row">
+            <div class="col-lg-4 col-sm-12">
+              <div>
+                <h3><%= story.title %> - by <%= story.user.name %></h3>
+                <%= image_tag story.cover(:index_cover), class: "img-responsive" %>
+                <div class="actions">
+                  <div class="row">
+                    <%= link_to t('actions.show'), story, class: "btn btn-primary btn-action" if story.user == current_user %>
+                  </div>
+                  <div class="row">
+                    <% if current_user and story.has_adventurer? current_user.adventurers %>
+                      <%= link_to t('actions.read'), "javascript:;", class: "read btn btn-primary btn-action", data: {continue: true, story_id: story.id} %>
+                    <% else %>
+                      <%= link_to t('actions.read'), story_prelude_path(story, new_story: true), class: "btn btn-primary btn-action", data: {continue: false} %>
+                    <% end %>
+                  </div>
+                  <div class="row">
+                    <%= link_to t('actions.edit'), edit_story_path(story), class: "btn btn-primary btn-action" if story.user == current_user %>
+                  </div>
+                  <div class="row">
+                    <%= link_to t('actions.destroy'), story, class: "btn btn-danger btn-action", data: {confirm: 'Are you sure?'}, method: :delete if story.user == current_user %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+              <div class="resume">
+                <p>
+                  <%= simple_format story.resume %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div id="tabs-2">
+        <h2>Favoritos</h2>
+      </div>
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function(){
+    $("#profile-tabs").tabs();
+  });
+</script>
