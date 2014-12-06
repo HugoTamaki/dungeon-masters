@@ -23,6 +23,8 @@
   end
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
+  
+  get 'profile/:id' => 'users#profile'
 
   root to: "custom_pages#index"
 
