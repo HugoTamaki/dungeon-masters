@@ -2,18 +2,13 @@ class StoriesController < ApplicationController
 
   # before_filter :authenticate_user!, except: [:prelude, :read, :search, :index]
   # load_and_authorize_resource except: [:prelude, :read]
-  before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :authenticate_user!, except: [:search_result]
+  load_and_authorize_resource except: [:search_result]
   
   # GET /stories
   # GET /stories.json
   def index
     @stories = Story.by_user(current_user.id).page(params[:page]).per(5)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @stories }
-    end
   end
 
   # GET /stories/1
@@ -22,11 +17,6 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
     @items = @story.items
     @chapters = @story.chapters.includes(:decisions)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @story }
-    end
   end
 
   def prelude
@@ -97,11 +87,6 @@ class StoriesController < ApplicationController
 
   def new
     @story = Story.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @story }
-    end
   end
 
   # GET /stories/1/edit
@@ -122,8 +107,6 @@ class StoriesController < ApplicationController
         chapter.decisions.build
       end
     end
-    # chapters = Chapter.by_story(params[:id])
-    # @chapters = chapters.includes(:decisions, :monsters)
     @chapters = @story.chapters
   end
 
