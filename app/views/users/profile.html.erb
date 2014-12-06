@@ -64,6 +64,42 @@
       </div>
       <div id="tabs-2">
         <h2>Favoritos</h2>
+
+        <% @favorites.each do |favorite| %>
+          <div class="row">
+            <div class="col-lg-4 col-sm-12">
+              <div>
+                <h3><%= favorite.title %> - by <%= link_to favorite.user.name, profile_path(favorite.user) %></h3>
+                <%= image_tag favorite.cover(:index_cover), class: "img-responsive" %>
+                <div class="actions">
+                  <div class="row">
+                    <%= link_to t('actions.show'), favorite, class: "btn btn-primary btn-action" if favorite.user == current_user %>
+                  </div>
+                  <div class="row">
+                    <% if current_user and favorite.has_adventurer? current_user.adventurers %>
+                      <%= link_to t('actions.read'), "javascript:;", class: "read btn btn-primary btn-action", data: {continue: true, story_id: favorite.id} %>
+                    <% else %>
+                      <%= link_to t('actions.read'), story_prelude_path(favorite, new_story: true), class: "btn btn-primary btn-action", data: {continue: false} %>
+                    <% end %>
+                  </div>
+                  <div class="row">
+                    <%= link_to t('actions.edit'), edit_story_path(favorite), class: "btn btn-primary btn-action" if favorite.user == current_user %>
+                  </div>
+                  <div class="row">
+                    <%= link_to t('actions.destroy'), favorite, class: "btn btn-danger btn-action", data: {confirm: 'Are you sure?'}, method: :delete if favorite.user == current_user %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+              <div class="resume">
+                <p>
+                  <%= simple_format favorite.resume %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

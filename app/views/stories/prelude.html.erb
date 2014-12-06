@@ -8,9 +8,19 @@
     <div class="col-lg-8">
       <h3><%= t('stories.prelude.title') %></h3>
 
-      <% unless @story.prelude.empty? %>
-        <%= simple_format @story.prelude %>
+      <% if current_user && @story.user != current_user %>
+        <% if current_user.favorites.include?(@story) %>
+          <%= link_to "Desfavoritar", favorite_story_path(@story, type: "unfavorite"), method: :put, class: 'btn btn-primary' %>
+        <% else %>
+          <%= link_to "Favoritar", favorite_story_path(@story, type: "favorite"), method: :put, class: 'btn btn-primary' %>
+        <% end %>
       <% end %>
+
+      <div class="resume">
+        <% unless @story.prelude.empty? %>
+          <%= simple_format @story.prelude %>
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -54,8 +64,10 @@
   <div class="row">
     <div class="col-lg-12 comment-form">
       <%= simple_form_for([@story, @story.comments.build]) do |f| %>
-        <%= f.input :content, label: "Novo comentário", input_html: { rows: 10, cols: 70 }%>
-        <%= f.submit "Criar comentário", class: "btn btn-primary" %>
+        <div class="form-group">
+          <%= f.input :content, label: "Novo comentário", input_html: { rows: 10, class: 'form-control' } %>
+          <%= f.submit "Criar comentário", class: "btn btn-primary" %>
+        </div>
       <% end %>
     </div>
   </div>

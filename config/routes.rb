@@ -17,6 +17,7 @@
     post 'publish'
     get 'search_result',as: "search_result", on: :collection
     resources :comments
+    put :favorite, on: :member
   end
 
   resources :adventurers do

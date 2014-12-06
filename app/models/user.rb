@@ -32,4 +32,6 @@ class User < ActiveRecord::Base
   has_many :adventurers
   has_many :stories
   has_many :comments
+  has_many :favorite_stories
+  has_many :favorites, through: :favorite_stories, source: :story
 end

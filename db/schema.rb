@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206182019) do
+ActiveRecord::Schema.define(version: 20141206203810) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -143,6 +143,17 @@ ActiveRecord::Schema.define(version: 20141206182019) do
     t.integer  "item_validator"
     t.index ["chapter_id"], :name => "fk__decisions_chapter_id"
     t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_decisions_chapter_id"
+  end
+
+  create_table "favorite_stories", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "story_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["story_id"], :name => "fk__favorite_stories_story_id"
+    t.index ["user_id"], :name => "fk__favorite_stories_user_id"
+    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_favorite_stories_story_id"
+    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_favorite_stories_user_id"
   end
 
   create_table "modifiers_attributes", force: true do |t|

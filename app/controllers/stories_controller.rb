@@ -3,7 +3,7 @@ class StoriesController < ApplicationController
   # before_filter :authenticate_user!, except: [:prelude, :read, :search, :index]
   # load_and_authorize_resource except: [:prelude, :read]
   before_filter :authenticate_user!, except: [:search_result]
-  load_and_authorize_resource except: [:search_result]
+  load_and_authorize_resource except: [:search_result, :favorite]
   
   # GET /stories
   # GET /stories.json
@@ -114,6 +114,20 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:story_id])
     if @story.items.empty?
       item = @story.items.build
+    end
+  end
+
+  def favorite
+    type = params[:type]
+    story = Story.find(params[:id])
+    if type == "favorite"
+      current_user.favorites << story
+      redirect_to :back, notice: "Você favoritou #{story.title}"
+    elsif type == "unfavorite"
+      current_user.favorites.delete(story)
+      redirect_to :back, notice: "Você deixou de favoritar #{story.title}"
+    else
+      redirect_to :back, notice: 'Nada aconteceu.'
     end
   end
 

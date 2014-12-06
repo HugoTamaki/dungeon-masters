@@ -33,6 +33,8 @@ class Story < ActiveRecord::Base
   has_many :chapters, dependent: :destroy
   has_many :items, dependent: :destroy
   has_many :comments
+  has_many :favorite_stories
+  has_many :favorited_by, through: :favorite_stories, source: :user
   accepts_nested_attributes_for :chapters, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
 
