@@ -13,7 +13,7 @@
 class ModifierItem < ActiveRecord::Base
 
   belongs_to :chapter, touch: true
-  belongs_to :item
+  belongs_to :item, touch: true
 
   validates :quantity, presence: true, numericality: true
 end

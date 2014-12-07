@@ -1,8 +1,12 @@
 <div class="modifier-item-fields">
-  <%= f.label :item_id, t('stories.edit.item') %>
-  <%= f.collection_select :item_id, Item.by_story(@story), :id, :name, prompt: "select an item" %>
-  <p class="help-block"><%= t('actions.messages.modifier_item_hint') %></p>
-  <%= f.input :quantity, label: t('stories.edit.item_quantity'),
-    collection: quantity, prompt: "select quantity of items", hint: t('actions.messages.modifier_item_quantity_hint') %>
+  <div class="form-group">
+    <%= f.label :item_id, t('stories.edit.item') %>
+    <%= f.collection_select :item_id, Item.by_story(@story), :id, :name, {prompt: "select an item"}, {class: 'form-control'} %>
+    <p class="help-block"><%= t('actions.messages.modifier_item_hint') %></p>
+  </div>
+  <div class="form-group">
+    <%= f.input :quantity, label: t('stories.edit.item_quantity'),
+      collection: quantity, prompt: "select quantity of items", hint: t('actions.messages.modifier_item_quantity_hint'), input_html: {class: 'form-control'} %>
+  </div>
   <%= link_to_remove_fields t('stories.edit.remove_item'), f, "modifier-item" %>
 </div>

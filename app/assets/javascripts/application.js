@@ -97,9 +97,9 @@ $(document).ready(function(){
 
   $(document).on('click', '.usable-checkbox', function() {
     if ($(this).prop('checked')) {
-      $(this).next().next().addClass('visible');
+      $('#usable-item').addClass('visible');
     } else {
-      $(this).next().next().removeClass('visible');
+      $('#usable-item').removeClass('visible');
     }
   });
 

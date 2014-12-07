@@ -1,8 +1,12 @@
 <div class="decision-fields">
-  <%= f.label :destiny_num, t('stories.edit.decisions') %>
-  <%= f.collection_select :destiny_num, Chapter.by_story(@story.id), :id, :reference, prompt: "--"  %>
-  <p class="help-block"><%= t('actions.messages.decision_hint') %></p>
-  <%= t('stories.edit.chapter_restriction') %><%= f.collection_select :item_validator, modifier_items, :id,:name, prompt: "--" %>
-  <p class="help-block"><%= t('actions.messages.decision_item_hint') %></p>
+  <div class="form-group">
+    <%= f.label :destiny_num, t('stories.edit.decisions') %>
+    <%= f.collection_select :destiny_num, @chapters, :id, :reference, {prompt: "--"}, {class: 'form-control'}  %>
+    <p class="help-block"><%= t('actions.messages.decision_hint') %></p>
+  </div>
+  <div class="form-group">
+    <%= t('stories.edit.chapter_restriction') %><%= f.collection_select :item_validator, modifier_items, :id,:name, {prompt: "--"},{class: 'form-control'} %>
+    <p class="help-block"><%= t('actions.messages.decision_item_hint') %></p>
+  </div>
   <%= link_to_remove_fields t('stories.edit.remove_decision'), f, "decision" %>
 </div>

@@ -1,8 +1,14 @@
 <div class="monster-fields">
-  <%= f.input :name, label: t('stories.edit.name'), input_html: {title: t('tooltip.chapter_monster_name')}, hint: t('actions.messages.monster_hint') %>
-  <%= f.input :skill, label: t('stories.edit.skill'),
-    collection: skills, prompt: "select skill value", hint: t('actions.messages.monster_skill_hint') %>
-  <%= f.input :energy, label: t('stories.edit.energy'),
-    collection: energy, prompt: "select energy value", hint: t('actions.messages.monster_energy_hint') %>
+  <div class="form-group">
+    <%= f.input :name, label: t('stories.edit.name'), input_html: {title: t('tooltip.chapter_monster_name'), class: 'form-control'}, hint: t('actions.messages.monster_hint') %>
+  </div>
+  <div class="form-group">
+    <%= f.input :skill, label: t('stories.edit.skill'),
+    collection: skills, prompt: "select skill value", hint: t('actions.messages.monster_skill_hint'), input_html: {class: 'form-control'} %>
+  </div>
+  <div class="form-group">
+    <%= f.input :energy, label: t('stories.edit.energy'),
+    collection: energy, prompt: "select energy value", hint: t('actions.messages.monster_energy_hint'), input_html: {class: 'form-control'} %>
+  </div>
   <%= link_to_remove_fields t('stories.edit.remove_monster'), f, "monster" %>
 </div>

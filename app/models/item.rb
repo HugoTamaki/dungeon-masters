@@ -15,7 +15,7 @@
 
 class Item < ActiveRecord::Base
 
-  belongs_to :story
+  belongs_to :story, touch: true
   has_many :adventurers, through: :adventurers_items
   has_many :modifiers_items, dependent: :destroy
 
