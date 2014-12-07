@@ -4,6 +4,6 @@ class UsersController < ApplicationController
   def profile
     @user = User.find(params[:id])
     @stories = @user.stories
-    @favorites = @user.favorites
+    @favorites = @user.favorites.published
   end
 end
