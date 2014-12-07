@@ -20,6 +20,8 @@
 
 class Story < ActiveRecord::Base
 
+  before_destroy :destroy_favorites
+
   has_attached_file :cover, styles: {thumbnail: "200x200>", index_cover: "400x300>"}, :default_url => "no_image_:style.png"
 
   validates :title, presence: true
@@ -124,6 +126,11 @@ class Story < ActiveRecord::Base
     joins('LEFT JOIN users AS u 
             ON u.id = stories.user_id').where('u.name LIKE :search 
             OR stories.title LIKE :search', search: "%#{search}%").order('stories.title ASC') if search
+  end
+
+  def destroy_favorites
+    favorites_to_destroy = FavoriteStory.where(story_id: self.id)
+    favorites_to_destroy.destroy_all
   end
 
 end

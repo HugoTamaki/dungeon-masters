@@ -29,9 +29,9 @@ class User < ActiveRecord::Base
   # attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   # attr_accessible :title, :body
 
-  has_many :adventurers
-  has_many :stories
-  has_many :comments
-  has_many :favorite_stories
+  has_many :adventurers, dependent: :destroy
+  has_many :stories, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :favorite_stories, dependent: :destroy
   has_many :favorites, through: :favorite_stories, source: :story
 end
