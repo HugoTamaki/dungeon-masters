@@ -19,6 +19,10 @@ class StoriesController < ApplicationController
     @chapters = @story.chapters.includes(:decisions)
   end
 
+  def story
+    @story = Story.find(params[:story_id])
+  end
+
   def prelude
     @story = Story.find(params[:story_id])
     if @story.published || @story.user == current_user
@@ -285,7 +289,7 @@ class StoriesController < ApplicationController
     @story.destroy
 
     respond_to do |format|
-      format.html { redirect_to stories_url }
+      format.html { redirect_to profile_path(current_user) }
       format.json { head :no_content }
     end
   end

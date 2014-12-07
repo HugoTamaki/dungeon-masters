@@ -1,6 +1,6 @@
   Calabouco::Application.routes.draw do
 
-  resources :stories do
+  resources :stories, except: :index do
 #    put 'stories/auto_save', as: :auto_save_story_path
     get 'read', on: :collection
 #    put 'auto_save', on: :collection
@@ -16,6 +16,7 @@
     post 'use_item', on: :collection
     post 'publish'
     get 'search_result',as: "search_result", on: :collection
+    get 'story', as: 'show'
     resources :comments
     put :favorite, on: :member
   end

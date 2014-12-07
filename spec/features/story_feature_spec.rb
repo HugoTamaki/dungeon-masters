@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Story" do
-  let(:user) {FactoryGirl.create :user}
+  let(:user) {FactoryGirl.create :user, name: 'Fulano'}
   let!(:story) {FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 10)}
   let!(:item) {FactoryGirl.create(:item, story_id: story.id)}
   let!(:adventurer) {FactoryGirl.create(:adventurer, user_id: user.id, skill: 5, energy: 5, luck: 5)}
@@ -49,13 +49,13 @@ feature "Story" do
     end
 
     scenario "user deletes a story" do
-      visit "/stories"
+      visit "/profile/#{user.id}"
 
       page.should have_text("Titulo")
       click_link("Deletar história")
       page.driver.browser.switch_to.alert.accept
       page.should have_text("Nenhuma história")
-      current_path.should == "/stories"
+      current_path.should == "/profile/#{user.id}"
     end
   end
 
@@ -225,8 +225,9 @@ feature "Story" do
       click_link "Capítulo 8"
       page.should have_text("content 8")
 
-      visit "/stories"
+      visit "/profile/#{user.id}"
       find(:xpath, "(//a[text()='Ler história'])[2]").click
+      click_link "Ler história"
       click_link "Continuar"
 
       page.should have_text ("content 8")
@@ -243,8 +244,9 @@ feature "Story" do
       click_link "Capítulo 8"
       page.should have_text("content 8")
 
-      visit "/stories"
+      visit "/profile/#{user.id}"
       find(:xpath, "(//a[text()='Ler história'])[2]").click
+      click_link "Ler história"
       click_link "Começar do Início"
 
       page.should have_text ("Prelúdio")

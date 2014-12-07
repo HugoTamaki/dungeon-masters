@@ -1,20 +1,7 @@
 <div class="container prelude_div">
   <div class="row">
-    <div class="col-lg-4">
-      <div class="image">
-        <%= image_tag @story.cover(:index_cover), class: "img-responsive center" %>
-      </div>      
-    </div>
-    <div class="col-lg-8">
-      <h3><%= t('stories.prelude.title') %></h3>
-
-      <% if current_user && @story.user != current_user %>
-        <% if current_user.favorites.include?(@story) %>
-          <%= link_to "", favorite_story_path(@story, type: "unfavorite"), method: :put, class: 'btn btn-primary fa fa-star' %>
-        <% else %>
-          <%= link_to "", favorite_story_path(@story, type: "favorite"), method: :put, class: 'btn btn-primary favorite fa fa-star-o' %>
-        <% end %>
-      <% end %>
+    <div class="col-lg-12">
+      <h1><%= t('stories.show.prelude') %></h1>
 
       <div class="resume">
         <% unless @story.prelude.empty? %>
@@ -45,43 +32,7 @@
       <!-- fim do form -->
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <h2>Comentários</h2>
-      <% @story.comments.each do |comment| %>
-        <div class="comment">
-          <div class="comment-author">
-            <% if comment.user %>
-              <p>Autor: <%= link_to comment.user.name, profile_path(comment.user) %></p>
-            <% else %>
-              <p>Autor: Not found</p>
-            <% end %>
-          </div>
-          <div class="comment-content">
-            <p><%= comment.content.gsub(/\n/, '<br/>').html_safe %></p>
-          </div>
-        </div>
-        <hr>
-      <% end %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12 comment-form">
-      <%= simple_form_for([@story, @story.comments.build]) do |f| %>
-        <div class="form-group">
-          <%= f.input :content, label: "Novo comentário", input_html: { rows: 10, class: 'form-control' } %>
-        </div>
-        <div class="form-group">
-          <%= f.submit "Criar comentário", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
 </div>
-<%# button_opts = {reference: "1", id: @story} %>
-<%#= link_to "Chapter 1",
-                    read_stories_path(button_opts),
-                    class: "btn btn-primary" unless @story.chapters.where(reference: "1").empty? %>
 <script type="text/javascript">
 
   $(document).ready(function() {

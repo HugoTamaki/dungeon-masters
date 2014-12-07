@@ -97,11 +97,7 @@
         <div class="row last-stories">
           <% @stories.each do |story| %>
             <div class="index_stories col-lg-3 col-sm-12">
-              <% if current_user and story.has_adventurer? current_user.adventurers %>
-                <p><%= link_to story.title, "javascript:;", class: "read", data: {continue: true, story_id: story.id} %></p>
-              <% else %>
-                <p><%= link_to story.title, story_prelude_path(story, new_story: true), data: {continue: false} %></p>
-              <% end %>
+              <p><%= link_to story.title, story_show_path(story), class: 'read' %></p>
               <%= image_tag story.cover(:thumbnail) %>
             </div>
           <% end %>
