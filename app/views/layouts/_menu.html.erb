@@ -14,7 +14,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><%= link_to t('menu.my_stories'), stories_path  %></li>
+        <li><%= link_to t('menu.my_profile'), profile_path(current_user) if current_user %></li>
         <li><%= link_to t('menu.new_story'), new_story_path %></li>
       </ul>
       <%= form_tag search_result_stories_path, method: :get do %>
@@ -24,18 +24,19 @@
         </div>
       <% end %>
       <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-          <li class="navbar-text"><%= t('menu.logged_as') %><strong><%= current_user.name %></strong></li>
-          <li><%= link_to t('menu.edit_account'), edit_user_registration_path, :class => 'navbar-link' %></li>
-          <li><%= link_to t('menu.logout'), destroy_user_session_path, method: :delete, :class => 'navbar-link' %></li>
-        <% else %>
-          <li>
-            <%= link_to t('menu.login'), new_user_session_path, :class => 'navbar-link'  %>
-          </li>
-          <li>
-            <%= link_to t('menu.sign_up'), new_registration_path(:user), :class => 'navbar-link'  %>
-          </li>
-        <% end %>
+        <li class="dropdown">
+          <% if user_signed_in? %>
+            <a href="#" class='navbar-link' data-toggle='dropdown'>
+              <%= current_user.name %> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to t('menu.edit_account'), edit_user_registration_path, :class => 'navbar-link' %></li>
+              <li><%= link_to t('menu.logout'), destroy_user_session_path, method: :delete, :class => 'navbar-link' %></li>
+            </ul>
+          <% else %>
+            <%= link_to "Entrar", new_user_session_path, class: 'navbar-link'  %>
+          <% end %>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

@@ -257,6 +257,7 @@ pt-BR:
     chapters_with_errors: "Capítulos com erros: "
   menu:
     my_stories: "Minhas Histórias"
+    my_profile: "Meu Perfil"
     new_story: "Nova História"
     search: "Buscar"
     logged_as: "Logado como "
@@ -299,6 +300,7 @@ pt-BR:
         button: "Editar"
         name: "Nome"
         email: "Email"
+        about_me: "Sobre mim"
         password: "Senha"
         password_confirmation: "Confirmação de senha"
         current_password: "Senha atual"

@@ -10,9 +10,9 @@
 
       <% if current_user && @story.user != current_user %>
         <% if current_user.favorites.include?(@story) %>
-          <%= link_to "Desfavoritar", favorite_story_path(@story, type: "unfavorite"), method: :put, class: 'btn btn-primary' %>
+          <%= link_to "", favorite_story_path(@story, type: "unfavorite"), method: :put, class: 'btn btn-primary fa fa-star' %>
         <% else %>
-          <%= link_to "Favoritar", favorite_story_path(@story, type: "favorite"), method: :put, class: 'btn btn-primary' %>
+          <%= link_to "", favorite_story_path(@story, type: "favorite"), method: :put, class: 'btn btn-primary favorite fa fa-star-o' %>
         <% end %>
       <% end %>
 
@@ -51,7 +51,11 @@
       <% @story.comments.each do |comment| %>
         <div class="comment">
           <div class="comment-author">
-            <p>Autor: <%= link_to comment.user.name, profile_path(comment.user) %></p>
+            <% if comment.user %>
+              <p>Autor: <%= link_to comment.user.name, profile_path(comment.user) %></p>
+            <% else %>
+              <p>Autor: Not found</p>
+            <% end %>
           </div>
           <div class="comment-content">
             <p><%= comment.content.gsub(/\n/, '<br/>').html_safe %></p>
@@ -66,6 +70,8 @@
       <%= simple_form_for([@story, @story.comments.build]) do |f| %>
         <div class="form-group">
           <%= f.input :content, label: "Novo comentário", input_html: { rows: 10, class: 'form-control' } %>
+        </div>
+        <div class="form-group">
           <%= f.submit "Criar comentário", class: "btn btn-primary" %>
         </div>
       <% end %>

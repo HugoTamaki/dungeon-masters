@@ -5,8 +5,9 @@
     <div class="col-lg-12 col-sm-12 col-xs-12">
       <h1><%= @user.name %></h1>
       <h2>Sobre o autor:</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, rerum voluptas quasi modi repellendus illum cupiditate voluptatum officia, in odio eos recusandae, deserunt impedit at debitis labore magnam nobis consequatur.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam nemo asperiores, assumenda nulla, explicabo omnis itaque aspernatur blanditiis dolore est veniam, neque tempore optio. Incidunt animi laudantium voluptatibus quibusdam odit!</p>
+      <div class="about_me">
+        <%= simple_format @user.about_me %>
+      </div>
     </div>
   </div>
   <div class="row">

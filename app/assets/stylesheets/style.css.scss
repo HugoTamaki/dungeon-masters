@@ -276,6 +276,11 @@ body {
     display: block;
     color: $white;
   }
+  .ui-widget-header {
+    background-color: $beige;
+    border: 0;
+    border-bottom: 1px solid #AAAAAA;
+  }
 }
 
 .sigma {
@@ -361,6 +366,13 @@ label {
 
 .tooltip-style {
   background-color: white;
+}
+
+.user_div {
+  border: 1px solid;
+  border-radius: 7px;
+  height: auto;
+  background-color: $beige;
 }
 
 @media (max-width: 500px) {

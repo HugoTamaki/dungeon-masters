@@ -259,6 +259,7 @@ en:
     chapters_with_errors: "Chapters with errors: "
   menu:
     my_stories: "My Stories"
+    my_profile: "My Profile"
     new_story: "New Story"
     search: "Search"
     logged_as: "Logged as "
@@ -301,6 +302,7 @@ en:
         button: "Update"
         name: "Name"
         email: "Email"
+        about_me: "About me"
         password: "Password"
         password_confirmation: "Password confirmation"
         current_password: "Current password"
