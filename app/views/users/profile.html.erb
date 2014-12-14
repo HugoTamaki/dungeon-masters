@@ -72,16 +72,7 @@
                 <%= image_tag favorite.cover(:index_cover), class: "img-responsive" %>
                 <div class="actions">
                   <div class="row">
-                    <%= link_to t('actions.show'), favorite, class: "btn btn-primary btn-action" if favorite.user == current_user %>
-                  </div>
-                  <div class="row">
                     <%= link_to t('actions.read'), story_show_path(favorite), class: 'btn btn-primary btn-action' %>
-                  </div>
-                  <div class="row">
-                    <%= link_to t('actions.edit'), edit_story_path(favorite), class: "btn btn-primary btn-action" if favorite.user == current_user %>
-                  </div>
-                  <div class="row">
-                    <%= link_to t('actions.destroy'), favorite, class: "btn btn-danger btn-action", data: {confirm: 'Are you sure?'}, method: :delete if favorite.user == current_user %>
                   </div>
                 </div>
               </div>

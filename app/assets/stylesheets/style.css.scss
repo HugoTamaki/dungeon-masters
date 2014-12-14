@@ -76,7 +76,6 @@ body {
 }
 
 .wrapper {
-  float: left;
   margin: 10px;
   border: 1px solid;
   border-radius: 7px;
@@ -348,7 +347,7 @@ label {
 }
 
 .not-used {
-  width: 900px;
+  width: auto;
   margin-left: 0;
   border: 1px solid;
   border-radius: 7px;
