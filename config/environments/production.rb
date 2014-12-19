@@ -26,20 +26,20 @@ Calabouco::Application.configure do
   config.assets.digest = true
 
   ActionMailer::Base.default :from => 'no-reply@dungeonmasters.com.br'
+  
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.default_url_options = { :host => 'www.dungeonmasters.com' }
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    tls: true,
-    ssl: true,
-    domain: "gmail.com",
+    address: "smtp.sendgrid.net",
+    port: "25",
     authentication: :plain,
     enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+    user_name: ENV["SENDGRID_USERNAME"],
+    password: ENV["SENDGRID_PASSWORD"],
+    domain: "dungeonmasters"
   }
   config.action_mailer.default_url_options = { :host => 'dungeonmasters.com.br' }
 
