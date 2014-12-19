@@ -26,7 +26,7 @@ Calabouco::Application.configure do
   config.assets.digest = true
 
   ActionMailer::Base.default :from => 'no-reply@dungeonmasters.com.br'
-  
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -34,7 +34,7 @@ Calabouco::Application.configure do
   config.action_mailer.default_url_options = { :host => 'www.dungeonmasters.com' }
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
-    port: "25",
+    port: 587,
     authentication: :plain,
     enable_starttls_auto: true,
     user_name: ENV["SENDGRID_USERNAME"],
