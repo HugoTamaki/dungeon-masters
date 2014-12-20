@@ -32,7 +32,7 @@ Calabouco::Application.configure do
   config.action_mailer.default_url_options = { :host => 'http://www.dungeonmasters.com.br' }
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
-    port: 587,
+    port: 25,
     authentication: :plain,
     enable_starttls_auto: true,
     user_name: ENV["SENDGRID_USERNAME"],
