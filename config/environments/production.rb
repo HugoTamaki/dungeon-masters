@@ -29,11 +29,11 @@ Calabouco::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
-  config.action_mailer.default_url_options = { :host => 'www.dungeonmasters.com.br' }
+  config.action_mailer.default_url_options = { :host => 'dungeonmasters.com.br' }
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
     port: '587',
-    domain: 'www.dungeonmasters.com.br',
+    domain: 'dungeonmasters.com.br',
     authentication: :plain,
     enable_starttls_auto: true,
     user_name: ENV["SENDGRID_USERNAME"],
