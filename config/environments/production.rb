@@ -36,8 +36,8 @@ Calabouco::Application.configure do
     domain: 'dungeonmasters.com.br',
     authentication: :plain,
     enable_starttls_auto: true,
-    user_name: Rails.application.secrets.sendgrid_username,
-    password: Rails.application.secrets.sendgrid_password
+    user_name: ENV["SENDGRID_USERNAME"],
+    password: ENV["SENDGRID_PASSWORD"]
   }
 
   # Defaults to Rails.root.join("public/assets")
