@@ -21,5 +21,3 @@ public/.DS_Store
 config/database.yml
 config/initializers/secret_token.rb
 config/deploy/production.rb
-# Ignore application configuration
-/config/application.yml
