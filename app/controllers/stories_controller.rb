@@ -99,7 +99,7 @@ class StoriesController < ApplicationController
     @story = Story.includes(:chapters, :items).find(params[:id])
 
     if @story.chapters.empty?
-      if chapter_numbers.present?
+      if params[:chapter_numbers].present?
         for i in (1..chapter_numbers)
           chapter = @story.chapters.build
           chapter.decisions.build
@@ -258,6 +258,7 @@ class StoriesController < ApplicationController
     else
       @errors = get_errors(@story)
       @chapters_with_errors = get_chapters_with_errors(@story)
+      @chapters = @story.chapters
       respond_to do |format|
         format.html { render action: :edit, controller: :stories }
         format.json { render json: {errors: @errors.to_json, 
