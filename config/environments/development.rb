@@ -34,8 +34,8 @@ Calabouco::Application.configure do
     port: 587,
     authentication: :plain,
     enable_starttls_auto: true,
-    user_name: ENV["SENDGRID_USERNAME"],
-    password: ENV["SENDGRID_PASSWORD"],
+    user_name: Rails.application.secret.sendgrid_username,
+    password: Rails.application.secret.sendgrid_password,
     domain: "dungeonmasters"
   }
 end
