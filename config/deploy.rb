@@ -9,7 +9,7 @@ set :deploy_to, '/var/www/dungeon-masters'
 
 set :format, :pretty
 
-set :linked_files, %w{config/database.yml config/initializers/secret_token.rb}
+set :linked_files, %w{config/database.yml config/initializers/secret_token.rb, config/application.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :stage, :production

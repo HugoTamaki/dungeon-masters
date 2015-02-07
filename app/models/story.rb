@@ -48,6 +48,7 @@ class Story < ActiveRecord::Base
     adventurers.each do |adventurer|
       if adventurer.story == self
         has_adventurer = true
+        break
       end
     end
     has_adventurer
