@@ -44,14 +44,7 @@ class Story < ActiveRecord::Base
   scope :published, -> { where(published: true) }
 
   def has_adventurer? adventurers
-    has_adventurer = false
-    adventurers.each do |adventurer|
-      if adventurer.story == self
-        has_adventurer = true
-        break
-      end
-    end
-    has_adventurer
+    adventurers.any? {|adventurer| adventurer.story == self}
   end
 
   def self.graph(chapters)
