@@ -27,7 +27,7 @@ class Story < ActiveRecord::Base
   validates :title, presence: true
   validates :resume, presence: true
   validates :chapter_numbers, presence: true, numericality: true
-  validates_attachment_size :cover, :less_than => 300.kilobytes
+  validates_attachment_size :cover, :less_than => 2.megabytes
   validates_attachment_content_type :cover, content_type: ["image/jpg", "image/png", "image/gif", "image/jpeg"]
 
   belongs_to :user

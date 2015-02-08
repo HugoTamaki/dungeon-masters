@@ -77,7 +77,7 @@ en:
       fifty_less: "Fifty chapters removed and story was updated."
       chapter_not_found: "Chapter not found, redefine the decisions of this chapter"
       chapter_delete_message: "Are you sure? It can delete chapters that are destines of other chapters"
-      image_hint: " Choose an image to show on the beginning of the chapter. Image size should be less than 300 Kb"
+      image_hint: " Choose an image to show on the beginning of the chapter. Image size should be less than 2 Mb"
       decision_hint: " Choose which chapter the adventurer can go from here."
       decision_item_hint: " If you choose an item here, the adventurer can only select this chapter if the adventurer has it. To have items to use here, create them at 'Edit Items'"
       monster_hint: " If you create a monster for this chapter, the adventurer will have to do combat with it before he can choose any chapter as decision."

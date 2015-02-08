@@ -75,7 +75,7 @@ pt-BR:
       fifty_less: "Cinquenta capítulos foram removidos e história foi atualizada."
       chapter_not_found: "Capítulo não encontrado, reveja os destinos deste capítulo"
       chapter_delete_message: "Tem certeza? Você pode acabar apagando capítulos que são destinos de outros capítulos."
-      image_hint: " Escolha uma imagem para exibir antes do conteúdo do capítulo. A imagem deve ser menor que 300 Kb"
+      image_hint: " Escolha uma imagem para exibir antes do conteúdo do capítulo. A imagem deve ser menor que 2 Mb"
       decision_hint: " Escolha para onde o aventureiro pode ir a partir daqui."
       decision_item_hint: " Se escolher um item, o capítulo só ficará disponível se o aventureiro tiver este item. Para ter itens disponíveis aqui, crie-os indo em 'Editar itens'"
       monster_hint: " Se criar um monstro para o capítulo, o aventureiro terá que enfrentá-lo antes de escolher algum caminho para seguir."
