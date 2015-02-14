@@ -178,7 +178,9 @@ feature "Story" do
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      energy = Adventurer.last.energy
+      adventurer = Adventurer.last
+      adventurer.energy = 5
+      adventurer.save
 
       page.should have_text("content 1")
       
@@ -187,7 +189,7 @@ feature "Story" do
 
       click_link "Pastel"
 
-      Adventurer.last.energy.should be_equal(energy + 4)
+      Adventurer.last.energy.should be_equal(9)
 
       sleep(0.5)
       page.body.should include("<strike>pastel</strike>")
@@ -199,7 +201,9 @@ feature "Story" do
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      energy = Adventurer.last.energy
+      adventurer = Adventurer.last
+      adventurer.energy = 5
+      adventurer.save
 
       page.should have_text("content 1")
       
@@ -208,7 +212,7 @@ feature "Story" do
 
       click_link "health drink"
 
-      Adventurer.last.energy.should be_equal(energy + 4)
+      Adventurer.last.energy.should be_equal(9)
 
       sleep(0.5)
       page.body.should have_text "health drink - 1"
