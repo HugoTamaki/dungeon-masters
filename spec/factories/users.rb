@@ -17,8 +17,8 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string(255)
+#  about_me               :text
 #
-
 
 FactoryGirl.define do
   factory :user do
