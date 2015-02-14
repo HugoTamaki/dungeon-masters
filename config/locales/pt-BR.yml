@@ -118,6 +118,10 @@ pt-BR:
       attribute_modifiers: "Modificadores de atributos"
     edit:
       title: "Editando História"
+      story_title: "Título"
+      resume: "Resumo"
+      prelude: "Prelúdio"
+      initial_gold: "Ouro inicial"
       chapter: "Capítulo"
       add_chapter: "Adicionar Capítulo"
       remove_chapter: "Remover capítulo"

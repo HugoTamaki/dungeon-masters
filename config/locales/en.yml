@@ -120,6 +120,10 @@ en:
       attribute_modifiers: "Attribute Modifiers"
     edit:
       title: "Editing Story"
+      story_title: "Title"
+      resume: "Resume"
+      prelude: "Prelude"
+      initial_gold: "Initial Gold"
       chapter: "Chapter"
       add_chapter: "Add Chapter"
       remove_chapter: "Remove chapter"
