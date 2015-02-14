@@ -89,10 +89,13 @@ class Adventurer < ActiveRecord::Base
     case attribute
       when "skill"
         adventurer.skill += modifier.to_i
+        adventurer.skill = 12 if adventurer.skill > 12
       when "energy"
         adventurer.energy += modifier.to_i
+        adventurer.energy = 24 if adventurer.energy > 24
       when "luck"
         adventurer.luck += modifier.to_i
+        adventurer.luck = 12 if adventurer.luck > 12
       when "gold"
         adventurer.gold += modifier.to_i
     end
