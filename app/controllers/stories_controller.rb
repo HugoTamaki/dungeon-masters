@@ -63,6 +63,7 @@ class StoriesController < ApplicationController
           adventurer = current_user.adventurers.by_story(@story.id).first
           adventurer.chapter_id = @chapter.id
           adventurer.story = @story
+          adventurer.gold = @story.initial_gold if @story.initial_gold > 0
           adventurer.save
 
           @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
@@ -452,6 +453,7 @@ class StoriesController < ApplicationController
       params.require(:story).permit(:resume,
                                     :title,
                                     :prelude,
+                                    :initial_gold,
                                     :user_id,
                                     :chapter_numbers,
                                     :cover,

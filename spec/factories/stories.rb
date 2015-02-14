@@ -17,8 +17,8 @@
 #  cover_updated_at   :datetime
 #  published          :boolean          default(FALSE)
 #  chapter_numbers    :integer
+#  initial_gold       :integer          default(0)
 #
-
 
 FactoryGirl.define do
   factory :story do

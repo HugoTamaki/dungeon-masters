@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207095346) do
+ActiveRecord::Schema.define(version: 20150214125028) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20141207095346) do
     t.datetime "cover_updated_at"
     t.boolean  "published",                     default: false
     t.integer  "chapter_numbers"
+    t.integer  "initial_gold",                  default: 0
     t.index ["user_id"], :name => "index_stories_on_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_stories_user_id"
   end
