@@ -34,12 +34,17 @@ describe Story do
     it {should have_attribute :cover_content_type}
     it {should have_attribute :cover_file_size}
     it {should have_attribute :cover_updated_at}
+    it {should have_attribute :initial_gold}
+    it {should have_attribute :published}
+    it {should have_attribute :chapter_numbers}
   end
 
   describe "Relationships" do
     it {should respond_to :user}
     it {should respond_to :chapters}
     it {should respond_to :items}
+    it {should respond_to :favorite_stories}
+    it {should respond_to :favorited_by}
   end
 
   describe "Validations" do
@@ -78,7 +83,7 @@ describe Story do
 
       describe "#cover" do
         context "is valid" do
-          it "when size is less than 300k" do
+          it "when size is less than 2MB" do
             story.cover = File.new("#{Rails.root}/spec/photos/test.png")
             story.should have(0).errors_on :cover
           end
