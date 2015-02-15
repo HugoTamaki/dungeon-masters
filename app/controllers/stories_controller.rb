@@ -28,9 +28,19 @@ class StoriesController < ApplicationController
     if @story.published || @story.user == current_user
       if params[:new_story]
         adventurer = current_user.adventurers.by_story(params[:story_id]).first
-        adventurer.destroy unless adventurer.nil?
-        @adventurer = Adventurer.new
-        @adventurer.story_id = params[:story_id]
+        unless adventurer.nil?
+          adventurer.chapters.clear
+          adventurer.adventurers_items.clear
+          adventurer.adventurers_shops.clear
+          adventurer.skill = nil
+          adventurer.energy = nil
+          adventurer.luck = nil
+          adventurer.save(validate: false)
+          @adventurer = adventurer
+        else
+          @adventurer = Adventurer.new
+          @adventurer.story_id = params[:story_id]
+        end
       else
         @adventurer = current_user.adventurers.by_story(params[:story_id]).first
         unless @adventurer.nil?
@@ -201,6 +211,27 @@ class StoriesController < ApplicationController
     respond_to do |format|
       format.json { render json: data.to_json }
     end
+  end
+
+  def buy_item
+    binding.pry
+    adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
+    modifier_shop = ModifierShop.find(params[:shop_id])
+    item = modifier_shop.item
+
+    adventurer_modifier_shop = adventurer.adventurers_shops.any? {|adv_shop| adv_shop.modifier_shop.id == params[:shop_id]}
+    binding.pry
+
+    # if adventurer_modifier_shop
+    #   adventurer_modifier_shop.quantity -= 1
+    #   if adventurer_modifier_shop.save
+
+    #   else
+
+    #   end
+    # else
+    #   adventurer.adventurers_shops.create(modifier_shop_id: params[:shop_id:], quantity: modifier_shop.quantity - 1)
+    # end
   end
 
   def erase_image

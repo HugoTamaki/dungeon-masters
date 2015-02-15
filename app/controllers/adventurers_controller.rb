@@ -26,6 +26,23 @@ class AdventurersController < ApplicationController
     end
   end
 
+  def update
+    adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
+    @adventurer = adventurer
+    @adventurer.skill = params[:adventurer][:skill]
+    @adventurer.energy = params[:adventurer][:energy]
+    @adventurer.luck = params[:adventurer][:luck]
+
+    respond_to do |format|
+      if @adventurer.save
+        options = {reference: params[:reference], id: params[:story_id]}
+        format.html { redirect_to read_stories_path(options) }
+      else
+        format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
+      end
+    end
+  end
+
   def update_adventurer_status
     user = User.find(current_user.id)
     adventurer = user.adventurers.by_story(params[:story_id]).first
