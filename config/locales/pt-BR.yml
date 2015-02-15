@@ -1,3 +1,5 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 pt-BR:
   activerecord:
@@ -83,6 +85,9 @@ pt-BR:
       monster_energy_hint: " Escolha qual o nível de energia do monstro. Quanto mais alto, mais vitalidade ele terá."
       modifier_item_hint: " Se escolher um item, o aventureiro irá recebe-lo quando passar por este capítulo. Se ele passar pelo mesmo uma segunda vez, não irá receber novamente o item. Para que o item apareça aqui, você deve criá-lo clicando no botão 'Editar itens'"
       modifier_item_quantity_hint: " Decida quantos itens o aventureiro irá receber ao passar pelo capítulo."
+      modifier_shop_hint: "Se escolher um item, o aventureiro terá a chance de comprar este item, pelo preço que for definido abaixo."
+      modifier_shop_price_hint: "Defina quantas moedas de ouro o item irá custar para o aventureiro."
+      modifier_shop_quantity_hint: "Escolha quantos itens estarão disponíveis para a venda no capítulo."
       item_hint: " Ao criar um item, você poderá usá-lo na edição dos capítulos."
       item_description_hint: " Uma breve descrição do item."
       item_usable_hint: " Se o item for usável, selecione este atributo. Isso quer dizer que uma vez que o aventureiro tenha o item, se ele clicar no link do item irá 'utiliza-lo', e não poderá mais fazê-lo novamente. Se o item for um item-chave, deixe desmarcado este atributo."
@@ -143,6 +148,8 @@ pt-BR:
       energy: "Energia"
       items: "Itens"
       item: "Item"
+      shop: "Loja"
+      shops: "Lojas"
       add_item: "Adicionar Item"
       item_quantity: "Quantidade"
       remove_item: "Remover item"

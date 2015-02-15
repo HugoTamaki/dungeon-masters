@@ -16,6 +16,8 @@
    inflect.irregular 'ModifierItem', 'ModifiersItems'
    inflect.irregular 'modifier_attribute', 'modifiers_attributes'
    inflect.irregular 'ModifierAttribute', 'ModifiersAttributes'
+   inflect.irregular 'ModifierShop', 'ModifiersShops'
+   inflect.irregular 'modifier_shop', 'modifiers_shops'
 #   inflect.uncountable %w( fish sheep )
  end
 #

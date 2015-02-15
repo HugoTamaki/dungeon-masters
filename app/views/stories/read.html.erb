@@ -32,6 +32,18 @@
         </p>
         <div id="combat-result"></div>
       <% end %>
+      <% if @chapter.modifiers_shops.present? %>
+        <div id="chapter-shop">
+          <h3>Comprar?</h3>
+          <% @chapter.modifiers_shops.each do |shop| %>
+            <p>
+              <%= link_to shop.item.name, "javascript:;", id: "#{shop.item.name.parameterize.underscore}_shop", class: "buyable-item" %><br>
+              <span class="shop-price">Preço: <%= shop.price %></span><br>
+              <span class="shop-qty">Quantidade: <%= shop.quantity %></span>
+            </p>
+          <% end %>
+        </div>
+      <% end %>
       <div id="chapter-buttons">
         <% @chapter.decisions.each do |decision| %>
           <% button_opts = {reference: decision.child.reference, id: @story} unless decision.child.nil? %>

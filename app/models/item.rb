@@ -18,6 +18,7 @@ class Item < ActiveRecord::Base
   belongs_to :story, touch: true
   has_many :adventurers, through: :adventurers_items
   has_many :modifiers_items, dependent: :destroy
+  has_many :modifiers_shops, dependent: :destroy
 
   validates :description, presence: true
   validates :name, presence: true

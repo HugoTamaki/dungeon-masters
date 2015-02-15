@@ -37,6 +37,13 @@
       <% end %>
       <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_items, "modifiers_items" %>
     </div>
+    <div class="modifiers-shops">
+      <h3><%= t('stories.edit.shop') %></h3>
+      <%= f.simple_fields_for :modifiers_shops do |builder| %>
+        <%= render "modifiers_shops/modifiers_shops_fields", f: builder %>
+      <% end %>
+      <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_shops, "modifiers_shops"%>
+    </div>
   </div>
 </div>
 <br/>

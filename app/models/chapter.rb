@@ -27,6 +27,7 @@ class Chapter < ActiveRecord::Base
   has_many :monsters, dependent: :destroy
   has_many :modifiers_items, dependent: :destroy
   has_many :modifiers_attributes, dependent: :destroy
+  has_many :modifiers_shops, dependent: :destroy
 
   validates_attachment_size :image, :less_than => 2.megabytes
   validates_attachment_content_type :image, content_type: ["image/jpg", "image/png", "image/gif", "image/jpeg"]
@@ -35,6 +36,7 @@ class Chapter < ActiveRecord::Base
   accepts_nested_attributes_for :monsters, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :modifiers_items, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :modifiers_attributes, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :modifiers_shops, reject_if: :all_blank, allow_destroy: true
 
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
   scope :by_reference, lambda {|reference| where(reference: reference)}

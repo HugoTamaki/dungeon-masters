@@ -24,7 +24,8 @@ function add_fields(link, association, content) {
   if (association == "decisions" ||
     association == "monsters" ||
     association == "modifiers_items" ||
-    association == "modifiers_attributes") {
+    association == "modifiers_attributes" ||
+    association == "modifiers_shops") {
     $(link).before(content.replace(regexp, new_id));
   } else {
     $(link).parent().before(content.replace(regexp, new_id));
