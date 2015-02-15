@@ -76,8 +76,6 @@ class StoriesController < ApplicationController
           adventurer.gold = @story.initial_gold if @story.initial_gold > 0 && params[:reference] == "1"
           adventurer.save
 
-          @adventurer = adventurer
-
           @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
           @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
           @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter

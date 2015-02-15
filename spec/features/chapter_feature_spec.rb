@@ -27,7 +27,7 @@ feature Chapter do
       fill_in "Nome", with: "monster"
       select "5", from: "Habilidade"
       select "5", from: "Energia"
-      click_link "Adicionar Item"
+      first(:link, "Adicionar Item").click
       select "espada", from: "Item"
       select "1", from: "Quantidade"
 
