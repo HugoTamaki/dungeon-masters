@@ -12,5 +12,5 @@
 
 class AdventurerShop < ActiveRecord::Base
   belongs_to :adventurer
-  belongs_to :modifier_item
+  belongs_to :modifier_shop
 end

@@ -73,8 +73,10 @@ class StoriesController < ApplicationController
           adventurer = current_user.adventurers.by_story(@story.id).first
           adventurer.chapter_id = @chapter.id
           adventurer.story = @story
-          adventurer.gold = @story.initial_gold if @story.initial_gold > 0
+          adventurer.gold = @story.initial_gold if @story.initial_gold > 0 && params[:reference] == "1"
           adventurer.save
+
+          @adventurer = adventurer
 
           @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
           @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
@@ -214,24 +216,57 @@ class StoriesController < ApplicationController
   end
 
   def buy_item
-    binding.pry
     adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
     modifier_shop = ModifierShop.find(params[:shop_id])
     item = modifier_shop.item
 
-    adventurer_modifier_shop = adventurer.adventurers_shops.any? {|adv_shop| adv_shop.modifier_shop.id == params[:shop_id]}
-    binding.pry
+    if adventurer_modifier_shop_present? adventurer
+      adventurer_modifier_shop = adventurer.adventurers_shops.where(modifier_shop_id: params[:shop_id]).first
+      unless (adventurer.gold < 1 || adventurer_modifier_shop.quantity < 1)
+        adventurer_modifier_shop.quantity -= 1
+        if adventurer_modifier_shop.save
+          if adventurer.items.include? item
+            adventurer_item = adventurer.adventurers_items.where(item_id: item.id).first
+            adventurer_item.quantity += 1
+            adventurer_item.save
+            adventurer.gold -= modifier_shop.price
+            adventurer.save
+            data = {
+              name: item.name.parameterize.underscore,
+              adventurer_quantity: adventurer_item.quantity,
+              shop_quantity: adventurer_modifier_shop.quantity
+            }
+          else
+            adventurer.items << item
+            adventurer.gold -= modifier_shop.price
+            adventurer.save
+            data = {
+              name: item.name.parameterize.underscore,
+              shop_quantity: adventurer_modifier_shop.quantity
+            }
+          end
+        else
+          data = {
+            message: I18n.t('actions.messages.adventurer_update_fail')
+          }
+        end
+      end
+    else
+      unless adventurer.gold < 1 || modifier_shop.quantity < 1
+        adventurer_shop = adventurer.adventurers_shops.create(modifier_shop_id: params[:shop_id], quantity: modifier_shop.quantity - 1)
+        adventurer.adventurers_items.create(item_id: item.id, quantity: 1)
+        adventurer.gold -= modifier_shop.price
+        adventurer.save
+        data = {
+          name: item.name.parameterize.underscore,
+          shop_quantity: adventurer_shop.quantity
+        }
+      end
+    end
 
-    # if adventurer_modifier_shop
-    #   adventurer_modifier_shop.quantity -= 1
-    #   if adventurer_modifier_shop.save
-
-    #   else
-
-    #   end
-    # else
-    #   adventurer.adventurers_shops.create(modifier_shop_id: params[:shop_id:], quantity: modifier_shop.quantity - 1)
-    # end
+    respond_to do |format|
+      format.json { render json: data.to_json }
+    end
   end
 
   def erase_image
@@ -473,6 +508,10 @@ class StoriesController < ApplicationController
       end
 
       redirect_to edit_story_path(story), notice: message
+    end
+
+    def adventurer_modifier_shop_present? adventurer
+      adventurer.adventurers_shops.any? {|adv_shop| adv_shop.modifier_shop_id == params[:shop_id].to_i}
     end
 
     def set_story
