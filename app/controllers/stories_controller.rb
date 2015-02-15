@@ -231,24 +231,15 @@ class StoriesController < ApplicationController
             adventurer_item.save
             adventurer.gold -= modifier_shop.price
             adventurer.save
-            data = {
-              name: item.name.parameterize.underscore,
-              adventurer_quantity: adventurer_item.quantity,
-              shop_quantity: adventurer_modifier_shop.quantity
-            }
           else
             adventurer.items << item
             adventurer.gold -= modifier_shop.price
             adventurer.save
-            data = {
-              name: item.name.parameterize.underscore,
-              shop_quantity: adventurer_modifier_shop.quantity
-            }
           end
         else
-          data = {
-            message: I18n.t('actions.messages.adventurer_update_fail')
-          }
+          # data = {
+          #   message: I18n.t('actions.messages.adventurer_update_fail')
+          # }
         end
       end
     else
@@ -257,16 +248,9 @@ class StoriesController < ApplicationController
         adventurer.adventurers_items.create(item_id: item.id, quantity: 1)
         adventurer.gold -= modifier_shop.price
         adventurer.save
-        data = {
-          name: item.name.parameterize.underscore,
-          shop_quantity: adventurer_shop.quantity
-        }
       end
     end
-
-    respond_to do |format|
-      format.json { render json: data.to_json }
-    end
+    redirect_to :back
   end
 
   def erase_image

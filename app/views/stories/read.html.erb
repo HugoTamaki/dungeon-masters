@@ -13,6 +13,18 @@
           <%= simple_format @chapter.content %>
         </p>
       </div>
+      <% if @chapter.modifiers_shops.present? %>
+        <div id="chapter-shop">
+          <h3>Comprar?</h3>
+          <% @chapter.modifiers_shops.each do |shop| %>
+            <p>
+              <%= link_to_if(return_real_quantity(shop) > 0, shop.item.name, story_buy_item_path(@story, shop_id: shop.id)) %><br>
+              <span class="shop-price">Preço: <%= shop.price %></span><br>
+              <span class="shop-qty">Quantidade: <%= return_real_quantity(shop) %></span>
+            </p>
+          <% end %>
+        </div>
+      <% end %>
       <% if @chapter.monsters.present? %>
       <hr/>
         <% @chapter.monsters.each do |monster| %>
@@ -31,18 +43,6 @@
           <%= button_tag t('stories.read.combat'), class: "btn btn-primary", id: "combat" %>
         </p>
         <div id="combat-result"></div>
-      <% end %>
-      <% if @chapter.modifiers_shops.present? %>
-        <div id="chapter-shop">
-          <h3>Comprar?</h3>
-          <% @chapter.modifiers_shops.each do |shop| %>
-            <p>
-              <%= link_to shop.item.name, "javascript:;", id: "#{shop.item.name.parameterize.underscore}_shop", data: {shop_id: shop.id, story_id: @story.id}, class: "buyable-item" %><br>
-              <span class="shop-price">Preço: <%= shop.price %></span><br>
-              <span class="shop-qty">Quantidade: <%= return_real_quantity(shop) %></span>
-            </p>
-          <% end %>
-        </div>
       <% end %>
       <div id="chapter-buttons">
         <% @chapter.decisions.each do |decision| %>
