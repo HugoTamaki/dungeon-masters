@@ -26,6 +26,8 @@ class Adventurer < ActiveRecord::Base
   belongs_to :chapter
   has_many :adventurers_items, inverse_of: :adventurer, dependent: :destroy
   has_many :items, through: :adventurers_items
+  has_many :adventurers_shops
+  has_many :modifiers_items, through: :adventurers_shops
   has_many :adventurer_chapters, inverse_of: :adventurer, dependent: :destroy
   has_many :chapters, through: :adventurer_chapters
   accepts_nested_attributes_for :adventurers_items, reject_if: :all_blank, allow_destroy: true

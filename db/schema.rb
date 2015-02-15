@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150215095923) do
+ActiveRecord::Schema.define(version: 20150215132024) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -125,6 +125,31 @@ ActiveRecord::Schema.define(version: 20150215095923) do
     t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_items_item_id"
   end
 
+  create_table "modifiers_shops", force: true do |t|
+    t.integer  "chapter_id"
+    t.integer  "item_id"
+    t.integer  "price"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["chapter_id"], :name => "fk__modifiers_shops_chapter_id"
+    t.index ["item_id"], :name => "fk__modifiers_shops_item_id"
+    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_shops_chapter_id"
+    t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_shops_item_id"
+  end
+
+  create_table "adventurers_shops", force: true do |t|
+    t.integer  "adventurer_id"
+    t.integer  "modifier_shop_id"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["adventurer_id"], :name => "fk__adventurers_shops_adventurer_id"
+    t.index ["modifier_shop_id"], :name => "fk__adventurers_shops_modifier_shop_id"
+    t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_shops_adventurer_id"
+    t.foreign_key ["modifier_shop_id"], "modifiers_shops", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_shops_modifier_shop_id"
+  end
+
   create_table "comments", force: true do |t|
     t.integer  "user_id"
     t.integer  "story_id"
@@ -178,19 +203,6 @@ ActiveRecord::Schema.define(version: 20150215095923) do
     t.index ["item_id"], :name => "fk__modifiers_items_item_id"
     t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_items_chapter_id"
     t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_items_item_id"
-  end
-
-  create_table "modifiers_shops", force: true do |t|
-    t.integer  "chapter_id"
-    t.integer  "item_id"
-    t.integer  "price"
-    t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["chapter_id"], :name => "fk__modifiers_shops_chapter_id"
-    t.index ["item_id"], :name => "fk__modifiers_shops_item_id"
-    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_shops_chapter_id"
-    t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_shops_item_id"
   end
 
   create_table "monsters", force: true do |t|

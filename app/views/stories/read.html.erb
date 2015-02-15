@@ -37,9 +37,9 @@
           <h3>Comprar?</h3>
           <% @chapter.modifiers_shops.each do |shop| %>
             <p>
-              <%= link_to shop.item.name, "javascript:;", id: "#{shop.item.name.parameterize.underscore}_shop", class: "buyable-item" %><br>
+              <%= link_to shop.item.name, "javascript:;", id: "#{shop.item.name.parameterize.underscore}_shop", data: {shop_id: shop.id, story_id: @story.id}, class: "buyable-item" %><br>
               <span class="shop-price">Preço: <%= shop.price %></span><br>
-              <span class="shop-qty">Quantidade: <%= shop.quantity %></span>
+              <span class="shop-qty">Quantidade: <%= return_real_quantity(shop) %></span>
             </p>
           <% end %>
         </div>

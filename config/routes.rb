@@ -14,6 +14,7 @@
     get 'edit_items', as: "edit_items"
     get 'graph'
     post 'use_item', on: :collection
+    post 'buy_item', on: :collection
     post 'publish'
     get 'search_result',as: "search_result", on: :collection
     get 'story', as: 'show'

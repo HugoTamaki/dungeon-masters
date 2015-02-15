@@ -34,4 +34,23 @@ $(document).ready(function(){
       }
     })
   });
+
+  $('.buyable-item').on('click', function(){
+    console.log($(this).data("shop-id"));
+    $.ajax({
+      url: 'buy_item',
+      type: 'POST',
+      data: {
+        "shop_id": $(this).data("shop-id"),
+        "story_id": $(this).data("story-id")
+      },
+      dataType: "json",
+      success: function(data){
+
+      },
+      error: function(response){
+
+      }
+    });
+  });
 });
