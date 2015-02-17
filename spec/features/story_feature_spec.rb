@@ -60,7 +60,7 @@ feature "Story" do
   end
 
   feature "#read story" do
-    let!(:story_sample) {FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 0)}
+    let!(:story_sample) {FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 0, initial_gold: 20)}
     let!(:item1) { FactoryGirl.create(:item, name: "espada", description: "uma espada", story: story_sample, usable: false) }
     let!(:item2) { FactoryGirl.create(:item, name: "escudo", description: "um escudo", story: story_sample, usable: false) }
     let!(:item3) { FactoryGirl.create(:item, name: "Pastel", description: "um pastelzinho", story: story_sample, usable: true, attr: "energy", modifier: 4) }
@@ -90,6 +90,8 @@ feature "Story" do
     let!(:chapter7) { FactoryGirl.create(:chapter, reference: "7", content: "content 7", story: story_sample) }
 
     let!(:chapter8) { FactoryGirl.create(:chapter, reference: "8", content: "content 8", story: story_sample) }
+    let!(:shop) { FactoryGirl.create(:modifier_shop, chapter: chapter8, item: item3, price: 5, quantity: 2) }
+    let!(:shop2) { FactoryGirl.create(:modifier_shop, chapter: chapter8, item: item1, price: 18, quantity: 1) }
 
 
     before(:each) do
@@ -157,7 +159,7 @@ feature "Story" do
       page.should have_css ".disabled"
     end
 
-    scenario "user has an item and passes trough", js: true do
+    scenario "user has an item and passes through", js: true do
       visit "/stories/#{story_sample.id}/prelude?new_story=true"
 
       click_button "Rolar dados"
@@ -216,6 +218,44 @@ feature "Story" do
 
       sleep(0.5)
       page.body.should have_text "health drink - 1"
+    end
+
+    scenario "user buy an item", js: true do
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
+
+      page.should have_text("content 1")
+
+      click_link "Capítulo 8"
+
+      click_link "Pastel"
+
+      page.should have_text "Pastel - 1"
+      page.should have_text "Ouro: 15"
+      page.should have_text "Sua compra foi bem sucedida."
+    end
+
+    scenario "user buy an item but does not has enough gold", js: true do
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+
+      click_button "Rolar dados"
+      click_button "Capítulo 1"
+
+      page.should have_text("content 1")
+
+      click_link "Capítulo 8"
+
+      click_link "Pastel"
+      first(:link, "Pastel").click
+
+      page.should have_text "Pastel - 1"
+      page.should have_text "Ouro: 10"
+
+      click_link "espada"
+
+      page.should have_text "Não foi possível comprar este item."
     end
 
     scenario "user continues from where he stoped", js: true do
