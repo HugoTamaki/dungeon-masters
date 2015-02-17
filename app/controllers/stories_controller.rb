@@ -220,7 +220,7 @@ class StoriesController < ApplicationController
 
     if adventurer_modifier_shop_present? adventurer
       adventurer_modifier_shop = adventurer.adventurers_shops.where(modifier_shop_id: params[:shop_id]).first
-      unless (adventurer.gold < 1 || adventurer_modifier_shop.quantity < 1)
+      unless cant_buy?(adventurer, adventurer_modifier_shop, modifier_shop.price)
         adventurer_modifier_shop.quantity -= 1
         if adventurer_modifier_shop.save
           if adventurer.items.include? item
@@ -234,21 +234,24 @@ class StoriesController < ApplicationController
             adventurer.gold -= modifier_shop.price
             adventurer.save
           end
+          redirect_to :back, notice: "Sua compra foi bem sucedida."
         else
-          # data = {
-          #   message: I18n.t('actions.messages.adventurer_update_fail')
-          # }
+          redirect_to :back, alert: "Ocorreu algum problema."
         end
+      else
+        redirect_to :back, alert: "Não foi possível comprar este ítem."
       end
     else
-      unless adventurer.gold < 1 || modifier_shop.quantity < 1
+      unless cant_buy?(adventurer, adventurer_modifier_shop, modifier_shop.price)
         adventurer_shop = adventurer.adventurers_shops.create(modifier_shop_id: params[:shop_id], quantity: modifier_shop.quantity - 1)
         adventurer.adventurers_items.create(item_id: item.id, quantity: 1)
         adventurer.gold -= modifier_shop.price
         adventurer.save
+        redirect_to :back, notice: "Sua compra foi bem sucedida."
+      else
+        redirect_to :back, alert: "Não foi possível comprar este item."
       end
     end
-    redirect_to :back
   end
 
   def erase_image
@@ -490,6 +493,14 @@ class StoriesController < ApplicationController
       end
 
       redirect_to edit_story_path(story), notice: message
+    end
+
+    def cant_buy?(adventurer, adventurer_modifier_shop, price)
+      if adventurer_modifier_shop
+        adventurer.gold < 1 || adventurer_modifier_shop.quantity < 1 || adventurer.gold < price
+      else
+        adventurer.gold < 1 || adventurer.gold < price
+      end
     end
 
     def adventurer_modifier_shop_present? adventurer
