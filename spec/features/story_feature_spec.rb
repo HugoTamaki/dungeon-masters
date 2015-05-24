@@ -191,6 +191,7 @@ feature "Story" do
 
       click_link "Pastel"
 
+      sleep(0.5)
       Adventurer.last.energy.should be_equal(9)
 
       sleep(0.5)
@@ -214,6 +215,7 @@ feature "Story" do
 
       click_link "health drink"
 
+      sleep(0.5)
       Adventurer.last.energy.should be_equal(9)
 
       sleep(0.5)
