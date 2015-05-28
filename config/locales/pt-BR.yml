@@ -100,6 +100,22 @@ pt-BR:
     items: "Itens"
     story: "História"
     graph: "Grafo"
+  views:
+    pagination:
+      first: "&laquo; Primeira"
+      last: "Última &raquo;"
+      previous: "&lsaquo; Ant"
+      next: "Prox &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "%{entry_name} não encontrados"
+          one: "Mostrando <b>1</b> %{entry_name}"
+          other: "Mostrando <b> %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Mostrando %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> de <b>%{total}</b> do total"
   stories:
     index:
       title: "Minhas Histórias"

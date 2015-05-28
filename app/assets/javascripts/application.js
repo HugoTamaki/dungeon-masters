@@ -70,7 +70,7 @@ $(document).ready(function(){
     $(this).next().children(".note-editable").html($(this).val());
   });
 
-  $('.chapter_form').submit(function(){
+  $('.edit_chapter').submit(function(){
     $('.note-editable').each(function(){
       $(this).parent().prev().val($(this).html());
     });

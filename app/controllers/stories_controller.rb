@@ -122,7 +122,7 @@ class StoriesController < ApplicationController
         chapter.decisions.build
       end
     end
-    @chapters = @story.chapters
+    @chapters = @story.chapters.page(params[:page]).per(10)
   end
 
   def edit_items

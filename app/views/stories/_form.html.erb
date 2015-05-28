@@ -4,181 +4,66 @@
   <div class="message-container"></div>
   <div class="row">
     <div class="col-lg-12">
-      <% cache @story do %>
-        <%= simple_form_for @story, html: {class: 'chapter_form'} do |f| %>
-          <% if params[:action] == "edit" || params[:action] == "update" %>
-            <div class="actions">
-              <%= f.submit t('actions.finish_editing'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.edit_items'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.graph'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.save'), class: "btn btn-primary" %>
-              <% f.object.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
-              <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
-            </div>
-            <div class="actions">
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Adicionar capítulos <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <%= f.submit t('actions.five_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.ten_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.twenty_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.fifty_more'), class: "btn btn-link" %>
-                  </li>
-                </ul>
+      <% @chapters.each do |chapter| %>
+        <div class="chapter-fields">
+          <div class="accordionButton">
+            <h3><%= t('stories.edit.chapter') %> <%= chapter.reference %></h3>
+          </div>
+          <div class="accordionContent">
+            <%= simple_form_for chapter, url: chapter_update_story_chapters_path(@story, chapter), remote: true do |f| %>
+              <div class="form-group">
+                <%= f.input :content, label: t('stories.edit.content'), input_html: { rows: 10, title: t('tooltip.chapter_content'), class: 'chapter-content-wysiwyg summernote form-control' } %>
               </div>
-            </div>
-            <div class="actions">
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Remover capítulos <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <%= f.submit t('actions.five_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.ten_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.twenty_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.fifty_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          <% end %>
-          <% if params[:action] == "new" %>
-            <div class="form-group">
-              <%= f.input :title, label: t('stories.new.story_title'), input_html: {class: 'form-control'} %>
-              <%= f.hidden_field :user_id, value: current_user.id %>
-            </div>
-            <div class="form-group">
-              <%= f.input :cover, label: t('stories.new.cover') %>
-            </div>
-            <div class="form-group">
-              <%= f.input :resume, label: t('stories.new.resume'), as: :text, input_html: { rows: 10, title: t('tooltip.story_resume'), class: 'form-control'} %>
-            </div>
-            <div class="form-group">
-              <%= f.input :prelude, label: t('stories.new.prelude'), as: :text, input_html: { rows: 10, title: t('tooltip.story_prelude'), class: 'form-control' } %>
-            </div>
-            <div class="form-group">
-              <%= f.input :chapter_numbers, label: t('stories.new.chapter_numbers'),
-                collection: chapter_numbers, prompt: "select number of chapters", input_html: {class: 'form-control'} %>
-            </div>
-
-          <% elsif params[:action] == "edit" || params[:action] == "update" %>
-            <input type="hidden" id="story_id" value="<%= @story.id %>" />
-
-            <div id="tabs">
-              <ul>
-                <li><a href="#tabs-1"><%= t('tabs.chapters') %></a></li>
-                <li><a href="#tabs-2"><%= t('tabs.story') %></a></li>
-              </ul>
-              <div id="tabs-1">
-                <div id="wrapper"> <!-- wrapper para accordion -->
-                  <%= f.simple_fields_for :chapters, @chapters do |builder| %>
-                    <%# cache builder.object do %>
-                      <%= render partial: "/chapters/chapters_fields", :locals => {:f => builder} %>
-                    <%# end %>
-                  <% end %>
-                  <br/>
+              <%= f.input :image, label: t('stories.edit.image'), hint: t('actions.messages.image_hint'), input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 2.megabytes} %>
+              <% if f.object.image.blank? %>
+                <%= t('stories.edit.no_current_image') %>
+              <% else %>
+                <div class="chapter-image">
+                  <%= t('stories.edit.current_image') %>: <%= image_tag Chapter.find(f.object.id).image(:thumbnail) %>
                 </div>
-              </div>
-              <div id="tabs-2">
-                <div class="field">
-                  <%= f.input :title, label: t('stories.edit.story_title') %>
-                  <%= f.hidden_field :user_id, value: current_user.id %>
-                </div>
-                <div class="field">
-                  <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 2.megabytes} %>
-                </div>
-                <% if f.object.cover.blank? %>
-                  <%= image_tag 'no_image_thumbnail.png' %>
-                <% else %>
-                  Current image: <%= image_tag f.object.cover(:thumbnail) %>
+                <%= f.input :id, as: :hidden %>
+                <p><%= link_to t('stories.edit.remove_image'), "#", remote: true, class: "remove btn btn-primary" %></p>
+              <% end %>
+              <div class="decisions">
+                <h3><%= t('stories.edit.decisions') %></h3>
+                <%= f.simple_fields_for :decisions do |builder| %>
+                  <%= render partial: "/decisions/decisions_fields", :locals => {:f => builder} %>
                 <% end %>
-                <div class="field">
-                  <%= f.input :initial_gold, label: t('stories.edit.initial_gold'), as: :integer %>
-                </div>
-                <div class="field">
-                  <%= f.input :resume, label: t('stories.edit.resume'), as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
-                </div>
-                <div class="field">
-                  <%= f.input :prelude, label: t('stories.edit.prelude'), as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
-                </div>
+                <%= link_to_add_fields t('stories.edit.add_decisions'), f, :decisions, "decisions" %>
               </div>
-            </div><br/>
-          <% end %>
+              <div class="monsters">
+                <h3><%= t('stories.edit.monsters') %></h3>
+                <%= f.simple_fields_for :monsters do |builder| %>
+                  <%= render partial: "/monsters/monsters_fields", :locals => {:f => builder} %>
+                <% end %>
+                <%= link_to_add_fields t('stories.edit.add_monsters'), f, :monsters, "monsters" %>
+              </div>
+              <div class="modifiers-items">
+                <h3><%= t('stories.edit.items') %></h3>
+                <%= f.simple_fields_for :modifiers_items do |builder| %>
+                  <%= render "/modifiers_items/modifiers_items_fields", f: builder %>
+                <% end %>
+                <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_items, "modifiers_items" %>
+              </div>
+              <div class="modifiers-shops">
+                <h3><%= t('stories.edit.shop') %></h3>
+                <%= f.simple_fields_for :modifiers_shops do |builder| %>
+                  <%= render "modifiers_shops/modifiers_shops_fields", f: builder %>
+                <% end %>
+                <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_shops, "modifiers_shops"%>
+              </div>
 
-          <% if params[:action] == "new" %>
-            <div class="actions">
-              <%= f.submit t('actions.next'), class: "btn btn-primary" %>
-            </div>
-          <% elsif params[:action] == "edit" || params[:action] == "update" %>
-            <div class="actions">
-              <%= f.submit t('actions.finish_editing'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.edit_items'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.graph'), class: "btn btn-primary" %>
-              <%= f.submit t('actions.save'), class: "btn btn-primary" %>
-              <% f.object.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
-              <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
-            </div>
-            <div class="actions">
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Adicionar capítulos <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <%= f.submit t('actions.five_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.ten_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.twenty_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.fifty_more'), class: "btn btn-link" %>
-                  </li>
-                </ul>
+              <div class="form-action">
+                <%= f.submit 'Salvar', class: 'btn btn-primary' %>
               </div>
-            </div>
-            <div class="actions">
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Remover capítulos <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <%= f.submit t('actions.five_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.ten_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.twenty_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.fifty_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
+            <% end %>
+          </div>
+        </div>
+        <br/>
+
       <% end %>
+
+      <%= paginate @chapters %>
     </div>
   </div>
 </div>

@@ -20,6 +20,9 @@
     get 'story', as: 'show'
     resources :comments
     put :favorite, on: :member
+    resources :chapters do
+      put ':id', to: 'chapters#update', as: 'chapter_update', on: :collection
+    end
   end
 
   resources :adventurers do
