@@ -1,58 +1,10 @@
 <div class="container">
+  <%= render 'shared/navigation' %>
+
   <h1><%= t('items.edit.title') %></h1>
   <div class="message-container"></div>
   <div class="wrapper">
     <%= simple_form_for(@story) do |f| %>
-      <div class="actions">
-        <%= f.submit t('actions.finish_editing'), class: "btn btn-primary" %>
-        <%= f.submit t('actions.edit_chapters'), class: "btn btn-primary" %>
-        <%= f.submit t('actions.graph'), class: "btn btn-primary" %>
-        <%= f.submit t('actions.save'), class: "btn btn-primary" %>
-        <% f.object.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
-        <%= link_to publish_val, "javascript:;", id: "publish", class: "btn btn-primary" %>
-      </div>
-      <div class="actions">
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Adicionar capítulos <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <%= f.submit t('actions.five_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.ten_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.twenty_more'), class: "btn btn-link" %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.fifty_more'), class: "btn btn-link" %>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="actions">
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Remover capítulos <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <%= f.submit t('actions.five_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.ten_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.twenty_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                  <li>
-                    <%= f.submit t('actions.fifty_less'), class: "btn btn-link", data: {confirm: t('actions.messages.chapter_delete_message')} %>
-                  </li>
-                </ul>
-              </div>
-            </div>
       <div>
         <%= f.simple_fields_for :items do |builder| %>
           <%= render partial: "/items/items_fields", :locals => {:f => builder} %>
@@ -60,6 +12,10 @@
         <p>
           <%= link_to_add_fields t('items.edit.add_items'), f, :items, "items" %>
         </p>
+      </div>
+
+      <div class="actions">
+        <%= f.submit t('actions.save'), class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>  
