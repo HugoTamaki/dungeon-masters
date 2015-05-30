@@ -1,0 +1,32 @@
+<%= render partial: 'shared/errors' %>
+
+<div class="container">
+  <div class="message-container"></div>
+  <div class="row">
+    <div class="col-lg-12">
+      <%= simple_form_for @story, html: {class: 'chapter_form'} do |f| %>
+        <div class="form-group">
+          <%= f.input :title, label: t('stories.new.story_title'), input_html: {class: 'form-control'} %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+        </div>
+        <div class="form-group">
+          <%= f.input :cover, label: t('stories.new.cover') %>
+        </div>
+        <div class="form-group">
+          <%= f.input :resume, label: t('stories.new.resume'), as: :text, input_html: { rows: 10, title: t('tooltip.story_resume'), class: 'form-control'} %>
+        </div>
+        <div class="form-group">
+          <%= f.input :prelude, label: t('stories.new.prelude'), as: :text, input_html: { rows: 10, title: t('tooltip.story_prelude'), class: 'form-control' } %>
+        </div>
+        <div class="form-group">
+          <%= f.input :chapter_numbers, label: t('stories.new.chapter_numbers'),
+            collection: chapter_numbers, prompt: "select number of chapters", input_html: {class: 'form-control'} %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit t('actions.next'), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
