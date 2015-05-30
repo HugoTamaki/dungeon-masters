@@ -1,6 +1,7 @@
 <% @story.published ? publish_val = t('actions.unpublish') : publish_val = t('actions.publish') %>
 <ul>
   <li><%= link_to t('actions.finish_editing'), profile_path(current_user) , class: 'btn btn-primary' %></li>
+  <li><%= link_to t('actions.edit_story'), story_edit_story_path(@story), class: 'btn btn-primary' %></li>
   <li><%= link_to t('actions.edit_chapters'), edit_story_path(@story), class: 'btn btn-primary' %></li>
   <li><%= link_to t('actions.edit_items'), story_edit_items_path(@story), class: 'btn btn-primary' %></li>
   <li><%= link_to t('actions.graph'), story_graph_path(@story), class: 'btn btn-primary' %> </li>

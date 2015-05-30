@@ -11,6 +11,7 @@
     post 'node_update'
     get 'erase_image', as: 'erase_image'
     get 'edit_special_attributes', as: "edit_special_attributes"
+    get 'edit_story', to: 'stories#edit_story', as: 'edit_story'
     get 'edit_items', as: "edit_items"
     get 'graph'
     post 'use_item', on: :collection

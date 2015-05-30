@@ -35,6 +35,8 @@ en:
     read: "Read"
     edit: "Edit"
     destroy: "Delete"
+    edit_story: "Edit Story"
+    save_story: "Save Story"
     edit_chapters: "Edit Chapters"
     finish_editing: "Finish Editing"
     edit_items: "Edit Items"

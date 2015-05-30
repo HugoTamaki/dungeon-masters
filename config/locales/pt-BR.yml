@@ -35,6 +35,8 @@ pt-BR:
     read: "Ler história"
     edit: "Editar história"
     destroy: "Deletar história"
+    edit_story: "Editar História"
+    save_story: "Salvar História"
     edit_chapters: "Editar Capítulos"
     finish_editing: "Terminar Edição"
     edit_items: "Editar Itens"

@@ -125,6 +125,10 @@ class StoriesController < ApplicationController
     @chapters = @story.chapters.page(params[:page]).per(10)
   end
 
+  def edit_story
+    @story = Story.find(params[:story_id])
+  end
+
   def edit_items
     @story = Story.find(params[:story_id])
     if @story.items.empty?
@@ -411,28 +415,8 @@ class StoriesController < ApplicationController
           redirect_to :back, notice: I18n.t('actions.messages.save_success')
         when I18n.t('actions.edit_items')
           redirect_to story_edit_items_path(story), notice: I18n.t('actions.messages.data_saved')
-        when I18n.t('actions.edit_chapters')
-          redirect_to edit_story_path(story), notice: I18n.t('actions.messages.data_saved')
-        when I18n.t('actions.graph')
-          redirect_to story_graph_path(story), notice: I18n.t('actions.messages.save_success')
-        when I18n.t('actions.edit_monsters')
-          redirect_to story_edit_monsters_path(story), notice: I18n.t('actions.messages.save_success')
-        when I18n.t('actions.five_more')
-          add_chapters(story,5)
-        when I18n.t('actions.ten_more')
-          add_chapters(story,10)
-        when I18n.t('actions.twenty_more')
-          add_chapters(story,20)
-        when I18n.t('actions.fifty_more')
-          add_chapters(story,50)
-        when I18n.t('actions.five_less')
-          remove_chapters(story,5)
-        when I18n.t('actions.ten_less')
-          remove_chapters(story,10)
-        when I18n.t('actions.twenty_less')
-          remove_chapters(story,20)
-        when I18n.t('actions.fifty_less')
-          remove_chapters(story,50)
+        when I18n.t('actions.save_story')
+          redirect_to story_edit_story_path(story), notice: I18n.t('actions.messages.data_saved')
         else
           redirect_to story, notice: I18n.t('actions.messages.update_success')
       end

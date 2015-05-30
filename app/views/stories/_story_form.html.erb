@@ -1,0 +1,36 @@
+<%= render partial: 'shared/errors' %>
+
+<div class="container">
+  <div class="message-container"></div>
+  <div class="row wrapper">
+    <div class="col-lg-12">
+      <%= simple_form_for @story, html: {class: 'chapter_form'} do |f| %>
+        <div class="field">
+          <%= f.input :title, label: t('stories.edit.story_title') %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+        </div>
+        <div class="field">
+          <%= f.input :cover, input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 2.megabytes} %>
+        </div>
+        <% if f.object.cover.blank? %>
+          <%= image_tag 'no_image_thumbnail.png' %>
+        <% else %>
+          Current image: <%= image_tag f.object.cover(:thumbnail) %>
+        <% end %>
+        <div class="field">
+          <%= f.input :initial_gold, label: t('stories.edit.initial_gold'), as: :integer %>
+        </div>
+        <div class="field">
+          <%= f.input :resume, label: t('stories.edit.resume'), as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
+        </div>
+        <div class="field">
+          <%= f.input :prelude, label: t('stories.edit.prelude'), as: :text, input_html: { rows: 10, style: 'width: 100%' } %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit t('actions.save_story'), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
