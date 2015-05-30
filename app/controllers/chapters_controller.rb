@@ -9,17 +9,15 @@ class ChaptersController < ApplicationController
     @story = Story.find(params[:story_id])
 
     respond_to do |format|
-      binding.pry
       if @chapter.update_attributes(chapter_params)
-        format.json { render json: {message: 'Capítulo atualizado'}, status: :updated, location: [@story, @chapter] }
+        format.json { render json: @chapter.to_json }
       else
-        format.json { render json: @chapter.errors, :status => :unprocessable_entity }
+        format.json { render json: { :error => @chapter.errors.full_messages }, :status => :unprocessable_entity }
       end
     end
   end
 
   def chapter_params
-    binding.pry
     params.require(:chapter).permit(:reference, 
                                     :story_id, 
                                     :content, 

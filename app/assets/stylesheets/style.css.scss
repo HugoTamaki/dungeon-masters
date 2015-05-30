@@ -234,6 +234,15 @@ body {
 .message-container {
   height: 20px;
   display: block;
+  position: fixed;
+  top: 125px;
+  left: 30%;
+  right: 30%;
+  height: auto;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 999;
+  display: hidden;
 }
 
 .new-pass {
