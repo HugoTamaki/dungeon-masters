@@ -245,6 +245,15 @@ body {
   display: hidden;
 }
 
+.nav-menu {
+  list-style-type: none;
+  padding-left: 0;
+  li {
+    display: inline;
+    margin: 0 10px;
+  }
+}
+
 .new-pass {
   margin-top: 10px;
 }
