@@ -17,8 +17,9 @@
     post 'use_item', on: :collection
     get 'buy_item'
     post 'publish'
-    get 'search_result',as: "search_result", on: :collection
+    get 'search_result', as: 'search_result', on: :collection
     get 'story', as: 'show'
+    get 'update_chapter_number', as: 'update_chapter_number'
     resources :comments
     put :favorite, on: :member
     resources :chapters do

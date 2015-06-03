@@ -150,6 +150,14 @@ class StoriesController < ApplicationController
     end
   end
 
+  def update_chapter_number
+    @story = Story.find(params[:story_id])
+
+    quantity = params[:quantity].to_i
+
+    params[:type] == 'sum' ? add_chapters(story, quantity) : remove_chapters(story, quantity)
+  end
+
   def graph
     @story = Story.find(params[:story_id])
   end

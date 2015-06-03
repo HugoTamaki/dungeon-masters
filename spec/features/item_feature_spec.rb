@@ -12,26 +12,26 @@ feature Item do
     end
 
     scenario "user creates item successfully" do
-      visit "stories/#{story.id}/edit_items"
+      visit "/stories/#{story.id}/edit_items"
 
       fill_in "Nome", with: "Escudo"
       fill_in "Descrição", with: "um escudo"
 
-      click_button "Editar Capítulos"
+      click_button "Salvar"
 
-      current_path.should == "/stories/#{Story.last.id}/edit"
-      page.should have_text("Dados salvos.")
+      current_path.should == "/stories/#{story.id}/edit_items"
+      page.should have_text("História salva com sucesso.")
       Item.last.name.should == "Escudo"
       Item.last.description.should == "um escudo"
     end
 
-    scenario "user fails to create item" do
-      visit "stories/#{story.id}/edit_items"
+    scenario "user fails to create item", js: true do
+      visit "/stories/#{story.id}/edit_items"
 
       fill_in "Nome", with: ""
       fill_in "Descrição", with: "um escudo"
 
-      click_button "Editar Capítulos"
+      click_button "Salvar"
 
       current_path.should == "/stories/#{Story.last.id}"
       page.should have_text("Items name não deve estar em branco")

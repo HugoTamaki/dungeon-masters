@@ -371,31 +371,31 @@ feature "Story" do
     scenario "user adds 5 chapters" do
       visit "/stories/#{story_sample2.id}/edit"
 
-      first(:button, "+5 capítulos").click
+      first(:link, "+5 capítulos").click
       story_sample2.chapters.count.should == 10
     end
 
     scenario "user adds 10 chapters" do
       visit "/stories/#{story_sample2.id}/edit"
 
-      first(:button, "Adicionar capítulos").click
-      first(:button, "+10 capítulos").click
+      first(:link, "Adicionar capítulos").click
+      first(:link, "+10 capítulos").click
       story_sample2.chapters.count.should == 15
     end
 
     scenario "user adds 20 chapters" do
       visit "/stories/#{story_sample2.id}/edit"
 
-      first(:button, "Adicionar capítulos").click
-      first(:button, "+20 capítulos").click
+      first(:link, "Adicionar capítulos").click
+      first(:link, "+20 capítulos").click
       story_sample2.chapters.count.should == 25
     end
 
     scenario "user adds 50 chapters" do
       visit "/stories/#{story_sample2.id}/edit"
 
-      first(:button, "Adicionar capítulos").click
-      first(:button, "+50 capítulos").click
+      first(:link, "Adicionar capítulos").click
+      first(:link, "+50 capítulos").click
       story_sample2.chapters.count.should == 55
     end
   end
@@ -414,8 +414,8 @@ feature "Story" do
     scenario "user removes 5 chapters", js: true do
       visit "/stories/#{story_sample3.id}/edit"
 
-      first(:button, "Remover capítulos").click
-      first(:button, "-5 capítulos").click
+      first(:link, "Remover capítulos").click
+      first(:link, "-5 capítulos").click
       page.driver.browser.switch_to.alert.accept
       sleep(1)
       story_sample3.chapters.count.should == 45
@@ -424,8 +424,8 @@ feature "Story" do
     scenario "user removes 10 chapters", js: true do
       visit "/stories/#{story_sample3.id}/edit"
 
-      first(:button, "Remover capítulos").click
-      first(:button, "-10 capítulos").click
+      first(:link, "Remover capítulos").click
+      first(:link, "-10 capítulos").click
       page.driver.browser.switch_to.alert.accept
       sleep(1)
       story_sample3.chapters.count.should == 40
@@ -434,8 +434,8 @@ feature "Story" do
     scenario "user removes 20 chapters", js: true do
       visit "/stories/#{story_sample3.id}/edit"
 
-      first(:button, "Remover capítulos").click
-      first(:button, "-20 capítulos").click
+      first(:link, "Remover capítulos").click
+      first(:link, "-20 capítulos").click
       page.driver.browser.switch_to.alert.accept
       sleep(1)
       story_sample3.chapters.count.should == 30
@@ -444,8 +444,8 @@ feature "Story" do
     scenario "user removes 50 chapters", js: true do
       visit "/stories/#{story_sample3.id}/edit"
 
-      first(:button, "Remover capítulos").click
-      first(:button, "-50 capítulos").click
+      first(:link, "Remover capítulos").click
+      first(:link, "-50 capítulos").click
       page.driver.browser.switch_to.alert.accept
       sleep(1)
       story_sample3.chapters.count.should == 0
