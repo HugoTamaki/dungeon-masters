@@ -496,6 +496,7 @@ class StoriesController < ApplicationController
     end
 
     def cant_buy?(adventurer, adventurer_modifier_shop, price)
+      adventurer.gold ||= 0
       if adventurer_modifier_shop
         adventurer.gold < 1 || adventurer_modifier_shop.quantity < 1 || adventurer.gold < price
       else
