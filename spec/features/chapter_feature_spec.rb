@@ -33,6 +33,8 @@ feature Chapter do
 
       first(:button, "Salvar").click
 
+      sleep(1)
+
       story = Story.last
       chapter = story.chapters.first
       monster = chapter.monsters.first
@@ -52,13 +54,11 @@ feature Chapter do
       click_link "Adicionar Monstro"
       fill_in "Nome", with: "monster"
 
-      first(:button, "Terminar Edição").click
-      current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text "Chapters monsters skill não deve estar em branco"
-      page.should have_text "Chapters monsters skill não é um número"
-      page.should have_text "Chapters monsters energy não deve estar em branco"
-      page.should have_text "Chapters monsters energy não é um número"
-      page.should have_text "Capítulos com erros: 1"
+      first(:button, "Salvar").click
+
+      story = Story.last
+      chapter = story.chapters.first
+      expect(chapter.monsters).to eq([])
     end
   end
 end
