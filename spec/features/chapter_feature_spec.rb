@@ -31,9 +31,18 @@ feature Chapter do
       select "espada", from: "Item"
       select "1", from: "Quantidade"
 
-      first(:button, "Terminar Edição").click
-      current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text("História atualizada com sucesso.")
+      first(:button, "Salvar").click
+
+      story = Story.last
+      chapter = story.chapters.first
+      monster = chapter.monsters.first
+      item = chapter.modifiers_items.first.item
+      chapter.decisions.first.destiny_num.should eq 5
+      monster.name.should eq 'monster'
+      monster.skill.should eq 5
+      monster.energy.should eq 5
+      item.name.should eq 'espada'
+      item.description.should eq 'uma espada'
     end
 
     scenario "user creates story without success", js: true do
