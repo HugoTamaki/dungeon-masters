@@ -17,10 +17,10 @@ feature Item do
       fill_in "Nome", with: "Escudo"
       fill_in "Descrição", with: "um escudo"
 
-      click_button "Salvar"
+      click_button "Editar Itens"
 
       current_path.should == "/stories/#{story.id}/edit_items"
-      page.should have_text("História salva com sucesso.")
+      page.should have_text("Dados salvos.")
       Item.last.name.should == "Escudo"
       Item.last.description.should == "um escudo"
     end
@@ -31,10 +31,10 @@ feature Item do
       fill_in "Nome", with: ""
       fill_in "Descrição", with: "um escudo"
 
-      click_button "Salvar"
+      click_button "Editar Itens"
 
       current_path.should == "/stories/#{Story.last.id}"
-      page.should have_text("Items name não deve estar em branco")
+      page.should have_text("não deve estar em branco")
       Item.last.name.should_not == "Escudo"
       Item.last.description.should_not == "um escudo"
     end

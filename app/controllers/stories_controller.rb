@@ -324,10 +324,18 @@ class StoriesController < ApplicationController
       @chapters_with_errors = get_chapters_with_errors(@story)
       @chapters = @story.chapters
       respond_to do |format|
-        format.html { render action: :edit, controller: :stories }
-        format.json { render json: {errors: @errors.to_json, 
-                                    chapters_with_errors: @chapters_with_errors}, 
-                                    status: :unprocessable_entity }
+        case params[:commit]
+        when t('actions.edit_items')
+          format.html { render action: :edit_items, controller: :stories, alert: @errors }
+          format.json { render json: {errors: @errors.to_json, 
+                                      chapters_with_errors: @chapters_with_errors}, 
+                                      status: :unprocessable_entity }
+        when t('actions.save_story')
+          format.html { render action: :edit_story, controller: :stories, alert: @errors }
+          format.json { render json: {errors: @errors.to_json, 
+                                      chapters_with_errors: @chapters_with_errors}, 
+                                      status: :unprocessable_entity }
+        end
       end
     end
   end
