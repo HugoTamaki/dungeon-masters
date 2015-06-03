@@ -25,7 +25,7 @@ feature Item do
       Item.last.description.should == "um escudo"
     end
 
-    scenario "user fails to create item", js: true do
+    scenario "user fails to create item" do
       visit "/stories/#{story.id}/edit_items"
 
       fill_in "Nome", with: ""
