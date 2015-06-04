@@ -39,12 +39,12 @@ feature Chapter do
       chapter = story.chapters.first
       monster = chapter.monsters.first
       item = chapter.modifiers_items.first.item
-      chapter.decisions.first.destiny_num.should eq 5
-      monster.name.should eq 'monster'
-      monster.skill.should eq 5
-      monster.energy.should eq 5
-      item.name.should eq 'espada'
-      item.description.should eq 'uma espada'
+      expect(chapter.decisions.first.child.reference).to eq "5"
+      expect(monster.name).to eq 'monster'
+      expect(monster.skill).to eq 5
+      expect(monster.energy).to eq 5
+      expect(item.name).to eq 'espada'
+      expect(item.description).to eq 'uma espada'
     end
 
     scenario "user creates story without success", js: true do
@@ -55,6 +55,8 @@ feature Chapter do
       fill_in "Nome", with: "monster"
 
       first(:button, "Salvar").click
+
+      sleep(1)
 
       story = Story.last
       chapter = story.chapters.first

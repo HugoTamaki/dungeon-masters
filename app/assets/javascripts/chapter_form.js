@@ -28,5 +28,5 @@ $(document).ready(function(){
       var submitButton = $(this).find('input[name="commit"]');
       submitButton.attr('value', 'Salvar');
       submitButton.removeClass('disabled');
-    })
+    });
 });

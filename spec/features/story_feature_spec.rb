@@ -404,6 +404,8 @@ feature "Story" do
     let!(:story_sample3) { FactoryGirl.create(:story, title: "Story sample", published: true, user: user, chapter_numbers: 50) }
 
     before(:each) do
+      story = Story.last
+      story.chapters.destroy_all
       for i in (1..50)
         story_sample3.chapters.build(reference: "#{i}", content: "content #{i}")
       end

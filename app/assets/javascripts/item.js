@@ -11,8 +11,7 @@ $(document).ready(function(){
       },
       dataType: "json",
       success: function(data) {
-        $(".message-container").html("<p class='message'>" + data["message"] + "</p>");
-        setTimeout("$('.message').fadeOut()", 3000);
+        showMessage(data["message"]);
         $('#adventurer_skill').html(data["skill"]);
         $('#adventurer_energy').html(data["energy"]);
         $('#adventurer_luck').html(data["luck"]);
@@ -32,6 +31,15 @@ $(document).ready(function(){
         $(".message-container").html("<p class='message'>" + response["message"] + "</p>");
         setTimeout("$('.message').fadeOut()", 3000);
       }
-    })
+    });
   });
+
+  function showMessage(message) {
+    $('.message-container').fadeIn();
+    $('.message-container').removeClass('alert alert-success');
+    $('.message-container').removeClass('alert alert-danger');
+    $('.message-container').addClass('alert alert-success');
+    $('.message-container').html(message);
+    $('.message-container').fadeOut(3000);
+  }
 });
