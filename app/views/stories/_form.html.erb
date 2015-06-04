@@ -1,72 +1,69 @@
 <%= render partial: 'shared/errors' %>
-
-<div class="container">
-  <div class="message-container">
-    
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <% @chapters.each do |chapter| %>
-        <div class="chapter-fields wrapper">
-          <div class="accordionButton">
-            <h3><%= t('stories.edit.chapter') %> <%= chapter.reference %></h3>
-          </div>
-          <div class="accordionContent">
-            <%= simple_form_for chapter, url: chapter_update_story_chapters_path(@story, chapter), remote: true do |f| %>
-              <div class="form-group">
-                <%= f.input :content, label: t('stories.edit.content'), input_html: { rows: 10, title: t('tooltip.chapter_content'), class: 'chapter-content-wysiwyg summernote form-control' } %>
-              </div>
-              <%= f.input :image, label: t('stories.edit.image'), hint: t('actions.messages.image_hint'), input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 2.megabytes} %>
-              <% if f.object.image.blank? %>
-                <%= t('stories.edit.no_current_image') %>
-              <% else %>
-                <div class="chapter-image">
-                  <%= t('stories.edit.current_image') %>: <%= image_tag Chapter.find(f.object.id).image(:thumbnail) %>
-                </div>
-                <%= f.input :id, as: :hidden %>
-                <p><%= link_to t('stories.edit.remove_image'), "#", remote: true, class: "remove btn btn-primary" %></p>
-              <% end %>
-              <div class="decisions">
-                <h3><%= t('stories.edit.decisions') %></h3>
-                <%= f.simple_fields_for :decisions do |builder| %>
-                  <%= render partial: "/decisions/decisions_fields", :locals => {:f => builder} %>
-                <% end %>
-                <%= link_to_add_fields t('stories.edit.add_decisions'), f, :decisions, "decisions" %>
-              </div>
-              <div class="monsters">
-                <h3><%= t('stories.edit.monsters') %></h3>
-                <%= f.simple_fields_for :monsters do |builder| %>
-                  <%= render partial: "/monsters/monsters_fields", :locals => {:f => builder} %>
-                <% end %>
-                <%= link_to_add_fields t('stories.edit.add_monsters'), f, :monsters, "monsters" %>
-              </div>
-              <div class="modifiers-items">
-                <h3><%= t('stories.edit.items') %></h3>
-                <%= f.simple_fields_for :modifiers_items do |builder| %>
-                  <%= render "/modifiers_items/modifiers_items_fields", f: builder %>
-                <% end %>
-                <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_items, "modifiers_items" %>
-              </div>
-              <div class="modifiers-shops">
-                <h3><%= t('stories.edit.shop') %></h3>
-                <%= f.simple_fields_for :modifiers_shops do |builder| %>
-                  <%= render "modifiers_shops/modifiers_shops_fields", f: builder %>
-                <% end %>
-                <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_shops, "modifiers_shops"%>
-              </div>
-
-              <div class="form-action">
-                <%= f.submit 'Salvar', class: 'btn btn-primary' %>
-              </div>
-            <% end %>
-          </div>
+<div class="message-container">
+  
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <% @chapters.each do |chapter| %>
+      <div class="chapter-fields wrapper">
+        <div class="accordionButton">
+          <h3><%= t('stories.edit.chapter') %> <%= chapter.reference %></h3>
         </div>
-        <br/>
+        <div class="accordionContent">
+          <%= simple_form_for chapter, url: chapter_update_story_chapters_path(@story, chapter), remote: true do |f| %>
+            <div class="form-group">
+              <%= f.input :content, label: t('stories.edit.content'), input_html: { rows: 10, title: t('tooltip.chapter_content'), class: 'chapter-content-wysiwyg summernote form-control' } %>
+            </div>
+            <%= f.input :image, label: t('stories.edit.image'), hint: t('actions.messages.image_hint'), input_html: {onchange: "validateFiles(this);"}, data: {max_file_size: 2.megabytes} %>
+            <% if f.object.image.blank? %>
+              <%= t('stories.edit.no_current_image') %>
+            <% else %>
+              <div class="chapter-image">
+                <%= t('stories.edit.current_image') %>: <%= image_tag Chapter.find(f.object.id).image(:thumbnail) %>
+              </div>
+              <%= f.input :id, as: :hidden %>
+              <p><%= link_to t('stories.edit.remove_image'), "#", remote: true, class: "remove btn btn-primary" %></p>
+            <% end %>
+            <div class="decisions">
+              <h3><%= t('stories.edit.decisions') %></h3>
+              <%= f.simple_fields_for :decisions do |builder| %>
+                <%= render partial: "/decisions/decisions_fields", :locals => {:f => builder} %>
+              <% end %>
+              <%= link_to_add_fields t('stories.edit.add_decisions'), f, :decisions, "decisions" %>
+            </div>
+            <div class="monsters">
+              <h3><%= t('stories.edit.monsters') %></h3>
+              <%= f.simple_fields_for :monsters do |builder| %>
+                <%= render partial: "/monsters/monsters_fields", :locals => {:f => builder} %>
+              <% end %>
+              <%= link_to_add_fields t('stories.edit.add_monsters'), f, :monsters, "monsters" %>
+            </div>
+            <div class="modifiers-items">
+              <h3><%= t('stories.edit.items') %></h3>
+              <%= f.simple_fields_for :modifiers_items do |builder| %>
+                <%= render "/modifiers_items/modifiers_items_fields", f: builder %>
+              <% end %>
+              <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_items, "modifiers_items" %>
+            </div>
+            <div class="modifiers-shops">
+              <h3><%= t('stories.edit.shop') %></h3>
+              <%= f.simple_fields_for :modifiers_shops do |builder| %>
+                <%= render "modifiers_shops/modifiers_shops_fields", f: builder %>
+              <% end %>
+              <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_shops, "modifiers_shops"%>
+            </div>
 
-      <% end %>
+            <div class="form-action">
+              <%= f.submit 'Salvar', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <br/>
 
-      <%= paginate @chapters %>
-    </div>
+    <% end %>
+
+    <%= paginate @chapters %>
   </div>
 </div>
 <%= render partial: 'publish_script' %>
