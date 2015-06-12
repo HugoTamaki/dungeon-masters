@@ -34,6 +34,16 @@ class Adventurer < ActiveRecord::Base
 
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
 
+  def clear
+    self.chapters.clear
+    self.adventurers_items.clear
+    self.adventurers_shops.clear
+    self.skill = nil
+    self.energy = nil
+    self.luck = nil
+    self.save(validate: false)
+  end
+
   def self.attribute_and_item_changer(adventurer, chapter)
     if chapter.modifiers_attributes.present?
       unless adventurer.chapters.include? chapter

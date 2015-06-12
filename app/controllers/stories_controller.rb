@@ -29,13 +29,7 @@ class StoriesController < ApplicationController
       if params[:new_story]
         adventurer = current_user.adventurers.by_story(params[:story_id]).first
         unless adventurer.nil?
-          adventurer.chapters.clear
-          adventurer.adventurers_items.clear
-          adventurer.adventurers_shops.clear
-          adventurer.skill = nil
-          adventurer.energy = nil
-          adventurer.luck = nil
-          adventurer.save(validate: false)
+          adventurer.clear
           @adventurer = adventurer
         else
           @adventurer = Adventurer.new
@@ -43,13 +37,7 @@ class StoriesController < ApplicationController
         end
       else
         @adventurer = current_user.adventurers.by_story(params[:story_id]).first
-        unless @adventurer.nil?
-          redirect_to read_stories_path(continue: true, chapter_id: @adventurer.chapter.id, id: @story.id, adventurer_id: @adventurer.id)
-        else
-          @adventurer.destroy unless @adventurer.nil?
-          @adventurer = Adventurer.new
-          @adventurer.story_id = params[:story_id]
-        end
+        redirect_to read_stories_path(continue: true, chapter_id: @adventurer.chapter.id, id: @story.id, adventurer_id: @adventurer.id)
       end
     else
       redirect_to root_url, alert: I18n.t('actions.not_published')
@@ -69,7 +57,7 @@ class StoriesController < ApplicationController
         end
       else
         @chapter = @story.chapters.by_reference(params[:reference]).first
-        if @story and @story.has_adventurer?(current_user.adventurers) and @chapter.present?
+        if @story && @story.has_adventurer?(current_user.adventurers) && @chapter.present?
           adventurer = current_user.adventurers.by_story(@story.id).first
           adventurer.chapter_id = @chapter.id
           adventurer.story = @story
