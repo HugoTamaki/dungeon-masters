@@ -108,7 +108,7 @@ class StoriesController < ApplicationController
     end
     @chapter_count = @story.chapters.count
     @chapters = @story.chapters.page(params[:page]).per(10)
-    @all_chapters = @story_chapters
+    @all_chapters = @story.chapters
     @page = params[:page]
     params[:change_page] == 'true' ? @last_chapter = nil : @last_chapter = params[:last_chapter]
   end
