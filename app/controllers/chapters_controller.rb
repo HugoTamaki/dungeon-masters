@@ -1,4 +1,5 @@
 class ChaptersController < ApplicationController
+  respond_to :html, :json
 
   def show
 

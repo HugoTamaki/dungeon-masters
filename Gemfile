@@ -49,6 +49,7 @@ gem "launchy"
 gem 'annotate', "~> 2.6.5"
 gem 'summernote-rails'
 gem 'figaro'
+gem 'remotipart', '~> 1.2'
 # gem 'sidekiq'
 # gem "devise-async"
 # gem 'rvm1-capistrano3', :require => false
