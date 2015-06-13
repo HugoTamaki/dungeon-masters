@@ -12,7 +12,7 @@ class ChaptersController < ApplicationController
     if @chapter.update(chapter_params)
       redirect_to edit_story_path(@story, page: params[:chapter][:page], last_chapter: params[:chapter][:position]), notice: 'Capítulo atualizado com sucesso.'
     else
-      redirect_to edit_story_path(@story, page: params[:chapter][:page], last_chapter: params[:chapter][:position]), alert: { :error => @chapter.errors.full_messages }
+      redirect_to edit_story_path(@story, page: params[:chapter][:page], last_chapter: params[:chapter][:position]), alert: { :errors => @chapter.errors.full_messages }
     end
   end
 
