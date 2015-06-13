@@ -45,14 +45,14 @@ $(document).ready(function(){
     $("#tabs").tabs();
   });
 
-  $('.chapter-fields').accordion({
-    active: false,
-    collapsible: true,
-    header: '.accordionButton',
-    heightStyle: "content",
-    autoHeight: false,
-    clearStyle: true,
-  });
+  // $('.chapter-fields').accordion({
+  //   active: false,
+  //   collapsible: true,
+  //   header: '.accordionButton',
+  //   heightStyle: "content",
+  //   autoHeight: false,
+  //   clearStyle: true,
+  // });
 
   $('.summernote').summernote({
     height: 330,

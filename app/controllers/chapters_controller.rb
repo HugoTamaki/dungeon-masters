@@ -9,12 +9,10 @@ class ChaptersController < ApplicationController
     @chapter = Chapter.find(params[:id])
     @story = Story.find(params[:story_id])
 
-    respond_to do |format|
-      if @chapter.update_attributes(chapter_params)
-        format.json { render json: @chapter.to_json }
-      else
-        format.json { render json: { :error => @chapter.errors.full_messages }, :status => :unprocessable_entity }
-      end
+    if @chapter.update(chapter_params)
+      redirect_to edit_story_path(@story, page: params[:chapter][:page], last_chapter: params[:chapter][:position]), notice: 'Capítulo atualizado com sucesso.'
+    else
+      redirect_to edit_story_path(@story, page: params[:chapter][:page], last_chapter: params[:chapter][:position]), alert: { :error => @chapter.errors.full_messages }
     end
   end
 

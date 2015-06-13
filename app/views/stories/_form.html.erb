@@ -4,13 +4,14 @@
 </div>
 <div class="row">
   <div class="col-lg-12">
+    <% index = 0 %>
     <% @chapters.each do |chapter| %>
-      <div class="chapter-fields wrapper">
+      <div class="chapter-fields wrapper <%= index.to_s == @last_chapter ? 'active' : '' %>">
         <div class="accordionButton">
           <h3><%= t('stories.edit.chapter') %> <%= chapter.reference %></h3>
         </div>
         <div class="accordionContent">
-          <%= simple_form_for chapter, url: chapter_update_story_chapters_path(@story, chapter), input_html: {multipart: true}, remote: true do |f| %>
+          <%= simple_form_for chapter, url: chapter_update_story_chapters_path(@story, chapter) do |f| %>
             <div class="form-group">
               <%= f.input :content, label: t('stories.edit.content'), input_html: { rows: 10, title: t('tooltip.chapter_content'), class: 'chapter-content-wysiwyg summernote form-control' } %>
             </div>
@@ -53,6 +54,10 @@
               <%= link_to_add_fields t('stories.edit.add_item'), f, :modifiers_shops, "modifiers_shops"%>
             </div>
 
+            <%= f.hidden_field :page, value: @page %>
+            <%= f.hidden_field :position, value: index %>
+            <% index += 1 %>
+
             <div class="form-action">
               <%= f.submit 'Salvar', class: 'btn btn-primary' %>
             </div>
@@ -67,3 +72,18 @@
   </div>
 </div>
 <%= render partial: 'publish_script' %>
+<script>
+  $(document).ready(function(){
+    $('.chapter-fields').accordion({
+      active: false,
+      collapsible: true,
+      header: '.accordionButton',
+      heightStyle: "content",
+      autoHeight: false,
+      clearStyle: true,
+    });
+
+    $('.active').accordion('option','active',0);
+  });
+</script>
+ 

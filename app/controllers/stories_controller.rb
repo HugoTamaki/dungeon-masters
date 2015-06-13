@@ -56,7 +56,7 @@ class StoriesController < ApplicationController
           format.json { render json: @chapter }
         end
       else
-        @chapter = @story.chapters.by_reference(params[:reference]).first
+        @chapter = @story.chapters.find_by reference: params[:reference]
         if @story && @story.has_adventurer?(current_user.adventurers) && @chapter.present?
           adventurer = current_user.adventurers.by_story(@story.id).first
           adventurer.chapter_id = @chapter.id
@@ -108,6 +108,8 @@ class StoriesController < ApplicationController
     end
     @chapter_count = @story.chapters.count
     @chapters = @story.chapters.page(params[:page]).per(10)
+    @page = params[:page]
+    @last_chapter = params[:last_chapter]
   end
 
   def edit_story
