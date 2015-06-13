@@ -48,6 +48,15 @@ class Story < ActiveRecord::Base
     adventurers.any? {|adventurer| adventurer.story == self}
   end
 
+  def build_chapters chapter_numbers
+    for i in (1..chapter_numbers)
+      chapter = self.chapters.build
+      chapter.decisions.build
+      chapter.reference = i
+      chapter.save
+    end
+  end
+
   def self.graph(chapters)
     references = []
     chapters_with_decisions = {}

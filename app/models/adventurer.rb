@@ -44,49 +44,48 @@ class Adventurer < ActiveRecord::Base
     self.save(validate: false)
   end
 
-  def self.attribute_and_item_changer(adventurer, chapter)
+  def attribute_and_item_changer(chapter)
     if chapter.modifiers_attributes.present?
-      unless adventurer.chapters.include? chapter
+      unless self.chapters.include? chapter
         chapter.modifiers_attributes.each do |attribute|
-          change_attribute(adventurer, attribute.attr, attribute.quantity)
+          change_attribute(self, attribute.attr, attribute.quantity)
         end
       end
     end
 
     if chapter.modifiers_items.present?
       chapter.modifiers_items.each do |item|
-        unless adventurer.chapters.include? chapter
-          if dont_have_item(adventurer, item.item.id)
-            adventurer.items << item.item unless adventurer.items.include? item.item
-            adventurer_item = adventurer.adventurers_items.find_by(item_id: item.item.id)
+        unless self.chapters.include? chapter
+          if self.dont_have_item(item.item.id)
+            self.items << item.item unless self.items.include? item.item
+            adventurer_item = self.adventurers_items.find_by(item_id: item.item.id)
             adventurer_item.quantity += item.quantity if adventurer_item.item.usable
             adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           else
-            adventurer_item = adventurer.adventurers_items.find_by(item_id: item.item.id)
+            adventurer_item = self.adventurers_items.find_by(item_id: item.item.id)
             adventurer_item.quantity += item.quantity if adventurer_item.item.usable
             adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           end
         end
       end
-      adventurer.save
+      self.save
     end
-    adventurer
   end
 
-  def self.dont_have_item(adventurer,item_id)
-    adventurer_items = adventurer.items.where(id: item_id)
-    used_item = AdventurerItem.where(adventurer_id: adventurer.id, item_id: item_id).first
+  def dont_have_item(item_id)
+    adventurer_items = self.items.where(id: item_id)
+    used_item = AdventurerItem.where(adventurer_id: self.id, item_id: item_id).first
     (adventurer_items.empty? || used_item.status == 0) ? true : false
   end
 
-  def self.use_required_item(decision,adventurer)
+  def use_required_item(decision)
     unless decision.nil?
       if decision.item_validator
         required_item = Item.find(decision.item_validator)
         if required_item.usable
-          change_attribute(adventurer, required_item.attr, required_item.modifier)
+          self.change_attribute(required_item.attr, required_item.modifier)
         end
         adventurer_item = AdventurerItem.find_by(item_id: required_item.id)
         adventurer_item.status = 0 unless required_item.usable
@@ -94,24 +93,23 @@ class Adventurer < ActiveRecord::Base
         adventurer_item.save
       end
     end
-    adventurer
   end
 
-  def self.change_attribute(adventurer, attribute, modifier)
+  def change_attribute(attribute, modifier)
     case attribute
       when "skill"
-        adventurer.skill += modifier.to_i
-        adventurer.skill = 12 if adventurer.skill > 12
+        self.skill += modifier.to_i
+        self.skill = 12 if self.skill > 12
       when "energy"
-        adventurer.energy += modifier.to_i
-        adventurer.energy = 24 if adventurer.energy > 24
+        self.energy += modifier.to_i
+        self.energy = 24 if self.energy > 24
       when "luck"
-        adventurer.luck += modifier.to_i
-        adventurer.luck = 12 if adventurer.luck > 12
+        self.luck += modifier.to_i
+        self.luck = 12 if self.luck > 12
       when "gold"
-        adventurer.gold += modifier.to_i
+        self.gold += modifier.to_i
     end
 
-    adventurer.save
+    self.save
   end
 end

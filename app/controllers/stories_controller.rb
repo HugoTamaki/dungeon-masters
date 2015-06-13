@@ -64,12 +64,13 @@ class StoriesController < ApplicationController
           adventurer.gold = @story.initial_gold if @story.initial_gold > 0 && params[:reference] == "1"
           adventurer.save
 
-          @adventurer = Adventurer.attribute_and_item_changer(adventurer, @chapter) unless @adventurer && @chapter
+          adventurer.attribute_and_item_changer(@chapter) unless @adventurer && @chapter
+          @adventurer = adventurer
           @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
           @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
 
           this_decision = Decision.find_by(destiny_num: @chapter.id)
-          Adventurer.use_required_item(this_decision, @adventurer)
+          @adventurer.use_required_item(this_decision)
           
           respond_to do |format|
             format.html # show.html.erb
@@ -99,12 +100,7 @@ class StoriesController < ApplicationController
 
     if @story.chapters.empty?
       if params[:chapter_numbers].present?
-        for i in (1..chapter_numbers)
-          chapter = @story.chapters.build
-          chapter.decisions.build
-          chapter.reference = i
-          chapter.save
-        end
+        @story.build_chapters(chapter_numbers)
       else
         chapter = @story.chapters.build
         chapter.decisions.build
@@ -190,7 +186,7 @@ class StoriesController < ApplicationController
   def use_item
     adventurer = current_user.adventurers.by_story(params[:story_id]).first
     adventurer_item = adventurer.adventurers_items.find_by(item_id: params["item-id"])
-    Adventurer.change_attribute(adventurer, params[:attribute], params[:modifier])
+    adventurer.change_attribute(params[:attribute], params[:modifier])
     adventurer_item.quantity -= 1
 
     if adventurer_item.save
