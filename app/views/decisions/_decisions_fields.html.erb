@@ -1,7 +1,7 @@
 <div class="decision-fields">
   <div class="form-group">
     <%= f.label :destiny_num, t('stories.edit.decisions') %>
-    <%= f.collection_select :destiny_num, @chapters, :id, :reference, {prompt: "--"}, {class: 'form-control'}  %>
+    <%= f.collection_select :destiny_num, @all_chapters, :id, :reference, {prompt: "--"}, {class: 'form-control'}  %>
     <p class="help-block"><%= t('actions.messages.decision_hint') %></p>
   </div>
   <div class="form-group">
