@@ -68,7 +68,7 @@
 
     <% end %>
 
-    <%= paginate @chapters %>
+    <%= paginate @chapters, params: {change_page: true} %>
   </div>
 </div>
 <%= render partial: 'publish_script' %>
