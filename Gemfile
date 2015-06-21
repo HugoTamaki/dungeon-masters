@@ -34,8 +34,6 @@ end
 
 gem "jquery-rails"
 gem "devise"
-gem "therubyracer"
-gem "less-rails"
 gem "schema_plus"
 gem "simple_form"
 gem "pry"
