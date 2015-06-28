@@ -48,7 +48,7 @@ class Adventurer < ActiveRecord::Base
     if chapter.modifiers_attributes.present?
       unless self.chapters.include? chapter
         chapter.modifiers_attributes.each do |attribute|
-          change_attribute(self, attribute.attr, attribute.quantity)
+          change_attribute(attribute.attr, attribute.quantity)
         end
       end
     end
