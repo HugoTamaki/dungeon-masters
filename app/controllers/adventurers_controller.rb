@@ -27,8 +27,7 @@ class AdventurersController < ApplicationController
   end
 
   def update
-    adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
-    @adventurer = adventurer
+    @adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
     @adventurer.skill = params[:adventurer][:skill]
     @adventurer.energy = params[:adventurer][:energy]
     @adventurer.luck = params[:adventurer][:luck]

@@ -26,17 +26,10 @@ class StoriesController < ApplicationController
   def prelude
     @story = Story.find(params[:story_id])
     if @story.published || @story.user == current_user
+      @adventurer = Adventurer.by_user_and_story(current_user, story).first
       if params[:new_story]
-        adventurer = current_user.adventurers.by_story(params[:story_id]).first
-        unless adventurer.nil?
-          adventurer.clear
-          @adventurer = adventurer
-        else
-          @adventurer = Adventurer.new
-          @adventurer.story_id = params[:story_id]
-        end
+        @adventurer = Adventurer.clear_or_create_adventurer(@adventurer, params[:story_id])
       else
-        @adventurer = current_user.adventurers.by_story(params[:story_id]).first
         redirect_to read_stories_path(continue: true, chapter_id: @adventurer.chapter.id, id: @story.id, adventurer_id: @adventurer.id)
       end
     else

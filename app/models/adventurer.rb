@@ -33,6 +33,7 @@ class Adventurer < ActiveRecord::Base
   accepts_nested_attributes_for :adventurers_items, reject_if: :all_blank, allow_destroy: true
 
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
+  scope :by_user_and_story, lambda {|user, story| where(user_id: user.id, story_id: story.id)}
 
   def clear
     self.chapters.clear
@@ -111,5 +112,15 @@ class Adventurer < ActiveRecord::Base
     end
 
     self.save
+  end
+
+  def self.clear_or_create_adventurer(adventurer, story_id)
+    if adventurer.nil?
+      adventurer = Adventurer.new
+      adventurer.story_id = story_id
+    else
+      adventurer.clear
+    end
+    adventurer
   end
 end
