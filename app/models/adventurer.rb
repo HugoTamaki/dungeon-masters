@@ -75,6 +75,13 @@ class Adventurer < ActiveRecord::Base
     end
   end
 
+  def set_chapter_and_gold(chapter, story, reference)
+    self.chapter_id = chapter.id
+    self.story = story
+    self.gold = story.initial_gold if story.initial_gold > 0 && reference == "1"
+    self.save
+  end
+
   def dont_have_item(item_id)
     adventurer_items = self.items.where(id: item_id)
     used_item = AdventurerItem.where(adventurer_id: self.id, item_id: item_id).first

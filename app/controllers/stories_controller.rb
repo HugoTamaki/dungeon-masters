@@ -44,31 +44,17 @@ class StoriesController < ApplicationController
         @chapter = Chapter.find(params[:chapter_id])
         @adventurer = Adventurer.find(params[:adventurer_id])
         @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
-        respond_to do |format|
-          format.html # show.html.erb
-          format.json { render json: @chapter }
-        end
       else
         @chapter = @story.chapters.find_by reference: params[:reference]
         if @story && @story.has_adventurer?(current_user.adventurers) && @chapter.present?
-          adventurer = current_user.adventurers.by_story(@story.id).first
-          adventurer.chapter_id = @chapter.id
-          adventurer.story = @story
-          adventurer.gold = @story.initial_gold if @story.initial_gold > 0 && params[:reference] == "1"
-          adventurer.save
-
-          adventurer.attribute_and_item_changer(@chapter) unless @adventurer && @chapter
-          @adventurer = adventurer
+          @adventurer = Adventurer.by_user_and_story(current_user, @story).first
+          @adventurer.set_chapter_and_gold(@chapter, @story, params[:reference])
+          @adventurer.attribute_and_item_changer(@chapter)
           @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
           @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
 
           this_decision = Decision.find_by(destiny_num: @chapter.id)
           @adventurer.use_required_item(this_decision)
-          
-          respond_to do |format|
-            format.html # show.html.erb
-            format.json { render json: @chapter }
-          end
         else
           redirect_to root_url, alert: I18n.t('actions.not_found')
         end
