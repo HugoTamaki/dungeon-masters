@@ -12,29 +12,27 @@ feature "Story" do
   let!(:item4) { FactoryGirl.create(:item, name: "health drink", description: "bebida revigorante", story: story_sample, usable: true, attr: "energy", modifier: 4) }
 
   let!(:chapter1) { FactoryGirl.create(:chapter, reference: "1", content: "content 1", story: story_sample) }
+  let!(:chapter2) { FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_sample) }
+  let!(:chapter3) { FactoryGirl.create(:chapter, reference: "3", content: "content 3", story: story_sample) }
+  let!(:chapter4) { FactoryGirl.create(:chapter, reference: "4", content: "content 4", story: story_sample) }
+  let!(:chapter5) { FactoryGirl.create(:chapter, reference: "5", content: "content 5", story: story_sample) }
+  let!(:chapter6) { FactoryGirl.create(:chapter, reference: "6", content: "content 6", story: story_sample) }
+  let!(:chapter7) { FactoryGirl.create(:chapter, reference: "7", content: "content 7", story: story_sample) }
+  let!(:chapter8) { FactoryGirl.create(:chapter, reference: "8", content: "content 8", story: story_sample) }
+
   let!(:decision12) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 2) }
   let!(:decision13) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 3) }
   let!(:decision18) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 8, item_validator: item3.id) }
-  let!(:modifier_item1) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item3, quantity: 1) }
-  let!(:modifier_item2) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item4, quantity: 2) }
-
-  let!(:chapter2) { FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_sample) }
-  let!(:decision25) { FactoryGirl.create(:decision, chapter: chapter2, destiny_num: 5) }
-  let!(:monster) { FactoryGirl.create(:monster, chapter: chapter2, name: "goblin", skill: 1, energy: 1) }
-
-  let!(:chapter3) { FactoryGirl.create(:chapter, reference: "3", content: "content 3", story: story_sample) }
-  let!(:modifier_item) { FactoryGirl.create(:modifier_item, chapter: chapter3, item: item, quantity: 1) }
-
-  let!(:chapter4) { FactoryGirl.create(:chapter, reference: "4", content: "content 4", story: story_sample) }
-
-  let!(:chapter5) { FactoryGirl.create(:chapter, reference: "5", content: "content 5", story: story_sample) }
   let!(:decision56) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: 6) }
   let!(:decision57) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: 7, item_validator: item1.id) }
+  
+  let!(:modifier_item1) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item3, quantity: 1) }
+  let!(:modifier_item2) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item4, quantity: 2) }
+  let!(:decision25) { FactoryGirl.create(:decision, chapter: chapter2, destiny_num: 5) }
 
-  let!(:chapter6) { FactoryGirl.create(:chapter, reference: "6", content: "content 6", story: story_sample) }
-  let!(:chapter7) { FactoryGirl.create(:chapter, reference: "7", content: "content 7", story: story_sample) }
+  let!(:monster) { FactoryGirl.create(:monster, chapter: chapter2, name: "goblin", skill: 1, energy: 1) }
+  let!(:modifier_item) { FactoryGirl.create(:modifier_item, chapter: chapter3, item: item, quantity: 1) }
 
-  let!(:chapter8) { FactoryGirl.create(:chapter, reference: "8", content: "content 8", story: story_sample) }
   let!(:shop) { FactoryGirl.create(:modifier_shop, chapter: chapter8, item: item3, price: 5, quantity: 2) }
   let!(:shop2) { FactoryGirl.create(:modifier_shop, chapter: chapter8, item: item1, price: 18, quantity: 1) }
 
