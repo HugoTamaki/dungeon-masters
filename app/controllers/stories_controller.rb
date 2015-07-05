@@ -197,21 +197,15 @@ class StoriesController < ApplicationController
     modifier_shop = ModifierShop.find(params[:shop_id])
     item = modifier_shop.item
 
-    if adventurer_modifier_shop_present? adventurer
+    if adventurer.adventurer_modifier_shop_present? params[:shop_id]
       adventurer_modifier_shop = adventurer.adventurers_shops.where(modifier_shop_id: params[:shop_id]).first
-      unless cant_buy?(adventurer, adventurer_modifier_shop, modifier_shop.price)
+      unless adventurer.cant_buy?(adventurer_modifier_shop, modifier_shop.price)
         adventurer_modifier_shop.quantity -= 1
         if adventurer_modifier_shop.save
           if adventurer.items.include? item
-            adventurer_item = adventurer.adventurers_items.where(item_id: item.id).first
-            adventurer_item.quantity += 1
-            adventurer_item.save
-            adventurer.gold -= modifier_shop.price
-            adventurer.save
+            adventurer.buy_same_item(item, modifier_shop.price)
           else
-            adventurer.items << item
-            adventurer.gold -= modifier_shop.price
-            adventurer.save
+            adventurer.buy_new_item(item, modifier_shop.price)
           end
           redirect_to :back, notice: "Sua compra foi bem sucedida."
         else
@@ -221,11 +215,9 @@ class StoriesController < ApplicationController
         redirect_to :back, alert: "Não foi possível comprar este ítem."
       end
     else
-      unless cant_buy?(adventurer, adventurer_modifier_shop, modifier_shop.price)
+      unless adventurer.cant_buy?(adventurer_modifier_shop, modifier_shop.price)
         adventurer_shop = adventurer.adventurers_shops.create(modifier_shop_id: params[:shop_id], quantity: modifier_shop.quantity - 1)
-        adventurer.adventurers_items.create(item_id: item.id, quantity: 1)
-        adventurer.gold -= modifier_shop.price
-        adventurer.save
+        adventurer.buy_new_item(item, modifier_shop.price)
         redirect_to :back, notice: "Sua compra foi bem sucedida."
       else
         redirect_to :back, alert: "Não foi possível comprar este item."
@@ -460,19 +452,6 @@ class StoriesController < ApplicationController
       end
 
       redirect_to edit_story_path(story), notice: message
-    end
-
-    def cant_buy?(adventurer, adventurer_modifier_shop, price)
-      adventurer.gold ||= 0
-      if adventurer_modifier_shop
-        adventurer.gold < 1 || adventurer_modifier_shop.quantity < 1 || adventurer.gold < price
-      else
-        adventurer.gold < 1 || adventurer.gold < price
-      end
-    end
-
-    def adventurer_modifier_shop_present? adventurer
-      adventurer.adventurers_shops.any? {|adv_shop| adv_shop.modifier_shop_id == params[:shop_id].to_i}
     end
 
     def set_story

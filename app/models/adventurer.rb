@@ -130,4 +130,31 @@ class Adventurer < ActiveRecord::Base
     end
     adventurer
   end
+
+  def adventurer_modifier_shop_present? shop_id
+    self.adventurers_shops.any? {|adv_shop| adv_shop.modifier_shop_id == shop_id.to_i}
+  end
+
+  def cant_buy?(adventurer_modifier_shop, price)
+    self.gold ||= 0
+    if adventurer_modifier_shop
+      self.gold < 1 || adventurer_modifier_shop.quantity < 1 || self.gold < price
+    else
+      self.gold < 1 || self.gold < price
+    end
+  end
+
+  def buy_same_item item, price
+    adventurer_item = self.adventurers_items.where(item_id: item.id).first
+    adventurer_item.quantity += 1
+    adventurer_item.save
+    self.gold -= price
+    self.save
+  end
+
+  def buy_new_item item, price
+    self.adventurers_items.create(item_id: item.id, quantity: 1)
+    self.gold -= price
+    self.save
+  end
 end
