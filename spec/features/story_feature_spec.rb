@@ -23,12 +23,12 @@ feature "Story" do
   let!(:decision12) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter2.id) }
   let!(:decision13) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter3.id) }
   let!(:decision18) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter8.id, item_validator: item3.id) }
+  let!(:decision25) { FactoryGirl.create(:decision, chapter: chapter2, destiny_num: chapter5.id) }
   let!(:decision56) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: chapter6.id) }
   let!(:decision57) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: chapter7.id, item_validator: item1.id) }
   
   let!(:modifier_item1) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item3, quantity: 1) }
   let!(:modifier_item2) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item4, quantity: 2) }
-  let!(:decision25) { FactoryGirl.create(:decision, chapter: chapter2, destiny_num: 5) }
 
   let!(:monster) { FactoryGirl.create(:monster, chapter: chapter2, name: "goblin", skill: 1, energy: 1) }
   let!(:modifier_item) { FactoryGirl.create(:modifier_item, chapter: chapter3, item: item, quantity: 1) }

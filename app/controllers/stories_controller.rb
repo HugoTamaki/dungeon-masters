@@ -191,28 +191,12 @@ class StoriesController < ApplicationController
     adventurer = current_user.adventurers.where(story_id: params[:story_id]).first
     modifier_shop = ModifierShop.find(params[:shop_id])
     item = modifier_shop.item
+    adventurer_modifier_shop = adventurer.adventurers_shops.where(modifier_shop_id: params[:shop_id]).first
 
     if adventurer.adventurer_modifier_shop_present? params[:shop_id]
-      adventurer_modifier_shop = adventurer.adventurers_shops.where(modifier_shop_id: params[:shop_id]).first
-      unless adventurer.cant_buy?(adventurer_modifier_shop, modifier_shop.price)
-        adventurer_modifier_shop.quantity -= 1
-        if adventurer_modifier_shop.save
-          adventurer.buy_item(item, modifier_shop)
-          redirect_to :back, notice: "Sua compra foi bem sucedida."
-        else
-          redirect_to :back, alert: "Ocorreu algum problema."
-        end
-      else
-        redirect_to :back, alert: "Não foi possível comprar este ítem."
-      end
+      update_same_adventurer_shop(adventurer, adventurer_modifier_shop, modifier_shop, item)
     else
-      unless adventurer.cant_buy?(adventurer_modifier_shop, modifier_shop.price)
-        adventurer_shop = adventurer.adventurers_shops.create(modifier_shop_id: params[:shop_id], quantity: modifier_shop.quantity - 1)
-        adventurer.buy_new_item(item, modifier_shop.price)
-        redirect_to :back, notice: "Sua compra foi bem sucedida."
-      else
-        redirect_to :back, alert: "Não foi possível comprar este item."
-      end
+      create_new_adventurer_shop(adventurer, adventurer_modifier_shop, modifier_shop, item, params[:shop_id])
     end
   end
 
@@ -425,10 +409,7 @@ class StoriesController < ApplicationController
 
       quantity.times do
         last_chapter = story.reload.chapters.last
-        last_chapter.decisions.each do |decision|
-          decision.destroy
-        end
-        story.reload.chapters.last.destroy
+        last_chapter.destroy
       end
 
       case num_chapters
@@ -443,6 +424,30 @@ class StoriesController < ApplicationController
       end
 
       redirect_to edit_story_path(story), notice: message
+    end
+
+    def update_same_adventurer_shop(adventurer, adventurer_shop, modifier_shop, item)
+      unless adventurer.cant_buy?(adventurer_shop, modifier_shop.price)
+        adventurer_shop.quantity -= 1
+        if adventurer_shop.save
+          adventurer.buy_item(item, modifier_shop)
+          redirect_to :back, notice: "Sua compra foi bem sucedida."
+        else
+          redirect_to :back, alert: "Ocorreu algum problema."
+        end
+      else
+        redirect_to :back, alert: "Não foi possível comprar este ítem."
+      end
+    end
+
+    def create_new_adventurer_shop(adventurer, adventurer_shop, modifier_shop, item, shop_id)
+      unless adventurer.cant_buy?(adventurer_shop, modifier_shop.price)
+        adventurer.adventurers_shops.create(modifier_shop_id: shop_id, quantity: modifier_shop.quantity - 1)
+        adventurer.buy_new_item(item, modifier_shop.price)
+        redirect_to :back, notice: "Sua compra foi bem sucedida."
+      else
+        redirect_to :back, alert: "Não foi possível comprar este item."
+      end
     end
 
     def set_gold_items_and_attributes(user)
