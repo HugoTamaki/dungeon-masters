@@ -39,7 +39,7 @@ feature Chapter do
       chapter = story.chapters.first
       monster = chapter.monsters.first
       item = chapter.modifiers_items.first.item
-      expect(chapter.decisions.first.child.reference).to eq "5"
+      expect(chapter.decisions.first.destiny.reference).to eq "5"
       expect(monster.name).to eq 'monster'
       expect(monster.skill).to eq 5
       expect(monster.energy).to eq 5
