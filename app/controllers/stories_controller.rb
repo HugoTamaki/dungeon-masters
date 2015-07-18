@@ -47,12 +47,7 @@ class StoriesController < ApplicationController
       else
         @chapter = @story.chapters.find_by reference: params[:reference]
         if @story && @story.has_adventurer?(current_user.adventurers) && @chapter.present?
-          @adventurer = Adventurer.by_user_and_story(current_user, @story).first
-          @adventurer.set_chapter_and_gold(@chapter, @story, params[:reference])
-          @adventurer.attribute_and_item_changer(@chapter)
-          @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
-          @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
-
+          set_gold_items_and_attributes(current_user)
           this_decision = Decision.find_by(destiny_num: @chapter.id)
           @adventurer.use_required_item(this_decision)
         else
@@ -452,6 +447,14 @@ class StoriesController < ApplicationController
       end
 
       redirect_to edit_story_path(story), notice: message
+    end
+
+    def set_gold_items_and_attributes(user)
+      @adventurer = Adventurer.by_user_and_story(current_user, @story).first
+      @adventurer.set_chapter_and_gold(@chapter, @story, params[:reference])
+      @adventurer.attribute_and_item_changer(@chapter)
+      @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
+      @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
     end
 
     def set_story

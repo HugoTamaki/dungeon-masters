@@ -90,8 +90,8 @@ class Adventurer < ActiveRecord::Base
 
   def use_required_item(decision)
     unless decision.nil?
-      if decision.item_validator
-        required_item = Item.find(decision.item_validator)
+      if decision.has_item_validation?
+        required_item = decision.item
         if required_item.usable
           self.change_attribute(required_item.attr, required_item.modifier)
         end

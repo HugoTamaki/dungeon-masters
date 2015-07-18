@@ -19,6 +19,7 @@ class Item < ActiveRecord::Base
   has_many :adventurers, through: :adventurers_items
   has_many :modifiers_items, dependent: :destroy
   has_many :modifiers_shops, dependent: :destroy
+  has_many :decisions, foreign_key: :item_validator
 
   validates :description, presence: true
   validates :name, presence: true

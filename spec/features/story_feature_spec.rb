@@ -20,11 +20,11 @@ feature "Story" do
   let!(:chapter7) { FactoryGirl.create(:chapter, reference: "7", content: "content 7", story: story_sample) }
   let!(:chapter8) { FactoryGirl.create(:chapter, reference: "8", content: "content 8", story: story_sample) }
 
-  let!(:decision12) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 2) }
-  let!(:decision13) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 3) }
-  let!(:decision18) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: 8, item_validator: item3.id) }
-  let!(:decision56) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: 6) }
-  let!(:decision57) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: 7, item_validator: item1.id) }
+  let!(:decision12) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter2.id) }
+  let!(:decision13) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter3.id) }
+  let!(:decision18) { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter8.id, item_validator: item3.id) }
+  let!(:decision56) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: chapter6.id) }
+  let!(:decision57) { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: chapter7.id, item_validator: item1.id) }
   
   let!(:modifier_item1) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item3, quantity: 1) }
   let!(:modifier_item2) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item4, quantity: 2) }
@@ -183,6 +183,7 @@ feature "Story" do
       adventurer.save
 
       page.should have_text("content 1")
+
       
       click_link "Capítulo 2"
       page.should have_text("content 2")

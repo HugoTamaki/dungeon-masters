@@ -13,6 +13,7 @@
 class Decision < ActiveRecord::Base
 
   belongs_to :chapter, touch: true
+  belongs_to :item, foreign_key: :item_validator
 
   def child
     begin
@@ -21,5 +22,9 @@ class Decision < ActiveRecord::Base
     rescue
       nil
     end
+  end
+
+  def has_item_validation?
+    self.item
   end
 end
