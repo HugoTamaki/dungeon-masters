@@ -197,11 +197,7 @@ class StoriesController < ApplicationController
       unless adventurer.cant_buy?(adventurer_modifier_shop, modifier_shop.price)
         adventurer_modifier_shop.quantity -= 1
         if adventurer_modifier_shop.save
-          if adventurer.items.include? item
-            adventurer.buy_same_item(item, modifier_shop.price)
-          else
-            adventurer.buy_new_item(item, modifier_shop.price)
-          end
+          adventurer.buy_item(item, modifier_shop)
           redirect_to :back, notice: "Sua compra foi bem sucedida."
         else
           redirect_to :back, alert: "Ocorreu algum problema."

@@ -144,6 +144,14 @@ class Adventurer < ActiveRecord::Base
     end
   end
 
+  def buy_item (item, modifier_shop)
+    if items.include? item
+      buy_same_item(item, modifier_shop.price)
+    else
+      buy_new_item(item, modifier_shop.price)
+    end
+  end
+
   def buy_same_item item, price
     adventurer_item = self.adventurers_items.where(item_id: item.id).first
     adventurer_item.quantity += 1
