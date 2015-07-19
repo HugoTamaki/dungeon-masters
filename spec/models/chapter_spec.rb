@@ -24,7 +24,7 @@ require "spec_helper"
 describe Chapter do
   let(:chapter) { FactoryGirl.build(:chapter) }
 
-  describe "Atributos" do
+  describe "Attributes" do
     it {should have_attribute :content}
     it {should have_attribute :reference}
     it {should have_attribute :story_id}
@@ -38,7 +38,7 @@ describe Chapter do
 
   end
 
-  describe "Relacionamentos" do
+  describe "Relationships" do
     it {should respond_to :story}
     it {should respond_to :decisions}
     it {should respond_to :monsters}
@@ -46,18 +46,18 @@ describe Chapter do
     it {should respond_to :modifiers_attributes}
   end
 
-  describe "Validacoes" do
-    describe "de atributos" do
+  describe "Validations" do
+    describe "of attributes" do
       describe "#image" do
-        context "é valido quando" do
-          it "é menor que 300k" do
+        context "is valid" do
+          it "when less than 300k" do
             chapter.image = File.new("#{Rails.root}/spec/photos/test.png")
             chapter.should have(0).errors_on :image
           end
         end
 
-        context "é invalido quando" do
-          it "é maior que 300k" do
+        context "is valid" do
+          it "when more than 300k" do
             chapter.image = File.new("#{Rails.root}/spec/photos/test2.jpg")
             chapter.should_not have(0).errors_on :image
           end

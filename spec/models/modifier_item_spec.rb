@@ -16,34 +16,34 @@ require "spec_helper"
 describe ModifierItem do
   let(:modifier_item) { FactoryGirl.build(:modifier_item) }
 
-  describe "Atributos" do
+  describe "Attributes" do
     it {should have_attribute :item_id}
     it {should have_attribute :chapter_id}
     it {should have_attribute :quantity}
   end
 
-  describe "Relacionamentos" do
+  describe "Relationships" do
     it {should respond_to :chapter}
     it {should respond_to :item}
   end
 
-  describe "Validações" do
-    describe "de atributos" do
+  describe "Validations" do
+    describe "of attributes" do
       describe "#quantity" do
-        context "é valido quando" do
-          it "está preenchido" do
+        context "is valid" do
+          it "when present" do
             modifier_item.quantity = 1
             modifier_item.should have(0).errors_on :quantity
           end
         end
 
-        context "é inválido quando" do
-          it "não está preenchido" do
+        context "is invalid" do
+          it "when not present" do
             modifier_item.quantity = nil
             modifier_item.should_not have(0).errors_on :quantity
           end
 
-          it "não é numérico" do
+          it "when not a number" do
             modifier_item.quantity = "abc"
             modifier_item.should_not have(0).errors_on :quantity
           end

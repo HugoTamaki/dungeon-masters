@@ -17,28 +17,28 @@ require "spec_helper"
 describe Monster do
   let(:monster) {FactoryGirl.build(:monster)}
 
-  describe "Atributos" do
+  describe "Attributes" do
     it {should have_attribute :name}
     it {should have_attribute :skill}
     it {should have_attribute :chapter_id}
   end
 
-  describe "Relacionamentos" do
+  describe "Relationships" do
     it {should respond_to :chapter}
   end
 
-  describe "Validações" do
-    describe "de atributos" do
+  describe "Validations" do
+    describe "of attributes" do
       describe "#name" do
-        context "é valido quando" do
-          it "está preenchido" do
+        context "is valid" do
+          it "when present" do
             monster.name = "monster"
             monster.should have(0).errors_on :name
           end
         end
 
-        context "é inválido quando" do
-          it "não está preenchido" do
+        context "is invalid" do
+          it "when not present" do
             monster.name = nil
             monster.should_not have(0).errors_on :name
           end
@@ -46,20 +46,20 @@ describe Monster do
       end
 
       describe "#skill" do
-        context "é valido quando" do
-          it "está preenchido" do
+        context "is valid" do
+          it "when present" do
             monster.skill = 1
             monster.should have(0).errors_on :skill
           end
         end
 
-        context "é inválido quando" do
-          it "não está preenchido" do
+        context "is invalid" do
+          it "when not present" do
             monster.skill = nil
             monster.should_not have(0).errors_on :skill
           end
 
-          it "não é numérico" do
+          it "when not a number" do
             monster.skill = "abc"
             monster.should_not have(0).errors_on :skill
           end
@@ -67,20 +67,20 @@ describe Monster do
       end
 
       describe "#energy" do
-        context "é valido quando" do
-          it "está preenchido" do
+        context "is valid" do
+          it "when present" do
             monster.energy = 1
             monster.should have(0).errors_on :energy
           end
         end
 
-        context "é inválido quando" do
-          it "não está preenchido" do
+        context "is invalid" do
+          it "when not present" do
             monster.energy = nil
             monster.should_not have(0).errors_on :energy
           end
 
-          it "não é numérico" do
+          it "when not a number" do
             monster.energy = "abc"
             monster.should_not have(0).errors_on :energy
           end

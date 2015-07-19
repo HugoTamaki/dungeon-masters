@@ -13,5 +13,37 @@
 require 'spec_helper'
 
 describe Comment do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:story)   {FactoryGirl.create(:story)}
+  let(:user)    {FactoryGirl.create(:user)}
+  let(:comment) {FactoryGirl.create(:comment, story: story, user: user)}
+
+  describe "Attributes" do
+    it {should have_attribute :user_id}
+    it {should have_attribute :story_id}
+    it {should have_attribute :content}
+  end
+
+  describe "Relationships" do
+    it {should respond_to :user}
+    it {should respond_to :story}
+  end
+
+  describe "Validations" do
+    describe "of attributes" do
+      context "#content" do
+        context "is valid" do
+          it "when present" do
+            expect(comment.save).to eq(true)
+          end
+        end
+
+        context "is invalid" do
+          it "when absent" do
+            comment.content = nil
+            expect(comment.save).to eq(false)
+          end
+        end
+      end
+    end
+  end
 end

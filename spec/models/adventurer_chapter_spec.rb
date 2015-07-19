@@ -12,5 +12,15 @@
 require 'spec_helper'
 
 describe AdventurerChapter do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:adventurer_chapter) {FactoryGirl.create(:adventurer_chapter)}
+
+  describe "Attributes" do
+    it {should have_attribute :adventurer_id}
+    it {should have_attribute :chapter_id}
+  end
+
+  describe "Relationships" do
+    it {should respond_to :adventurer}
+    it {should respond_to :chapter}
+  end
 end

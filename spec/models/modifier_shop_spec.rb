@@ -14,9 +14,9 @@
 require 'spec_helper'
 
 describe ModifierShop do
-  let!(:story) {FactoryGirl.create(:story)}
-  let!(:chapter) {FactoryGirl.create(:chapter, story: story)}
-  let!(:item) {FactoryGirl.create(:item)}
+  let!(:story)        {FactoryGirl.create(:story)}
+  let!(:chapter)      {FactoryGirl.create(:chapter, story: story)}
+  let!(:item)         {FactoryGirl.create(:item)}
   let(:modifier_shop) { FactoryGirl.create(:modifier_shop, chapter: chapter, item: item) }
 
   describe "Attributes" do
