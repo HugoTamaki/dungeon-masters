@@ -2,8 +2,8 @@ class StoriesController < ApplicationController
 
   # before_filter :authenticate_user!, except: [:prelude, :read, :search, :index]
   # load_and_authorize_resource except: [:prelude, :read]
-  before_filter :authenticate_user!, except: [:search_result, :story]
-  load_and_authorize_resource except: [:search_result, :favorite, :story]
+  before_filter :authenticate_user!, except: [:search_result, :detail]
+  load_and_authorize_resource except: [:search_result, :favorite, :detail]
   
   # GET /stories
   # GET /stories.json
@@ -19,14 +19,14 @@ class StoriesController < ApplicationController
     @chapters = @story.chapters.includes(:decisions)
   end
 
-  def story
+  def detail
     @story = Story.find(params[:story_id])
   end
 
   def prelude
     @story = Story.find(params[:story_id])
     if @story.published || @story.user == current_user
-      @adventurer = Adventurer.by_user_and_story(current_user, story).first
+      @adventurer = Adventurer.by_user_and_story(current_user, @story).first
       if params[:new_story]
         @adventurer = Adventurer.clear_or_create_adventurer(@adventurer, params[:story_id])
       else
@@ -117,7 +117,7 @@ class StoriesController < ApplicationController
 
     quantity = params[:quantity].to_i
 
-    params[:type] == 'sum' ? add_chapters(story, quantity) : remove_chapters(story, quantity)
+    params[:type] == 'sum' ? add_chapters(@story, quantity) : remove_chapters(@story, quantity)
   end
 
   def graph
