@@ -6,5 +6,6 @@ class Ability
 
     can :manage, Story, :user_id => user.id
     can :read, Story
+    can :create, Comment
   end
 end

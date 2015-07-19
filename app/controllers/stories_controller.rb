@@ -2,8 +2,8 @@ class StoriesController < ApplicationController
 
   # before_filter :authenticate_user!, except: [:prelude, :read, :search, :index]
   # load_and_authorize_resource except: [:prelude, :read]
-  before_filter :authenticate_user!, except: [:search_result]
-  load_and_authorize_resource except: [:search_result, :favorite]
+  before_filter :authenticate_user!, except: [:search_result, :story]
+  load_and_authorize_resource except: [:search_result, :favorite, :story]
   
   # GET /stories
   # GET /stories.json

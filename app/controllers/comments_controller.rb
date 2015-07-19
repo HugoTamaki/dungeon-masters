@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_filter :authenticate_user!
+
   def create
     @story = Story.find(params[:story_id])
     @comment = @story.comments.new(comment_params)
