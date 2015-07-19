@@ -25,6 +25,7 @@ FactoryGirl.define do
     title "Titulo"
     resume "Resumo"
     prelude "Preludio"
+    chapter_numbers 10
 #    cover { File.new("#{Rails.root}/spec/photos/test.png") }
   end
 

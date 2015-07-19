@@ -18,5 +18,4 @@ FactoryGirl.define do
     item_id 1
     status 1
   end
-
 end
