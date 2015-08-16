@@ -48,23 +48,6 @@ describe Item do
           end
         end
       end
-
-      describe "#description" do
-        context "is valid" do
-          it "when present" do
-            item.description = "alguma descrição"
-            item.should have(0).errors_on :description
-          end
-        end
-
-        context "is invalid" do
-          it "when not present" do
-            item.description = ""
-            item.should_not have(0).errors_on :description
-          end
-        end
-      end
     end
-
   end
 end

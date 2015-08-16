@@ -21,7 +21,6 @@ class Item < ActiveRecord::Base
   has_many :modifiers_shops, dependent: :destroy
   has_many :decisions, foreign_key: :item_validator
 
-  validates :description, presence: true
   validates :name, presence: true
 
   before_update do

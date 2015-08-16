@@ -47,7 +47,7 @@
             </div>
           <% end %>
 
-          <% flash[:error] = flash[:errors] = flash[:notice] = nil %>
+          <% flash[:error] = flash[:errors] = flash[:notice] = flash[:alert] = nil %>
         </div>
       </div>
       <%= yield %>

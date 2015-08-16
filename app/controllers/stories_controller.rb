@@ -254,17 +254,20 @@ class StoriesController < ApplicationController
     if @story.update_attributes(story_params)
       redirect_story(@story, params)
     else
-      @errors = get_errors(@story)
-      @chapters_with_errors = get_chapters_with_errors(@story)
       @chapters = @story.chapters
+      @errors = get_errors(@story)
+      flash[:alert] = {errors: @errors}
       respond_to do |format|
         case params[:commit]
         when t('actions.edit_items')
+          @errors = get_errors(@story)
+          
           format.html { render action: :edit_items, controller: :stories, alert: @errors }
           format.json { render json: {errors: @errors.to_json, 
                                       chapters_with_errors: @chapters_with_errors}, 
                                       status: :unprocessable_entity }
         when t('actions.save_story')
+          @chapters_with_errors = get_chapters_with_errors(@story)
           format.html { render action: :edit_story, controller: :stories, alert: @errors }
           format.json { render json: {errors: @errors.to_json, 
                                       chapters_with_errors: @chapters_with_errors}, 
