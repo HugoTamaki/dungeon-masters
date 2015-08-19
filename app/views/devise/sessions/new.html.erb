@@ -1,18 +1,29 @@
 <div class="container">
-  <h2><%= t('account.session.title') %></h2>
+  <div class="row row-centered">
+    <div class="col-lg-4 col-centered">
+      <h2><%= t('account.session.title') %></h2>
+      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="form-inputs">
+          <div class="form-inputs">
+            <div class="form-group">
+              <%= f.input :email, required: true, autofocus: true, input_html: {class: 'form-control'} %>
+            </div>
+            <div class="form-group">
+              <%= f.input :password, label: 'Senha', required: true, input_html: {class: 'form-control'} %>
+            </div>
+            <div class="form-group">
+              <%= f.input :remember_me, label: 'lembrar de mim', as: :boolean if devise_mapping.rememberable? %>
+            </div>
+          </div>
+        </div>
 
-  <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-    <div class="form-inputs">
-      <%= f.input :email, label: t('account.session.email'), :required => false, :autofocus => true %>
-      <%= f.input :password, label: t('account.session.password'), :required => false %>
-      <%= f.label :remember_me, t('account.session.remember_me') %>
-      <%= f.check_box :remember_me, :as => :boolean if devise_mapping.rememberable? %>
+        <div class="form-actions">
+          <%= f.button :submit, "Entrar", class: 'btn btn-lg btn-block btn-primary' %>
+        </div>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+
     </div>
-
-    <div class="form-actions">
-      <%= f.button :submit, t('account.session.button'), class: 'btn btn-primary' %>
-    </div>
-  <% end %>
-
-  <%= render "devise/shared/links" %>  
+  </div>
 </div>
