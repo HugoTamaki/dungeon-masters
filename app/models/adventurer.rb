@@ -56,11 +56,11 @@ class Adventurer < ActiveRecord::Base
 
     if chapter.modifiers_items.present?
       chapter.modifiers_items.each do |item|
-        unless self.chapters.include? chapter
-          if self.dont_have_item(item.item.id)
-            self.items << item.item unless self.items.include? item.item
-            adventurer_item = self.adventurers_items.find_by(item_id: item.item.id)
-            adventurer_item.quantity += item.quantity if adventurer_item.item.usable
+        unless chapters.include? chapter
+          if dont_have_item(item.item.id)
+            items << item.item unless items.include? item.item
+            adventurer_item = adventurers_items.find_by(item_id: item.item.id)
+            adventurer_item.quantity += item.quantity
             adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           else
@@ -97,7 +97,7 @@ class Adventurer < ActiveRecord::Base
         end
         adventurer_item = AdventurerItem.find_by(item_id: required_item.id)
         adventurer_item.status = 0 unless required_item.usable
-        adventurer_item.quantity -= 1 if adventurer_item.quantity > 0 && required_item.usable
+        adventurer_item.quantity -= 1 if adventurer_item.quantity > 0
         adventurer_item.save
       end
     end
