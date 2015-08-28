@@ -25,6 +25,6 @@ class Decision < ActiveRecord::Base
   end
 
   def has_item_validation?
-    self.item
+    item
   end
 end

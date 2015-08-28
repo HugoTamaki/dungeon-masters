@@ -47,7 +47,7 @@ class Adventurer < ActiveRecord::Base
 
   def attribute_and_item_changer(chapter)
     if chapter.modifiers_attributes.present?
-      unless self.chapters.include? chapter
+      unless chapters.include? chapter
         chapter.modifiers_attributes.each do |attribute|
           change_attribute(attribute.attr, attribute.quantity)
         end
@@ -55,37 +55,36 @@ class Adventurer < ActiveRecord::Base
     end
 
     if chapter.modifiers_items.present?
-      chapter.modifiers_items.each do |item|
+      chapter.modifiers_items.each do |modifier_item|
         unless chapters.include? chapter
-          if dont_have_item(item.item.id)
-            items << item.item unless items.include? item.item
-            adventurer_item = adventurers_items.find_by(item_id: item.item.id)
-            adventurer_item.quantity += item.quantity
+          if dont_have_item(modifier_item.item)
+            items << modifier_item.item unless items.include? modifier_item.item
+            adventurer_item = adventurers_items.find_by(item: modifier_item.item)
+            adventurer_item.quantity += modifier_item.quantity
             adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           else
-            adventurer_item = self.adventurers_items.find_by(item_id: item.item.id)
+            adventurer_item = adventurers_items.find_by(item: modifier_item.item)
             adventurer_item.quantity += item.quantity if adventurer_item.item.usable
             adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           end
         end
       end
-      self.save
+      save
     end
   end
 
   def set_chapter_and_gold(chapter, story, reference)
-    self.chapter_id = chapter.id
+    self.chapter = chapter
     self.story = story
     self.gold = story.initial_gold if story.initial_gold > 0 && reference == "1"
-    self.save
+    save
   end
 
-  def dont_have_item(item_id)
-    adventurer_items = self.items.where(id: item_id)
-    used_item = AdventurerItem.where(adventurer_id: self.id, item_id: item_id).first
-    (adventurer_items.empty? || used_item.status == 0) ? true : false
+  def dont_have_item(item)
+    adventurer_item = adventurers_items.find_by(item: item)
+    !items.include?(item) || adventurer_item.status.zero?
   end
 
   def use_required_item(decision)

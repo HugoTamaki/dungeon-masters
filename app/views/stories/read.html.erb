@@ -49,9 +49,9 @@
           <% button_opts = {reference: decision.destiny.reference, id: @story} unless decision.destiny.nil? %>
           <% disabled = "disabled" if @chapter.monsters.present? %>
           <% donthave = false %>
-          <% donthave = true if decision.item_validator && @adventurer.dont_have_item(decision.item_validator) %>
+          <% donthave = true if decision.item_validator && @adventurer.dont_have_item(decision.item) %>
           <% if decision.item_validator? %>
-            <% disabled ||= "disabled" if @adventurer.dont_have_item(decision.item_validator) %>
+            <% disabled ||= "disabled" if @adventurer.dont_have_item(decision.item) %>
           <% end %>
           <p>
             <%= link_to  "#{t('stories.read.chapter')} #{decision.destiny.reference}",
