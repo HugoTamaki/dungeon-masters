@@ -79,7 +79,7 @@ class Adventurer < ActiveRecord::Base
     self.chapter = chapter
     self.story = story
     self.gold = story.initial_gold if story.initial_gold > 0 && reference == "1"
-    save
+    self.save
   end
 
   def dont_have_item(item)
