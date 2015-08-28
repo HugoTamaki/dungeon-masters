@@ -53,7 +53,7 @@ class AdventurersController < ApplicationController
     args = {}
     args[:adventurer] = {}
     args[:adventurer][:skill] = params[:adventurer_skill]
-    args[:adventurer][:energy] = params[:adventurer_energy]
+    args[:adventurer][:energy] = (params[:adventurer_energy] < 1) ? 0 : params[:adventurer_energy]
     args[:adventurer][:luck] = params[:adventurer_luck]
 
     respond_to do |format|
