@@ -92,7 +92,7 @@ class Adventurer < ActiveRecord::Base
       if decision.has_item_validation?
         required_item = decision.item
         if required_item.usable
-          self.change_attribute(required_item.attr, required_item.modifier)
+          change_attribute(required_item.attr, required_item.modifier)
         end
         adventurer_item = adventurers_items.find_by(item: required_item)
         adventurer_item.status = 0 unless required_item.usable
@@ -131,7 +131,7 @@ class Adventurer < ActiveRecord::Base
   end
 
   def adventurer_modifier_shop_present? shop_id
-    self.adventurers_shops.any? {|adv_shop| adv_shop.modifier_shop_id == shop_id.to_i}
+    adventurers_shops.any? {|adv_shop| adv_shop.modifier_shop_id == shop_id.to_i}
   end
 
   def cant_buy?(adventurer_modifier_shop, price)
