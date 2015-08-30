@@ -47,7 +47,7 @@ body {
   border-radius: 7px;
   left-margin: 0;
   .ui-widget-content {
-    background-color: $lightGreen;
+    background-color: $lightPurple;
   }
 }
 
@@ -94,7 +94,7 @@ body {
   top: 20px;
   bottom: 20px;
   padding: 10px;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
 }
 
 #tabs {
@@ -107,7 +107,7 @@ body {
   border-bottom-left-radius: 7px;
   height: 700px;
   overflow: auto;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
 }
 
 .comment-form {
@@ -121,7 +121,7 @@ body {
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
   height: 700px;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
   overflow: auto;
   a {
     color: $blue;
@@ -162,7 +162,7 @@ body {
     font-size: 18px;
   }
   .feature-even {
-    background-color: $lighterGreen;
+    background-color: $lighterGrey;
   }
   .last-stories {
     padding: 10px 0;
@@ -289,16 +289,16 @@ body {
   border-top-left-radius: 7px;
   border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-bottom: 1px solid $lightGreen;
+  border-bottom: 1px solid $lightPurple;
   height: auto;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
 }
 
 .prelude_div {
   border: 1px solid;
   border-radius: 7px;
   height: auto;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
   .image {
     margin: 0;
     img {
@@ -316,7 +316,7 @@ body {
 }
 
 #profile-tabs {
-  background-color: $lightGreen;
+  background-color: $lightPurple;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   border: 1px solid $black;
@@ -326,7 +326,7 @@ body {
     color: $white;
   }
   .ui-widget-header {
-    background-color: $lightGreen;
+    background-color: $lightPurple;
     border: 0;
     border-bottom: 1px solid #AAAAAA;
   }
@@ -367,7 +367,7 @@ label {
   border-radius: 7px;
   padding: 10px;
   margin: 15px;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
 }
 
 .index_stories {
@@ -394,7 +394,7 @@ label {
   padding-bottom: 20px;
   border: 1px solid;
   border-radius: 7px;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
 }
 
 .not-used {
@@ -402,7 +402,7 @@ label {
   margin-left: 0;
   border: 1px solid;
   border-radius: 7px;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
   margin-top: 20px;
   position: relative;
   border-radius: 4px;
@@ -421,7 +421,7 @@ label {
   border: 1px solid;
   border-radius: 7px;
   height: auto;
-  background-color: $lightGreen;
+  background-color: $lightPurple;
 }
 
 @media (max-width: 500px) {
