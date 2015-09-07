@@ -102,4 +102,35 @@ describe Adventurer do
       end
     end
   end
+
+  describe '#methods' do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:story) { FactoryGirl.create(:story, initial_gold: 30) }
+    let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
+
+    describe '#set_chapter_and_gold' do
+      before(:each) do
+        adventurer.user = user
+        adventurer.save
+      end
+
+      context 'should maintain same gold' do
+        it 'should set chapter, story and reference of an adventurer' do
+          adventurer.set_chapter_and_gold(chapter, story, "30")
+          expect(adventurer.chapter).to eq(chapter)
+          expect(adventurer.story).to eq(story)
+          expect(adventurer.gold).to eq(adventurer.gold)
+        end
+      end
+
+      context 'should update gold by story initial_gold' do
+        it 'should set adventurer gold with story initial_gold' do
+          adventurer.set_chapter_and_gold(chapter, story, "1")
+          expect(adventurer.chapter).to eq(chapter)
+          expect(adventurer.story).to eq(story)
+          expect(adventurer.gold).to eq(30)
+        end
+      end
+    end
+  end
 end
