@@ -65,7 +65,7 @@ class Adventurer < ActiveRecord::Base
             adventurer_item.save
           else
             adventurer_item = adventurers_items.find_by(item: modifier_item.item)
-            adventurer_item.quantity += item.quantity if adventurer_item.item.usable
+            adventurer_item.quantity += modifier_item.quantity
             adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           end
