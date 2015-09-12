@@ -300,5 +300,39 @@ describe Adventurer do
         end
       end
     end
+
+    describe '#clear_or_create_adventurer' do
+      let(:item) { FactoryGirl.create(:item, story: story, usable: true, attr: 'energy', modifier: 4) }
+
+      context 'adventurer does not exist' do
+        it 'should create new adventurer' do
+          expect(Adventurer.count).to eql(0)
+          adventurer = Adventurer.clear_or_create_adventurer(nil, story.id)
+          adventurer.skill = 1
+          adventurer.energy = 1
+          adventurer.luck = 1
+          adventurer.save
+          expect(Adventurer.count).to eq(1)
+        end
+      end
+
+      context 'adventurer exists' do
+        before do
+          adventurer
+        end
+
+        it 'should clear adventurer' do
+          adventurer.items << item
+          expect(Adventurer.count).to eql(1)
+          expect(adventurer.items.count).to eql(1)
+          adventurer = Adventurer.clear_or_create_adventurer(adventurer, story.id)
+          expect(Adventurer.count).to eql(1)
+          expect(adventurer.items.count).to eql(0)
+          expect(adventurer.skill).to eql(nil)
+          expect(adventurer.energy).to eql(nil)
+          expect(adventurer.luck).to eql(nil)
+        end
+      end
+    end
   end
 end
