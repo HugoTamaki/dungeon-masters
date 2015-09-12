@@ -334,5 +334,47 @@ describe Adventurer do
         end
       end
     end
+
+    describe '#adventurer_modifier_shop_present?' do
+      let(:story)   { FactoryGirl.create(:story, initial_gold: 30) }
+      let(:item)    { FactoryGirl.create(:item, story: story, usable: true, attr: 'energy', modifier: 4) }
+      let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
+      let(:shop)    { FactoryGirl.create(:modifier_shop, chapter: chapter, item: item) }
+
+      context 'adventurer_shop present' do
+        it 'should return true' do
+          adventurer.adventurers_shops.create(modifier_shop: shop)
+          expect(adventurer.adventurer_modifier_shop_present? shop.id).to eql(true)
+        end
+      end
+
+      context 'adventurer_shop not present' do
+        it 'should return false' do
+          expect(adventurer.adventurer_modifier_shop_present? shop.id).to eql(false)
+        end
+      end
+    end
+
+    describe '#cant_buy?' do
+      context 'adventurer_shop present' do
+        context 'cant buy' do
+          
+        end
+
+        context 'can buy' do
+          
+        end
+      end
+
+      context 'adventurer_shop not present' do
+        context 'cant buy' do
+          
+        end
+
+        context 'can buy' do
+          
+        end
+      end
+    end
   end
 end
