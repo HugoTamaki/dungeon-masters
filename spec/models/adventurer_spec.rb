@@ -159,17 +159,21 @@ describe Adventurer do
           expect(adventurer.items).to include(item)
           expect(adventurer.items.count).to eql(1)
           expect(adventurer_item.quantity).to eql(3)
+          expect(adventurer_item.status).to eql(1)
         end
 
         it 'should update existing adventurer_item' do
           adventurer.items << item
           adventurer_item = adventurer.adventurers_items.first
+          adventurer_item.quantity = 1
+          adventurer_item.save
 
           expect(adventurer.reload.items.count).to eql(1)
           adventurer.attribute_and_item_changer(chapter)
           expect(adventurer.items).to include(item)
           expect(adventurer.items.count).to eql(1)
-          expect(adventurer_item.quantity).to eql(4)
+          expect(adventurer_item.reload.quantity).to eql(4)
+          expect(adventurer_item.status).to eql(1)
         end
       end
     end
