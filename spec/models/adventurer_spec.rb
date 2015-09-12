@@ -356,23 +356,75 @@ describe Adventurer do
     end
 
     describe '#cant_buy?' do
+      let(:story)   { FactoryGirl.create(:story, initial_gold: 30) }
+      let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
+      let(:item)    { FactoryGirl.create(:item, story: story, usable: true, attr: 'energy', modifier: 4) }
+      let(:modifier_shop) { FactoryGirl.create(:modifier_shop, chapter: chapter, item: item, quantity: 4) }
+      let(:adventurer_shop) { FactoryGirl.create(:adventurer_shop, quantity: 4, adventurer: adventurer, modifier_shop: modifier_shop) }
+
       context 'adventurer_shop present' do
         context 'cant buy' do
-          
+          it 'gold is less than one' do
+            adventurer.gold = 0
+            adventurer.save
+            price = 5
+            expect(adventurer.cant_buy?(adventurer_shop, price)).to eql(true)
+          end
+
+          it 'adventurer_modifier_shop quantity is less than one' do
+            adventurer.gold = 5
+            adventurer.save
+            adventurer_shop.quantity = 0
+            adventurer_shop.save
+            price = 5
+            expect(adventurer.cant_buy?(adventurer_shop, price)).to eql(true)
+          end
+
+          it 'adventurer gold is not sufficient' do
+            adventurer.gold = 1
+            adventurer.save
+            price = 5
+            expect(adventurer.cant_buy?(adventurer_shop, price)).to eql(true)
+          end
         end
 
         context 'can buy' do
-          
+          it 'price is less than gold and quantity is more than 0' do
+            adventurer.gold = 10
+            adventurer.save
+            price = 5
+            expect(adventurer.cant_buy?(adventurer_shop, price)).to eql(false)
+          end
         end
       end
 
       context 'adventurer_shop not present' do
         context 'cant buy' do
-          
+          it 'gold is less than one' do
+            adventurer.gold = 0
+            adventurer.save
+            price = 5
+            adventurer_shop = nil
+            expect(adventurer.cant_buy?(adventurer_shop, price)).to eql(true)
+          end
+
+          it 'adventurer gold is not sufficient' do
+            adventurer.gold = 1
+            adventurer.save
+            price = 5
+            adventurer_shop = nil
+            expect(adventurer.cant_buy?(adventurer_shop, price)).to eql(true)
+          end
         end
 
         context 'can buy' do
-          
+          it 'price is less than gold' do
+            adventurer.gold = 10
+            adventurer.save
+            price = 5
+            adventurer_shop = nil
+            expect(adventurer.cant_buy?(adventurer_shop, price)).to eql(false)
+          end
         end
       end
     end
