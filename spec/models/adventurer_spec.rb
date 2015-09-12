@@ -427,6 +427,45 @@ describe Adventurer do
           end
         end
       end
+
+      describe '#buy_item' do
+        let(:story)   { FactoryGirl.create(:story, initial_gold: 30) }
+        let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
+        let(:item)    { FactoryGirl.create(:item, story: story, usable: true, attr: 'energy', modifier: 4) }
+        let(:modifier_shop) { FactoryGirl.create(:modifier_shop, chapter: chapter, item: item, quantity: 4, price: 5) }
+
+        context 'adventurer is buying same item' do
+          before do
+            adventurer.gold = 10
+            adventurer.items << item
+            adventurer.save
+            adventurer_item = adventurer.adventurers_items.first
+            adventurer_item.quantity = 1
+            adventurer_item.save
+          end
+
+          it 'should update quantity of item' do
+            adventurer.buy_same_item(item, modifier_shop.price)
+            adventurer_item = adventurer.adventurers_items.first
+            expect(adventurer_item.quantity).to eql(2)
+          end
+        end
+
+        context 'adventurer is buying new item' do
+          before do
+            adventurer.gold = 10
+            adventurer.save
+          end
+
+          it 'should add item to adventurer items' do
+            expect(adventurer.items.count).to eql(0)
+            expect(adventurer.adventurers_items.count).to eql(0)
+            adventurer.buy_item(item, modifier_shop)
+            expect(adventurer.reload.items.count).to eql(1)
+            expect(adventurer.adventurers_items.count).to eql(1)
+          end
+        end
+      end
     end
   end
 end
