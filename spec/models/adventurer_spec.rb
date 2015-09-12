@@ -177,5 +177,36 @@ describe Adventurer do
         end
       end
     end
+
+    describe '#dont_have_item' do
+      let(:item) { FactoryGirl.create(:item, story: story, usable: true, attr: 'energy', modifier: 4) }
+
+      context 'dont have item' do
+        it 'dont have item at all' do
+          expect(adventurer.dont_have_item(item)).to eql(true)
+        end
+
+        it 'have adventurer item, but its already used' do
+          adventurer.items << item
+          adventurer_item = adventurer.adventurers_items.first
+          adventurer_item.quantity = 0
+          adventurer_item.status = 0
+          adventurer_item.save
+
+          expect(adventurer.dont_have_item(item)).to eql(true)
+        end
+      end
+
+      context 'have item' do
+        it 'have item' do
+          adventurer.items << item
+          adventurer_item = adventurer.adventurers_items.first
+          adventurer_item.quantity = 1
+          adventurer_item.save
+
+          expect(adventurer.dont_have_item(item)).to eql(false)
+        end
+      end
+    end
   end
 end
