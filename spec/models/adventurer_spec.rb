@@ -208,5 +208,97 @@ describe Adventurer do
         end
       end
     end
+
+    describe '#use_required_item' do
+      let(:item) { FactoryGirl.create(:item, story: story, usable: true, attr: 'energy', modifier: 4) }
+      let(:not_usable_item) { FactoryGirl.create(:item, story: story, usable: false) }
+      let(:story)   { FactoryGirl.create(:story, initial_gold: 30) }
+      let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
+      let(:chapter2) { FactoryGirl.create(:chapter, reference: "46", story: story) }
+      let(:decision) { FactoryGirl.create(:decision, chapter: chapter2) }
+
+      context 'decision is nil' do
+        it 'should do nothing with adventurer' do
+          decision = nil
+          adventurer.use_required_item decision
+          expect(adventurer.changed?).to eql(false)
+        end
+      end
+
+      context 'decision does not have item validation' do
+        it 'should do nothing with adventurer' do
+          adventurer.use_required_item decision
+          expect(adventurer.changed?).to eql(false)
+        end
+      end
+
+      context 'required item is usable' do
+        it 'should update adventurer_item quantity and change attributes of adventurer' do
+          adventurer.items << item
+          adventurer_item = adventurer.adventurers_items.first
+          adventurer_item.quantity = 1
+          adventurer_item.save
+          decision.item_validator = item.id
+          decision.save
+
+          adventurer.use_required_item(decision)
+          expect(adventurer_item.reload.quantity).to eql(0)
+          expect(adventurer.reload.energy).to eql(5)
+        end
+      end
+
+      context 'required item is not usable' do
+        it 'should not update adventurer attributes' do
+          adventurer.items << not_usable_item
+          adventurer_item = adventurer.adventurers_items.first
+          adventurer_item.quantity = 1
+          adventurer_item.save
+          decision.item_validator = not_usable_item.id
+          decision.save
+
+          adventurer.use_required_item(decision)
+          expect(adventurer_item.reload.quantity).to eql(0)
+          expect(adventurer_item.reload.status).to eql(0)
+        end
+      end
+    end
+
+    describe '#change_attribute' do
+      context 'change skill' do
+        it 'changes skill of adventurer' do
+          adventurer.change_attribute('skill', 5)
+          expect(adventurer.skill).to eq(6)
+        end
+        
+        it 'does not rise higher than 12' do
+          adventurer.change_attribute('skill', 20)
+          expect(adventurer.skill).to eq(12)
+        end
+      end
+
+      context 'change energy' do
+        it 'changes energy of adventurer' do
+          adventurer.change_attribute('energy', 5)
+          expect(adventurer.energy).to eq(6)
+        end
+        
+        it 'does not rise higher than 24' do
+          adventurer.change_attribute('energy', 30)
+          expect(adventurer.energy).to eq(24)
+        end
+      end
+
+      context 'change luck' do
+        it 'changes luck of adventurer' do
+          adventurer.change_attribute('luck', 5)
+          expect(adventurer.luck).to eq(6)
+        end
+        
+        it 'does not rise higher than 12' do
+          adventurer.change_attribute('luck', 20)
+          expect(adventurer.luck).to eq(12)
+        end
+      end
+    end
   end
 end
