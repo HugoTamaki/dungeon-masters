@@ -19,7 +19,8 @@
 require "spec_helper"
 
 describe Adventurer do
-  let(:adventurer) {FactoryGirl.build(:adventurer)}
+  let(:user) { FactoryGirl.create(:user) }
+  let(:adventurer) { FactoryGirl.create(:adventurer, user: user) }
 
   describe "Attributes" do
     it {should have_attribute :name}
@@ -104,8 +105,8 @@ describe Adventurer do
   end
 
   describe '#methods' do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:story) { FactoryGirl.create(:story, initial_gold: 30) }
+    let(:user)    { FactoryGirl.create(:user) }
+    let(:story)   { FactoryGirl.create(:story, initial_gold: 30) }
     let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
 
     describe '#set_chapter_and_gold' do
@@ -129,6 +130,46 @@ describe Adventurer do
           expect(adventurer.chapter).to eq(chapter)
           expect(adventurer.story).to eq(story)
           expect(adventurer.gold).to eq(30)
+        end
+      end
+    end
+
+    describe '#attribute_and_item_changer' do
+      let(:item) { FactoryGirl.create(:item, story: story, usable: true, attr: 'energy', modifier: 4) }
+
+      before do
+        chapter.modifiers_attributes.create(attr: 'energy', quantity: 5)
+        chapter.modifiers_items.create(item: item, quantity: 3)
+      end
+
+      context 'adventurer attributes' do
+        it 'should change adventurer attributes' do
+          adventurer.attribute_and_item_changer(chapter)
+          expect(adventurer.energy).to eql(6)
+        end
+      end
+
+      context 'adventurer items' do
+        it 'should add item to adventurer' do
+          expect(adventurer.items.count).to eql(0)
+
+          adventurer.attribute_and_item_changer(chapter)
+          adventurer_item = adventurer.adventurers_items.first
+
+          expect(adventurer.items).to include(item)
+          expect(adventurer.items.count).to eql(1)
+          expect(adventurer_item.quantity).to eql(3)
+        end
+
+        it 'should update existing adventurer_item' do
+          adventurer.items << item
+          adventurer_item = adventurer.adventurers_items.first
+
+          expect(adventurer.reload.items.count).to eql(1)
+          adventurer.attribute_and_item_changer(chapter)
+          expect(adventurer.items).to include(item)
+          expect(adventurer.items.count).to eql(1)
+          expect(adventurer_item.quantity).to eql(4)
         end
       end
     end
