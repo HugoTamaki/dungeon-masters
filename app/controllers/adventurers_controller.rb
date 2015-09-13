@@ -6,19 +6,19 @@ class AdventurersController < ApplicationController
       if adventurer.nil?
         @adventurer = Adventurer.new(adventurer_params)
         @adventurer.story_id = params[:story_id]
+        @story = Story.friendly.find(params[:story_id])
         if @adventurer.save
           current_user.adventurers << @adventurer
           current_user.save
-          options = {reference: params[:reference], story_id: params[:story_id]}
-          format.html { redirect_to story_read_path(options) }
+          format.html { redirect_to story_read_path(@story, reference: params[:reference]) }
         else
           format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
         end
       else
         @adventurer = adventurer
+        @story = adventurer.story
         if @adventurer.update_attributes(adventurer_params)
-          options = {reference: params[:reference], story_id: params[:story_id]}
-          format.html { redirect_to story_read_path(options) }
+          format.html { redirect_to story_read_path(@story, reference: params[:reference]) }
         else
           format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
         end
@@ -31,11 +31,11 @@ class AdventurersController < ApplicationController
     @adventurer.skill = params[:adventurer][:skill]
     @adventurer.energy = params[:adventurer][:energy]
     @adventurer.luck = params[:adventurer][:luck]
+    @story = @adventurer.story
 
     respond_to do |format|
       if @adventurer.save
-        options = {reference: params[:reference], story_id: params[:story_id]}
-        format.html { redirect_to story_read_path(options) }
+        format.html { redirect_to story_read_path(@story, reference: params[:reference]) }
       else
         format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
       end

@@ -14,23 +14,23 @@ class StoriesController < ApplicationController
   # GET /stories/1
   # GET /stories/1.json
   def show
-    @story = Story.friendly.find(params[:id])
+    @story = Story.find(params[:id])
     @items = @story.items
     @chapters = @story.chapters.includes(:decisions)
   end
 
   def detail
-    @story = Story.friendly.find(params[:story_id])
+    @story = Story.find(params[:story_id])
   end
 
   def prelude
-    @story = Story.friendly.find(params[:story_id])
+    @story = Story.find(params[:story_id])
     if @story.published || @story.user == current_user
       @adventurer = Adventurer.by_user_and_story(current_user, @story).first
       if params[:new_story]
         @adventurer = Adventurer.clear_or_create_adventurer(@adventurer, params[:story_id])
       else
-        redirect_to story_read_path(continue: true, chapter_id: @adventurer.chapter.id, story_id: @story.id, adventurer_id: @adventurer.id)
+        redirect_to story_read_path(@story, continue: true, chapter_id: @adventurer.chapter.id, adventurer_id: @adventurer.id)
       end
     else
       redirect_to root_url, alert: I18n.t('actions.not_published')
@@ -38,7 +38,7 @@ class StoriesController < ApplicationController
   end
 
   def read
-    @story = Story.friendly.find(params[:story_id])
+    @story = Story.find(params[:story_id])
     if @story.published || @story.user == current_user
       if params[:continue]
         @chapter = Chapter.find(params[:chapter_id])
@@ -88,11 +88,11 @@ class StoriesController < ApplicationController
   end
 
   def edit_story
-    @story = Story.friendly.find(params[:story_id])
+    @story = Story.find(params[:story_id])
   end
 
   def edit_items
-    @story = Story.friendly.find(params[:story_id])
+    @story = Story.find(params[:story_id])
     if @story.items.empty?
       item = @story.items.build
     end
@@ -100,7 +100,7 @@ class StoriesController < ApplicationController
 
   def favorite
     type = params[:type]
-    story = Story.friendly.find(params[:id])
+    story = Story.find(params[:id])
     if type == "favorite"
       current_user.favorites << story
       redirect_to :back, notice: "Você favoritou #{story.title}"
@@ -113,7 +113,7 @@ class StoriesController < ApplicationController
   end
 
   def update_chapter_number
-    @story = Story.friendly.find(params[:story_id])
+    @story = Story.find(params[:story_id])
 
     quantity = params[:quantity].to_i
 
@@ -121,7 +121,7 @@ class StoriesController < ApplicationController
   end
 
   def graph
-    @story = Story.friendly.find(params[:story_id])
+    @story = Story.find(params[:story_id])
   end
 
   def graph_json
@@ -211,7 +211,7 @@ class StoriesController < ApplicationController
   end
 
   def publish
-    story = Story.friendly.find(params[:story_id])
+    story = Story.find(params[:story_id])
     publish_story(story)
   end
   
@@ -233,7 +233,7 @@ class StoriesController < ApplicationController
   end
 
   def update_tabs
-    @story = Story.friendly.find(params[:story_id].to_i)
+    @story = Story.find(params[:story_id].to_i)
 
     respond_to do |format|
       if @story.update_attributes(params[:story])
@@ -249,7 +249,7 @@ class StoriesController < ApplicationController
   # PUT /stories/1
   # PUT /stories/1.json
   def update
-    @story = Story.friendly.find(params[:id])
+    @story = Story.find(params[:id])
 
     if @story.update_attributes(story_params)
       redirect_story(@story, params)
@@ -278,7 +278,7 @@ class StoriesController < ApplicationController
   end
 
   def auto_save
-    @story = Story.friendly.find(params[:story_id].to_i)
+    @story = Story.find(params[:story_id].to_i)
 
     respond_to do |format|
       if @story.update_attributes(params[:story])
@@ -295,7 +295,7 @@ class StoriesController < ApplicationController
   # DELETE /stories/1
   # DELETE /stories/1.json
   def destroy
-    @story = Story.friendly.find(params[:id])
+    @story = Story.find(params[:id])
     @story.destroy
 
     respond_to do |format|
@@ -462,7 +462,7 @@ class StoriesController < ApplicationController
     end
 
     def set_story
-      @story = Story.friendly.find(params[:id])
+      @story = Story.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

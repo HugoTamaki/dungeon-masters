@@ -24,7 +24,7 @@
         <% end %>
 
         <% if current_user and @story.has_adventurer? current_user.adventurers %>
-          <%= link_to t('actions.read'), "javascript:;", class: "read btn btn-primary btn-action", data: {continue: true, story_id: @story.id} %>
+          <%= link_to t('actions.read'), "javascript:;", class: "read btn btn-primary btn-action", data: {continue: true, story_id: @story.slug} %>
         <% else %>
           <%= link_to t('actions.read'), story_prelude_path(@story, new_story: true), class: "btn btn-primary btn-action", data: {continue: false} %>
         <% end %>
