@@ -9,16 +9,16 @@ class AdventurersController < ApplicationController
         if @adventurer.save
           current_user.adventurers << @adventurer
           current_user.save
-          options = {reference: params[:reference], id: params[:story_id]}
-          format.html { redirect_to read_stories_path(options) }
+          options = {reference: params[:reference], story_id: params[:story_id]}
+          format.html { redirect_to story_read_path(options) }
         else
           format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
         end
       else
         @adventurer = adventurer
         if @adventurer.update_attributes(adventurer_params)
-          options = {reference: params[:reference], id: params[:story_id]}
-          format.html { redirect_to read_stories_path(options) }
+          options = {reference: params[:reference], story_id: params[:story_id]}
+          format.html { redirect_to story_read_path(options) }
         else
           format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
         end
@@ -34,8 +34,8 @@ class AdventurersController < ApplicationController
 
     respond_to do |format|
       if @adventurer.save
-        options = {reference: params[:reference], id: params[:story_id]}
-        format.html { redirect_to read_stories_path(options) }
+        options = {reference: params[:reference], story_id: params[:story_id]}
+        format.html { redirect_to story_read_path(options) }
       else
         format.html { redirect_to :back, alert: "Adventurer attributes not valid." }
       end

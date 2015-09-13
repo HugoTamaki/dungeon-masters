@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $('.usable-item').on('click', function() {
     $.ajax({
-      url: 'use_item',
+      url: '/stories/use_item',
       type: 'POST',
       data: {
         "story_id": $(this).data("story-id"),

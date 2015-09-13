@@ -52,7 +52,7 @@ feature "Story" do
       click_button "Próximo"
 
       page.should have_text("História foi criada com sucesso.")
-      current_path.should == "/stories/#{Story.last.id}/edit" 
+      current_path.should == "/stories/#{Story.last.slug}/edit" 
     end
 
     scenario "user fails to create story" do

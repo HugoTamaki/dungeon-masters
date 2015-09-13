@@ -7,7 +7,7 @@ class ChaptersController < ApplicationController
 
   def update
     @chapter = Chapter.find(params[:id])
-    @story = Story.find(params[:story_id])
+    @story = Story.friendly.find(params[:story_id])
 
     if @chapter.update(chapter_params)
       redirect_to edit_story_path(@story, page: params[:chapter][:page], last_chapter: params[:chapter][:position]), notice: 'Capítulo atualizado com sucesso.'

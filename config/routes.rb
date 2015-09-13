@@ -2,7 +2,7 @@
 
   resources :stories, except: :index do
 #    put 'stories/auto_save', as: :auto_save_story_path
-    get 'read', on: :collection
+    get 'read', to: 'stories#read', as: 'read'
 #    put 'auto_save', on: :collection
     get 'prelude'
     put 'update_tabs'

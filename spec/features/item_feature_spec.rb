@@ -19,7 +19,7 @@ feature Item do
 
       click_button "Editar Itens"
 
-      current_path.should == "/stories/#{story.id}/edit_items"
+      current_path.should == "/stories/#{story.slug}/edit_items"
       page.should have_text("Dados salvos.")
       Item.last.name.should == "Escudo"
       Item.last.description.should == "um escudo"
@@ -33,7 +33,7 @@ feature Item do
 
       click_button "Editar Itens"
 
-      current_path.should == "/stories/#{Story.last.id}"
+      current_path.should == "/stories/#{Story.last.slug}"
       page.should have_text("não deve estar em branco")
       Item.last.name.should_not == "Escudo"
       Item.last.description.should_not == "um escudo"

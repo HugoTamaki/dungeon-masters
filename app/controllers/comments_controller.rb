@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_filter :authenticate_user!
 
   def create
-    @story = Story.find(params[:story_id])
+    @story = Story.friendly.find(params[:story_id])
     @comment = @story.comments.new(comment_params)
     @comment.user_id = current_user.id
     if @comment.save
@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @story = Story.find(params[:story_id])
+    @story = Story.friendly.find(params[:story_id])
     @comment = @story.comments.find(params[:id])
     @comment.destroy
     redirect_to story_show_path(@story), notice: "Comentário excluído."

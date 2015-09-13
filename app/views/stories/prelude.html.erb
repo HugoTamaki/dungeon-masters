@@ -23,7 +23,7 @@
           <%= hidden_field_tag :story_id, @story.id %>
           <%= hidden_field_tag :reference, "1" %>
         
-          <%= f.submit t('stories.prelude.chapter') + " 1", id: 'story-start', story_id: @story.id, class: "btn btn-primary disabled" unless @story.chapters.where(reference: "1").empty? %>
+          <%= f.submit t('stories.prelude.chapter') + " 1", id: 'story-start', story_id: @story, class: "btn btn-primary disabled" unless @story.chapters.where(reference: "1").empty? %>
         </div>
       <% end %>
       <div id="dice-container">

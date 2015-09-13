@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150215132024) do
+ActiveRecord::Schema.define(version: 20150913134447) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20150215132024) do
     t.boolean  "published",                     default: false
     t.integer  "chapter_numbers"
     t.integer  "initial_gold",                  default: 0
+    t.string   "slug"
+    t.index ["slug"], :name => "index_stories_on_slug"
     t.index ["user_id"], :name => "index_stories_on_user_id"
     t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_stories_user_id"
   end
@@ -105,9 +107,9 @@ ActiveRecord::Schema.define(version: 20150215132024) do
     t.integer  "story_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "usable"
-    t.string   "attr"
-    t.integer  "modifier"
+    t.boolean  "usable",                 default: false
+    t.string   "attr",                   default: ""
+    t.integer  "modifier",               default: 0
     t.index ["story_id"], :name => "index_items_on_story_id"
     t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_items_story_id"
   end

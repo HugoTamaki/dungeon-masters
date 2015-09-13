@@ -18,7 +18,7 @@
           <h3>Comprar?</h3>
           <% @chapter.modifiers_shops.each do |shop| %>
             <p>
-              <%= link_to_if(return_real_quantity(shop) > 0, shop.item.name, story_buy_item_path(@story, shop_id: shop.id)) %><br>
+              <%= link_to_if(return_real_quantity(shop) > 0, shop.item.name, story_buy_item_path(@story.id, shop_id: shop.id)) %><br>
               <span class="shop-price">Preço: <%= shop.price %></span><br>
               <span class="shop-qty">Quantidade: <%= return_real_quantity(shop) %></span>
             </p>
@@ -46,7 +46,7 @@
       <% end %>
       <div id="chapter-buttons">
         <% @chapter.decisions.each do |decision| %>
-          <% button_opts = {reference: decision.destiny.reference, id: @story} unless decision.destiny.nil? %>
+          <% button_opts = {reference: decision.destiny.reference, story_id: @story.id} unless decision.destiny.nil? %>
           <% disabled = "disabled" if @chapter.monsters.present? %>
           <% donthave = false %>
           <% donthave = true if decision.item_validator && @adventurer.dont_have_item(decision.item) %>
@@ -55,7 +55,7 @@
           <% end %>
           <p>
             <%= link_to  "#{t('stories.read.chapter')} #{decision.destiny.reference}",
-              read_stories_path(button_opts),
+              story_read_path(button_opts),
               class: "btn btn-primary #{disabled}", data: {donthave: "#{donthave}" } unless decision.destiny.nil? %>
           </p>
         <% end %>
