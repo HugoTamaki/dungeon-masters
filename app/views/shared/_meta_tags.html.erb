@@ -1,0 +1,17 @@
+<% if content_for?(:metadata) || content_for?(:opengraph) %>
+  <%= yield :metadata %>
+  <%= yield :opengraph %>
+<% else %>
+  <meta name="description" content="Lembra-se dos antigos livro-jogos da década de 80/90? Faça suas próprias histórias customizadas no Dungeon Masters" lang="pt-BR"/>
+  <meta name="keywords" content="livro-jogos, aventuras fantásticas, rpg, livro-jogos online, Dungeon Masters, Fighting Fantasy" lang="pt-BR" />
+  <meta name="author" content="Hugo Tamaki" />
+  <meta name="robots" content="index, nofollow" />
+  <meta name="url" content="<%= root_url %>" />
+  <meta property="og:title" content="Dungeon Masters" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="<%= root_url %>" />
+  <meta property="og:image" content="" />
+  <meta property="og:description" content="Lembra-se dos antigos livro-jogos da década de 80/90? Faça suas próprias histórias customizadas no Dungeon Masters" />
+  <meta property="og:site_name" content="Dungeon Masters" />
+  <meta property="og:locale" content="pt_br" />
+<% end %>

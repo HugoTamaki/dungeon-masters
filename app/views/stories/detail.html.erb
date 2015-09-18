@@ -1,5 +1,19 @@
 <%= render partial: "/shared/modal" %>
 
+<%= content_for :metadata do %>
+  <meta name="description" content="<%= @story.resume.truncate(100) %>">
+  <meta name="author" content="<%= @story.user.name %>">
+<% end %>
+<%= content_for :opengraph do %>
+  <meta property="og:title" content="<%= @story.title %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="<%= story_show_url(@story) %>" />
+  <meta property="og:image" content="<%= root_url[0..-2] + @story.cover(:index_cover) %>" />
+  <meta property="og:description" content="<%= @story.resume.truncate(100) %>" />
+  <meta property="og:site_name" content="<%= @story.title %>" />
+  <meta property="og:locale" content="pt_br" />
+<% end %>
+
 <div class="container prelude_div">
   <div class="row">
     <div class="col-lg-4">

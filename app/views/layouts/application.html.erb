@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="description" content="Lembra-se dos antigos livro-jogos da década de 80/90? Faça suas próprias histórias customizadas no Dungeon Masters" lang="pt-BR"/>
-    <meta name="keywords" content="livro-jogos, aventuras fantásticas, rpg, livro-jogos online, Dungeon Masters, Fighting Fantasy" lang="pt-BR" />
-    <meta name="author" content="Hugo Tamaki" />
-    <meta name="robots" content="index, nofollow" />
-    <meta name="url" content="http://www.dungeonmasters.com.br" />
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><%= content_for?(:title) ? yield(:title) : "Dungeon Masters" %></title>
+    <%= render 'shared/meta_tags' %>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <%= csrf_meta_tags %>
