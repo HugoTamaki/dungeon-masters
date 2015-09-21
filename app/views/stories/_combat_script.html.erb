@@ -2,17 +2,17 @@
   <script type="text/javascript">
     $(document).ready(function() {
       var story_id = <%= @chapter.story.id %>;
+      var morreu;
 
       $("#combat").click(function() {
         var result = "";
-        var finish;
-        var morreu = false;
         var adventurer = {
           name: "<%= @adventurer.name %>",
           skill: <%= @adventurer.skill %>,
           energy: <%= @adventurer.energy %>,
           luck: <%= @adventurer.luck %>
         }
+        morreu = adventurer.energy > 0 ? false : true;
 
         <% @chapter.monsters.each do |monster| %>
           var <%= monster.name.parameterize.underscore %> = {
@@ -21,7 +21,7 @@
             energy: <%= monster.energy %>
           }
 
-          shock(adventurer, <%= monster.name.parameterize.underscore %>, story_id, result, morreu);
+          shock(adventurer, <%= monster.name.parameterize.underscore %>, story_id);
         <% end %>
         
         $("#adventurer_energy").html(adventurer.energy);
@@ -32,13 +32,12 @@
               $(this).removeClass('disabled');
             }
           });
+          updateValues(adventurer.skill, adventurer.energy, adventurer.luck, story_id);
         }
         $("#combat").addClass('disabled');
-
-        updateValues(adventurer.skill, adventurer.energy, adventurer.luck, story_id)
       });
 
-      function shock(adventurer, monster, story_id, result, morreu) {
+      function shock(adventurer, monster, story_id) {
         finish = false;
 
         while (!finish) {
