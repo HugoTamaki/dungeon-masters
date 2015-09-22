@@ -33,6 +33,7 @@
             var tempData = {}
             var temp = {}
             temp["id"] = "Cap " + data["references"][i]["number"];
+            temp["description"] = data["references"][i]["description"];
             tempData["data"] = temp;
             tempData["position"] = {
                "x": data["references"][i]["x"]*500,
@@ -144,7 +145,7 @@
 
           // making elements tips
           cy.elements().qtip({
-            content: function(){ return 'Example qTip on ele ' },
+            content: function(){ return this._private.data.description; },
             position: {
               my: 'top center',
               at: 'bottom center'

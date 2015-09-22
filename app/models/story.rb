@@ -69,6 +69,7 @@ class Story < ActiveRecord::Base
         temp[:x] = c.x
         temp[:y] = c.y
         temp[:color] = c.color
+        temp[:description] = c.content.truncate(200, separator: '</div>').html_safe
         references << temp
       end
     end
