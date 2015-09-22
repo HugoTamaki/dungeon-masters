@@ -15,6 +15,9 @@
 //= require jquery.remotipart
 //= require bootstrap.min
 //= require summernote.min
+//= require jquery.qtip.min
+//= require cytoscape.min
+//= require cytoscape-qtip
 //= require_tree .
 //= require jquery-ui
 //= require remove-image

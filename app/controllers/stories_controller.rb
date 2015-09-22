@@ -147,7 +147,7 @@ class StoriesController < ApplicationController
   end
 
   def node_update
-    chapter = Chapter.by_story(params[:story_id]).where(reference: params[:cap].gsub("Cap ","")).first
+    chapter = Chapter.by_story(params[:id]).where(reference: params[:cap].gsub("Cap ","")).first
     chapter.x = params[:x].to_f
     chapter.y = params[:y].to_f
 
