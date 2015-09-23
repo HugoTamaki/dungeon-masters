@@ -33,6 +33,7 @@
             var tempData = {}
             var temp = {}
             temp["id"] = "Cap " + data["references"][i]["number"];
+            temp["description"] = data["references"][i]["description"];
             tempData["data"] = temp;
             tempData["position"] = {
                "x": data["references"][i]["x"]*500,
@@ -128,7 +129,7 @@
               url: 'node_update',
               type: 'POST',
               data: {
-                id: document.getElementById('story_id').value,
+                id: <%= @story.id %>,
                 x: parseFloat(node.position().x) / 500.0,
                 y: parseFloat(node.position().y) / 500.0,
                 cap: node.id()
@@ -140,6 +141,22 @@
                 console.log("error");
               }
             });
+          });
+
+          // making elements tips
+          cy.elements().qtip({
+            content: function(){ return this._private.data.description; },
+            position: {
+              my: 'top center',
+              at: 'bottom center'
+            },
+            style: {
+              classes: 'qtip-bootstrap',
+              tip: {
+                width: 16,
+                height: 8
+              }
+            }
           });
         
           // writting not used chapters
