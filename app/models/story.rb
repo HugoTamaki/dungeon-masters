@@ -74,8 +74,8 @@ class Story < ActiveRecord::Base
       end
     end
 
-    chapters_with_decisions["references"] = references
-    destines = []
+    chapters_with_decisions[:references] = references
+    destinies = []
 
     chapters.each do |c|
       aux = []
@@ -83,32 +83,24 @@ class Story < ActiveRecord::Base
       c.decisions.each do |d|
         aux << Chapter.find(d.destiny_num).reference.to_i unless d.destiny_num.nil?
       end
-      destines << aux
+      destinies << aux
     end
 
-    chapters_with_decisions["chapter_destinies"] = destines
+    chapters_with_decisions[:chapter_destinies] = destinies
 
     infos = []
 
     chapters.each do |c|
-      aux = []
       infos << [c.x, c.y, c.color]
     end
 
-    chapters_with_decisions["infos"] = infos
+    chapters_with_decisions[:infos] = infos
 
-    duplicates = []
-    chapters_with_decisions["chapter_destinies"].each do |decisions|
-      duplicates << decisions.select {|element| decisions.count(element) > 1}
-    end
-
-    chapters_with_decisions["valid"] = []
-    duplicates.each do |duplicate|
-      if duplicate.empty?
-        chapters_with_decisions["valid"] << true
-      else
-        chapters_with_decisions["valid"] << false
-      end
+    chapters_with_decisions[:valid] = true
+    chapters_with_decisions[:chapter_destinies].each do |decisions|
+      duplicated = decisions.uniq
+      chapters_with_decisions[:valid] = false if duplicated.length != decisions.length
+      break if duplicated.length != decisions.length
     end
 
     decisions = []
@@ -124,7 +116,7 @@ class Story < ActiveRecord::Base
       end
     end
 
-    chapters_with_decisions["not_used"] = references - decisions
+    chapters_with_decisions[:not_used] = references - decisions
 
     chapters_with_decisions
   end

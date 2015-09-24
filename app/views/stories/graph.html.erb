@@ -144,7 +144,7 @@
           });
 
           // making elements tips
-          cy.elements().qtip({
+          cy.nodes().qtip({
             content: function(){ return this._private.data.description; },
             position: {
               my: 'top center',
