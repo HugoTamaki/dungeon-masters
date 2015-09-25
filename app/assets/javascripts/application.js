@@ -48,6 +48,14 @@ $(document).ready(function(){
     $("#tabs").tabs();
   });
 
+  $('#contact-form').submit(function(event) {
+    if ($('#email').val() !== '' && $('#message').val() !== '') {
+      return true;
+    }
+    $('.errors').addClass('alert alert-danger').html('Insira seus dados corretamente');
+    return false;
+  })
+
   // $('.chapter-fields').accordion({
   //   active: false,
   //   collapsible: true,

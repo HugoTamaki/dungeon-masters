@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row row-centered">
+    <h1>Contato</h1>
+    <div class="col-lg-4 col-centered">
+      <p>Encontrou algum bug? Tem sugestões? Ou quer apenas bater um papo sobre o projeto? Envie uma mensagem pelo contato!</p>
+      <%= form_tag send_message_path, method: :get, id: 'contact-form' do %>
+        <div class="errors"></div>
+        <div class="form-inputs">
+          <div class="form-group">
+            <%= label_tag 'Email' %>
+            <%= text_field_tag :email, nil, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag 'Mensagem' %>
+            <%= text_area_tag :message, nil, class: 'form-control', rows: 15 %>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <%= submit_tag "Enviar", class: 'btn btn-primary btn-lg', id: 'contact-submit' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+    
+</div>

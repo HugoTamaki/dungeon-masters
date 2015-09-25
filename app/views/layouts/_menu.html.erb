@@ -19,11 +19,14 @@
       </ul>
       <%= form_tag search_result_stories_path, method: :get do %>
         <div class="navbar-form navbar-left">
-          <%= text_field_tag :search, params[:search], class: "navbar-search" %>&nbsp;
+          <%= text_field_tag :search, params[:search], class: "navbar-search form-control" %>&nbsp;
           <%= submit_tag t('menu.search'), class: "btn btn-primary", name: nil %>
         </div>
       <% end %>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <%= link_to "Contato", contact_path, class: "navbar-link" %>
+        </li>
         <li class="dropdown">
           <% if user_signed_in? %>
             <a href="#" class='navbar-link' data-toggle='dropdown'>
