@@ -48,8 +48,21 @@ $(document).ready(function(){
     $("#tabs").tabs();
   });
 
+  function isEmailValid(str) {
+    var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    return str.match(pattern) !== null;
+  }
+
+  checkbox = '<div class="checkbox">';
+  checkbox += '<label>';
+  checkbox += '<input type="checkbox" id="howdy" value=""> Não sou um bot!';
+  checkbox += '</label>';
+  checkbox += '</div>';
+  $('#check').html(checkbox);
+
   $('#contact-form').submit(function(event) {
-    if ($('#email').val() !== '' && $('#message').val() !== '') {
+    if ($('#email').val() !== '' && isEmailValid($('#email').val()) && $('#message').val() !== '' && $('#howdy')[0].checked) {
       return true;
     }
     $('.errors').addClass('alert alert-danger').html('Insira seus dados corretamente');
