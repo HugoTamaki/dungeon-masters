@@ -56,7 +56,7 @@ $(document).ready(function(){
 
   checkbox = '<div class="checkbox">';
   checkbox += '<label>';
-  checkbox += '<input type="checkbox" id="howdy" value=""> Não sou um bot!';
+  checkbox += '<input type="checkbox" id="howdy" name="howdy" value="yeah"> Não sou um bot!';
   checkbox += '</label>';
   checkbox += '</div>';
   $('#check').html(checkbox);
