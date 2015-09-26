@@ -8,7 +8,7 @@ class CustomPagesController < ApplicationController
   end
 
   def send_message
-    unless params[:email].empty? && params[:message].empty? && params[:howdy] != "yeah"
+    unless params[:email].empty? && params[:message].empty? && params[:howdy].nil?
       ContactMailer.contact_email(params).deliver
       redirect_to :back, notice: "Contato enviado!"
     else
