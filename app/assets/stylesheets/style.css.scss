@@ -24,11 +24,22 @@ h1, h2, h3 {
 }
 
 .all {
+  max-height: 100%;
   margin-top: 60px;
 }
 
+html {
+  min-height: 100%;
+}
+
 body { 
-  background-color: $backgroundColor;
+  // background-color: $backgroundColor;
+  // height: 100%;
+  background: -webkit-linear-gradient(40deg, #4CB8C4 10%, #EAECC6 100%);
+  background:    -moz-linear-gradient(40deg, #4CB8C4 10%, #EAECC6 100%);
+  background:     -ms-linear-gradient(40deg, #4CB8C4 10%, #EAECC6 100%);
+  background:      -o-linear-gradient(40deg, #4CB8C4 10%, #EAECC6 100%);
+  background:         linear-gradient(40deg, #4CB8C4 10%, #EAECC6 100%);
 }
 
 .btn-toolbar {
@@ -47,7 +58,7 @@ body {
   border-radius: 7px;
   left-margin: 0;
   .ui-widget-content {
-    background-color: $beige;
+    background-color: $lime_green;
   }
 }
 
@@ -94,7 +105,7 @@ body {
   top: 20px;
   bottom: 20px;
   padding: 10px;
-  background-color: $beige;
+  background-color: $lime_green;
 }
 
 #tabs {
@@ -107,7 +118,7 @@ body {
   border-bottom-left-radius: 7px;
   height: 700px;
   overflow: auto;
-  background-color: $beige;
+  background-color: $lime_green;
 }
 
 .comment-form {
@@ -121,7 +132,7 @@ body {
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
   height: 700px;
-  background-color: $beige;
+  background-color: $lime_green;
   overflow: auto;
   a {
     color: $blue;
@@ -160,9 +171,6 @@ body {
   .feature {
     font-family: "Ubuntu";
     font-size: 18px;
-  }
-  .feature-even {
-    background-color: #98BFB7;
   }
   .last-stories {
     padding: 10px 0;
@@ -289,16 +297,16 @@ body {
   border-top-left-radius: 7px;
   border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-bottom: 1px solid $beige;
+  border-bottom: 1px solid $lime_green;
   height: auto;
-  background-color: $beige;
+  background-color: $lime_green;
 }
 
 .prelude_div {
   border: 1px solid;
   border-radius: 7px;
   height: auto;
-  background-color: $beige;
+  background-color: $lime_green;
   .image {
     margin: 0;
     img {
@@ -316,7 +324,7 @@ body {
 }
 
 #profile-tabs {
-  background-color: $beige;
+  background-color: $lime_green;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   border: 1px solid $black;
@@ -326,7 +334,7 @@ body {
     color: $white;
   }
   .ui-widget-header {
-    background-color: $beige;
+    background-color: $lime_green;
     border: 0;
     border-bottom: 1px solid #AAAAAA;
   }
@@ -367,7 +375,7 @@ label {
   border-radius: 7px;
   padding: 10px;
   margin: 15px;
-  background-color: $beige;
+  background-color: $lime_green;
 }
 
 .index_stories {
@@ -394,7 +402,7 @@ label {
   padding-bottom: 20px;
   border: 1px solid;
   border-radius: 7px;
-  background-color: $beige;
+  background-color: $lime_green;
 }
 
 .not-used {
@@ -402,7 +410,7 @@ label {
   margin-left: 0;
   border: 1px solid;
   border-radius: 7px;
-  background-color: $beige;
+  background-color: $lime_green;
   margin-top: 20px;
   position: relative;
   border-radius: 4px;
@@ -421,7 +429,7 @@ label {
   border: 1px solid;
   border-radius: 7px;
   height: auto;
-  background-color: $beige;
+  background-color: $lime_green;
 }
 
 @media (max-width: 500px) {

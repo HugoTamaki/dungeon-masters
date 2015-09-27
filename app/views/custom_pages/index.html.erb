@@ -9,7 +9,7 @@
 </div>
 <div class="features">
   <% unless user_signed_in? %>
-    <div class="feature feature-even">
+    <div class="feature">
       <div class="container">
         <div class="row feature-content">
           <div class="col-lg-6">
@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <div class="feature feature-even">
+    <div class="feature">
       <div class="container">
         <div class="row feature-content">
           <div class="col-lg-6">
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-    <div class="feature feature-even">
+    <div class="feature">
       <div class="container">
         <div class="row feature-content">
           <div class="col-lg-6">
@@ -88,7 +88,7 @@
       </div>
     </div>
   <% end %>
-  <div class="feature feature-even">
+  <div class="feature">
     <div class="container">
       <h3><%= t('custom_pages.last_stories') %></h3>
       <% if @stories.empty? %>
