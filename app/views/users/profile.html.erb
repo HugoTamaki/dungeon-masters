@@ -80,7 +80,9 @@
                 <%= image_tag favorite.cover(:index_cover), class: "img-responsive" %>
                 <div class="actions">
                   <div class="row">
-                    <%= link_to t('actions.read'), story_show_path(favorite), class: 'btn btn-primary btn-action' %>
+                    <%= link_to story_show_path(favorite), class: 'btn btn-primary btn-action' do %>
+                      <i class="fa fa-play"></i> <%= t('actions.read') %>
+                    <% end %>
                   </div>
                 </div>
               </div>
