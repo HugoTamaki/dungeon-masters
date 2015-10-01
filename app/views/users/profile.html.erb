@@ -34,16 +34,24 @@
                   <%= image_tag story.cover(:index_cover), class: "img-responsive" %>
                   <div class="actions">
                     <div class="row">
-                      <%= link_to t('actions.show'), story, class: "btn btn-primary btn-action" if story.user == current_user %>
+                      <%= link_to story, class: "btn btn-primary btn-action" do %>
+                        <i class="fa fa-book"></i> <%= t('actions.show') %>
+                      <% end  if story.user == current_user %>
                     </div>
                     <div class="row">
-                      <%= link_to t('actions.read'), story_show_path(story), class: 'btn btn-primary btn-action' %>
+                      <%= link_to story_show_path(story), class: 'btn btn-primary btn-action' do %>
+                        <i class="fa fa-play"></i> <%= t('actions.read') %>
+                      <% end %>
                     </div>
                     <div class="row">
-                      <%= link_to t('actions.edit'), edit_story_path(story), class: "btn btn-primary btn-action" if story.user == current_user %>
+                      <%= link_to edit_story_path(story), class: "btn btn-primary btn-action" do %>
+                        <i class="fa fa-pencil-square-o"></i> <%= t('actions.edit') %>
+                      <% end if story.user == current_user %>
                     </div>
                     <div class="row">
-                      <%= link_to t('actions.destroy'), story, class: "btn btn-danger btn-action", data: {confirm: 'Are you sure?'}, method: :delete if story.user == current_user %>
+                      <%= link_to story, class: "btn btn-danger btn-action", data: {confirm: 'Tem certeza?'}, :method => :delete do %>
+                        <i class="fa fa-trash-o"></i> <%= t('actions.destroy') %>
+                      <% end if story.user == current_user %>
                     </div>
                   </div>
                 </div>
