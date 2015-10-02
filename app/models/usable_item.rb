@@ -1,0 +1,3 @@
+class UsableItem < Item
+
+end

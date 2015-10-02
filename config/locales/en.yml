@@ -95,6 +95,7 @@ en:
       item_usable_hint: " If the item is usable, then choose this attribute. This means that once the adventurer has the item, if he clicks on it, he will use it and can't do that again. If the item is a key-item, leave it unmarked."
       item_usable_attr_hint: "Define which attribute the item will modify."
       item_usable_quantity_hint: " Define how much the item will modify of one attribute (eg: -4 of energy, or +3 of skill)"
+      damage_hint: "Define how much damage your weapon will deal to enemy on each successful atack"
   tabs:
     story: "Story"
     chapters: "Chapters"
@@ -166,6 +167,7 @@ en:
       energy: "Energy"
       items: "Items"
       item: "Item"
+      damage: "Damage"
       shop: "Shop"
       shops: "Shops"
       add_item: "Add item"
@@ -214,6 +216,7 @@ en:
       name: "Name"
       description: "Description"
       usable_item: "Usable item"
+      type: "Type"
       remove: "Remove"
       attribute: "Attribute"
       modifier: "Modifier"

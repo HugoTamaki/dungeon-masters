@@ -38,6 +38,10 @@ module ApplicationHelper
     [5, 10, 20, 50, 100]
   end
 
+  def damage
+    [1, 2, 3, 4]
+  end
+
   def modifier_items
     items = [Item.new(name: 'no item')]
     Item.by_story(@story).each do |item|

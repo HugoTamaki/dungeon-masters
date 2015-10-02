@@ -95,6 +95,7 @@ pt-BR:
       item_usable_hint: " Se o item for usável, selecione este atributo. Isso quer dizer que uma vez que o aventureiro tenha o item, se ele clicar no link do item irá 'utiliza-lo', e não poderá mais fazê-lo novamente. Se o item for um item-chave, deixe desmarcado este atributo."
       item_usable_attr_hint: " Defina qual atributo o item irá modificar ao ser usado."
       item_usable_quantity_hint: " Defina quanto o item irá modificar do atributo (ex: -4 de energia, ou +3 de habilidade)"
+      damage_hint: "Ao selecionar o dano da sua arma, a cada rodada em que você tiver sucesso, o inimigo perderá a quantidade de enrgia escolhida"
   tabs:
     story: "História"
     chapters: "Capítulos"
@@ -166,6 +167,7 @@ pt-BR:
       energy: "Energia"
       items: "Itens"
       item: "Item"
+      damage: "Dano"
       shop: "Loja"
       shops: "Lojas"
       add_item: "Adicionar Item"
@@ -214,6 +216,7 @@ pt-BR:
       name: "Nome"
       description: "Descrição"
       usable_item: "Item usável"
+      type: "Tipo"
       remove: "Remover"
       attribute: "Atributo"
       modifier: "Modificador"

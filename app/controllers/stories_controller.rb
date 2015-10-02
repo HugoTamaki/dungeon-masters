@@ -491,7 +491,7 @@ class StoriesController < ApplicationController
                                                           modifiers_attributes_attributes: [:id, :attr, :chapter_id, :quantity, :_destroy],
                                                           modifiers_items_attributes: [:id, :chapter_id, :item_id, :quantity, :_destroy, items_attributes: [:id, :description, :name, :story_id, :_destroy]],
                                                           modifiers_shops_attributes: [:id, :chapter_id, :item_id, :price, :quantity, :_destroy, items_attributes: [:id, :description, :name, :story_id, :_destroy]],
-                                                          items_attributes: [:id, :description, :name, :story_id, :_destroy]
+                                                          items_attributes: [:id, :description, :name, :type, :damage, :story_id, :_destroy]
                                                           ]) if params[:story]
     end
 end

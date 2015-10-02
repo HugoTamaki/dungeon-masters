@@ -88,8 +88,14 @@ body {
   .usable-item-attributes {
     display: none;
   }
+  .weapon-item-attributes {
+    display: none;
+  }
   .visible {
     display: block;
+  }
+  .controls {
+    margin-left: 21px;
   }
 }
 

@@ -121,12 +121,14 @@ $(document).ready(function(){
     $('#message').fadeOut('slow');//just a function to fade out the message
   }
 
-  $(document).on('click', '.usable-checkbox', function() {
-    if ($(this).prop('checked')) {
-      $('#usable-item').addClass('visible');
-    } else {
-      $('#usable-item').removeClass('visible');
-    }
+  $(document).on('click', 'input[value="UsableItem"]', function() {
+    $(this).closest('.input-group').next('.usable-item-attributes').addClass('visible');
+    $(this).closest('.input-group').next().next().removeClass('visible');
+  });
+
+  $(document).on('click', 'input[value="Weapon"]', function() {
+    $(this).closest('.input-group').next('.usable-item-attributes').removeClass('visible');
+    $(this).closest('.input-group').next().next().addClass('visible');
   });
 
 });
