@@ -271,7 +271,8 @@ feature "Story" do
       page.should have_text("content 8")
 
       visit "/profile/#{user.id}"
-      find(:xpath, "(//a[text()='Ler história'])[2]").click
+
+      find(:xpath, "//a[@href='/stories/#{story_sample.slug}/detail']").click
       click_link "Ler história"
       click_link "Continuar"
 
@@ -290,7 +291,8 @@ feature "Story" do
       page.should have_text("content 8")
 
       visit "/profile/#{user.id}"
-      find(:xpath, "(//a[text()='Ler história'])[2]").click
+
+      find(:xpath, "//a[@href='/stories/#{story_sample.slug}/detail']").click
       click_link "Ler história"
       click_link "Começar do Início"
 
