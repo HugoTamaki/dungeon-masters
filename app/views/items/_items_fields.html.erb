@@ -7,7 +7,7 @@
   </div>
   <div class="input-group">
     <%= f.label :type, t('items.edit.type') %>
-    <%= f.input :type, collection: [['UsableItem', 'Item Usável'], ['Weapon', 'Arma']], label_method: :last, value_method: :first, as: :radio_buttons, required: true, label: false %>
+    <%= f.input :type, collection: [['UsableItem', 'Item Usável'], ['Weapon', 'Arma'], ['KeyItem', 'Item Chave']], label_method: :last, value_method: :first, as: :radio_buttons, required: true, label: false %>
     <p class="help-block"><%= t('actions.messages.item_usable_hint') %></p>
   </div>
   <div class="usable-item-attributes <%= 'visible' if f.object.is_a?(UsableItem) %>">

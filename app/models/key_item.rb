@@ -1,0 +1,3 @@
+class KeyItem < KeyItem
+
+end

@@ -131,4 +131,9 @@ $(document).ready(function(){
     $(this).closest('.input-group').next().next().addClass('visible');
   });
 
+  $(document).on('click', 'input[value="KeyItem"]', function() {
+    $(this).closest('.input-group').next('.usable-item-attributes').removeClass('visible');
+    $(this).closest('.input-group').next().next().removeClass('visible');
+  });
+
 });
