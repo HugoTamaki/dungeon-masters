@@ -46,6 +46,18 @@ class Story < ActiveRecord::Base
   scope :by_user, lambda {|user_id| where(user_id: user_id)}
   scope :published, -> { where(published: true) }
 
+  def weapons
+    items.weapons
+  end
+
+  def usable_items
+    items.usable_items
+  end
+
+  def key_items
+    items.key_items
+  end
+
   def has_adventurer? adventurers
     adventurers.any? {|adventurer| adventurer.story == self}
   end

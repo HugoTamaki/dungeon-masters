@@ -35,6 +35,18 @@ class Adventurer < ActiveRecord::Base
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
   scope :by_user_and_story, lambda {|user, story| where(user_id: user.id, story_id: story.id)}
 
+  def weapons
+    items.weapons
+  end
+
+  def usable_items
+    items.usable_items
+  end
+
+  def key_items
+    items.key_items
+  end
+
   def clear
     self.chapters.clear
     self.adventurers_items.clear
@@ -61,12 +73,10 @@ class Adventurer < ActiveRecord::Base
             items << modifier_item.item unless items.include? modifier_item.item
             adventurer_item = adventurers_items.find_by(item: modifier_item.item)
             adventurer_item.quantity += modifier_item.quantity
-            adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           else
             adventurer_item = adventurers_items.find_by(item: modifier_item.item)
             adventurer_item.quantity += modifier_item.quantity
-            adventurer_item.status = 1 unless adventurer_item.item.usable
             adventurer_item.save
           end
         end
@@ -84,7 +94,7 @@ class Adventurer < ActiveRecord::Base
 
   def dont_have_item(item)
     adventurer_item = adventurers_items.find_by(item: item)
-    !items.include?(item) || adventurer_item.status.zero?
+    !items.include?(item) || item.adventurer_item.quantity == 0
   end
 
   def use_required_item(decision)
@@ -95,7 +105,6 @@ class Adventurer < ActiveRecord::Base
           change_attribute(required_item.attr, required_item.modifier)
         end
         adventurer_item = adventurers_items.find_by(item: required_item)
-        adventurer_item.status = 0 unless required_item.usable
         adventurer_item.quantity -= 1 if adventurer_item.quantity > 0
         adventurer_item.save
       end

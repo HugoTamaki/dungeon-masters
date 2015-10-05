@@ -17,18 +17,15 @@ class Item < ActiveRecord::Base
 
   belongs_to :story, touch: true
   has_many :adventurers, through: :adventurers_items
+  has_one :adventurer_item
   has_many :modifiers_items, dependent: :destroy
   has_many :modifiers_shops, dependent: :destroy
   has_many :decisions, foreign_key: :item_validator
 
   validates :name, presence: true
 
-  before_update do
-    unless self.usable
-      self.attr = ''
-      self.modifier = 0
-    end
-  end
-
+  scope :weapons, -> { where(type: 'Weapon') }
+  scope :usable_items, -> { where(type: 'UsableItem') }
+  scope :key_items, -> { where(type: 'KeyItem') }
   scope :by_story, lambda {|story_id| where(story_id: story_id)}
 end
