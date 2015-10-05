@@ -17,7 +17,6 @@ class Item < ActiveRecord::Base
 
   belongs_to :story, touch: true
   has_many :adventurers, through: :adventurers_items
-  has_one :adventurer_item
   has_many :modifiers_items, dependent: :destroy
   has_many :modifiers_shops, dependent: :destroy
   has_many :decisions, foreign_key: :item_validator

@@ -94,7 +94,7 @@ class Adventurer < ActiveRecord::Base
 
   def dont_have_item(item)
     adventurer_item = adventurers_items.find_by(item: item)
-    !items.include?(item) || item.adventurer_item.quantity == 0
+    !items.include?(item) || adventurer_item.quantity == 0
   end
 
   def use_required_item(decision)
