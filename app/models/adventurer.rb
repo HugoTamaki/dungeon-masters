@@ -101,7 +101,7 @@ class Adventurer < ActiveRecord::Base
     unless decision.nil?
       if decision.has_item_validation?
         required_item = decision.item
-        if required_item.usable
+        if required_item.is_a?(UsableItem) || required_item.is_a?(KeyItem)
           change_attribute(required_item.attr, required_item.modifier)
         end
         adventurer_item = adventurers_items.find_by(item: required_item)
