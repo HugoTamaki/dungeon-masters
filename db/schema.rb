@@ -107,9 +107,9 @@ ActiveRecord::Schema.define(version: 20151001231036) do
     t.integer  "story_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "usable",                 default: false
-    t.string   "attr",                   default: ""
-    t.integer  "modifier",               default: 0
+    t.boolean  "usable"
+    t.string   "attr"
+    t.integer  "modifier"
     t.string   "type",                   default: "UsableItem"
     t.integer  "damage",                 default: 2
     t.index ["story_id"], :name => "index_items_on_story_id"
