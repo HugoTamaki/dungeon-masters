@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001231036) do
+ActiveRecord::Schema.define(version: 20151005204400) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -119,10 +119,10 @@ ActiveRecord::Schema.define(version: 20151001231036) do
   create_table "adventurers_items", force: true do |t|
     t.integer  "adventurer_id"
     t.integer  "item_id"
-    t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "quantity",      default: 0
+    t.boolean  "selected"
     t.index ["adventurer_id"], :name => "index_adventurers_items_on_adventurer_id"
     t.index ["item_id"], :name => "index_adventurers_items_on_item_id"
     t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_items_adventurer_id"
