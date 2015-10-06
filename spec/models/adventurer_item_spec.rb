@@ -20,7 +20,7 @@ describe AdventurerItem do
   describe "Attributes" do
     it {should have_attribute :adventurer_id}
     it {should have_attribute :item_id}
-    it {should have_attribute :status}
+    it {should have_attribute :selected}
   end
 
   describe "Relationships" do
