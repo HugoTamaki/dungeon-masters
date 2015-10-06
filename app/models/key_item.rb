@@ -1,3 +1,3 @@
-class KeyItem < KeyItem
+class KeyItem < Item
 
 end
