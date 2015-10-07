@@ -10,6 +10,6 @@ module AdventurersHelper
   end
 
   def current_weapon_damage(adventurer)
-    @adventurer.selected_weapon ? @adventurer.selected_weapon.damage : 2
+    adventurer.selected_weapon ? adventurer.selected_weapon.damage : 2
   end
 end

@@ -26,4 +26,33 @@ describe AdventurersHelper do
       end
     end
   end
+
+  describe '#current_weapon_damage' do
+    let(:sword) { FactoryGirl.create(:weapon, name: 'Espada', damage: 4) }
+    let(:lance) { FactoryGirl.create(:weapon, name: 'Lança', damage: 3) }
+
+    context 'there is a selected weapon' do
+      before do
+        adventurer.items << lance
+        adventurer.items << sword
+        adventurer_item = adventurer.adventurers_items.last
+        adventurer_item.update(selected: true)
+      end
+
+      it 'returns damage of selected weapon' do
+        expect(helper.current_weapon_damage(adventurer)).to eql(4)
+      end
+    end
+
+    context 'there is not a selected weapon' do
+      before do
+        adventurer.items << lance
+        adventurer.items << sword
+      end
+
+      it 'returns default number' do
+        expect(helper.current_weapon_damage(adventurer)).to eql(2)
+      end
+    end
+  end
 end
