@@ -105,14 +105,14 @@ describe Adventurer do
   end
 
   describe '#methods' do
-    let(:user)    { FactoryGirl.create(:user) }
-    let(:story)   { FactoryGirl.create(:story, initial_gold: 30) }
-    let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
+    let(:user)        { FactoryGirl.create(:user) }
+    let(:story)       { FactoryGirl.create(:story, initial_gold: 30) }
+    let(:chapter)     { FactoryGirl.create(:chapter, reference: "30", story: story) }
+    let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
+    let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
+    let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
 
     describe '#weapons' do
-      let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
-      let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
-      let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
 
       before do
         adventurer.items << weapon
@@ -128,9 +128,6 @@ describe Adventurer do
     end
 
     describe '#usable_items' do
-      let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
-      let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
-      let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
 
       before do
         adventurer.items << weapon
@@ -146,9 +143,6 @@ describe Adventurer do
     end
 
     describe '#key_items' do
-      let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
-      let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
-      let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
 
       before do
         adventurer.items << weapon
@@ -163,19 +157,28 @@ describe Adventurer do
       end
     end
 
-    describe '#weapons' do
-      let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
-      let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
-      let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
+    describe '#selected_weapon' do
+      let(:lance) { FactoryGirl.create(:weapon, name: 'lance', story: story, damage: 4) }
 
       before do
-        adventurer.items << weapon
+        adventurer.items << lance
       end
 
-      it 'returns adventurer weapons items' do
-        expect(adventurer.weapons).to include(weapon)
-        expect(adventurer.weapons).not_to include(usable_item)
-        expect(adventurer.weapons).not_to include(key_item)
+      context 'has one selected weapon' do
+        before do
+          adventurer_item = adventurer.adventurers_items.last
+          adventurer_item.update(selected: true)
+        end
+
+        it 'returns selected weapon' do
+          expect(adventurer.selected_weapon).to eq(lance)
+        end
+      end
+
+      context 'has no selected weapon' do
+        it 'returns selected weapon' do
+          expect(adventurer.selected_weapon).to eq(nil)
+        end
       end
     end
 
