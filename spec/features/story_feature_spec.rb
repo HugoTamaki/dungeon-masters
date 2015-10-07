@@ -6,10 +6,10 @@ feature "Story" do
   let!(:item)           { FactoryGirl.create(:item, story_id: story.id)}
   let!(:adventurer)     { FactoryGirl.create(:adventurer, user_id: user.id, skill: 5, energy: 5, luck: 5)}
   let!(:story_sample)   { FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 0, initial_gold: 20)}
-  let!(:item1)          { FactoryGirl.create(:item, name: "espada", description: "uma espada", story: story_sample, usable: false) }
-  let!(:item2)          { FactoryGirl.create(:item, name: "escudo", description: "um escudo", story: story_sample, usable: false) }
-  let!(:item3)          { FactoryGirl.create(:item, name: "Pastel", description: "um pastelzinho", story: story_sample, usable: true, attr: "energy", modifier: 4) }
-  let!(:item4)          { FactoryGirl.create(:item, name: "health drink", description: "bebida revigorante", story: story_sample, usable: true, attr: "energy", modifier: 4) }
+  let!(:item1)          { FactoryGirl.create(:item, name: "espada", description: "uma espada", story: story_sample, type: 'KeyItem') }
+  let!(:item2)          { FactoryGirl.create(:item, name: "escudo", description: "um escudo", story: story_sample, type: 'KeyItem') }
+  let!(:item3)          { FactoryGirl.create(:item, name: "Pastel", description: "um pastelzinho", story: story_sample, type: 'UsableItem', attr: "energy", modifier: 4) }
+  let!(:item4)          { FactoryGirl.create(:item, name: "health drink", description: "bebida revigorante", story: story_sample, type: 'UsableItem', attr: "energy", modifier: 4) }
 
   let!(:chapter1)       { FactoryGirl.create(:chapter, reference: "1", content: "content 1", story: story_sample) }
   let!(:chapter2)       { FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_sample) }
@@ -248,6 +248,7 @@ feature "Story" do
 
       click_link "Capítulo 8"
 
+      sleep(0.2)
       click_link "Pastel"
       first(:link, "Pastel").click
 
