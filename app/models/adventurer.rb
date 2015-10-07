@@ -47,6 +47,10 @@ class Adventurer < ActiveRecord::Base
     items.key_items
   end
 
+  def selected_weapon
+    adventurers_items.selected.last.item if adventurers_items.selected.present?
+  end
+
   def clear
     self.chapters.clear
     self.adventurers_items.clear

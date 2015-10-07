@@ -17,4 +17,5 @@ class AdventurerItem < ActiveRecord::Base
   belongs_to :item
 
   scope :by_adventurer, lambda {|adventurer_id| where(adventurer_id: adventurer_id)}
+  scope :selected, -> { where(selected: true) }
 end

@@ -109,6 +109,76 @@ describe Adventurer do
     let(:story)   { FactoryGirl.create(:story, initial_gold: 30) }
     let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
 
+    describe '#weapons' do
+      let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
+      let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
+      let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
+
+      before do
+        adventurer.items << weapon
+        adventurer.items << usable_item
+        adventurer.items << key_item
+      end
+
+      it 'returns adventurer weapons items' do
+        expect(adventurer.weapons).to include(weapon)
+        expect(adventurer.weapons).not_to include(usable_item)
+        expect(adventurer.weapons).not_to include(key_item)
+      end
+    end
+
+    describe '#usable_items' do
+      let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
+      let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
+      let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
+
+      before do
+        adventurer.items << weapon
+        adventurer.items << usable_item
+        adventurer.items << key_item
+      end
+
+      it 'returns adventurer usable items' do
+        expect(adventurer.usable_items).to include(usable_item)
+        expect(adventurer.usable_items).not_to include(weapon)
+        expect(adventurer.usable_items).not_to include(key_item)
+      end
+    end
+
+    describe '#key_items' do
+      let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
+      let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
+      let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
+
+      before do
+        adventurer.items << weapon
+        adventurer.items << usable_item
+        adventurer.items << key_item
+      end
+
+      it 'returns adventurer key items' do
+        expect(adventurer.key_items).to include(key_item)
+        expect(adventurer.key_items).not_to include(usable_item)
+        expect(adventurer.key_items).not_to include(weapon)
+      end
+    end
+
+    describe '#weapons' do
+      let(:weapon)      { FactoryGirl.create(:weapon, name: 'espada', story: story, damage: 3) }
+      let(:usable_item) { FactoryGirl.create(:usable_item, name: 'yakult', story: story, attr: 'energy', modifier: 4) }
+      let(:key_item)    { FactoryGirl.create(:key_item, name: 'chave', story: story) }
+
+      before do
+        adventurer.items << weapon
+      end
+
+      it 'returns adventurer weapons items' do
+        expect(adventurer.weapons).to include(weapon)
+        expect(adventurer.weapons).not_to include(usable_item)
+        expect(adventurer.weapons).not_to include(key_item)
+      end
+    end
+
     describe '#set_chapter_and_gold' do
       before(:each) do
         adventurer.user = user

@@ -8,4 +8,8 @@ module AdventurersHelper
       return modifier_shop.quantity
     end
   end
+
+  def current_weapon_damage(adventurer)
+    @adventurer.selected_weapon ? @adventurer.selected_weapon.damage : 2
+  end
 end

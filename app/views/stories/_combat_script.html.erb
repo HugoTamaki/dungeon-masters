@@ -10,7 +10,8 @@
           name: "<%= @adventurer.name %>",
           skill: <%= @adventurer.skill %>,
           energy: <%= @adventurer.energy %>,
-          luck: <%= @adventurer.luck %>
+          luck: <%= @adventurer.luck %>,
+          damage: <%= current_weapon_damage(@adventurer) %>
         }
         morreu = adventurer.energy > 0 ? false : true;
 
@@ -18,7 +19,8 @@
           var <%= monster.name.parameterize.underscore %> = {
             name: "<%= monster.name %>",
             skill: <%= monster.skill %>,
-            energy: <%= monster.energy %>
+            energy: <%= monster.energy %>,
+            damage: 2
           }
 
           shock(adventurer, <%= monster.name.parameterize.underscore %>, story_id);
@@ -50,7 +52,7 @@
 
           if (enemyAttackPower > adventurerAttackPower) {
             $('#combat-result').append("<p>" + adventurer.name + " <%= t('stories.read.attack_power') %> - "+ advDice1 + " + " + advDice2 + " + " + adventurer.skill + " = "+ adventurerAttackPower + "<strong><br>" + monster.name + " <%= t('stories.read.attack_power') %> - "+ enemyDice1 + " + " + enemyDice2 + " + " + monster.skill + " = " + enemyAttackPower + "</strong></p><hr>");
-            adventurer.energy -= 2;
+            adventurer.energy -= monster.damage;
             if (adventurer.energy < 1) {
               adventurer.energy = 0;
               finish = true;
@@ -64,7 +66,7 @@
             }
           } else if (enemyAttackPower < adventurerAttackPower) {
             $('#combat-result').append("<p><strong>"+ adventurer.name + " <%= t('stories.read.attack_power') %> - "+ advDice1 + " + " + advDice2 + " + " + adventurer.skill + " = "+ adventurerAttackPower + "</strong> <i class='fa fa-check fa-1'></i><br>" + monster.name + " <%= t('stories.read.attack_power') %> - "+ enemyDice1 + " + " + enemyDice2 + " + " + monster.skill + " = " + enemyAttackPower + "</p><hr>");
-            monster.energy -= 2;
+            monster.energy -= adventurer.damage;
             if (adventurer.energy < 1) {
               adventurer.energy = 0;
               finish = true;
