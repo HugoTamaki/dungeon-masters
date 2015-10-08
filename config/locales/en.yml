@@ -53,6 +53,8 @@ en:
     unpublish_fail: "Unpublish failed."
     not_published: "Not possible to access this story"
     not_found: "Story or chapter not found, or you havent's started this story yet"
+    success_weapon_select: "Successfully selected weapon."
+    fail_weapon_select: "Not possible to select weapon."
     five_more: "+5 chapters"
     ten_more: "+10 chapters"
     twenty_more: "+20 chapters"

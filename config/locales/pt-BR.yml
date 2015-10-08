@@ -53,6 +53,8 @@ pt-BR:
     unpublish_fail: "Despublicação falhou."
     not_published: "Não foi possível acessar essa história"
     not_found: "História ou capítulo não encontrado, ou você ainda não começou esta aventura"
+    success_weapon_select: "Arma escolhida com sucesso."
+    fail_weapon_select: "Não foi possível escolher essa arma."
     five_more: "+5 capítulos"
     ten_more: "+10 capítulos"
     twenty_more: "+20 capítulos"

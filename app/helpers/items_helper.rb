@@ -1,31 +1,36 @@
 module ItemsHelper
   def show_item(adventurer_item, item, chapter)
+    result = ""
     if item.is_a? Weapon
-      "<p>" +
-      item.name + 
-      "</p>"
+      result += "<p>"
+      result += link_to(item.name, story_select_weapon_path(adventurer_id: adventurer_item.adventurer, item_id: item))
+      if adventurer_item.selected
+        result += " <i class='fa fa-hand-o-left'></i>"
+      end
+      result += "</p>"
     elsif item.is_a? UsableItem
       if adventurer_item.quantity > 0
-        "<p>" + 
-        link_to(item.name, "javascript:;", id: "#{item.name.parameterize.underscore}_item", data: {story_id: "#{chapter.story.id}", item_id: "#{item.id}",attribute: "#{item.attr}", modifier: "#{item.modifier}"}, class: "usable-item") + 
-        " - <span id='quantity'>#{adventurer_item.quantity}</span>" +
-        "</p>"
+        result += "<p>"
+        result += link_to(item.name, "javascript:;", id: "#{item.name.parameterize.underscore}_item", data: {story_id: "#{chapter.story.id}", item_id: "#{item.id}",attribute: "#{item.attr}", modifier: "#{item.modifier}"}, class: "usable-item")
+        result += " - <span id='quantity'>#{adventurer_item.quantity}</span>"
+        result += "</p>"
       else
-        "<p>" + 
-        "<strike>#{item.name}</strike> - " + 
-        "<span id='quantity'>#{adventurer_item.quantity}</span>" + 
-        "</p>"
+        result += "<p>"
+        result += "<strike>#{item.name}</strike> - "
+        result += "<span id='quantity'>#{adventurer_item.quantity}</span>"
+        result += "</p>"
       end
     elsif item.is_a? KeyItem
       if adventurer_item.quantity > 0
-        "<p>" + 
-        "#{item.name} - #{adventurer_item.quantity} - item chave" + 
-        "</p>"
+        result += "<p>"
+        result += "#{item.name} - #{adventurer_item.quantity} - item chave"
+        result += "</p>"
       else
-        "<p>" + 
-        "<strike>#{item.name} - #{adventurer_item.quantity} - item chave</strike>" + 
-        "</p>"
+        result += "<p>"
+        result += "<strike>#{item.name} - #{adventurer_item.quantity} - item chave</strike>"
+        result += "</p>"
       end
     end
+    result
   end
 end

@@ -16,6 +16,7 @@
     get 'graph'
     post 'use_item', on: :collection
     get 'buy_item'
+    get 'select_weapon'
     post 'publish'
     get 'search_result', as: 'search_result', on: :collection
     get 'detail', as: 'show'
