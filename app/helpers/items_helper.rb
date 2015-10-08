@@ -1,6 +1,10 @@
 module ItemsHelper
   def show_item(adventurer_item, item, chapter)
-    if item.is_a? UsableItem
+    if item.is_a? Weapon
+      "<p>" +
+      item.name + 
+      "</p>"
+    elsif item.is_a? UsableItem
       if adventurer_item.quantity > 0
         "<p>" + 
         link_to(item.name, "javascript:;", id: "#{item.name.parameterize.underscore}_item", data: {story_id: "#{chapter.story.id}", item_id: "#{item.id}",attribute: "#{item.attr}", modifier: "#{item.modifier}"}, class: "usable-item") + 

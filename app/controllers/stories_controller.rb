@@ -476,7 +476,7 @@ class StoriesController < ApplicationController
                                     :cover,
                                     :published,
                                     :chapter_numbers,
-                                    items_attributes: [:id, :description, :name, :story_id, :usable, :attr, :modifier, :_destroy],
+                                    items_attributes: [:id, :description, :name, :story_id, :usable, :type, :damage, :attr, :modifier, :_destroy],
                                     chapters_attributes: [:id,
                                                           :content,
                                                           :reference,
