@@ -38,8 +38,8 @@ class Chapter < ActiveRecord::Base
   accepts_nested_attributes_for :modifiers_attributes, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :modifiers_shops, reject_if: :all_blank, allow_destroy: true
 
-  scope :by_story, lambda {|story_id| where(story_id: story_id)}
-  scope :by_reference, lambda {|reference| where(reference: reference)}
+  scope :by_story, -> (story_id) { where(story_id: story_id) }
+  scope :by_reference, -> (reference) { where(reference: reference) }
 
   before_create do
     self.x = Random.rand.round(10)

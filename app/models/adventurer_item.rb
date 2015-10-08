@@ -16,7 +16,7 @@ class AdventurerItem < ActiveRecord::Base
   belongs_to :adventurer
   belongs_to :item
 
-  scope :by_adventurer, lambda {|adventurer_id| where(adventurer_id: adventurer_id)}
+  scope :by_adventurer, -> (adventurer_id) { where(adventurer_id: adventurer_id) }
   scope :selected, -> { where(selected: true) }
   scope :weapons, -> { joins(:item).where(items: {type: 'Weapon'}) }
   scope :usable_items, -> { joins(:item).where(items: {type: 'UsableItem'}) }

@@ -43,7 +43,7 @@ class Story < ActiveRecord::Base
   accepts_nested_attributes_for :chapters, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
 
-  scope :by_user, lambda {|user_id| where(user_id: user_id)}
+  scope :by_user, -> (user_id) { where(user_id: user_id) }
   scope :published, -> { where(published: true) }
 
   def weapons

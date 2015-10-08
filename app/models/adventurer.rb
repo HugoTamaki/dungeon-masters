@@ -32,8 +32,8 @@ class Adventurer < ActiveRecord::Base
   has_many :chapters, through: :adventurer_chapters
   accepts_nested_attributes_for :adventurers_items, reject_if: :all_blank, allow_destroy: true
 
-  scope :by_story, lambda {|story_id| where(story_id: story_id)}
-  scope :by_user_and_story, lambda {|user, story| where(user_id: user.id, story_id: story.id)}
+  scope :by_story, -> (story_id) { where(story_id: story_id) }
+  scope :by_user_and_story, -> (user, story) { where(user_id: user.id, story_id: story.id) }
 
   def weapons
     items.weapons

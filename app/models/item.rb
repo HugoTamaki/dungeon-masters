@@ -26,5 +26,5 @@ class Item < ActiveRecord::Base
   scope :weapons, -> { where(type: 'Weapon') }
   scope :usable_items, -> { where(type: 'UsableItem') }
   scope :key_items, -> { where(type: 'KeyItem') }
-  scope :by_story, lambda {|story_id| where(story_id: story_id)}
+  scope :by_story, -> (story_id) { where(story_id: story_id) }
 end
