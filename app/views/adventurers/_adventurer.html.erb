@@ -22,7 +22,19 @@
   <p><%= t('stories.read.gold') %>: <span id="adventurer_gold"><%= @adventurer.gold %></span></p>
   <% if @adventurers_items.present? %>
     <h3><%= t('stories.read.adventurer_items') %></h3>
-    <% @adventurers_items.each do |adventurer_item| %>
+
+    <h4>Armas</h4>
+    <% @adventurers_items.weapons.each do |adventurer_item| %>
+      <%= show_item(adventurer_item, adventurer_item.item, @chapter).html_safe %>
+    <% end %>
+
+    <h4>Itens</h4>
+    <% @adventurers_items.usable_items.each do |adventurer_item| %>
+      <%= show_item(adventurer_item, adventurer_item.item, @chapter).html_safe %>
+    <% end %>
+
+    <h4>Itens chave</h4>
+    <% @adventurers_items.key_items.each do |adventurer_item| %>
       <%= show_item(adventurer_item, adventurer_item.item, @chapter).html_safe %>
     <% end %>
   <% end %>
