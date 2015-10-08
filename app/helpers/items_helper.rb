@@ -4,6 +4,7 @@ module ItemsHelper
     if item.is_a? Weapon
       result += "<p>"
       result += link_to(item.name, story_select_weapon_path(adventurer_id: adventurer_item.adventurer, item_id: item))
+      result += " dano: #{item.damage}"
       if adventurer_item.selected
         result += " <i class='fa fa-hand-o-left'></i>"
       end

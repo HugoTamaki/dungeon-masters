@@ -95,6 +95,8 @@ pt-BR:
       item_hint: " Ao criar um item, você poderá usá-lo na edição dos capítulos."
       item_description_hint: " Uma breve descrição do item."
       item_usable_hint: " Se o item for usável, selecione este atributo. Isso quer dizer que uma vez que o aventureiro tenha o item, se ele clicar no link do item irá 'utiliza-lo', e não poderá mais fazê-lo novamente. Se o item for um item-chave, deixe desmarcado este atributo."
+      item_key_hint: " Se o item for um item chave, ele não pode ser usado pelo aventureiro, mas ele ainda pode ser necessário para acessar um capítulo."
+      item_weapon_hint: " Se o item for uma arma, você pode definir o dano para cada um, e o aventureiro pode escolher qual arma usar no momento."
       item_usable_attr_hint: " Defina qual atributo o item irá modificar ao ser usado."
       item_usable_quantity_hint: " Defina quanto o item irá modificar do atributo (ex: -4 de energia, ou +3 de habilidade)"
       damage_hint: "Ao selecionar o dano da sua arma, a cada rodada em que você tiver sucesso, o inimigo perderá a quantidade de enrgia escolhida"

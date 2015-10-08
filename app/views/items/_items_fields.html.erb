@@ -8,9 +8,9 @@
   <div class="input-group">
     <%= f.label :type, t('items.edit.type') %>
     <%= f.input :type, collection: [['UsableItem', 'Item Usável'], ['Weapon', 'Arma'], ['KeyItem', 'Item Chave']], label_method: :last, value_method: :first, as: :radio_buttons, required: true, label: false %>
-    <p class="help-block"><%= t('actions.messages.item_usable_hint') %></p>
   </div>
   <div class="usable-item-attributes <%= 'visible' if f.object.is_a?(UsableItem) %>">
+    <p class="help-block"><%= t('actions.messages.item_usable_hint') %></p>
     <div class="form-group">
       <%= f.input :attr, label: t('items.edit.attribute'),
       collection: attributes, prompt: t('items.edit.select_attribute'), hint: t('actions.messages.item_usable_attr_hint'), input_html: {class: 'form-control'} %>
@@ -18,9 +18,13 @@
     </div>
   </div>
   <div class="weapon-item-attributes <%= 'visible' if f.object.is_a?(Weapon) %>">
+    <p class="help-block"><%= t('actions.messages.item_weapon_hint') %></p>
     <div class="form-group">
       <%= f.input :damage, label: t('stories.edit.damage'), collection: damage, prompt: "select damage of weapon", hint: t('actions.messages.damage_hint'), input_html: {class: 'form-control'} %>
     </div>
+  </div>
+  <div class="key-item-attributes <%= 'visible' if f.object.is_a?(KeyItem) %>">
+    <p class="help-block"><%= t('actions.messages.item_key_hint') %></p>
   </div>
   <p><%= link_to_remove_fields t('items.edit.remove'), f, "item" %></p>
 </div>

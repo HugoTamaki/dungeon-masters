@@ -124,16 +124,19 @@ $(document).ready(function(){
   $(document).on('click', 'input[value="UsableItem"]', function() {
     $(this).closest('.input-group').next('.usable-item-attributes').addClass('visible');
     $(this).closest('.input-group').next().next().removeClass('visible');
+    $(this).closest('.input-group').next().next().next().removeClass('visible');
   });
 
   $(document).on('click', 'input[value="Weapon"]', function() {
     $(this).closest('.input-group').next('.usable-item-attributes').removeClass('visible');
     $(this).closest('.input-group').next().next().addClass('visible');
+    $(this).closest('.input-group').next().next().next().removeClass('visible');
   });
 
   $(document).on('click', 'input[value="KeyItem"]', function() {
     $(this).closest('.input-group').next('.usable-item-attributes').removeClass('visible');
     $(this).closest('.input-group').next().next().removeClass('visible');
+    $(this).closest('.input-group').next().next().next().addClass('visible');
   });
 
 });

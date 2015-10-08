@@ -95,6 +95,8 @@ en:
       item_hint: " You can use items you create here at chapter edition."
       item_description_hint: " Uma breve descrição do item."
       item_usable_hint: " If the item is usable, then choose this attribute. This means that once the adventurer has the item, if he clicks on it, he will use it and can't do that again. If the item is a key-item, leave it unmarked."
+      item_key_hint: " If the item is a Key Item, it can't be used by the adventurer, but is may be necessary to access some chapters."
+      item_weapon_hint: " If the item is a Weapon, you can define the damage it will take from your enemy on each successful attack, and the adventurer can select which weapon to use at the moment."
       item_usable_attr_hint: "Define which attribute the item will modify."
       item_usable_quantity_hint: " Define how much the item will modify of one attribute (eg: -4 of energy, or +3 of skill)"
       damage_hint: "Define how much damage your weapon will deal to enemy on each successful atack"
