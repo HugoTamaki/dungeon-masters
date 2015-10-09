@@ -2,13 +2,23 @@ module ItemsHelper
   def show_item(adventurer_item, item, chapter)
     result = ""
     if item.is_a? Weapon
-      result += "<p>"
-      result += link_to(item.name, story_select_weapon_path(adventurer_id: adventurer_item.adventurer, item_id: item))
-      result += " dano: #{item.damage}"
-      if adventurer_item.selected
-        result += " <i class='fa fa-hand-o-left'></i>"
+      if adventurer_item.quantity > 0
+        result += "<p>"
+        result += link_to(item.name, story_select_weapon_path(adventurer_id: adventurer_item.adventurer, item_id: item))
+        result += " dano: #{item.damage}"
+        if adventurer_item.selected
+          result += " <i class='fa fa-hand-o-left'></i>"
+        end
+        result += "</p>"
+      else
+        result += "<p>"
+        result += "<strike>#{item.name}</strike>"
+        result += " dano: #{item.damage}"
+        if adventurer_item.selected
+          result += " <i class='fa fa-hand-o-left'></i>"
+        end
+        result += "</p>"
       end
-      result += "</p>"
     elsif item.is_a? UsableItem
       if adventurer_item.quantity > 0
         result += "<p>"
