@@ -202,9 +202,7 @@ class StoriesController < ApplicationController
 
   def select_weapon
     adventurer = Adventurer.find params[:adventurer_id]
-    adventurer.adventurers_items.update_all(selected: false)
-    adventurer_item = adventurer.adventurers_items.find_by(item_id: params[:item_id])
-    if adventurer_item.update(selected: true)
+    if adventurer.select_weapon(params[:item_id])
       redirect_to :back, notice: I18n.t('actions.success_weapon_select')
     else
       redirect_to :back, alert: I18n.t('actions.fail_weapon_select')

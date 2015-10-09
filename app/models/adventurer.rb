@@ -51,6 +51,12 @@ class Adventurer < ActiveRecord::Base
     adventurers_items.selected.last.item if adventurers_items.selected.present?
   end
 
+  def select_weapon(item_id)
+    adventurer_item = adventurers_items.find_by(item_id: item_id)
+    adventurers_items.update_all(selected: false)
+    adventurer_item.selected? ? adventurer_item.update(selected: false) : adventurer_item.update(selected: true)
+  end
+
   def clear
     self.chapters.clear
     self.adventurers_items.clear
