@@ -6,10 +6,11 @@ feature "Story" do
   let!(:item)           { FactoryGirl.create(:item, story_id: story.id)}
   let!(:adventurer)     { FactoryGirl.create(:adventurer, user_id: user.id, skill: 5, energy: 5, luck: 5)}
   let!(:story_sample)   { FactoryGirl.create(:story, user_id: user.id, chapter_numbers: 0, initial_gold: 20)}
-  let!(:item1)          { FactoryGirl.create(:item, name: "espada", description: "uma espada", story: story_sample, type: 'KeyItem') }
+  let!(:item1)          { FactoryGirl.create(:item, name: "espada", description: "uma espada", story: story_sample, type: 'Weapon') }
   let!(:item2)          { FactoryGirl.create(:item, name: "escudo", description: "um escudo", story: story_sample, type: 'KeyItem') }
   let!(:item3)          { FactoryGirl.create(:item, name: "Pastel", description: "um pastelzinho", story: story_sample, type: 'UsableItem', attr: "energy", modifier: 4) }
   let!(:item4)          { FactoryGirl.create(:item, name: "health drink", description: "bebida revigorante", story: story_sample, type: 'UsableItem', attr: "energy", modifier: 4) }
+  let!(:item5)          { FactoryGirl.create(:item, name: "lança", description: "uma lança", story: story_sample, type: 'Weapon') }
 
   let!(:chapter1)       { FactoryGirl.create(:chapter, reference: "1", content: "content 1", story: story_sample) }
   let!(:chapter2)       { FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_sample) }
@@ -19,19 +20,28 @@ feature "Story" do
   let!(:chapter6)       { FactoryGirl.create(:chapter, reference: "6", content: "content 6", story: story_sample) }
   let!(:chapter7)       { FactoryGirl.create(:chapter, reference: "7", content: "content 7", story: story_sample) }
   let!(:chapter8)       { FactoryGirl.create(:chapter, reference: "8", content: "content 8", story: story_sample) }
+  let!(:chapter9)       { FactoryGirl.create(:chapter, reference: "9", content: "content 9", story: story_sample) }
+  let!(:chapter10)      { FactoryGirl.create(:chapter, reference: "10", content: "content 10", story: story_sample) }
+  let!(:chapter11)      { FactoryGirl.create(:chapter, reference: "11", content: "content 11", story: story_sample) }
 
   let!(:decision12)     { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter2.id) }
   let!(:decision13)     { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter3.id) }
   let!(:decision18)     { FactoryGirl.create(:decision, chapter: chapter1, destiny_num: chapter8.id, item_validator: item3.id) }
   let!(:decision25)     { FactoryGirl.create(:decision, chapter: chapter2, destiny_num: chapter5.id) }
+  let!(:decision29)     { FactoryGirl.create(:decision, chapter: chapter2, destiny_num: chapter9.id) }
   let!(:decision56)     { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: chapter6.id) }
   let!(:decision57)     { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: chapter7.id, item_validator: item1.id) }
+  let!(:decision910)    { FactoryGirl.create(:decision, chapter: chapter9, destiny_num: chapter10.id) }
+  let!(:decision1011)   { FactoryGirl.create(:decision, chapter: chapter10, destiny_num: chapter11.id, item_validator: item1.id) }
   
   let!(:modifier_item1) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item3, quantity: 1) }
   let!(:modifier_item2) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item4, quantity: 2) }
 
   let!(:monster)        { FactoryGirl.create(:monster, chapter: chapter2, name: "goblin", skill: 1, energy: 1) }
+
   let!(:modifier_item)  { FactoryGirl.create(:modifier_item, chapter: chapter3, item: item, quantity: 1) }
+  let!(:modifier_item3) { FactoryGirl.create(:modifier_item, chapter: chapter9, item: item1, quantity: 1) }
+  let!(:modifier_item4) { FactoryGirl.create(:modifier_item, chapter: chapter10, item: item5, quantity: 1) }
 
   let!(:shop)           { FactoryGirl.create(:modifier_shop, chapter: chapter8, item: item3, price: 5, quantity: 2) }
   let!(:shop2)          { FactoryGirl.create(:modifier_shop, chapter: chapter8, item: item1, price: 18, quantity: 1) }
@@ -258,6 +268,52 @@ feature "Story" do
       click_link "espada"
 
       page.should have_text "Não foi possível comprar este item."
+    end
+
+    scenario 'user select one of the weapons', js: true do
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+
+      click_button "Rolar dados"
+
+      click_button "Capítulo 1"
+      click_link "Capítulo 2"
+      click_button "Combate"
+      click_link "Capítulo 9"
+      click_link "Capítulo 10"
+      click_link "espada"
+
+      sleep(0.2)
+
+      adventurer = Adventurer.last
+      adventurer_item = adventurer.adventurers_items.find_by(item: item1)
+
+      expect(adventurer_item.selected).to eql(true)
+      expect(page).to have_text('Arma escolhida com sucesso.')
+    end
+
+    scenario 'user loses one of the weapons', js: true do
+      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+
+      click_button "Rolar dados"
+      
+      click_button "Capítulo 1"
+      click_link "Capítulo 2"
+      click_button "Combate"
+      click_link "Capítulo 9"
+      click_link "Capítulo 10"
+      click_link "espada"
+      click_link "Capítulo 11"
+
+      sleep(0.2)
+
+      adventurer = story_sample.adventurers.last
+      adventurer_item = adventurer.adventurers_items.find_by(item: item1)
+
+      expect(adventurer_item.selected).to eql(false)
+      expect(adventurer_item.quantity).to eql(0)
+      
+      sleep(0.2)
+      page.body.should include("<strike>espada</strike>")
     end
 
     scenario "user continues from where he stoped", js: true do

@@ -110,7 +110,7 @@ class Adventurer < ActiveRecord::Base
         end
         adventurer_item = adventurers_items.find_by(item: required_item)
         adventurer_item.quantity -= 1 if adventurer_item.quantity > 0
-        adventurer_item.selected = false if adventurer_item.is_a?(Weapon) && adventurer_item.quantity == 0
+        adventurer_item.selected = false if adventurer_item.item.is_a?(Weapon) && adventurer_item.quantity == 0
         adventurer_item.save
       end
     end

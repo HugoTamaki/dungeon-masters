@@ -34,7 +34,7 @@ class Story < ActiveRecord::Base
   validates_attachment_content_type :cover, content_type: ["image/jpg", "image/png", "image/gif", "image/jpeg"]
 
   belongs_to :user
-  has_one :adventurer
+  has_many :adventurers
   has_many :chapters, dependent: :destroy
   has_many :items, dependent: :destroy
   has_many :comments
