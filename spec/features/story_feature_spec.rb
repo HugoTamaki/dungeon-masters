@@ -61,8 +61,8 @@ feature "Story" do
 
       click_button "Próximo"
 
-      page.should have_text("História foi criada com sucesso.")
-      current_path.should == "/stories/#{Story.last.slug}/edit" 
+      expect(page).to have_text("História foi criada com sucesso.")
+      expect(current_path).to eql("/stories/#{Story.last.slug}/edit")
     end
 
     scenario "user fails to create story" do
@@ -74,11 +74,11 @@ feature "Story" do
 
       click_button "Próximo"
 
-      current_path.should == "/stories/new"
-      page.should have_text "Title não deve estar em branco"
-      page.should have_text "Resume não deve estar em branco"
-      page.should have_text "Chapter numbers não deve estar em branco"
-      page.should have_text "Chapter numbers não é um número"
+      expect(current_path).to eql("/stories/new")
+      expect(page).to have_text("Title não deve estar em branco")
+      expect(page).to have_text("Resume não deve estar em branco")
+      expect(page).to have_text("Chapter numbers não deve estar em branco")
+      expect(page).to have_text("Chapter numbers não é um número")
     end
   end
 
@@ -91,12 +91,12 @@ feature "Story" do
     scenario "user deletes a story" do
       visit "/profile/#{user.id}"
 
-      page.should have_text("Titulo")
+      expect(page).to have_text("Titulo")
       first(:link, "Deletar história").click
       page.driver.browser.switch_to.alert.accept
       sleep(0.5)
       expect(Story.count).to eq 1
-      current_path.should == "/profile/#{user.id}"
+      expect(current_path).to eql("/profile/#{user.id}")
     end
   end
 
@@ -107,83 +107,83 @@ feature "Story" do
     end
 
     scenario "user passes through chapters", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
       
       click_link "Capítulo 2"
-      page.should have_text("content 2")
+      expect(page).to have_text("content 2")
 
-      page.should have_button 'Combat'
+      expect(page).to have_button 'Combat'
       click_button "Combate"
 
       click_link "Capítulo 5"
-      page.should have_text("content 5")
+      expect(page).to have_text("content 5")
     end
 
     scenario "user does combat", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
 
       click_button "Capítulo 1"
       click_link "Capítulo 2"
 
-      page.should have_button 'Combate'
+      expect(page).to have_button 'Combat'
 
       click_button "Combate"
-      page.should have_text("goblin morreu!")
+      expect(page).to have_text("goblin morreu!")
     end
 
     scenario "user receives an item", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
 
       click_button "Capítulo 1"
       click_link "Capítulo 3"
-      page.should have_text("espada")
+      expect(page).to have_text("espada")
     end
 
     scenario "user does not has an item", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
       
       click_link "Capítulo 2"
-      page.should have_text("content 2")
+      expect(page).to have_text("content 2")
 
-      page.should have_button 'Combat'
+      expect(page).to have_button('Combat')
       click_button "Combate"
 
       click_link "Capítulo 5"
-      page.should have_text("content 5")
-      page.should have_css ".disabled"
+      expect(page).to have_text("content 5")
+      expect(page).to have_css(".disabled")
     end
 
     scenario "user has an item and passes through", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
       
       click_link "Capítulo 8"
-      page.should have_text("content 8")
+      expect(page).to have_text("content 8")
 
       sleep(0.2)
-      page.body.should include("<strike>Pastel</strike>")
+      expect(page.body).to include("<strike>Pastel</strike>")
     end
 
     scenario "user uses an usable item and it depletes", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
@@ -192,23 +192,23 @@ feature "Story" do
       adventurer.energy = 5
       adventurer.save
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
 
       
       click_link "Capítulo 2"
-      page.should have_text("content 2")
+      expect(page).to have_text("content 2")
 
       click_link "Pastel"
 
       sleep(0.5)
-      Adventurer.last.energy.should be_equal(9)
+      expect(Adventurer.last.energy).to eql(9)
 
       sleep(0.5)
-      page.body.should include("<strike>pastel</strike>")
+      expect(page.body).to include("<strike>pastel</strike>")
     end
 
     scenario "user uses an usable item and it does not deplete", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
@@ -217,44 +217,44 @@ feature "Story" do
       adventurer.energy = 5
       adventurer.save
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
       
       click_link "Capítulo 2"
-      page.should have_text("content 2")
+      expect(page).to have_text("content 2")
 
       click_link "health drink"
 
       sleep(0.5)
-      Adventurer.last.energy.should be_equal(9)
+      expect(Adventurer.last.energy).to eql(9)
 
       sleep(0.5)
-      page.body.should have_text "health drink - 1"
+      expect(page.body).to have_text("health drink - 1")
     end
 
     scenario "user buy an item", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
 
       click_link "Capítulo 8"
 
       click_link "Pastel"
 
-      page.should have_text "Pastel - 1"
-      page.should have_text "Ouro: 15"
-      page.should have_text "Sua compra foi bem sucedida."
+      expect(page).to have_text("Pastel - 1")
+      expect(page).to have_text("Ouro: 15")
+      expect(page).to have_text("Sua compra foi bem sucedida.")
     end
 
     scenario "user buy an item but does not has enough gold", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
 
       click_link "Capítulo 8"
 
@@ -262,8 +262,8 @@ feature "Story" do
       click_link "Pastel"
       first(:link, "Pastel").click
 
-      page.should have_text "Pastel - 1"
-      page.should have_text "Ouro: 10"
+      expect(page).to have_text("Pastel - 1")
+      expect(page).to have_text("Ouro: 10")
 
       click_link "espada"
 
@@ -271,7 +271,7 @@ feature "Story" do
     end
 
     scenario 'user select one of the weapons', js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
 
@@ -292,7 +292,7 @@ feature "Story" do
     end
 
     scenario 'user loses one of the weapons', js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       
@@ -313,19 +313,19 @@ feature "Story" do
       expect(adventurer_item.quantity).to eql(0)
       
       sleep(0.2)
-      page.body.should include("<strike>espada</strike>")
+      expect(page.body).to include("<strike>espada</strike>")
     end
 
     scenario "user continues from where he stoped", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
       
       click_link "Capítulo 8"
-      page.should have_text("content 8")
+      expect(page).to have_text("content 8")
 
       visit "/profile/#{user.id}"
 
@@ -333,19 +333,19 @@ feature "Story" do
       click_link "Ler história"
       click_link "Continuar"
 
-      page.should have_text ("content 8")
+      expect(page).to have_text("content 8")
     end
 
     scenario "user start story from beginning", js: true do
-      visit "/stories/#{story_sample.id}/prelude?new_story=true"
+      visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
       click_button "Capítulo 1"
 
-      page.should have_text("content 1")
+      expect(page).to have_text("content 1")
       
       click_link "Capítulo 8"
-      page.should have_text("content 8")
+      expect(page).to have_text("content 8")
 
       visit "/profile/#{user.id}"
 
@@ -353,7 +353,7 @@ feature "Story" do
       click_link "Ler história"
       click_link "Começar do Início"
 
-      page.should have_text ("Prelúdio")
+      expect(page).to have_text("Prelúdio")
     end
   end
 
@@ -367,15 +367,15 @@ feature "Story" do
 
       scenario "user publish a story", js: true do
         visit root_path
-        page.should_not have_text "Unpublished Story"
+        expect(page).not_to have_text("Unpublished Story")
 
         visit "/stories/#{unpublished_story.id}/edit"
 
         first(:link, "Publicar").click
-        page.should have_text "Publicado com sucesso."
+        expect(page).to have_text("Publicado com sucesso.")
 
         visit root_path
-        page.should have_text "Unpublished Story"
+        expect(page).to have_text("Unpublished Story")
       end
     end
 
@@ -384,15 +384,15 @@ feature "Story" do
 
       scenario "user unpublish a story", js: true do
         visit root_path
-        page.should have_text "Published Story"
+        expect(page).to have_text("Published Story")
 
         visit "/stories/#{published_story.id}/edit"
 
         first(:link, "Despublicar").click
-        page.should have_text "Despublicado com sucesso."
+        expect(page).to have_text("Despublicado com sucesso.")
 
         visit root_path
-        page.should_not have_text "Published Story"
+        expect(page).not_to have_text("Published Story")
       end      
     end
   end
@@ -409,8 +409,8 @@ feature "Story" do
 
       page.find('.navbar-search').set 'Story sample'
       click_button "Buscar"
-      page.should have_text "Story sample"
-      current_path.should == "/stories/search_result"
+      expect(page).to have_text("Story sample")
+      expect(current_path).to eql("/stories/search_result")
     end
   end
 
@@ -430,7 +430,7 @@ feature "Story" do
       visit "/stories/#{story_sample2.id}/edit"
 
       first(:link, "+5 capítulos").click
-      story_sample2.chapters.count.should == 10
+      expect(story_sample2.chapters.count).to eql(10)
     end
 
     scenario "user adds 10 chapters" do
@@ -438,7 +438,7 @@ feature "Story" do
 
       first(:button, "Adicionar capítulos").click
       first(:link, "+10 capítulos").click
-      story_sample2.chapters.count.should == 15
+      expect(story_sample2.chapters.count).to eql(15)
     end
 
     scenario "user adds 20 chapters" do
@@ -446,7 +446,7 @@ feature "Story" do
 
       first(:button, "Adicionar capítulos").click
       first(:link, "+20 capítulos").click
-      story_sample2.chapters.count.should == 25
+      expect(story_sample2.chapters.count).to eql(25)
     end
 
     scenario "user adds 50 chapters" do
@@ -454,7 +454,7 @@ feature "Story" do
 
       first(:button, "Adicionar capítulos").click
       first(:link, "+50 capítulos").click
-      story_sample2.chapters.count.should == 55
+      expect(story_sample2.chapters.count).to eql(55)
     end
   end
 
@@ -478,7 +478,7 @@ feature "Story" do
       first(:link, "-5 capítulos").click
       page.driver.browser.switch_to.alert.accept
       sleep(1)
-      story_sample3.chapters.count.should == 45
+      expect(story_sample3.chapters.count).to eql(45)
     end
 
     scenario "user removes 10 chapters", js: true do
@@ -488,7 +488,7 @@ feature "Story" do
       first(:link, "-10 capítulos").click
       page.driver.browser.switch_to.alert.accept
       sleep(1)
-      story_sample3.chapters.count.should == 40
+      expect(story_sample3.chapters.count).to eql(40)
     end
 
     scenario "user removes 20 chapters", js: true do
@@ -498,7 +498,7 @@ feature "Story" do
       first(:link, "-20 capítulos").click
       page.driver.browser.switch_to.alert.accept
       sleep(1)
-      story_sample3.chapters.count.should == 30
+      expect(story_sample3.chapters.count).to eql(30)
     end
 
     scenario "user removes 50 chapters", js: true do
@@ -508,7 +508,7 @@ feature "Story" do
       first(:link, "-50 capítulos").click
       page.driver.browser.switch_to.alert.accept
       sleep(1)
-      story_sample3.chapters.count.should == 0
+      expect(story_sample3.chapters.count).to eql(0)
     end
   end
 end
