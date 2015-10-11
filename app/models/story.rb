@@ -72,61 +72,42 @@ class Story < ActiveRecord::Base
   end
 
   def self.graph(chapters)
-    references = []
     chapters_with_decisions = {}
-    chapters.each do |c|
-      if c.reference == "1" || c.has_parent?
-        temp = {}
-        temp[:number] = c.reference
-        temp[:x] = c.x
-        temp[:y] = c.y
-        temp[:color] = c.color
-        temp[:description] = c.content.truncate(200, separator: '</div>').html_safe
-        references << temp
-      end
-    end
+
+    references = chapters
+      .select { |chapter| chapter.reference == "1" || chapter.has_parent? }
+      .map { |chapter| {
+            number: chapter.reference, 
+            x: chapter.x,
+            y: chapter.y,
+            color: chapter.color,
+            description: chapter.content.present? ? chapter.content.truncate(200, separator: '</div>').html_safe : nil
+          } }
 
     chapters_with_decisions[:references] = references
-    destinies = []
 
-    chapters.each do |c|
-      aux = []
-      aux << c.reference
-      c.decisions.each do |d|
-        aux << Chapter.find(d.destiny_num).reference.to_i unless d.destiny_num.nil?
-      end
-      destinies << aux
-    end
+    destinies = chapters.map { |chapter| [
+        chapter.reference,
+        chapter.decisions
+          .reject { |decision| decision.destiny_num.nil? }
+          .map { |decision| Chapter.find(decision.destiny_num).reference.to_i }
+      ].flatten }
 
     chapters_with_decisions[:chapter_destinies] = destinies
 
-    infos = []
-
-    chapters.each do |c|
-      infos << [c.x, c.y, c.color]
-    end
-
+    infos = chapters.map { |chapter| [chapter.x, chapter.y, chapter.color] }
     chapters_with_decisions[:infos] = infos
 
-    chapters_with_decisions[:valid] = true
-    chapters_with_decisions[:chapter_destinies].each do |decisions|
-      duplicated = decisions.uniq
-      chapters_with_decisions[:valid] = false if duplicated.length != decisions.length
-      break if duplicated.length != decisions.length
-    end
+    chapters_with_decisions[:valid] = chapters_with_decisions.all? { |decisions| decisions.uniq.length == decisions.length }
 
     decisions = []
     references = []
 
-    chapters.each do |chapter|
-      references << chapter.reference.to_i
-    end
-
-    chapters.each do |chapter|
-      chapter.decisions.each do |decision|
-        decisions << Chapter.find(decision.destiny_num).reference.to_i unless decision.destiny_num.nil?
-      end
-    end
+    references = chapters.map { |chapter| chapter.reference.to_i }
+    decisions = chapters.map { |chapter| chapter.decisions
+                                          .reject { |decision| decision.destiny_num.nil? }
+                                          .map { |decision| Chapter.find(decision.destiny_num) }.flatten
+                                         }
 
     chapters_with_decisions[:not_used] = references - decisions
 
