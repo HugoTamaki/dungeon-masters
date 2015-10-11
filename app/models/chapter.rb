@@ -62,17 +62,6 @@ class Chapter < ActiveRecord::Base
   end
 
   def has_parent?
-    decision = Decision.find_by(destiny_num: self.id)
-    if decision
-      chapters = decision.chapter.story.chapters
-      chapters.each do |c|
-        c.decisions.each do |d|
-          if decision == d
-            return true
-          end
-        end
-      end
-    end
-    false
+    Decision.joins(:chapter).where(chapters: {story_id: self.story.id}, decisions: {destiny_num: self.id}).present?
   end
 end
