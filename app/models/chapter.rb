@@ -77,8 +77,8 @@ class Chapter < ActiveRecord::Base
           } }
     end
 
-    def get_destinies(chapters)
-      chapters.map { |chapter| [
+    def get_destinies
+      all.map { |chapter| [
           chapter.reference,
           chapter.decisions
             .reject { |decision| decision.destiny_num.nil? }
@@ -86,13 +86,13 @@ class Chapter < ActiveRecord::Base
         ].flatten }
     end
 
-    def get_infos(chapters)
-      chapters.map { |chapter| [chapter.x, chapter.y, chapter.color] }
+    def get_infos
+      all.map { |chapter| [chapter.x, chapter.y, chapter.color] }
     end
 
-    def get_not_used_references(chapters)
-      references = chapters.map { |chapter| chapter.reference.to_i }
-      decisions = chapters.map { |chapter| chapter.decisions
+    def get_not_used_references
+      references = all.map { |chapter| chapter.reference.to_i }
+      decisions = all.map { |chapter| chapter.decisions
                                             .reject { |decision| decision.destiny_num.nil? }
                                             .map { |decision| Chapter.find(decision.destiny_num) }.flatten
                                            }

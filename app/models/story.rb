@@ -74,10 +74,10 @@ class Story < ActiveRecord::Base
   def self.graph(chapters)
     chapters_with_decisions = {}
     chapters_with_decisions[:references] = chapters.get_references
-    chapters_with_decisions[:chapter_destinies] = Chapter.get_destinies(chapters)
-    chapters_with_decisions[:infos] = Chapter.get_infos(chapters)
+    chapters_with_decisions[:chapter_destinies] = chapters.get_destinies
+    chapters_with_decisions[:infos] = chapters.get_infos
     chapters_with_decisions[:valid] = Chapter.validate_chapters(chapters_with_decisions)
-    chapters_with_decisions[:not_used] = Chapter.get_not_used_references(chapters)
+    chapters_with_decisions[:not_used] = chapters.get_not_used_references
 
     chapters_with_decisions
   end
