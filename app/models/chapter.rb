@@ -78,16 +78,13 @@ class Chapter < ActiveRecord::Base
     end
 
     def get_destinies
-      all.map { |chapter| [
-          chapter.reference,
-          chapter.decisions
-            .reject { |decision| decision.destiny_num.nil? }
-            .map { |decision| Chapter.find(decision.destiny_num).reference.to_i }
-        ].flatten }
-    end
-
-    def get_infos
-      all.map { |chapter| [chapter.x, chapter.y, chapter.color] }
+      all.map { |chapter| {
+          source: chapter.reference,
+          destinies: chapter.decisions
+                      .reject { |decision| decision.destiny_num.nil? }
+                      .map { |decision| Chapter.find(decision.destiny_num).reference.to_i },
+          infos: [chapter.x, chapter.y, chapter.color]
+        } }
     end
 
     def get_not_used_references

@@ -28,44 +28,44 @@
         if (data["valid"]) {
 
           // writting nodes
-          var getNodes = [];
-          for (var i=0;i<data["references"].length;i++) {
-            var tempData = {}
-            var temp = {}
-            temp["id"] = "Cap " + data["references"][i]["number"];
-            temp["description"] = data["references"][i]["description"];
-            tempData["data"] = temp;
-            tempData["position"] = {
-               "x": data["references"][i]["x"]*500,
-               "y": data["references"][i]["y"]*500
-            },
-            tempData["css"] = {
-              'background-color': data["references"][i]["color"]
+          var getNodes = data["references"].map(function(reference) {
+            return {
+              data: {
+                id: "Cap " + reference.number,
+                description: reference.description
+              },
+              position: {
+                x: reference.x*500,
+                y: reference.y*500
+              },
+              css: {
+                'background-color': reference.color
+              }
             }
-            getNodes.push(tempData);
-          }
+          });
 
           // getting edges
           var getEdges = []
-          for (var i=0;i<data["chapter_destinies"].length;i++) {
-            var node = data["chapter_destinies"][i][0];
-            var chapters = data["chapter_destinies"][i];
-            var color = data["infos"][i][2];
-            for (var j=1;j<chapters.length;j++) {
-              var temp = {}
-              var tempData = {}
-              temp["id"] = node + "-" + chapters[j];
-              temp["weight"] = 10;
-              temp["source"] = "Cap " + node;
-              temp["target"] = "Cap " + chapters[j];
-              tempData["data"] = temp;
-              tempData["css"] = {
-                'line-color': color,
-                'target-arrow-color': color
-              }
-              getEdges.push(tempData);
-            }
-          }
+          data["chapter_destinies"].forEach(function(chapterDestiny) {
+            var source = chapterDestiny.source;
+            var destinies = chapterDestiny.destinies;
+            destinies.forEach(function(destiny) {
+              getEdges.push(
+                  {
+                    data: {
+                      id: source + "-" + destiny,
+                      weight: 10,
+                      source: "Cap " + source,
+                      target: "Cap " + destiny
+                    },
+                    css: {
+                      'line-color': chapterDestiny.infos[2],
+                      'target-arrow-color': chapterDestiny.infos[2]
+                    }
+                  }
+                );
+            });
+          });
 
           var elementsJson = {
             nodes: getNodes,
