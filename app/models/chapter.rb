@@ -78,7 +78,8 @@ class Chapter < ActiveRecord::Base
     end
 
     def get_destinies
-      all.map { |chapter| {
+      select { |chapter| chapter.reference == "1" || chapter.has_parent? }
+      .map { |chapter| {
           source: chapter.reference,
           destinies: chapter.decisions
                       .reject { |decision| decision.destiny_num.nil? }
@@ -88,12 +89,7 @@ class Chapter < ActiveRecord::Base
     end
 
     def get_not_used_references
-      references = all.map { |chapter| chapter.reference.to_i }
-      decisions = all.map { |chapter| chapter.decisions
-                                            .reject { |decision| decision.destiny_num.nil? }
-                                            .map { |decision| Chapter.find(decision.destiny_num) }.flatten
-                                           }
-      references - decisions
+      all.reject { |chapter| chapter.reference == "1" || chapter.has_parent? }.map { |chapter| chapter.reference }
     end
 
     def validate_chapters(chapters_with_decisions)
