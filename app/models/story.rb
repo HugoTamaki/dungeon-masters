@@ -73,43 +73,11 @@ class Story < ActiveRecord::Base
 
   def self.graph(chapters)
     chapters_with_decisions = {}
-
-    references = chapters
-      .select { |chapter| chapter.reference == "1" || chapter.has_parent? }
-      .map { |chapter| {
-            number: chapter.reference, 
-            x: chapter.x,
-            y: chapter.y,
-            color: chapter.color,
-            description: chapter.content.present? ? chapter.content.truncate(200, separator: '</div>').html_safe : nil
-          } }
-
-    chapters_with_decisions[:references] = references
-
-    destinies = chapters.map { |chapter| [
-        chapter.reference,
-        chapter.decisions
-          .reject { |decision| decision.destiny_num.nil? }
-          .map { |decision| Chapter.find(decision.destiny_num).reference.to_i }
-      ].flatten }
-
-    chapters_with_decisions[:chapter_destinies] = destinies
-
-    infos = chapters.map { |chapter| [chapter.x, chapter.y, chapter.color] }
-    chapters_with_decisions[:infos] = infos
-
-    chapters_with_decisions[:valid] = chapters_with_decisions.all? { |decisions| decisions.uniq.length == decisions.length }
-
-    decisions = []
-    references = []
-
-    references = chapters.map { |chapter| chapter.reference.to_i }
-    decisions = chapters.map { |chapter| chapter.decisions
-                                          .reject { |decision| decision.destiny_num.nil? }
-                                          .map { |decision| Chapter.find(decision.destiny_num) }.flatten
-                                         }
-
-    chapters_with_decisions[:not_used] = references - decisions
+    chapters_with_decisions[:references] = chapters.get_references
+    chapters_with_decisions[:chapter_destinies] = Chapter.get_destinies(chapters)
+    chapters_with_decisions[:infos] = Chapter.get_infos(chapters)
+    chapters_with_decisions[:valid] = Chapter.validate_chapters(chapters_with_decisions)
+    chapters_with_decisions[:not_used] = Chapter.get_not_used_references(chapters)
 
     chapters_with_decisions
   end
@@ -124,5 +92,4 @@ class Story < ActiveRecord::Base
     favorites_to_destroy = FavoriteStory.where(story_id: self.id)
     favorites_to_destroy.destroy_all
   end
-
 end

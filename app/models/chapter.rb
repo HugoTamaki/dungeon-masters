@@ -64,4 +64,43 @@ class Chapter < ActiveRecord::Base
   def has_parent?
     Decision.joins(:chapter).where(chapters: {story_id: self.story.id}, decisions: {destiny_num: self.id}).present?
   end
+
+  class << self
+    def get_references
+      select { |chapter| chapter.reference == "1" || chapter.has_parent? }
+      .map { |chapter| {
+            number: chapter.reference, 
+            x: chapter.x,
+            y: chapter.y,
+            color: chapter.color,
+            description: chapter.content.present? ? chapter.content.truncate(200, separator: '</div>').html_safe : nil
+          } }
+    end
+
+    def get_destinies(chapters)
+      chapters.map { |chapter| [
+          chapter.reference,
+          chapter.decisions
+            .reject { |decision| decision.destiny_num.nil? }
+            .map { |decision| Chapter.find(decision.destiny_num).reference.to_i }
+        ].flatten }
+    end
+
+    def get_infos(chapters)
+      chapters.map { |chapter| [chapter.x, chapter.y, chapter.color] }
+    end
+
+    def get_not_used_references(chapters)
+      references = chapters.map { |chapter| chapter.reference.to_i }
+      decisions = chapters.map { |chapter| chapter.decisions
+                                            .reject { |decision| decision.destiny_num.nil? }
+                                            .map { |decision| Chapter.find(decision.destiny_num) }.flatten
+                                           }
+      references - decisions
+    end
+
+    def validate_chapters(chapters_with_decisions)
+      chapters_with_decisions.all? { |decisions| decisions.uniq.length == decisions.length }
+    end
+  end
 end

@@ -125,9 +125,7 @@ class StoriesController < ApplicationController
   end
 
   def graph_json
-    chapters_of_story = Chapter.by_story(params[:id])
-    chapters = chapters_of_story.includes(:decisions)
-
+    chapters = Chapter.includes(:decisions).by_story(params[:id])
     @chapters = Story.graph(chapters)
 
     respond_to do |format|
