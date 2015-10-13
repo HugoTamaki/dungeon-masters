@@ -120,27 +120,50 @@ describe Story do
     end
 
     describe ".graph" do
-      let!(:chapter1) {FactoryGirl.create(:chapter, reference: "1", content: "content 1", story: story_with_adventurer)}
-      let!(:chapter2) {FactoryGirl.create(:chapter, reference: "2", content: "content 2", story: story_with_adventurer)}
-      let!(:chapter3) {FactoryGirl.create(:chapter, reference: "3", content: "content 3", story: story_with_adventurer)}
-      let!(:chapter4) {FactoryGirl.create(:chapter, reference: "4", content: "content 4", story: story_with_adventurer)}
-      let!(:chapter5) {FactoryGirl.create(:chapter, reference: "5", content: "content 5", story: story_with_adventurer)}
-      let!(:chapter6) {FactoryGirl.create(:chapter, reference: "6", content: "content 6", story: story_with_adventurer)}
-      let!(:chapter7) {FactoryGirl.create(:chapter, reference: "7", content: "content 7", story: story_with_adventurer)}
-      let!(:chapter8) {FactoryGirl.create(:chapter, reference: "8", content: "content 8", story: story_with_adventurer)}
-      let!(:chapter9) {FactoryGirl.create(:chapter, reference: "9", content: "content 9", story: story_with_adventurer)}
-      let!(:chapter10) {FactoryGirl.create(:chapter, reference: "10", content: "content 10", story: story_with_adventurer)}
+      let!(:chapter1)    {FactoryGirl.create(:chapter, reference: "1", x: 0.5, y: 0.5, content: "content 1", story: story_with_adventurer)}
+      let!(:chapter2)    {FactoryGirl.create(:chapter, reference: "2", x: 0.5, y: 0.5, content: "content 2", story: story_with_adventurer)}
+      let!(:chapter3)    {FactoryGirl.create(:chapter, reference: "3", x: 0.5, y: 0.5, content: "content 3", story: story_with_adventurer)}
+      let!(:chapter4)    {FactoryGirl.create(:chapter, reference: "4", x: 0.5, y: 0.5, content: "content 4", story: story_with_adventurer)}
+      let!(:chapter5)    {FactoryGirl.create(:chapter, reference: "5", x: 0.5, y: 0.5, content: "content 5", story: story_with_adventurer)}
+      let!(:chapter6)    {FactoryGirl.create(:chapter, reference: "6", x: 0.5, y: 0.5, content: "content 6", story: story_with_adventurer)}
+      let!(:chapter7)    {FactoryGirl.create(:chapter, reference: "7", x: 0.5, y: 0.5, content: "content 7", story: story_with_adventurer)}
+      let!(:chapter8)    {FactoryGirl.create(:chapter, reference: "8", x: 0.5, y: 0.5, content: "content 8", story: story_with_adventurer)}
+      let!(:chapter9)    {FactoryGirl.create(:chapter, reference: "9", x: 0.5, y: 0.5, content: "content 9", story: story_with_adventurer)}
+      let!(:chapter10)   {FactoryGirl.create(:chapter, reference: "10", x: 0.5, y: 0.5, content: "content 10", story: story_with_adventurer)}
       let!(:decision1_4) {FactoryGirl.create(:decision, chapter_id: chapter1.id, destiny_num: chapter4.id)}
       let!(:decision1_7) {FactoryGirl.create(:decision, chapter_id: chapter1.id, destiny_num: chapter7.id)}
       let!(:decision4_8) {FactoryGirl.create(:decision, chapter_id: chapter4.id, destiny_num: chapter8.id)}
       let!(:decision7_3) {FactoryGirl.create(:decision, chapter_id: chapter7.id, destiny_num: chapter3.id)}
 
       it "prepare json for graph" do
+        pending "need to check float numbers equality"
         graph = Story.graph(story_with_adventurer.chapters)
-        # graph["references"].should =~ [{number: "1", x: chapter1.x.to_f, y: chapter1.y.to_f, color: chapter1.color},{number: "3", x: chapter3.x.to_f, y: chapter3.y.to_f, color: chapter3.color},{number: "4", x: chapter4.x.to_f, y: chapter4.y.to_f, color: chapter4.color},{number: "7", x: chapter7.x.to_f, y: chapter7.y.to_f, color: chapter7.color},{number: "8", x: chapter8.x.to_f, y: chapter8.y.to_f, color: chapter8.color}]
-        graph["chapter_destinies"] =~ [["1", 4, 7], ["2"], ["3"], ["4", 8], ["5"], ["6"], ["7", 3], ["8"], ["9"], ["10"]]
-        graph["valid"] =~ [true, true, true, true, true, true, true, true, true, true]
-        graph["not_user"] =~ [1, 2, 5, 6, 9, 10]
+
+        expect(graph[:references]).to match(
+            [
+              {:number=>"1", :x=>chapter1.x, :y=>chapter1.y, :color=>chapter1.color, :description=>"content 1"},
+              {:number=>"3", :x=>chapter3.x, :y=>chapter3.y, :color=>chapter3.color, :description=>"content 3"},
+              {:number=>"4", :x=>chapter4.x, :y=>chapter4.y, :color=>chapter4.color, :description=>"content 4"},
+              {:number=>"7", :x=>chapter7.x, :y=>chapter7.y, :color=>chapter7.color, :description=>"content 7"},
+              {:number=>"8", :x=>chapter8.x, :y=>chapter8.y, :color=>chapter8.color, :description=>"content 8"}
+            ]
+          )
+
+        expect(graph[:chapter_destinies]).to match(
+            [
+              {:source=>"1", :destinies=>[4, 7], :infos=>[chapter1.x, chapter1.y, chapter1.color]},
+              {:source=>"3", :destinies=>[], :infos=>[chapter3.x, chapter3.y, chapter3.color]},
+              {:source=>"4", :destinies=>[8], :infos=>[chapter4.x, chapter4.y, chapter4.color]},
+              {:source=>"7", :destinies=>[3], :infos=>[chapter7.x, chapter7.y, chapter7.color]},
+              {:source=>"8", :destinies=>[], :infos=>[chapter8.x, chapter8.y, chapter8.color]}
+            ]
+          )
+
+        expect(graph[:not_used]).to match(
+            [chapter2.reference, chapter5.reference, chapter6.reference, chapter9.reference, chapter10.reference]
+          )
+
+        expect(graph[:valid]).to eql(true)
       end
     end
 
