@@ -42,23 +42,11 @@ class Chapter < ActiveRecord::Base
   scope :by_reference, -> (reference) { where(reference: reference) }
 
   before_create do
-    self.x = Random.rand.round(10)
-    self.y = Random.rand.round(10)
-    number = Random.rand(6) + 1
-    case number
-    when 1
-      self.color = "#CCFF00"
-    when 2
-      self.color = "#CC00FF"
-    when 3
-      self.color = "#00CCFF"
-    when 4
-      self.color = "#FF3300"
-    when 5
-      self.color = "#FF9900"
-    when 6
-      self.color = "#FFFF00"
-    end
+    self.color = ["#CCFF00","#CC00FF","#00CCFF","#FF3300","#FF9900","#FFFF00"].sample
+  end
+
+  def has_children?
+    decisions.where.not(destiny_num: nil).count > 0
   end
 
   def has_parent?
@@ -67,7 +55,7 @@ class Chapter < ActiveRecord::Base
 
   class << self
     def get_references
-      select { |chapter| chapter.reference == "1" || chapter.has_parent? }
+      select { |chapter| chapter.has_parent? || chapter.has_children? }
       .map { |chapter| {
             number: chapter.reference, 
             x: chapter.x,
@@ -78,7 +66,7 @@ class Chapter < ActiveRecord::Base
     end
 
     def get_destinies
-      select { |chapter| chapter.reference == "1" || chapter.has_parent? }
+      select { |chapter| chapter.has_parent? || chapter.has_children? }
       .map { |chapter| {
           source: chapter.reference,
           destinies: chapter.decisions
