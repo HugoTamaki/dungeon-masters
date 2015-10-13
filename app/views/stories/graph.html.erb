@@ -45,12 +45,11 @@
           });
 
           // getting edges
-          var getEdges = []
-          data["chapter_destinies"].forEach(function(chapterDestiny) {
-            var source = chapterDestiny.source;
-            var destinies = chapterDestiny.destinies;
+          var getEdges = data["chapter_destinies"].reduce(function(result, chapter) {
+            var source = chapter.source;
+            var destinies = chapter.destinies;
             destinies.forEach(function(destiny) {
-              getEdges.push(
+              result.push(
                   {
                     data: {
                       id: source + "-" + destiny,
@@ -59,13 +58,14 @@
                       target: "Cap " + destiny
                     },
                     css: {
-                      'line-color': chapterDestiny.infos[2],
-                      'target-arrow-color': chapterDestiny.infos[2]
+                      'line-color': chapter.infos[2],
+                      'target-arrow-color': chapter.infos[2]
                     }
                   }
-                );
+                )
             });
-          });
+            return result;
+          }, []);
 
           var elementsJson = {
             nodes: getNodes,
