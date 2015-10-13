@@ -74,10 +74,7 @@
 
           var cy = cytoscape({
             container: document.getElementById('sig'),
-            elements: {
-              nodes: getNodes,
-              edges: getEdges
-            },
+            elements: elementsJson,
             selected: false,
             selectable: true,
             style: [
