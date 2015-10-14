@@ -122,6 +122,26 @@ class Adventurer < ActiveRecord::Base
     end
   end
 
+  def use_item(item_id, attribute, modifier)
+    change_attribute(attribute, modifier)
+    adventurer_item = adventurers_items.find_by(item_id: item_id)
+    adventurer_item.quantity -= 1
+    if adventurer_item.save
+      data = {
+        name: adventurer_item.item.name.parameterize.underscore,
+        skill: skill,
+        energy: energy,
+        luck: luck,
+        gold: gold,
+        quantity: adventurer_item.quantity,
+        message: I18n.t('actions.messages.adventurer_update_success')
+      }
+    else
+      data = {}
+    end
+    data
+  end
+
   def change_attribute(attribute, modifier)
     case attribute
       when "skill"

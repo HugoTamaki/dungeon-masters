@@ -160,28 +160,16 @@ class StoriesController < ApplicationController
 
   def use_item
     adventurer = current_user.adventurers.by_story(params[:story_id]).first
-    adventurer_item = adventurer.adventurers_items.find_by(item_id: params["item-id"])
-    adventurer.change_attribute(params[:attribute], params[:modifier])
-    adventurer_item.quantity -= 1
+    result = adventurer.use_item(params["item-id"], params[:attribute], params[:modifier])
 
-    if adventurer_item.save
-      data = {
-        name: adventurer_item.item.name.parameterize.underscore,
-        skill: adventurer.skill,
-        energy: adventurer.energy,
-        luck: adventurer.luck,
-        gold: adventurer.gold,
-        quantity: adventurer_item.quantity,
-        message: I18n.t('actions.messages.adventurer_update_success')
-      }
+    if result.present?
+      result[:message] = I18n.t('actions.messages.adventurer_update_success')
     else
-      data = {
-        message: I18n.t('actions.messages.adventurer_update_fail')
-      }
+      result[:message] = I18n.t('actions.messages.adventurer_update_fail')
     end
 
     respond_to do |format|
-      format.json { render json: data.to_json }
+      format.json { render json: result.to_json }
     end
   end
 
