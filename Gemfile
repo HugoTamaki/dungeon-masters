@@ -60,7 +60,6 @@ group :test do
   gem "capybara"
   gem "database_cleaner"
   gem "guard-rspec"
-  gem "cucumber-rails"
   gem "selenium-webdriver"
   gem 'fuubar'
 end
