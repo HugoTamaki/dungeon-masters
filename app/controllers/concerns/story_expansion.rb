@@ -1,4 +1,4 @@
-module StoryExtension
+module StoryExpansion
   def format_publish_message(story, options={})
     if options[:success]
       if story.published

@@ -1,5 +1,5 @@
 class StoriesController < ApplicationController
-  include StoryExtension
+  include StoryExpansion
 
   # before_filter :authenticate_user!, except: [:prelude, :read, :search, :index]
   # load_and_authorize_resource except: [:prelude, :read]
