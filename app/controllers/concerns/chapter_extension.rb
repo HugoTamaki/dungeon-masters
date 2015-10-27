@@ -1,4 +1,4 @@
-module StoryExpansion
+module ChapterExtension
   def format_publish_message(story, options={})
     if options[:success]
       if story.published
@@ -97,11 +97,14 @@ module StoryExpansion
     message
   end
 
-  def set_gold_items_and_attributes(user)
-    @adventurer = Adventurer.by_user_and_story(current_user, @story).first
-    @adventurer.set_chapter_and_gold(@chapter, @story, params[:reference])
-    @adventurer.attribute_and_item_changer(@chapter)
-    @adventurers_items = AdventurerItem.by_adventurer(@adventurer)
-    @adventurer.chapters << @chapter unless @adventurer.chapters.include? @chapter
+  def generate_chapters(chapter_numbers)
+    if @story.chapters.empty?
+      if chapter_numbers.present?
+        @story.build_chapters(chapter_numbers)
+      else
+        chapter = @story.chapters.build
+        chapter.decisions.build
+      end
+    end
   end
 end

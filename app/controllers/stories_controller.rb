@@ -1,5 +1,6 @@
 class StoriesController < ApplicationController
-  include StoryExpansion
+  include ChapterExtension
+  include AdventurerExtension
 
   # before_filter :authenticate_user!, except: [:prelude, :read, :search, :index]
   # load_and_authorize_resource except: [:prelude, :read]
@@ -73,14 +74,7 @@ class StoriesController < ApplicationController
     chapter_numbers = params[:chapter_numbers].to_i
     @story = Story.includes(:chapters, :items).find(params[:id])
 
-    if @story.chapters.empty?
-      if params[:chapter_numbers].present?
-        @story.build_chapters(chapter_numbers)
-      else
-        chapter = @story.chapters.build
-        chapter.decisions.build
-      end
-    end
+    generate_chapters(chapter_numbers)
     @chapter_count = @story.chapters.count
     @chapters = @story.chapters.page(params[:page]).per(10)
     @all_chapters = @story.chapters
