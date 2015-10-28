@@ -2,7 +2,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       var story_id = <%= @chapter.story.id %>;
-      var morreu;
+      var died;
 
       $("#combat").click(function() {
         var result = "";
@@ -13,7 +13,7 @@
           luck: <%= @adventurer.luck %>,
           damage: <%= current_weapon_damage(@adventurer) %>
         }
-        morreu = adventurer.energy > 0 ? false : true;
+        died = adventurer.energy > 0 ? false : true;
 
         <% @chapter.monsters.each do |monster| %>
           var <%= monster.name.parameterize.underscore %> = {
@@ -23,11 +23,13 @@
             damage: 2
           }
 
-          shock(adventurer, <%= monster.name.parameterize.underscore %>, story_id);
+          if (!died) {
+            died = shock(adventurer, <%= monster.name.parameterize.underscore %>, story_id);
+          }
         <% end %>
         
         $("#adventurer_energy").html(adventurer.energy);
-        if (!morreu) {
+        if (!died) {
           $('#chapter-buttons').children().find('a').each(function(){
             if ($(this).attr('data-donthave') != "true") {
               console.log($(this).attr('data-donthave'));
@@ -51,35 +53,30 @@
           var adventurerAttackPower = advDice1 + advDice2 + adventurer.skill;
 
           if (enemyAttackPower > adventurerAttackPower) {
-            $('#combat-result').append("<p>" + adventurer.name + " <%= t('stories.read.attack_power') %> - "+ advDice1 + " + " + advDice2 + " + " + adventurer.skill + " = "+ adventurerAttackPower + "<strong><br>" + monster.name + " <%= t('stories.read.attack_power') %> - "+ enemyDice1 + " + " + enemyDice2 + " + " + monster.skill + " = " + enemyAttackPower + "</strong></p><hr>");
+            $('#combat-result').append("<p>" + adventurer.name + " <%= t('stories.read.attack_power') %> - "+ advDice1 + " + " + advDice2 + " + " + adventurer.skill + " = "+ adventurerAttackPower + " <i class='fa fa-times fa-1'></i><strong><br>" + monster.name + " <%= t('stories.read.attack_power') %> - "+ enemyDice1 + " + " + enemyDice2 + " + " + monster.skill + " = " + enemyAttackPower + "</strong></p><hr>");
             adventurer.energy -= monster.damage;
-            if (adventurer.energy < 1) {
-              adventurer.energy = 0;
-              finish = true;
-              morreu = true;
-              $('#combat-result').append("<p><%= t('stories.read.you_died') %></p>");
-              updateValues(adventurer.skill, adventurer.energy, adventurer.luck, story_id);
-              return;
-            } else if (monster.energy < 1) {
-              finish = true;
-              $('#combat-result').append("<p>" + monster.name + " <%= t('stories.read.died') %></p>");
-            }
+            died = checkDeath(adventurer, monster);
           } else if (enemyAttackPower < adventurerAttackPower) {
             $('#combat-result').append("<p><strong>"+ adventurer.name + " <%= t('stories.read.attack_power') %> - "+ advDice1 + " + " + advDice2 + " + " + adventurer.skill + " = "+ adventurerAttackPower + "</strong> <i class='fa fa-check fa-1'></i><br>" + monster.name + " <%= t('stories.read.attack_power') %> - "+ enemyDice1 + " + " + enemyDice2 + " + " + monster.skill + " = " + enemyAttackPower + "</p><hr>");
             monster.energy -= adventurer.damage;
-            if (adventurer.energy < 1) {
-              adventurer.energy = 0;
-              finish = true;
-              morreu = true;
-              $('#combat-result').append("<p><%= t('stories.read.you_died') %></p>");
-              updateValues(adventurer.skill, adventurer.energy, adventurer.luck, story_id);
-              return;
-            } else if (monster.energy < 1) {
-              finish = true;
-              $('#combat-result').append("<p>" + monster.name + " <%= t('stories.read.died') %></p>");
-            }
+            died = checkDeath(adventurer, monster);
           }
-          if (morreu) { break; }
+          if (died) { break; }
+        }
+        return died;
+      }
+
+      function checkDeath(adventurer, monster) {
+        if (adventurer.energy < 1) {
+          adventurer.energy = 0;
+          finish = true;
+          $('#combat-result').append("<p><%= t('stories.read.you_died') %></p>");
+          updateValues(adventurer.skill, adventurer.energy, adventurer.luck, story_id);
+          return true;
+        } else if (monster.energy < 1) {
+          finish = true;
+          $('#combat-result').append("<p>" + monster.name + " <%= t('stories.read.died') %></p>");
+          return false;
         }
       }
 
