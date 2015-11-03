@@ -200,6 +200,10 @@ body {
   }
 }
 
+.invisible {
+  display: none;
+}
+
 .monsters {
   margin: 5px;
   padding: 15px;
@@ -347,6 +351,7 @@ body {
 }
 
 .sigma {
+  position: relative;
   margin-left:auto;
   margin-right:auto;
   position: relative;
@@ -359,6 +364,12 @@ body {
   scroll: false;
   top: 0;
   left: 0;
+}
+
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
 
 #story-start {
