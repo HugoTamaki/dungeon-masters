@@ -43,6 +43,8 @@ class Chapter < ActiveRecord::Base
 
   before_create do
     self.color = ["#CCFF00","#CC00FF","#00CCFF","#FF3300","#FF9900","#FFFF00"].sample
+    self.x = rand
+    self.y = rand
   end
 
   def has_children?
