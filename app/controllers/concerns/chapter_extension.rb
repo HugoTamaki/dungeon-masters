@@ -46,17 +46,17 @@ module ChapterExtension
 
   def add_chapters_by_quantity(story, num_chapters)
     if story.chapters.present?
-      last_chapter_reference = story.chapters.last.reference.to_i + 1
+      last_known_reference = story.chapters.last.reference.to_i + 1
     else
       last_chapter_reference = 1
     end
     quantity = num_chapters - 1
+    last_chapter_reference = last_known_reference + quantity
 
-    for i in (last_chapter_reference..(last_chapter_reference + quantity))
-      chapter = story.chapters.build
-      chapter.decisions.build
-      chapter.reference = i
-      chapter.save
+    ActiveRecord::Base.transaction do
+      (last_known_reference..last_chapter_reference).each do |i|
+        Chapter.create(story: story, reference: i)
+      end
     end
     story.chapter_numbers = story.chapters.last.reference.to_i
     story.save
@@ -75,14 +75,7 @@ module ChapterExtension
   end
 
   def remove_chapters_by_quantity(story, num_chapters)
-    quantity = num_chapters
-    chapter_quantity = story.chapters.count
-    quantity = chapter_quantity if chapter_quantity <= quantity
-
-    quantity.times do
-      last_chapter = story.reload.chapters.last
-      last_chapter.destroy
-    end
+    story.chapters.order(:reference).last(num_chapters).each(&:destroy) if story.chapters.count >= num_chapters
 
     case num_chapters
     when 5

@@ -47,11 +47,13 @@ class Chapter < ActiveRecord::Base
     self.y = rand
   end
 
-  def has_children?
+  before_save :check_parent_and_children
+
+  def check_children
     decisions.where.not(destiny_num: nil).count > 0
   end
 
-  def has_parent?
+  def check_parents
     Decision.joins(:chapter).where(chapters: {story_id: self.story.id}, decisions: {destiny_num: self.id}).present?
   end
 
@@ -86,4 +88,11 @@ class Chapter < ActiveRecord::Base
       chapters_with_decisions.all? { |decisions| decisions.uniq.length == decisions.length }
     end
   end
+
+  private
+
+    def check_parent_and_children
+      self.has_parent = true if check_parents
+      self.has_children = true if check_children
+    end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005204400) do
+ActiveRecord::Schema.define(version: 20151113222203) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 20151005204400) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.boolean  "has_parent",                    default: false
+    t.boolean  "has_children",                  default: false
     t.index ["story_id"], :name => "index_chapters_on_story_id"
     t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_chapters_story_id"
   end
