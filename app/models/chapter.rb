@@ -23,6 +23,7 @@ class Chapter < ActiveRecord::Base
   has_attached_file :image, styles: {thumbnail: "200x200>",normal: "600x600>"}
   belongs_to :story, touch: true
   has_many :adventurers, dependent: :destroy
+  has_many :adventurer_chapters, dependent: :destroy
   has_many :decisions, dependent: :destroy
   has_many :monsters, dependent: :destroy
   has_many :modifiers_items, dependent: :destroy
@@ -47,7 +48,7 @@ class Chapter < ActiveRecord::Base
     self.y = rand
   end
 
-  before_save :check_parent_and_children
+  before_update :check_parent_and_children
 
   def check_children
     decisions.where.not(destiny_num: nil).count > 0
@@ -74,7 +75,7 @@ class Chapter < ActiveRecord::Base
       .map { |chapter| {
           source: chapter.reference,
           destinies: chapter.decisions
-                      .reject { |decision| decision.destiny_num.nil? }
+                      .reject { |decision| decision.destiny_num.nil? || Chapter.find_by(id: decision.destiny_num).nil? }
                       .map { |decision| Chapter.find(decision.destiny_num).reference.to_i },
           infos: [chapter.x, chapter.y, chapter.color]
         } }
@@ -94,5 +95,16 @@ class Chapter < ActiveRecord::Base
     def check_parent_and_children
       self.has_parent = true if check_parents
       self.has_children = true if check_children
+      if self.has_children
+        self.decisions.each do |decision|
+          chapter = Chapter.find_by(id: decision.destiny_num)
+          if chapter
+            chapter.has_parent = true
+            chapter.save
+          else
+            decision.destroy
+          end
+        end
+      end
     end
 end

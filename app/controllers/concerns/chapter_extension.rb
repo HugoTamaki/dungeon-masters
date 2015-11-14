@@ -75,7 +75,7 @@ module ChapterExtension
   end
 
   def remove_chapters_by_quantity(story, num_chapters)
-    story.chapters.order(:reference).last(num_chapters).each(&:destroy) if story.chapters.count >= num_chapters
+    story.chapters.last(num_chapters).each(&:destroy) if story.chapters.count >= num_chapters
 
     case num_chapters
     when 5
