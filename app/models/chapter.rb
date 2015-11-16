@@ -51,11 +51,12 @@ class Chapter < ActiveRecord::Base
   before_update :check_parent_and_children
 
   def check_children
-    decisions.where.not(destiny_num: nil).count > 0
+    decisions.map {|decision| Chapter.find_by(id: decision.destiny_num)}
+      .select {|chapter| chapter.present?}.count > 0
   end
 
   def check_parents
-    Decision.joins(:chapter).where(chapters: {story_id: self.story.id}, decisions: {destiny_num: self.id}).present?
+    Decision.joins(:chapter).where(chapters: {story_id: story.id}, decisions: {destiny_num: id}).present?
   end
 
   class << self
@@ -95,14 +96,12 @@ class Chapter < ActiveRecord::Base
     def check_parent_and_children
       self.has_parent = true if check_parents
       self.has_children = true if check_children
-      if self.has_children
-        self.decisions.each do |decision|
+      if check_children
+        decisions.each do |decision|
           chapter = Chapter.find_by(id: decision.destiny_num)
           if chapter
             chapter.has_parent = true
             chapter.save
-          else
-            decision.destroy
           end
         end
       end
