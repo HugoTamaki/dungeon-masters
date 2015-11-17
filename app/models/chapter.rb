@@ -99,10 +99,7 @@ class Chapter < ActiveRecord::Base
       if check_children
         decisions.each do |decision|
           chapter = Chapter.find_by(id: decision.destiny_num)
-          if chapter
-            chapter.has_parent = true
-            chapter.save
-          end
+          chapter.update_column(:has_parent, true) if chapter
         end
       end
     end
