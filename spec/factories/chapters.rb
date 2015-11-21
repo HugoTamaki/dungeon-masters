@@ -28,6 +28,8 @@ FactoryGirl.define do
     x "0.4"
     y "0.5"
     color "#FFFFFF"
+    has_parent false
+    has_children false
   end
 
 end

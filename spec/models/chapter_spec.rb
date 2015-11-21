@@ -130,8 +130,31 @@ describe Chapter do
   end
 
   describe 'callbacks' do
+    let(:story)   { FactoryGirl.create(:story) }
+    let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
+
     describe '#check_parent_and_children' do
-      
+      context 'chapter has children' do
+        let!(:parent1)   { FactoryGirl.create(:chapter, reference: "40", story: story) }
+        let!(:decision1) { FactoryGirl.create(:decision, chapter: parent1, destiny_num: chapter.id) }
+
+        it 'update has_children attribute' do
+          expect(chapter.has_parent).to eql(false)
+          chapter.save
+          expect(chapter.has_parent).to eql(true)
+        end
+      end
+
+      context 'chapter has parent' do
+        let!(:child1)    { FactoryGirl.create(:chapter, reference: "32", story: story) }
+        let!(:decision1) { FactoryGirl.create(:decision, chapter: chapter, destiny_num: child1.id) }
+
+        it 'update has_parent attribute' do
+          expect(chapter.has_children).to eql(false)
+          chapter.save
+          expect(chapter.has_children).to eql(true)
+        end
+      end
     end
   end
 end
