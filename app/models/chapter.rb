@@ -51,16 +51,24 @@ class Chapter < ActiveRecord::Base
   before_update :check_parent_and_children
 
   def check_children
-    decisions.map {|decision| Chapter.find_by(id: decision.destiny_num)}
-      .select {|chapter| chapter.present?}.count > 0
+    children.count > 0
   end
 
   def check_parents
-    Decision.joins(:chapter).where(chapters: {story_id: story.id}, decisions: {destiny_num: id}).present?
+    parents.present?
+  end
+
+  def children
+    decisions.map { |decision| Chapter.find_by(id: decision.destiny_num) }
+      .select { |chapter| chapter.present? }
   end
 
   def parents
     Decision.joins(:chapter).where(chapters: {story_id: story.id}, decisions: {destiny_num: id}).map { |decision| decision.chapter }
+  end
+
+  def only_parent_is?(chapter)
+    parents.include?(chapter) && parents.count < 2
   end
 
   class << self
@@ -101,7 +109,7 @@ class Chapter < ActiveRecord::Base
       original_chapter = Chapter.find(chapter.id)
       original_chapter_decisions = original_chapter.decisions.map { |decision| decision.destiny_num }.uniq.sort
       actual_chapter_decisions = self.decisions.map { |decision| decision.destiny_num }.uniq.sort
-      original_chapter_decisions.select { |destiny_num| destiny_num.nil? }.present? ? false : original_chapter_decisions.uniq.sort != actual_chapter_decisions.uniq.sort
+      original_chapter_decisions.select { |destiny_num| destiny_num.nil? }.present? ? false : original_chapter_decisions != actual_chapter_decisions
     end
 
     def update_original_decisions(chapter)
@@ -109,7 +117,7 @@ class Chapter < ActiveRecord::Base
       original_chapter.decisions.each do |decision|
         destiny_chapter = Chapter.find_by(id: decision.destiny_num)
         if destiny_chapter
-          destiny_chapter.update_column(:has_parent, false) if destiny_chapter.parents.include?(original_chapter) && destiny_chapter.parents.count < 2
+          destiny_chapter.update_column(:has_parent, false) if destiny_chapter.only_parent_is?(original_chapter)
         end
       end
     end

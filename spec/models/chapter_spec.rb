@@ -65,4 +65,73 @@ describe Chapter do
       end
     end
   end
+
+  describe 'methods' do
+    let(:story)   { FactoryGirl.create(:story) }
+    let(:chapter) { FactoryGirl.create(:chapter, reference: "30", story: story) }
+
+    describe '#parents' do
+      let!(:parent1)   { FactoryGirl.create(:chapter, reference: "40", story: story) }
+      let!(:decision1) { FactoryGirl.create(:decision, chapter: parent1, destiny_num: chapter.id) }
+      let!(:parent2)   { FactoryGirl.create(:chapter, reference: "52", story: story) }
+      let!(:decision2) { FactoryGirl.create(:decision, chapter: parent2, destiny_num: chapter.id) }
+
+      it 'return parents of a chapter' do
+        expect(chapter.parents).to include(parent1)
+        expect(chapter.parents).to include(parent2)
+      end
+    end
+
+    describe '#children' do
+      let!(:child1)    { FactoryGirl.create(:chapter, reference: "32", story: story) }
+      let!(:decision1) { FactoryGirl.create(:decision, chapter: chapter, destiny_num: child1.id) }
+      let!(:child2)    { FactoryGirl.create(:chapter, reference: "45", story: story) }
+      let!(:decision2) { FactoryGirl.create(:decision, chapter: chapter, destiny_num: child2.id) }
+
+      it 'return children of a chapter' do
+        expect(chapter.children).to include(child1)
+        expect(chapter.children).to include(child2)
+      end
+    end
+
+    describe '#check_parents' do
+      context 'no parents at all' do
+        it 'returns false' do
+          expect(chapter.check_parents).to eql(false)
+        end
+      end
+
+      context 'one or more parents' do
+        let!(:parent1)   { FactoryGirl.create(:chapter, reference: "40", story: story) }
+        let!(:decision1) { FactoryGirl.create(:decision, chapter: parent1, destiny_num: chapter.id) }
+
+        it 'returns true' do
+          expect(chapter.check_parents).to eql(true)
+        end
+      end
+    end
+
+    describe '#check_children' do
+      context 'no children at all' do
+        it 'returns false' do
+          expect(chapter.check_children).to eql(false)
+        end
+      end
+
+      context 'one or more children' do
+        let!(:child1)    { FactoryGirl.create(:chapter, reference: "32", story: story) }
+        let!(:decision1) { FactoryGirl.create(:decision, chapter: chapter, destiny_num: child1.id) }
+
+        it 'returns true' do
+          expect(chapter.check_children).to eql(true)
+        end
+      end
+    end
+  end
+
+  describe 'callbacks' do
+    describe '#check_parent_and_children' do
+      
+    end
+  end
 end
