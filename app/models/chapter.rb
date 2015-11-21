@@ -59,6 +59,10 @@ class Chapter < ActiveRecord::Base
     Decision.joins(:chapter).where(chapters: {story_id: story.id}, decisions: {destiny_num: id}).present?
   end
 
+  def parents
+    Decision.joins(:chapter).where(chapters: {story_id: story.id}, decisions: {destiny_num: id}).map { |decision| decision.chapter }
+  end
+
   class << self
     def get_references
       select { |chapter| chapter.has_parent? || chapter.has_children? }
@@ -93,10 +97,28 @@ class Chapter < ActiveRecord::Base
 
   private
 
+    def different_original_decisions(chapter)
+      original_chapter = Chapter.find(chapter.id)
+      original_chapter_decisions = original_chapter.decisions.map { |decision| decision.destiny_num }.uniq.sort
+      actual_chapter_decisions = self.decisions.map { |decision| decision.destiny_num }.uniq.sort
+      original_chapter_decisions.select { |destiny_num| destiny_num.nil? }.present? ? false : original_chapter_decisions.uniq.sort != actual_chapter_decisions.uniq.sort
+    end
+
+    def update_original_decisions(chapter)
+      original_chapter = Chapter.find(chapter.id)
+      original_chapter.decisions.each do |decision|
+        destiny_chapter = Chapter.find_by(id: decision.destiny_num)
+        if destiny_chapter
+          destiny_chapter.update_column(:has_parent, false) if destiny_chapter.parents.include?(original_chapter) && destiny_chapter.parents.count < 2
+        end
+      end
+    end
+
     def check_parent_and_children
       self.has_parent = true if check_parents
       self.has_children = true if check_children
       if check_children
+        update_original_decisions(self) if different_original_decisions(self)
         decisions.each do |decision|
           chapter = Chapter.find_by(id: decision.destiny_num)
           chapter.update_column(:has_parent, true) if chapter
