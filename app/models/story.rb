@@ -20,9 +20,7 @@
 #
 
 class Story < ActiveRecord::Base
-  extend FriendlyId
-  searchkick
-  
+  extend FriendlyId  
   friendly_id :title, use: [:slugged, :finders]
 
   before_destroy :destroy_favorites
