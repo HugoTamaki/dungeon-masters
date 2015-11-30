@@ -88,6 +88,14 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    elasticsearch (1.0.14)
+      elasticsearch-api (= 1.0.14)
+      elasticsearch-transport (= 1.0.14)
+    elasticsearch-api (1.0.14)
+      multi_json
+    elasticsearch-transport (1.0.14)
+      faraday
+      multi_json
     erubis (2.7.0)
     execjs (2.2.1)
     factory_girl (4.4.0)
@@ -95,6 +103,8 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.3)
     figaro (1.1.0)
       thor (~> 0.14)
@@ -113,6 +123,7 @@ GEM
     guard-rspec (4.2.10)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
+    hashie (3.4.3)
     hike (1.2.3)
     i18n (0.6.11)
     jquery-rails (3.1.1)
@@ -139,6 +150,7 @@ GEM
     mini_portile (0.6.0)
     minitest (4.7.5)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     mysql2 (0.3.16)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -207,6 +219,10 @@ GEM
     schema_plus (1.5.2)
       activerecord (>= 3.2, <= 4.1.1)
       valuable
+    searchkick (1.0.3)
+      activemodel
+      elasticsearch (>= 1)
+      hashie
     selenium-webdriver (2.42.0)
       childprocess (>= 0.5.0)
       multi_json (~> 1.0)
@@ -287,6 +303,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 4.0.0)
   schema_plus
+  searchkick
   selenium-webdriver
   simple_form
   summernote-rails
