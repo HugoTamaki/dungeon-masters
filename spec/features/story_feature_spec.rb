@@ -258,8 +258,8 @@ feature "Story" do
 
       click_link "Capítulo 8"
 
-      sleep(0.2)
       click_link "Pastel"
+      sleep(0.5)
       first(:link, "Pastel").click
 
       expect(page).to have_text("Pastel - 1")
