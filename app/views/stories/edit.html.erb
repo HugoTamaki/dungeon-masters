@@ -2,7 +2,7 @@
 
   <%= render 'shared/navigation' %>
   <h1><%= t('stories.edit.title') %></h1>
-  <h2><%= "#{@chapter_count} #{'capítulo'.pluralize(@chapter_count)}" %></h2>
+  <h2><%= "#{@chapter_count} " %> <%= "#{t('stories.edit.chapters')}".pluralize(@chapter_count) %></h2>
 
   <%= render 'form' %>  
 </div>

@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Deseja continuar de onde parou?</h4>
+        <h4 class="modal-title" id="myModalLabel"><%= t "modal.continue_from" %></h4>
       </div>
       <div class="modal-body">
         
@@ -14,3 +14,19 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $(".read").click(function(){
+      if ($(this).data('continue') == true) {
+        var continueText = "<%= t 'modal.continue' %>";
+        var fromStart = "<%= t 'modal.from_start' %>";
+        var locale = "<%= params[:locale] %>";
+        var content = "<p><a href='/"+locale+"/stories/"+$(this).data('story-id')+"/prelude?continue=true' class='btn btn-primary'>"+continueText+"</a></p>";
+        content += "<p><a href='/"+locale+"/stories/"+$(this).data('story-id')+"/prelude?new_story=true' class='btn btn-primary'>"+fromStart+"</a></p>";
+        $(".modal-body").html(content);
+        $("#continue-modal").modal();
+      }
+    });
+  });
+</script>

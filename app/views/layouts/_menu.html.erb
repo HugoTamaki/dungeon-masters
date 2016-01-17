@@ -25,7 +25,10 @@
       <% end %>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <%= link_to "Contato", contact_path, class: "navbar-link" %>
+          <%= link_to t("menu.contact"), contact_path, class: "navbar-link" %>
+        </li>
+        <li>
+          <%= render "layouts/lang" %>            
         </li>
         <li class="dropdown">
           <% if user_signed_in? %>

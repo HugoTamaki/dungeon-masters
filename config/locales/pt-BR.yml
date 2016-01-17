@@ -183,6 +183,9 @@ pt-BR:
       remove_modifier: "Remover modificador"
       add_modifier: "Adicionar Modificador"
       remove_decision: "Remover decisão"
+      add_chapters: "Adicionar capítulos"
+      remove_chapters: "Remover capítulos"
+      chapters: "capítulos"
     new:
       title: "Nova história"
       story_title: "Título"
@@ -304,6 +307,20 @@ pt-BR:
     forgot_password: "Esqueceu a senha?"
     didnt_receive_confirmation: "Não recebeu instruções de confirmação?"
     didnt_receive_unlock: "Não recebeu instruções de desbloqueio?"
+    contact: "Contato"
+  profile:
+    autor_title: "Sobre o autor:"
+    my_stories: "Minhas histórias"
+    favourites: "Favoritos"
+    stories: "Histórias"
+  detail:
+    comments: "Comentários"
+    new_comment: "Novo comentário"
+    create_comment: "Criar Comentário"
+  modal:
+    continue_from: "Deseja continuar de onde parou?"
+    continue: "Continuar"
+    from_start: "Começar do Início"
   tooltip:
     chapter_numbers: "Defina quantos capítulos você quer que a história tenha. Se você quiser inserir mais capítulos depois não se preocupe, você pode fazer isso mais tarde."
     story_resume: "Este será um resumo rápido de sua história. Ela será visível para outros usuários que irão buscar pela sua história."

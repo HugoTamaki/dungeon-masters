@@ -62,7 +62,7 @@ feature "Story" do
       click_button "Próximo"
 
       expect(page).to have_text("História foi criada com sucesso.")
-      expect(current_path).to eql("/stories/#{Story.last.slug}/edit")
+      expect(current_path).to eql("/pt-BR/stories/#{Story.last.slug}/edit")
     end
 
     scenario "user fails to create story" do
@@ -74,7 +74,7 @@ feature "Story" do
 
       click_button "Próximo"
 
-      expect(current_path).to eql("/stories/new")
+      expect(current_path).to eql("/pt-BR/stories/new")
       expect(page).to have_text("Title não deve estar em branco")
       expect(page).to have_text("Resume não deve estar em branco")
       expect(page).to have_text("Chapter numbers não deve estar em branco")
@@ -96,7 +96,7 @@ feature "Story" do
       page.driver.browser.switch_to.alert.accept
       sleep(0.5)
       expect(Story.count).to eq 1
-      expect(current_path).to eql("/profile/#{user.id}")
+      expect(current_path).to eql("/pt-BR/profile/#{user.id}")
     end
   end
 
@@ -329,7 +329,7 @@ feature "Story" do
 
       visit "/profile/#{user.id}"
 
-      find(:xpath, "//a[@href='/stories/#{story_sample.slug}/detail']").click
+      find(:xpath, "//a[@href='/pt-BR/stories/#{story_sample.slug}/detail']").click
       click_link "Ler história"
       click_link "Continuar"
 
@@ -349,7 +349,7 @@ feature "Story" do
 
       visit "/profile/#{user.id}"
 
-      find(:xpath, "//a[@href='/stories/#{story_sample.slug}/detail']").click
+      find(:xpath, "//a[@href='/pt-BR/stories/#{story_sample.slug}/detail']").click
       click_link "Ler história"
       click_link "Começar do Início"
 
@@ -410,7 +410,7 @@ feature "Story" do
       page.find('.navbar-search').set 'Story sample'
       click_button "Buscar"
       expect(page).to have_text("Story sample")
-      expect(current_path).to eql("/stories/search_result")
+      expect(current_path).to eql("/pt-BR/stories/search_result")
     end
   end
 

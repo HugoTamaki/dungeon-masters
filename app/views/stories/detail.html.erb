@@ -47,7 +47,7 @@
   </div>
   <div class="row">
     <div class="col-lg-12">
-      <h2>Comentários</h2>
+      <h2><%= t "details.comments" %></h2>
       <% @story.comments.each do |comment| %>
         <div class="comment">
           <div class="comment-author">
@@ -69,10 +69,10 @@
     <div class="col-lg-12 comment-form">
       <%= simple_form_for([@story, @story.comments.build]) do |f| %>
         <div class="form-group">
-          <%= f.input :content, label: "Novo comentário", input_html: { rows: 10, class: 'form-control' } %>
+          <%= f.input :content, label: t("detail.new_comment"), input_html: { rows: 10, class: 'form-control' } %>
         </div>
         <div class="form-group">
-          <%= f.submit "Criar comentário", class: "btn btn-primary" %>
+          <%= f.submit t("detail.create_comment"), class: "btn btn-primary" %>
         </div>
       <% end %>
     </div>

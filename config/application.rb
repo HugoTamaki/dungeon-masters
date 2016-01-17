@@ -30,7 +30,7 @@ module Calabouco
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.enforce_available_locales = false
     config.i18n.available_locales = ["pt-BR"]
-    config.i18n.default_locale = :'pt-BR'
+    config.i18n.default_locale = 'pt-BR'
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 

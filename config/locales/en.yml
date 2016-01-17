@@ -183,6 +183,9 @@ en:
       remove_modifier: "Remove modifier"
       add_modifier: "Add modifier"
       remove_decision: "Remove decision"
+      add_chapters: "Add chapters"
+      remove_chapters: "Remove chapters"
+      chapters: "chapters"
     new:
       title: "New story"
       story_title: "Title"
@@ -304,6 +307,20 @@ en:
     forgot_password: "Forgot your password?"
     didnt_receive_confirmation: "Didn't receive confirmation instructions?"
     didnt_receive_unlock: "Didn't receive unlock instructions?"
+    contact: "Contact"
+  profile:
+    autor_title: "About the author:"
+    my_stories: "My stories"
+    favourites: "Favourites"
+    stories: "Stories"
+  detail:
+    comments: "Comments"
+    new_comment: "New comment"
+    create_comment: "Create Comment"
+  modal:
+    continue_from: "Do you want to continue from where you stoped?"
+    continue: "Continue"
+    from_start: "From start"
   tooltip:
     chapter_numbers: "Insert how many chapters you want your story to have. If you want to insert more chapters, don't worry, you can do that later."
     story_resume: "This is the text that will be a quick resume of your story. It will be visible to users that search your story."

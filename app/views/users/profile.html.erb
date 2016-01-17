@@ -2,7 +2,7 @@
   <div class="row profile">
     <div class="col-lg-12 col-sm-12 col-xs-12">
       <h1><%= @user.name %></h1>
-      <h2>Sobre o autor:</h2>
+      <h2><%= t "profile.autor_title" %></h2>
       <div class="about_me">
         <%= simple_format @user.about_me %>
       </div>
@@ -12,17 +12,17 @@
     <div id="profile-tabs">
       <ul>
         <% if @user == current_user %>
-          <li><a href="#tabs-1">Minhas histórias</a></li>
+          <li><a href="#tabs-1"><%= t "profile.my_stories" %></a></li>
         <% else %>
-          <li><a href="#tabs-1">Histórias</a></li>
+          <li><a href="#tabs-1"><%= t "profile.stories" %></a></li>
         <% end %>
-        <li><a href="#tabs-2">Favoritos</a></li>
+        <li><a href="#tabs-2"><%= t "profile.favourites" %></a></li>
       </ul>
       <div id="tabs-1">
         <% if @user == current_user %>
-          <h2>Minhas histórias</h2>
+          <h2><%= t "profile.my_stories" %></h2>
         <% else %>
-          <h2>Histórias</h2>
+          <h2><%= t "profile.stories" %></h2>
         <% end %>
 
         <% if @stories.present? %>
@@ -34,11 +34,6 @@
                   <%= image_tag story.cover(:index_cover), class: "img-responsive" %>
                   <div class="actions">
                     <div class="row">
-                      <%= link_to story, class: "btn btn-primary btn-action" do %>
-                        <i class="fa fa-book"></i> <%= t('actions.show') %>
-                      <% end  if story.user == current_user %>
-                    </div>
-                    <div class="row">
                       <%= link_to story_show_path(story), class: 'btn btn-primary btn-action' do %>
                         <i class="fa fa-play"></i> <%= t('actions.read') %>
                       <% end %>
@@ -49,7 +44,7 @@
                       <% end if story.user == current_user %>
                     </div>
                     <div class="row">
-                      <%= link_to story, class: "btn btn-danger btn-action", data: {confirm: 'Tem certeza?'}, :method => :delete do %>
+                      <%= link_to story, class: "btn btn-danger btn-action", data: {confirm: t("are_you_sure")}, :method => :delete do %>
                         <i class="fa fa-trash-o"></i> <%= t('actions.destroy') %>
                       <% end if story.user == current_user %>
                     </div>
@@ -70,7 +65,7 @@
         <% end %>
       </div>
       <div id="tabs-2">
-        <h2>Favoritos</h2>
+        <h2><%= t "profile.favourites" %></h2>
 
         <% @favorites.each do |favorite| %>
           <div class="row">
