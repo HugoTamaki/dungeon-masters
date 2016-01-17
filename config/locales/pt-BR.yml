@@ -287,11 +287,17 @@ pt-BR:
     paragraph1: "Este site é para os fans dos famosos livro-jogos da década de 80 / 90! Crie suas próprias histórias customizadas, e compartilhe para que seus amigos joguem e se divirtam!"
     feature_title: "O que posso fazer?"
     feature1: "Crie quantos capítulos quiser!"
+    description_1: "Defina quantos capítulos sua história irá ter, e adicione quantos outros você quiser ou precisar!"
     feature2: "Defina os destinos dos capítulos!"
+    description_2: "Escolha quais capítulos o aventureiro pode escolher a partir dos seus capítulos!"
     feature3: "Crie monstros customizados!"
+    description_3: "Defina seus atributos, como energia e habilidade, e em que capítulos os aventureiros irão encontrá-los!"
     feature4: "Crie itens para sua história!"
+    description_4: "Crie itens para seus aventureiros, eles podem ser usáveis (como itens de cura), ou itens chave que definem se o aventureiro pode continuar ou não na história!"
     feature5: "Crie modificadores de atributos!"
+    description_5: "Faça os aventureiros ganharem ou perderem energia nos capítulos que desejar!"
     feature6: "Acompanhe como os capítulos se interconectam!"
+    description_6: "Veja como os capítulos se ligam a outros capítulos através de um grafo. Assim você pode ter mais controle de como sua história está evoluindo!"
   messages:
     chapters_with_errors: "Capítulos com erros: "
   menu:
@@ -321,6 +327,9 @@ pt-BR:
     continue_from: "Deseja continuar de onde parou?"
     continue: "Continuar"
     from_start: "Começar do Início"
+  contact:
+    contact: "Contato"
+    find_bug: "Encontrou algum bug? Tem sugestões? Ou quer apenas bater um papo sobre o projeto? Envie uma mensagem pelo contato!" 
   tooltip:
     chapter_numbers: "Defina quantos capítulos você quer que a história tenha. Se você quiser inserir mais capítulos depois não se preocupe, você pode fazer isso mais tarde."
     story_resume: "Este será um resumo rápido de sua história. Ela será visível para outros usuários que irão buscar pela sua história."

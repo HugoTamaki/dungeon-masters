@@ -287,11 +287,17 @@ en:
     paragraph1: "This site is for fans of the famous gamebooks of the 80's and 90's. Create your own customized stories and share it with your friends!"
     feature_title: "Features"
     feature1: "Create as many chapters as you want!"
+    description_1: "Define how many chapters your story will have and add as much chapters you need later!"
     feature2: "Define destiny chapters that the adventurer can choose!"
+    description_2: "Choose which chapters the adventurer can choose from your chapters!"
     feature3: "Create monsters with customized skill and energy, and choose in what chapters the encounters will occur!"
+    description_3: "Define attributes like energy and skill, and in which chapter the adventurer will gain them!"
     feature4: "Create usable or not usable items, with customized attribute modifiers!"
+    description_4: "Create items for your adventurers like key items, weapons or usable items!"
     feature5: "Create modifiers that can add or take points of adventurer attributes!"
+    description_5: "Make your adventurers loose or gain energy on specific chapters!"
     feature6: "See how your chapters between them!"
+    description_6: "See how your chapters link to each other through a graph. This way you can control better how your adventurer is evolving!"
   messages:
     chapters_with_errors: "Chapters with errors: "
   menu:
@@ -321,6 +327,9 @@ en:
     continue_from: "Do you want to continue from where you stoped?"
     continue: "Continue"
     from_start: "From start"
+  contact:
+    contact: "Contact"
+    find_bug: "Have you found a bug? Any sugestions? Want to talk about the project? Send us a message!"
   tooltip:
     chapter_numbers: "Insert how many chapters you want your story to have. If you want to insert more chapters, don't worry, you can do that later."
     story_resume: "This is the text that will be a quick resume of your story. It will be visible to users that search your story."

@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row row-centered">
-    <h1>Contato</h1>
+    <h1><%= t "contact.contact" %></h1>
     <div class="col-lg-4 col-centered">
-      <p>Encontrou algum bug? Tem sugestões? Ou quer apenas bater um papo sobre o projeto? Envie uma mensagem pelo contato!</p>
+      <p><%= t "contact.find_bug" %></p>
       <%= form_tag send_message_path, method: :get, id: 'contact-form' do %>
         <div class="errors"></div>
         <div class="form-inputs">
