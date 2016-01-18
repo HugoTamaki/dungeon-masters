@@ -1,11 +1,11 @@
 <div class="lang-menu">
   <% if params[:locale] == 'en' %>
     <%= image_tag "us.png" %>
-    <%= link_to locale: "pt-BR" do %>
+    <%= link_to locale: "pt-BR", reference: params[:reference] do %>
       <%= image_tag "br.png" %>
     <% end %>
   <% else %>
-    <%= link_to locale: "en" do %>
+    <%= link_to locale: "en", reference: params[:reference] do %>
       <%= image_tag "us.png" %>
     <% end %>
     <%= image_tag "br.png" %>
