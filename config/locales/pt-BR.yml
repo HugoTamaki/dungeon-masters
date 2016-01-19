@@ -71,9 +71,9 @@ pt-BR:
       update_success: "História atualizada com sucesso."
       adventurer_update_success: "Aventureiro atualizado."
       adventurer_update_fail: "Ocorreu um erro. Aventureiro não pode ser atualizado."
-      # success_buy: "Você comprou o item com sucesso."
-      # fail: "Ocorreu um problema."
-      # fail_buy: "Não foi possível comprar este item.
+      buy_success: "Sua compra foi bem sucedida."
+      problem_fail: "Ocorreu um problema."
+      buy_fail: "Não foi possível comprar este item."
       five_more: "Cinco capítulos foram adicionados e história foi atualizada."
       ten_more: "Dez capítulos foram adicionados e história foi atualizada."
       twenty_more: "Vinte capítulos foram adicionados e história foi atualizada."

@@ -71,9 +71,9 @@ en:
       update_success: "Story was successfully updated."
       adventurer_update_success: "Adventurer updated."
       adventurer_update_fail: "An error ocurred. Adventurer not updated."
-      success_buy: "You bought successfully an item."
-      fail: "There was a problem."
-      fail_buy: "You can't buy this item."
+      buy_success: "You bought successfully an item."
+      problem_fail: "There was a problem."
+      buy_fail: "You can't buy this item."
       five_more: "Five chapters added and story was updated."
       ten_more: "Ten chapters added and story was updated."
       twenty_more: "Twenty chapters added and story was updated."
@@ -373,4 +373,3 @@ en:
         hint_password: "we need your current password to make the changes"
         unhappy: "Unhappy? "
         cancel_account: "Cancel my account"
-

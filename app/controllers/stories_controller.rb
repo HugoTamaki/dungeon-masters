@@ -342,12 +342,12 @@ class StoriesController < ApplicationController
         adventurer_shop.quantity -= 1
         if adventurer_shop.save
           adventurer.buy_item(item, modifier_shop)
-          redirect_to :back, notice: I18n.t('actions.messages.success_buy')
+          redirect_to :back, notice: I18n.t('actions.messages.buy_success')
         else
-          redirect_to :back, alert: I18n.t('actions.messages.fail')
+          redirect_to :back, alert: I18n.t('actions.messages.problem_fail')
         end
       else
-        redirect_to :back, alert: I18n.t('actions.messages.fail_buy')
+        redirect_to :back, alert: I18n.t('actions.messages.buy_fail')
       end
     end
 
@@ -355,9 +355,9 @@ class StoriesController < ApplicationController
       unless adventurer.cant_buy?(adventurer_shop, modifier_shop.price)
         adventurer.adventurers_shops.create(modifier_shop_id: shop_id, quantity: modifier_shop.quantity - 1)
         adventurer.buy_new_item(item, modifier_shop.price)
-        redirect_to :back, notice: I18n.t('actions.messages.success_buy')
+        redirect_to :back, notice: I18n.t('actions.messages.buy_success')
       else
-        redirect_to :back, alert: I18n.t('actions.messages.fail_buy')
+        redirect_to :back, alert: I18n.t('actions.messages.buy_fail')
       end
     end
 
