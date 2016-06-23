@@ -41,7 +41,7 @@ gem "simple_form"
 gem "pry"
 gem "awesome_print"
 gem 'cancancan', '~> 1.8'
-gem "paperclip", "~> 3.0"
+gem "paperclip", "~> 4.3.6"
 gem "rmagick"
 gem "kaminari"
 gem "chromedriver-helper"
