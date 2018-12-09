@@ -6,7 +6,7 @@ class StoriesController < ApplicationController
   # load_and_authorize_resource except: [:prelude, :read]
   before_filter :authenticate_user!, except: [:search_result, :detail]
   load_and_authorize_resource except: [:search_result, :favorite, :detail]
-  
+
   # GET /stories
   # GET /stories.json
   def index
@@ -40,8 +40,8 @@ class StoriesController < ApplicationController
   end
 
   def read
-    @story = Story.find(params[:story_id])
-    if @story.published || @story.user == current_user
+    @story = Story.find_by(slug: params[:story_id])
+    if @story.try(:published) || @story.try(:user) == current_user
       if params[:continue]
         @chapter = Chapter.find(params[:chapter_id])
         @adventurer = Adventurer.find(params[:adventurer_id])
@@ -204,7 +204,7 @@ class StoriesController < ApplicationController
     story = Story.find(params[:story_id])
     publish_story(story)
   end
-  
+
   # POST /stories
   # POST /stories.json
   def create
@@ -251,16 +251,16 @@ class StoriesController < ApplicationController
         case params[:commit]
         when t('actions.edit_items')
           @errors = get_errors(@story)
-          
+
           format.html { render action: :edit_items, controller: :stories, alert: @errors }
-          format.json { render json: {errors: @errors.to_json, 
-                                      chapters_with_errors: @chapters_with_errors}, 
+          format.json { render json: {errors: @errors.to_json,
+                                      chapters_with_errors: @chapters_with_errors},
                                       status: :unprocessable_entity }
         when t('actions.save_story')
           @chapters_with_errors = get_chapters_with_errors(@story)
           format.html { render action: :edit_story, controller: :stories, alert: @errors }
-          format.json { render json: {errors: @errors.to_json, 
-                                      chapters_with_errors: @chapters_with_errors}, 
+          format.json { render json: {errors: @errors.to_json,
+                                      chapters_with_errors: @chapters_with_errors},
                                       status: :unprocessable_entity }
         end
       end
@@ -279,9 +279,9 @@ class StoriesController < ApplicationController
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
-    
+
   end
-  
+
   # DELETE /stories/1
   # DELETE /stories/1.json
   def destroy
@@ -293,7 +293,7 @@ class StoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   private
 
     def publish_story(story)
