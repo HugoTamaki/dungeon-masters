@@ -33,7 +33,7 @@ feature "Story" do
   let!(:decision57)     { FactoryGirl.create(:decision, chapter: chapter5, destiny_num: chapter7.id, item_validator: item1.id) }
   let!(:decision910)    { FactoryGirl.create(:decision, chapter: chapter9, destiny_num: chapter10.id) }
   let!(:decision1011)   { FactoryGirl.create(:decision, chapter: chapter10, destiny_num: chapter11.id, item_validator: item1.id) }
-  
+
   let!(:modifier_item1) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item3, quantity: 1) }
   let!(:modifier_item2) { FactoryGirl.create(:modifier_item, chapter: chapter1, item: item4, quantity: 2) }
 
@@ -93,7 +93,6 @@ feature "Story" do
 
       expect(page).to have_text("Titulo")
       first(:link, "Deletar história").click
-      page.driver.browser.switch_to.alert.accept
       sleep(0.5)
       expect(Story.count).to eq 1
       expect(current_path).to eql("/pt-BR/profile/#{user.id}")
@@ -113,7 +112,7 @@ feature "Story" do
       click_button "Capítulo 1"
 
       expect(page).to have_text("content 1")
-      
+
       click_link "Capítulo 2"
       expect(page).to have_text("content 2")
 
@@ -155,7 +154,7 @@ feature "Story" do
       click_button "Capítulo 1"
 
       expect(page).to have_text("content 1")
-      
+
       click_link "Capítulo 2"
       expect(page).to have_text("content 2")
 
@@ -174,7 +173,7 @@ feature "Story" do
       click_button "Capítulo 1"
 
       expect(page).to have_text("content 1")
-      
+
       click_link "Capítulo 8"
       expect(page).to have_text("content 8")
 
@@ -194,7 +193,7 @@ feature "Story" do
 
       expect(page).to have_text("content 1")
 
-      
+
       click_link "Capítulo 2"
       expect(page).to have_text("content 2")
 
@@ -218,7 +217,7 @@ feature "Story" do
       adventurer.save
 
       expect(page).to have_text("content 1")
-      
+
       click_link "Capítulo 2"
       expect(page).to have_text("content 2")
 
@@ -295,7 +294,7 @@ feature "Story" do
       visit "/stories/#{story_sample.slug}/prelude?new_story=true"
 
       click_button "Rolar dados"
-      
+
       click_button "Capítulo 1"
       click_link "Capítulo 2"
       click_button "Combate"
@@ -311,7 +310,7 @@ feature "Story" do
 
       expect(adventurer_item.selected).to eql(false)
       expect(adventurer_item.quantity).to eql(0)
-      
+
       sleep(0.2)
       expect(page.body).to include("<strike>espada</strike>")
     end
@@ -323,7 +322,7 @@ feature "Story" do
       click_button "Capítulo 1"
 
       expect(page).to have_text("content 1")
-      
+
       click_link "Capítulo 8"
       expect(page).to have_text("content 8")
 
@@ -343,7 +342,7 @@ feature "Story" do
       click_button "Capítulo 1"
 
       expect(page).to have_text("content 1")
-      
+
       click_link "Capítulo 8"
       expect(page).to have_text("content 8")
 
@@ -393,13 +392,13 @@ feature "Story" do
 
         visit root_path
         expect(page).not_to have_text("Published Story")
-      end      
+      end
     end
   end
 
   feature "#search story" do
     let!(:story_sample) { FactoryGirl.create(:story, title: "Story sample", published: true, user: user, chapter_numbers: 0) }
-    
+
     before(:each) do
       login_as user
     end
@@ -476,7 +475,7 @@ feature "Story" do
 
       first(:button, "Remover capítulos").click
       first(:link, "-5 capítulos").click
-      page.driver.browser.switch_to.alert.accept
+
       sleep(1)
       expect(story_sample3.chapters.count).to eql(45)
     end
@@ -486,7 +485,7 @@ feature "Story" do
 
       first(:button, "Remover capítulos").click
       first(:link, "-10 capítulos").click
-      page.driver.browser.switch_to.alert.accept
+
       sleep(1)
       expect(story_sample3.chapters.count).to eql(40)
     end
@@ -496,7 +495,7 @@ feature "Story" do
 
       first(:button, "Remover capítulos").click
       first(:link, "-20 capítulos").click
-      page.driver.browser.switch_to.alert.accept
+
       sleep(1)
       expect(story_sample3.chapters.count).to eql(30)
     end
@@ -506,7 +505,7 @@ feature "Story" do
 
       first(:button, "Remover capítulos").click
       first(:link, "-50 capítulos").click
-      page.driver.browser.switch_to.alert.accept
+
       sleep(1)
       expect(story_sample3.chapters.count).to eql(0)
     end

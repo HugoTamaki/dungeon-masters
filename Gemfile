@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.7.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -63,7 +63,7 @@ group :test do
   gem "capybara"
   gem "database_cleaner"
   gem "guard-rspec"
-  gem "selenium-webdriver"
+  gem "poltergeist"
   gem 'fuubar'
 end
 

@@ -13,213 +13,164 @@
 
 ActiveRecord::Schema.define(version: 20151113222203) do
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  :limit=>255, :default=>"", :null=>false, :index=>{:name=>"index_users_on_email", :unique=>true, :using=>:btree}
+    t.string   "encrypted_password",     :limit=>255, :default=>"", :null=>false
+    t.string   "reset_password_token",   :limit=>255, :index=>{:name=>"index_users_on_reset_password_token", :unique=>true, :using=>:btree}
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer  "sign_in_count",          :limit=>4, :default=>0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     :limit=>255
+    t.string   "last_sign_in_ip",        :limit=>255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.text     "about_me"
-    t.index ["email"], :name => "index_users_on_email", :unique => true
-    t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+    t.string   "name",                   :limit=>255
+    t.text     "about_me",               :limit=>65535
   end
 
-  create_table "stories", force: true do |t|
-    t.string   "title",              limit: 40
-    t.text     "resume"
-    t.integer  "user_id"
+  create_table "stories", force: :cascade do |t|
+    t.string   "title",              :limit=>40
+    t.text     "resume",             :limit=>65535
+    t.integer  "user_id",            :limit=>4, :index=>{:name=>"index_stories_on_user_id", :using=>:btree}, :foreign_key=>{:references=>"users", :name=>"fk_stories_user_id", :on_update=>:restrict, :on_delete=>:restrict}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "prelude"
-    t.string   "cover"
-    t.string   "cover_file_name"
-    t.string   "cover_content_type"
-    t.integer  "cover_file_size"
+    t.text     "prelude",            :limit=>65535
+    t.string   "cover",              :limit=>255
+    t.string   "cover_file_name",    :limit=>255
+    t.string   "cover_content_type", :limit=>255
+    t.integer  "cover_file_size",    :limit=>4
     t.datetime "cover_updated_at"
-    t.boolean  "published",                     default: false
-    t.integer  "chapter_numbers"
-    t.integer  "initial_gold",                  default: 0
-    t.string   "slug"
-    t.index ["slug"], :name => "index_stories_on_slug", :unique => true
-    t.index ["user_id"], :name => "index_stories_on_user_id"
-    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_stories_user_id"
+    t.boolean  "published",          :default=>false
+    t.integer  "chapter_numbers",    :limit=>4
+    t.integer  "initial_gold",       :limit=>4, :default=>0
+    t.string   "slug",               :limit=>255, :index=>{:name=>"index_stories_on_slug", :unique=>true, :using=>:btree}
   end
 
-  create_table "chapters", force: true do |t|
-    t.integer  "story_id"
-    t.string   "reference",          limit: 10
-    t.text     "content"
+  create_table "chapters", force: :cascade do |t|
+    t.integer  "story_id",           :limit=>4, :index=>{:name=>"index_chapters_on_story_id", :using=>:btree}, :foreign_key=>{:references=>"stories", :name=>"fk_chapters_story_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.string   "reference",          :limit=>10
+    t.text     "content",            :limit=>65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image"
-    t.float    "x"
-    t.float    "y"
-    t.string   "color"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
+    t.string   "image",              :limit=>255
+    t.float    "x",                  :limit=>24
+    t.float    "y",                  :limit=>24
+    t.string   "color",              :limit=>255
+    t.string   "image_file_name",    :limit=>255
+    t.string   "image_content_type", :limit=>255
+    t.integer  "image_file_size",    :limit=>4
     t.datetime "image_updated_at"
-    t.boolean  "has_parent",                    default: false
-    t.boolean  "has_children",                  default: false
-    t.index ["story_id"], :name => "index_chapters_on_story_id"
-    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_chapters_story_id"
+    t.boolean  "has_parent",         :default=>false
+    t.boolean  "has_children",       :default=>false
   end
 
-  create_table "adventurers", force: true do |t|
-    t.string   "name",       limit: 40
-    t.integer  "user_id"
-    t.integer  "skill"
-    t.integer  "energy"
-    t.integer  "luck"
-    t.integer  "gold"
+  create_table "adventurers", force: :cascade do |t|
+    t.string   "name",       :limit=>40
+    t.integer  "user_id",    :limit=>4, :index=>{:name=>"index_adventurers_on_user_id", :using=>:btree}, :foreign_key=>{:references=>"users", :name=>"fk_adventurers_user_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "skill",      :limit=>4
+    t.integer  "energy",     :limit=>4
+    t.integer  "luck",       :limit=>4
+    t.integer  "gold",       :limit=>4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "chapter_id"
-    t.integer  "story_id"
-    t.index ["chapter_id"], :name => "fk__adventurers_chapter_id"
-    t.index ["story_id"], :name => "fk__adventurers_story_id"
-    t.index ["user_id"], :name => "index_adventurers_on_user_id"
-    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_chapter_id"
-    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_story_id"
-    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_user_id"
+    t.integer  "chapter_id", :limit=>4, :index=>{:name=>"fk_adventurers_chapter_id", :using=>:btree}, :foreign_key=>{:references=>"chapters", :name=>"fk_adventurers_chapter_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "story_id",   :limit=>4, :index=>{:name=>"fk_adventurers_story_id", :using=>:btree}, :foreign_key=>{:references=>"stories", :name=>"fk_adventurers_story_id", :on_update=>:restrict, :on_delete=>:restrict}
   end
 
-  create_table "adventurer_chapters", force: true do |t|
-    t.integer  "adventurer_id"
-    t.integer  "chapter_id"
+  create_table "adventurer_chapters", force: :cascade do |t|
+    t.integer  "adventurer_id", :limit=>4, :index=>{:name=>"fk_adventurer_chapters_adventurer_id", :using=>:btree}, :foreign_key=>{:references=>"adventurers", :name=>"fk_adventurer_chapters_adventurer_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "chapter_id",    :limit=>4, :index=>{:name=>"fk_adventurer_chapters_chapter_id", :using=>:btree}, :foreign_key=>{:references=>"chapters", :name=>"fk_adventurer_chapters_chapter_id", :on_update=>:restrict, :on_delete=>:restrict}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["adventurer_id"], :name => "fk__adventurer_chapters_adventurer_id"
-    t.index ["chapter_id"], :name => "fk__adventurer_chapters_chapter_id"
-    t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurer_chapters_adventurer_id"
-    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurer_chapters_chapter_id"
   end
 
-  create_table "items", force: true do |t|
-    t.string   "name",        limit: 40
-    t.text     "description"
-    t.integer  "story_id"
+  create_table "items", force: :cascade do |t|
+    t.string   "name",        :limit=>40
+    t.text     "description", :limit=>65535
+    t.integer  "story_id",    :limit=>4, :index=>{:name=>"index_items_on_story_id", :using=>:btree}, :foreign_key=>{:references=>"stories", :name=>"fk_items_story_id", :on_update=>:restrict, :on_delete=>:restrict}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "usable",                 default: false
-    t.string   "attr",                   default: ""
-    t.integer  "modifier",               default: 0
-    t.string   "type",                   default: "UsableItem"
-    t.integer  "damage",                 default: 2
-    t.index ["story_id"], :name => "index_items_on_story_id"
-    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_items_story_id"
+    t.boolean  "usable",      :default=>false
+    t.string   "attr",        :limit=>255, :default=>""
+    t.integer  "modifier",    :limit=>4, :default=>0
+    t.string   "type",        :limit=>255, :default=>"UsableItem"
+    t.integer  "damage",      :limit=>4, :default=>2
   end
 
-  create_table "adventurers_items", force: true do |t|
-    t.integer  "adventurer_id"
-    t.integer  "item_id"
+  create_table "adventurers_items", force: :cascade do |t|
+    t.integer  "adventurer_id", :limit=>4, :index=>{:name=>"index_adventurers_items_on_adventurer_id", :using=>:btree}, :foreign_key=>{:references=>"adventurers", :name=>"fk_adventurers_items_adventurer_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "item_id",       :limit=>4, :index=>{:name=>"index_adventurers_items_on_item_id", :using=>:btree}, :foreign_key=>{:references=>"items", :name=>"fk_adventurers_items_item_id", :on_update=>:restrict, :on_delete=>:restrict}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "quantity",      default: 0
+    t.integer  "quantity",      :limit=>4, :default=>0
     t.boolean  "selected"
-    t.index ["adventurer_id"], :name => "index_adventurers_items_on_adventurer_id"
-    t.index ["item_id"], :name => "index_adventurers_items_on_item_id"
-    t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_items_adventurer_id"
-    t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_items_item_id"
   end
 
-  create_table "modifiers_shops", force: true do |t|
-    t.integer  "chapter_id"
-    t.integer  "item_id"
-    t.integer  "price"
-    t.integer  "quantity"
+  create_table "modifiers_shops", force: :cascade do |t|
+    t.integer  "chapter_id", :limit=>4, :index=>{:name=>"fk_modifiers_shops_chapter_id", :using=>:btree}, :foreign_key=>{:references=>"chapters", :name=>"fk_modifiers_shops_chapter_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "item_id",    :limit=>4, :index=>{:name=>"fk_modifiers_shops_item_id", :using=>:btree}, :foreign_key=>{:references=>"items", :name=>"fk_modifiers_shops_item_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "price",      :limit=>4
+    t.integer  "quantity",   :limit=>4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["chapter_id"], :name => "fk__modifiers_shops_chapter_id"
-    t.index ["item_id"], :name => "fk__modifiers_shops_item_id"
-    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_shops_chapter_id"
-    t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_shops_item_id"
   end
 
-  create_table "adventurers_shops", force: true do |t|
-    t.integer  "adventurer_id"
-    t.integer  "modifier_shop_id"
-    t.integer  "quantity"
+  create_table "adventurers_shops", force: :cascade do |t|
+    t.integer  "adventurer_id",    :limit=>4, :index=>{:name=>"fk_adventurers_shops_adventurer_id", :using=>:btree}, :foreign_key=>{:references=>"adventurers", :name=>"fk_adventurers_shops_adventurer_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "modifier_shop_id", :limit=>4, :index=>{:name=>"fk_adventurers_shops_modifier_shop_id", :using=>:btree}, :foreign_key=>{:references=>"modifiers_shops", :name=>"fk_adventurers_shops_modifier_shop_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "quantity",         :limit=>4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["adventurer_id"], :name => "fk__adventurers_shops_adventurer_id"
-    t.index ["modifier_shop_id"], :name => "fk__adventurers_shops_modifier_shop_id"
-    t.foreign_key ["adventurer_id"], "adventurers", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_shops_adventurer_id"
-    t.foreign_key ["modifier_shop_id"], "modifiers_shops", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_adventurers_shops_modifier_shop_id"
   end
 
-  create_table "comments", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "story_id"
-    t.text     "content"
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id",    :limit=>4, :index=>{:name=>"fk_comments_user_id", :using=>:btree}, :foreign_key=>{:references=>"users", :name=>"fk_comments_user_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "story_id",   :limit=>4, :index=>{:name=>"fk_comments_story_id", :using=>:btree}, :foreign_key=>{:references=>"stories", :name=>"fk_comments_story_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.text     "content",    :limit=>65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["story_id"], :name => "fk__comments_story_id"
-    t.index ["user_id"], :name => "fk__comments_user_id"
-    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_comments_story_id"
-    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_comments_user_id"
   end
 
-  create_table "decisions", force: true do |t|
-    t.integer  "chapter_id"
-    t.integer  "destiny_num"
+  create_table "decisions", force: :cascade do |t|
+    t.integer  "chapter_id",     :limit=>4, :index=>{:name=>"fk_decisions_chapter_id", :using=>:btree}, :foreign_key=>{:references=>"chapters", :name=>"fk_decisions_chapter_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "destiny_num",    :limit=>4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "item_validator"
-    t.index ["chapter_id"], :name => "fk__decisions_chapter_id"
-    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_decisions_chapter_id"
+    t.integer  "item_validator", :limit=>4
   end
 
-  create_table "favorite_stories", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "story_id"
+  create_table "favorite_stories", force: :cascade do |t|
+    t.integer  "user_id",    :limit=>4, :index=>{:name=>"fk_favorite_stories_user_id", :using=>:btree}, :foreign_key=>{:references=>"users", :name=>"fk_favorite_stories_user_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "story_id",   :limit=>4, :index=>{:name=>"fk_favorite_stories_story_id", :using=>:btree}, :foreign_key=>{:references=>"stories", :name=>"fk_favorite_stories_story_id", :on_update=>:restrict, :on_delete=>:restrict}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["story_id"], :name => "fk__favorite_stories_story_id"
-    t.index ["user_id"], :name => "fk__favorite_stories_user_id"
-    t.foreign_key ["story_id"], "stories", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_favorite_stories_story_id"
-    t.foreign_key ["user_id"], "users", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_favorite_stories_user_id"
   end
 
-  create_table "modifiers_attributes", force: true do |t|
-    t.integer  "chapter_id"
-    t.string   "attr"
-    t.integer  "quantity"
+  create_table "modifiers_attributes", force: :cascade do |t|
+    t.integer  "chapter_id", :limit=>4, :index=>{:name=>"fk_modifiers_attributes_chapter_id", :using=>:btree}, :foreign_key=>{:references=>"chapters", :name=>"fk_modifiers_attributes_chapter_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.string   "attr",       :limit=>255
+    t.integer  "quantity",   :limit=>4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["chapter_id"], :name => "fk__modifiers_attributes_chapter_id"
-    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_attributes_chapter_id"
   end
 
-  create_table "modifiers_items", force: true do |t|
-    t.integer  "chapter_id"
-    t.integer  "item_id"
-    t.integer  "quantity"
+  create_table "modifiers_items", force: :cascade do |t|
+    t.integer  "chapter_id", :limit=>4, :index=>{:name=>"fk_modifiers_items_chapter_id", :using=>:btree}, :foreign_key=>{:references=>"chapters", :name=>"fk_modifiers_items_chapter_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "item_id",    :limit=>4, :index=>{:name=>"fk_modifiers_items_item_id", :using=>:btree}, :foreign_key=>{:references=>"items", :name=>"fk_modifiers_items_item_id", :on_update=>:restrict, :on_delete=>:restrict}
+    t.integer  "quantity",   :limit=>4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["chapter_id"], :name => "fk__modifiers_items_chapter_id"
-    t.index ["item_id"], :name => "fk__modifiers_items_item_id"
-    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_items_chapter_id"
-    t.foreign_key ["item_id"], "items", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_modifiers_items_item_id"
   end
 
-  create_table "monsters", force: true do |t|
-    t.string   "name",       limit: 40
-    t.integer  "skill"
-    t.integer  "energy"
-    t.integer  "chapter_id"
+  create_table "monsters", force: :cascade do |t|
+    t.string   "name",       :limit=>40
+    t.integer  "skill",      :limit=>4
+    t.integer  "energy",     :limit=>4
+    t.integer  "chapter_id", :limit=>4, :index=>{:name=>"index_monsters_on_chapter_id", :using=>:btree}, :foreign_key=>{:references=>"chapters", :name=>"fk_monsters_chapter_id", :on_update=>:restrict, :on_delete=>:restrict}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["chapter_id"], :name => "index_monsters_on_chapter_id"
-    t.foreign_key ["chapter_id"], "chapters", ["id"], :on_update => :restrict, :on_delete => :restrict, :name => "fk_monsters_chapter_id"
   end
 
 end
