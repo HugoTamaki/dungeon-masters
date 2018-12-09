@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.4'
+gem 'rails', '4.2.6'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -34,14 +34,14 @@ group :development do
   # gem 'capistrano-sidekiq' , github: 'seuros/capistrano-sidekiq'
 end
 
-gem "jquery-rails"
+gem "jquery-rails", '~> 3.1.3'
 gem "devise"
 gem "schema_plus"
 gem "simple_form"
 gem "pry"
 gem "awesome_print"
 gem 'cancancan', '~> 1.8'
-gem "paperclip", "~> 4.3.6"
+gem "paperclip", "~> 5.2.0"
 gem "rmagick"
 gem "kaminari"
 gem "chromedriver-helper"
@@ -51,6 +51,7 @@ gem 'summernote-rails'
 gem 'figaro'
 gem 'remotipart', '~> 1.2'
 gem 'friendly_id', '~> 5.1.0'
+gem 'responders'
 # gem 'sidekiq'
 # gem "devise-async"
 # gem 'rvm1-capistrano3', :require => false
